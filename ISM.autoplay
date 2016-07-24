@@ -299,14 +299,14 @@ end</Script>
 <Event>
 <Name>On Show</Name>
 <Args/>
-<Script/>
+<Script>Page.SetFocus("IN_USERNAME");</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeCol>29</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -687,28 +687,34 @@ end</Script>
 <Event>
 <Name>On Key</Name>
 <Args>number e_Key, table e_Modifiers</Args>
-<Script/>
+<Script>if e_Key == 9 then
+	Page.SetFocus("IN_PASSWORD");
+end
+
+if e_Key == 13 then
+	Page.ClickObject("BTN_LOGIN");
+end</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>1701601889</DesignCodeCol>
+<DesignCodeLine>1</DesignCodeLine>
+<DesignCodeCol>25</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
 <Event>
 <Name>On Focus</Name>
 <Args/>
-<Script/>
+<Script>Input.SetSelection("IN_USERNAME", 1, -1);</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>1852798068</DesignCodeCol>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -728,7 +734,7 @@ end</Script>
 </Event>
 <Actions/>
 <Text>
-<Body/>
+<Body>k.sad</Body>
 <TextColor>0</TextColor>
 <BackgroundColor>16777215</BackgroundColor>
 <FontData>
@@ -783,28 +789,34 @@ end</Script>
 <Event>
 <Name>On Key</Name>
 <Args>number e_Key, table e_Modifiers</Args>
-<Script/>
+<Script>if e_Key == 9 then
+	Page.SetFocus("IN_USERNAME");
+end
+
+if e_Key == 13 then
+	Page.ClickObject("BTN_LOGIN");
+end</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>1080905728</DesignCodeCol>
+<DesignCodeLine>1</DesignCodeLine>
+<DesignCodeCol>25</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
 <Event>
 <Name>On Focus</Name>
 <Args/>
-<Script/>
+<Script>Input.SetSelection("IN_PASSWORD", 1, -1);</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>3290685</DesignCodeLine>
-<DesignCodeCol>1701667182</DesignCodeCol>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>31</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -845,7 +857,7 @@ end</Script>
 <VerticalScrollbar>1</VerticalScrollbar>
 <HorizontalScrollbar>0</HorizontalScrollbar>
 <Style>0</Style>
-<Mode>0</Mode>
+<Mode>1</Mode>
 <Mask/>
 <MaskSymbol> </MaskSymbol>
 <MaskRetMode>0</MaskRetMode>
@@ -879,7 +891,33 @@ end</Script>
 <Event>
 <Name>On Click</Name>
 <Args/>
-<Script/>
+<Script>local userName = Input.GetText("IN_USERNAME");
+local password = Input.GetText("IN_PASSWORD");
+
+if userName == "" then
+	Dialog.Message("Info", "Username can't be empty", MB_OK, MB_ICONINFORMATION, MB_DEFBUTTON1);
+	Application.ExitScript();
+end
+
+local mySQLConnection = dbConnect();
+
+mySQLCursor = mySQLConnection:execute("SELECT * FROM IT_USERS WHERE Username = '"..userName.."';");
+row = mySQLCursor:fetch({},"a")
+while row do
+	dbUsername = row.Username;
+	dbPassword = row.Password;
+    row = mySQLCursor:fetch(row,"a");
+end
+
+if (String.CompareNoCase(userName, dbUsername) == 0 and String.CompareNoCase(Crypto.MD5DigestFromString(password), dbPassword) == 0) then
+	Page.Jump("HOME");
+else
+	Dialog.Message("Error", "Invalid username/password.", MB_OK, MB_ICONSTOP, MB_DEFBUTTON1);
+	Page.SetFocus("IN_USERNAME");
+end
+
+MySQLCursor:close();
+MySQLConnection:close();</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
