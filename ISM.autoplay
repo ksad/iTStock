@@ -17,18 +17,18 @@
 <ProjectInfo ToolTipStyle="0">
 <Office2007Theme Theme="5"/>
 <WindowStyles>
-<Width>790</Width>
-<Height>545</Height>
-<WindowTitle>My Project</WindowTitle>
+<Width>1014</Width>
+<Height>713</Height>
+<WindowTitle>IT Stock Manager</WindowTitle>
 <WindowStyle>0</WindowStyle>
 <FillColor>0</FillColor>
 </WindowStyles>
 <WindowOptions>
 <Movable>1</Movable>
 <AlwaysOnTop>0</AlwaysOnTop>
-<Resizable>0</Resizable>
-<MinWidth>790</MinWidth>
-<MinHeight>545</MinHeight>
+<Resizable>1</Resizable>
+<MinWidth>1014</MinWidth>
+<MinHeight>713</MinHeight>
 </WindowOptions>
 <TransparentWindow>
 <TransparentImage/>
@@ -145,14 +145,14 @@ end</Script>
 <Event>
 <Name>On Shutdown</Name>
 <Args/>
-<Script/>
+<Script>MySQL:close();</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeCol>14</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
