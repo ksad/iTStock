@@ -63,7 +63,9 @@
 <Tracks/>
 </AudioBGMusic>
 <Globals>
-<Script>function dbConnect ()
+<Script>MENU_TREE_INDEXS = {Home="1", Settings="2"}
+
+function dbConnect ()
 	MySQLConnection, err = MySQL:connect("itstock", "root", "Syrine--BB--2016", "127.0.0.1", "3306");
 	if err then
 		-- If there is an error connecting to the database, display a dialog box with the error
@@ -74,8 +76,8 @@
 end</Script>
 <BookMarks count="0">
 </BookMarks>
-<DesignCodeLine>2</DesignCodeLine>
-<DesignCodeCol>12</DesignCodeCol>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 </Globals>
 <Defaults>
 <StartupPage>_PageFirst</StartupPage>
@@ -1168,15 +1170,14 @@ MySQLConnection:close();</Script>
 <Event>
 <Name>On Show</Name>
 <Args/>
-<Script>Input.SetText("IN_HELLO", "Bonjour "..CURRENT_USER);
-</Script>
+<Script>Input.SetText("IN_HELLO", "Bonjour "..CURRENT_USER);</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>50</DesignCodeCol>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
