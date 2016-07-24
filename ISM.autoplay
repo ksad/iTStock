@@ -1334,14 +1334,23 @@ MySQLConnection:close();</Script>
 <Event>
 <Name>On Select</Name>
 <Args>string e_NodeIndex</Args>
-<Script/>
+<Script>nodeProperties = Tree.GetNode("TR_MENU", MENU_TREE_INDEXS.Home);
+if nodeProperties.Selected then
+	Page.Jump("HOME");
+end
+
+nodeProperties = Tree.GetNode("TR_MENU", MENU_TREE_INDEXS.Settings);
+if nodeProperties.Selected then
+	Tree.SetSelectedNode("TR_MENU", MENU_TREE_INDEXS.Home);
+	Page.Jump("SETTINGS");
+end</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>59</DesignCodeLine>
-<DesignCodeCol>164229</DesignCodeCol>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -1354,7 +1363,7 @@ MySQLConnection:close();</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>59</DesignCodeLine>
+<DesignCodeLine>0</DesignCodeLine>
 <DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
@@ -1368,7 +1377,7 @@ MySQLConnection:close();</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>59</DesignCodeLine>
+<DesignCodeLine>0</DesignCodeLine>
 <DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
@@ -1382,8 +1391,8 @@ MySQLConnection:close();</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>59</DesignCodeLine>
-<DesignCodeCol>3043941</DesignCodeCol>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -1396,8 +1405,8 @@ MySQLConnection:close();</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>59</DesignCodeLine>
-<DesignCodeCol>10</DesignCodeCol>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -1410,8 +1419,8 @@ MySQLConnection:close();</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>59</DesignCodeLine>
-<DesignCodeCol>16802930</DesignCodeCol>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -1424,8 +1433,8 @@ MySQLConnection:close();</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>59</DesignCodeLine>
-<DesignCodeCol>15145</DesignCodeCol>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
