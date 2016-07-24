@@ -63,11 +63,19 @@
 <Tracks/>
 </AudioBGMusic>
 <Globals>
-<Script/>
+<Script>function dbConnect ()
+	MySQLConnection, err = MySQL:connect("itstock", "root", "Syrine--BB--2016", "127.0.0.1", "3306");
+	if err then
+		-- If there is an error connecting to the database, display a dialog box with the error
+		Dialog.Message("Error coonection", err, MB_OK, MB_ICONSTOP);
+	end
+
+	return MySQLConnection
+end</Script>
 <BookMarks count="0">
 </BookMarks>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeLine>2</DesignCodeLine>
+<DesignCodeCol>12</DesignCodeCol>
 </Globals>
 <Defaults>
 <StartupPage>_PageFirst</StartupPage>
@@ -114,7 +122,7 @@
 <SkinSubStyle/>
 </RuntimeSkin>
 <Databases>
-<MySQL>0</MySQL>
+<MySQL>1</MySQL>
 <SQLite3>0</SQLite3>
 <Oracle>0</Oracle>
 <ODBC>0</ODBC>
