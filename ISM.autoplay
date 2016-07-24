@@ -910,6 +910,7 @@ while row do
 end
 
 if (String.CompareNoCase(userName, dbUsername) == 0 and String.CompareNoCase(Crypto.MD5DigestFromString(password), dbPassword) == 0) then
+	CURRENT_USER = dbUsername;
 	Page.Jump("HOME");
 else
 	Dialog.Message("Error", "Invalid username/password.", MB_OK, MB_ICONSTOP, MB_DEFBUTTON1);
@@ -923,8 +924,8 @@ MySQLConnection:close();</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>18</DesignCodeLine>
-<DesignCodeCol>137</DesignCodeCol>
+<DesignCodeLine>19</DesignCodeLine>
+<DesignCodeCol>27</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -1167,14 +1168,15 @@ MySQLConnection:close();</Script>
 <Event>
 <Name>On Show</Name>
 <Args/>
-<Script/>
+<Script>Input.SetText("IN_HELLO", "Bonjour "..CURRENT_USER);
+</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeCol>50</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
