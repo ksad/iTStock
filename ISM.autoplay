@@ -680,7 +680,7 @@ end
 <Top>248</Top>
 <Bottom>275</Bottom>
 <Left>69</Left>
-<Right>148</Right>
+<Right>149</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -919,7 +919,8 @@ end</Script>
 local password = Input.GetText("IN_PASSWORD");
 
 if userName == "" then
-	Dialog.Message("Info", "Username can't be empty", MB_OK, MB_ICONINFORMATION, MB_DEFBUTTON1);
+	Dialog.Message("Error", "Username can't be empty", MB_OK, MB_ICONSTOP, MB_DEFBUTTON1);
+	Page.SetFocus("IN_USERNAME");
 	Application.ExitScript();
 end
 
@@ -939,6 +940,7 @@ if (String.CompareNoCase(userName, dbUsername) == 0 and String.CompareNoCase(Cry
 else
 	Dialog.Message("Error", "Invalid username/password.", MB_OK, MB_ICONSTOP, MB_DEFBUTTON1);
 	Page.SetFocus("IN_USERNAME");
+	Application.ExitScript();
 end
 
 MySQLCursor:close();
@@ -948,8 +950,8 @@ MySQLConnection:close();</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>19</DesignCodeLine>
-<DesignCodeCol>27</DesignCodeCol>
+<DesignCodeLine>4</DesignCodeLine>
+<DesignCodeCol>77</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
