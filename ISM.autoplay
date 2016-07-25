@@ -73,11 +73,33 @@ function dbConnect ()
 	end
 
 	return MySQLConnection
-end</Script>
+end
+
+--[[
+	This function allow to jump from keft menu on each page to a specific page
+	Usage : Each element added in the tree list should have Data = Page name in (MAJ)
+	Example : Settings -&gt; Data = SETTINGS
+]]
+function leftMenuJump ()
+	local SelectedMenu = Tree.GetSelectedNode("TR_MENU");
+
+	if SelectedMenu == "" then
+		Application.ExitScript();
+	end
+
+	nodeMenuProperties = Tree.GetNode("TR_MENU", SelectedMenu);
+
+	if Application.GetCurrentPage() == nodeMenuProperties.Data then
+		Application.ExitScript();
+	else
+		Page.Jump(nodeMenuProperties.Data);
+	end
+end
+</Script>
 <BookMarks count="0">
 </BookMarks>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeLine>17</DesignCodeLine>
+<DesignCodeCol>9</DesignCodeCol>
 </Globals>
 <Defaults>
 <StartupPage>_PageFirst</StartupPage>
@@ -568,7 +590,7 @@ end</Script>
 <Top>248</Top>
 <Bottom>275</Bottom>
 <Left>69</Left>
-<Right>148</Right>
+<Right>149</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -1184,7 +1206,7 @@ MySQLConnection:close();</Script>
 <Event>
 <Name>On Close</Name>
 <Args/>
-<Script/>
+<Script>Tree.SetSelectedNode("TR_MENU", MENU_TREE_INDEXS.Home);</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
@@ -1334,23 +1356,14 @@ MySQLConnection:close();</Script>
 <Event>
 <Name>On Select</Name>
 <Args>string e_NodeIndex</Args>
-<Script>nodeProperties = Tree.GetNode("TR_MENU", MENU_TREE_INDEXS.Home);
-if nodeProperties.Selected then
-	Page.Jump("HOME");
-end
-
-nodeProperties = Tree.GetNode("TR_MENU", MENU_TREE_INDEXS.Settings);
-if nodeProperties.Selected then
-	Tree.SetSelectedNode("TR_MENU", MENU_TREE_INDEXS.Home);
-	Page.Jump("SETTINGS");
-end</Script>
+<Script>leftMenuJump();</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeCol>15</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -1460,7 +1473,7 @@ end</Script>
 <tree_node>
 <AMSTreeData>
 <Text>Home</Text>
-<Data>New Data</Data>
+<Data>HOME</Data>
 <Selected>0</Selected>
 <Expanded>0</Expanded>
 <NodeIndex>1</NodeIndex>
@@ -1473,7 +1486,7 @@ end</Script>
 <tree_node>
 <AMSTreeData>
 <Text>Settings</Text>
-<Data>New Data</Data>
+<Data>SETTINGS</Data>
 <Selected>0</Selected>
 <Expanded>0</Expanded>
 <NodeIndex>2</NodeIndex>
@@ -1757,14 +1770,14 @@ end</Script>
 <Event>
 <Name>On Close</Name>
 <Args/>
-<Script/>
+<Script>Tree.SetSelectedNode("TR_MENU", MENU_TREE_INDEXS.Settings);</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeCol>59</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -1907,23 +1920,14 @@ end</Script>
 <Event>
 <Name>On Select</Name>
 <Args>string e_NodeIndex</Args>
-<Script>nodeProperties = Tree.GetNode("TR_MENU", MENU_TREE_INDEXS.Home);
-if nodeProperties.Selected then
-	Tree.SetSelectedNode("TR_MENU", MENU_TREE_INDEXS.Settings);
-	Page.Jump("HOME");
-end
-
-nodeProperties = Tree.GetNode("TR_MENU", MENU_TREE_INDEXS.Settings);
-if nodeProperties.Selected then
-	Page.Jump("SETTINGS");
-end</Script>
+<Script>leftMenuJump();</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>2</DesignCodeLine>
-<DesignCodeCol>58</DesignCodeCol>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -2033,7 +2037,7 @@ end</Script>
 <tree_node>
 <AMSTreeData>
 <Text>Home</Text>
-<Data>New Data</Data>
+<Data>HOME</Data>
 <Selected>0</Selected>
 <Expanded>0</Expanded>
 <NodeIndex>1</NodeIndex>
@@ -2046,7 +2050,7 @@ end</Script>
 <tree_node>
 <AMSTreeData>
 <Text>Settings</Text>
-<Data>New Data</Data>
+<Data>SETTINGS</Data>
 <Selected>0</Selected>
 <Expanded>0</Expanded>
 <NodeIndex>2</NodeIndex>
