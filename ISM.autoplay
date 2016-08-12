@@ -1483,7 +1483,7 @@ end
 
 
 local mySQLConnection = dbConnect();
-if mySQLConnection ~= nil then	
+if mySQLConnection ~= nil then
 	mySQLCursor = mySQLConnection:execute("SELECT * FROM IT_USERS WHERE Username = '"..userName.."';");
 	row = mySQLCursor:fetch({},"a")
 	while row do
@@ -1509,8 +1509,8 @@ end</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>34</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeLine>17</DesignCodeLine>
+<DesignCodeCol>30</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -2682,8 +2682,8 @@ end
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>83</Top>
-<Bottom>110</Bottom>
+<Top>73</Top>
+<Bottom>100</Bottom>
 <Left>1191</Left>
 <Right>1298</Right>
 </Coordinates>
@@ -2772,10 +2772,216 @@ end
 <MouseClickSndMode>0</MouseClickSndMode>
 <MouseClickSound/>
 <OriginalRect>
-<Top>83</Top>
-<Bottom>110</Bottom>
+<Top>73</Top>
+<Bottom>100</Bottom>
 <Left>1191</Left>
 <Right>1298</Right>
+</OriginalRect>
+</Text>
+</Object>
+<Object>
+<Type>3</Type>
+<Name>IMG_LOGOFF</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>0</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>1</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>90</Top>
+<Bottom>115</Bottom>
+<Left>1337</Left>
+<Right>1362</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>1632895086</DesignCodeLine>
+<DesignCodeCol>27507</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Right-Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>1632918638</DesignCodeLine>
+<DesignCodeCol>27507</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Enter</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>1868979310</DesignCodeLine>
+<DesignCodeCol>7566446</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Leave</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>1677734400</DesignCodeLine>
+<DesignCodeCol>3043941</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<NormalImage>
+<Filename>AutoPlay\Images\logout.png</Filename>
+<UseTransColor>0</UseTransColor>
+<TransClr>16777215</TransClr>
+<TransTolerance>10</TransTolerance>
+<Opacity>100</Opacity>
+<HTMode>0</HTMode>
+</NormalImage>
+<MouseOverSndMode>0</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>0</MouseClickSndMode>
+<MouseClickSound/>
+</Object>
+<Object>
+<Type>1</Type>
+<Name>LB_LOGOFF</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>0</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>1</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>93</Top>
+<Bottom>120</Bottom>
+<Left>1277</Left>
+<Right>1334</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script>Page.Jump("LOGIN");</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Right-Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Enter</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Leave</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<Text>
+<Body>Logout</Body>
+<NormalColor>16777215</NormalColor>
+<HighlightColor>16777215</HighlightColor>
+<MouseDownColor>16777215</MouseDownColor>
+<DisabledColor>12632256</DisabledColor>
+<FontData>
+<FontName>Nunito</FontName>
+<CharacterSet>0</CharacterSet>
+<Height>-16</Height>
+<Weight>400</Weight>
+<Italic>1</Italic>
+<Underline>1</Underline>
+<StrikeOut>0</StrikeOut>
+<AntiAlias>1</AntiAlias>
+</FontData>
+<Alignment>0</Alignment>
+<Orientation>0</Orientation>
+<AutoSize>1</AutoSize>
+<MouseOverSndMode>0</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>0</MouseClickSndMode>
+<MouseClickSound/>
+<OriginalRect>
+<Top>93</Top>
+<Bottom>120</Bottom>
+<Left>1277</Left>
+<Right>1334</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -3546,8 +3752,8 @@ end
 <MouseClickSndMode>0</MouseClickSndMode>
 <MouseClickSound/>
 <OriginalRect>
-<Top>79</Top>
-<Bottom>117</Bottom>
+<Top>78</Top>
+<Bottom>116</Bottom>
 <Left>54</Left>
 <Right>183</Right>
 </OriginalRect>
@@ -3658,8 +3864,8 @@ end
 <MouseClickSndMode>0</MouseClickSndMode>
 <MouseClickSound/>
 <OriginalRect>
-<Top>74</Top>
-<Bottom>101</Bottom>
+<Top>73</Top>
+<Bottom>100</Bottom>
 <Left>234</Left>
 <Right>303</Right>
 </OriginalRect>
@@ -3770,8 +3976,8 @@ end
 <MouseClickSndMode>0</MouseClickSndMode>
 <MouseClickSound/>
 <OriginalRect>
-<Top>94</Top>
-<Bottom>121</Bottom>
+<Top>93</Top>
+<Bottom>120</Bottom>
 <Left>234</Left>
 <Right>265</Right>
 </OriginalRect>
@@ -4688,7 +4894,7 @@ end
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>23</DesignCodeCol>
+<DesignCodeCol>19</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -6390,8 +6596,8 @@ end</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>34</DesignCodeLine>
-<DesignCodeCol>27</DesignCodeCol>
+<DesignCodeLine>57</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
