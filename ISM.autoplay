@@ -215,7 +215,7 @@ end
 
 function setDbConfigForm (currentObject)
 	local objectList = DialogEx.EnumerateObjects();
-	
+
 	for i, object in pairs(objectList) do
 		local objectType = DialogEx.GetObjectType(object);
 		if object == currentObject then
@@ -234,7 +234,7 @@ function setDbConfigForm (currentObject)
 					Image.Load(object, "AutoPlay\\Images\\input.png");
 				end
 			end
-			
+
 			if objectType == 7 and Input.GetText(object) == "" then
 				if String.Find(object, "DB_NAME", 1, false) ~= -1 then
 					Input.SetText(object, "Database");
@@ -269,8 +269,8 @@ function PopUp (Status)
 end</Script>
 <BookMarks count="0">
 </BookMarks>
-<DesignCodeLine>161</DesignCodeLine>
-<DesignCodeCol>36</DesignCodeCol>
+<DesignCodeLine>171</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 </Globals>
 <Defaults>
 <StartupPage>_PageFirst</StartupPage>
@@ -5779,7 +5779,7 @@ end</Script>
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeCol>22</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -5821,9 +5821,9 @@ end</Script>
 <HorizontalScrollbar>0</HorizontalScrollbar>
 <Style>0</Style>
 <Mode>0</Mode>
-<Mask>####</Mask>
-<MaskSymbol>2</MaskSymbol>
-<MaskRetMode>1</MaskRetMode>
+<Mask/>
+<MaskSymbol/>
+<MaskRetMode>0</MaskRetMode>
 <ReadOnly>0</ReadOnly>
 </Box>
 </Object>
@@ -6377,6 +6377,13 @@ end
 if port == "" or port == "Port" then
 	Image.Load("IMG_DB_PORT", "AutoPlay\\Images\\input_mandatory.png");
 	Application.SetLastError(0616);
+else
+	local portIsValid = String.ToNumber(port);
+	if portIsValid == 0 then
+		Dialog.Message("Error", "Invalid port number.", MB_OK, MB_ICONSTOP, MB_DEFBUTTON1);
+		Image.Load("IMG_DB_PORT", "AutoPlay\\Images\\input_mandatory.png");
+		Application.ExitScript();
+	end
 end
 
 error = Application.GetLastError();
@@ -6404,8 +6411,8 @@ end</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>50</DesignCodeLine>
-<DesignCodeCol>3</DesignCodeCol>
+<DesignCodeLine>34</DesignCodeLine>
+<DesignCodeCol>27</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -6484,16 +6491,7 @@ end</Script>
 </Text>
 </Object>
 <HGuidelines/>
-<VGuidelines>
-<Guideline>
-<pt>93</pt>
-<locked>0</locked>
-</Guideline>
-<Guideline>
-<pt>143</pt>
-<locked>0</locked>
-</Guideline>
-</VGuidelines>
+<VGuidelines/>
 </Page>
 </PageDialog>
 <PageDialog width="300" height="50" dialog_title="Loading" dialog_style="1" movable="0" use_custom_icon="0" custom_icon="" always_on_top="1" resizable="0" min_width="100" min_height="50" fit_custom_mask_to_window="1" custom_mask="">
