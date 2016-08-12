@@ -269,8 +269,8 @@ function PopUp (Status)
 end</Script>
 <BookMarks count="0">
 </BookMarks>
-<DesignCodeLine>171</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeLine>26</DesignCodeLine>
+<DesignCodeCol>2</DesignCodeCol>
 </Globals>
 <Defaults>
 <StartupPage>_PageFirst</StartupPage>
@@ -663,15 +663,15 @@ end</Script>
 end
 
 if e_Key == 13 then
-	Page.ClickObject("IMG_LOGIN_BUTTON");
+	Page.ClickObject("LB_LOGIN_BUTTON");
 end</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeLine>5</DesignCodeLine>
+<DesignCodeCol>35</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -767,7 +767,7 @@ Input.SetSelection("IN_USERNAME", 1, -1);</Script>
 end
 
 if e_Key == 13 then
-	Page.ClickObject("IMG_LOGIN_BUTTON");
+	Page.ClickObject("LB_LOGIN_BUTTON");
 end</Script>
 <TreeStates>
 <TreeState>0</TreeState>
@@ -775,7 +775,7 @@ end</Script>
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>5</DesignCodeLine>
-<DesignCodeCol>28</DesignCodeCol>
+<DesignCodeCol>35</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -1372,43 +1372,14 @@ Input.SetSelection("IN_PASSWORD", 1, -1);</Script>
 <Event>
 <Name>On Click</Name>
 <Args/>
-<Script>local userName = Input.GetText("IN_USERNAME");
-local password = Input.GetText("IN_PASSWORD");
-
-if userName == "" then
-	Dialog.Message("Error", "Username can't be empty", MB_OK, MB_ICONSTOP, MB_DEFBUTTON1);
-	Page.SetFocus("IN_USERNAME");
-	Application.ExitScript();
-end
-
-local mySQLConnection = dbConnect();
-
-mySQLCursor = mySQLConnection:execute("SELECT * FROM IT_USERS WHERE Username = '"..userName.."';");
-row = mySQLCursor:fetch({},"a")
-while row do
-	dbUsername = row.Username;
-	dbPassword = row.Password;
-    row = mySQLCursor:fetch(row,"a");
-end
-
-if (String.CompareNoCase(userName, dbUsername) == 0 and String.CompareNoCase(Crypto.MD5DigestFromString(password), dbPassword) == 0) then
-	CURRENT_USER = dbUsername;
-	Page.Jump("HOME");
-else
-	Dialog.Message("Error", "Invalid username/password.", MB_OK, MB_ICONSTOP, MB_DEFBUTTON1);
-	Page.SetFocus("IN_USERNAME");
-	Application.ExitScript();
-end
-
-mySQLCursor:close();
-mySQLConnection:close();</Script>
+<Script/>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>29</DesignCodeLine>
-<DesignCodeCol>24</DesignCodeCol>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -1504,34 +1475,42 @@ if userName == "" then
 	Application.ExitScript();
 end
 
-local mySQLConnection = dbConnect();
-
-mySQLCursor = mySQLConnection:execute("SELECT * FROM IT_USERS WHERE Username = '"..userName.."';");
-row = mySQLCursor:fetch({},"a")
-while row do
-	dbUsername = row.Username;
-	dbPassword = row.Password;
-    row = mySQLCursor:fetch(row,"a");
-end
-
-if (String.CompareNoCase(userName, dbUsername) == 0 and String.CompareNoCase(Crypto.MD5DigestFromString(password), dbPassword) == 0) then
-	CURRENT_USER = dbUsername;
-	Page.Jump("HOME");
-else
-	Dialog.Message("Error", "Invalid username/password.", MB_OK, MB_ICONSTOP, MB_DEFBUTTON1);
-	Page.SetFocus("IN_USERNAME");
+if password == "" then
+	Dialog.Message("Error", "Password can't be empty", MB_OK, MB_ICONSTOP, MB_DEFBUTTON1);
+	Page.SetFocus("IN_PASSWORD");
 	Application.ExitScript();
 end
 
-mySQLCursor:close();
-mySQLConnection:close();</Script>
+
+local mySQLConnection = dbConnect();
+if mySQLConnection ~= nil then	
+	mySQLCursor = mySQLConnection:execute("SELECT * FROM IT_USERS WHERE Username = '"..userName.."';");
+	row = mySQLCursor:fetch({},"a")
+	while row do
+		dbUsername = row.Username;
+		dbPassword = row.Password;
+	    row = mySQLCursor:fetch(row,"a");
+	end
+
+	if (String.CompareNoCase(userName, dbUsername) == 0 and String.CompareNoCase(Crypto.MD5DigestFromString(password), dbPassword) == 0) then
+		CURRENT_USER = dbUsername;
+		Page.Jump("HOME");
+	else
+		Dialog.Message("Error", "Invalid username/password.", MB_OK, MB_ICONSTOP, MB_DEFBUTTON1);
+		Page.SetFocus("IN_USERNAME");
+		Application.ExitScript();
+	end
+
+	mySQLCursor:close();
+	mySQLConnection:close();
+end</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>29</DesignCodeLine>
-<DesignCodeCol>24</DesignCodeCol>
+<DesignCodeLine>34</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
