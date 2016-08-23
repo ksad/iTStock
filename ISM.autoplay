@@ -263,7 +263,7 @@ end</Script>
 <Event>
 <Name>On Startup</Name>
 <Args/>
-<Script/>
+<Script>DialogEx.Show("LOGIN", true, nil, nil);</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
@@ -396,1237 +396,6 @@ end</Script>
 </MenuItem>
 </MenuBar>
 </ProjectInfo>
-<Page>
-<Name>LOGIN</Name>
-<InheritObs/>
-<InheritBG/>
-<Description/>
-<Keywords/>
-<Background>
-<Type>2</Type>
-<ImageStyle>0</ImageStyle>
-<TopColor>16711680</TopColor>
-<BottomColor>16777215</BottomColor>
-<UseCustomBackgroundSettings>1</UseCustomBackgroundSettings>
-<TransitionEffect/>
-<TransProps/>
-<NormalImage>
-<Filename>AutoPlay\Images\BG_Home.png</Filename>
-</NormalImage>
-</Background>
-<Event>
-<Name>On Preload</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Show</Name>
-<Args/>
-<Script>Page.SetFocus("IN_USERNAME");</Script>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>29</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Close</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Timer</Name>
-<Args>number e_ID</Args>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Audio</Name>
-<Args>number e_Channel, string e_State</Args>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Size</Name>
-<Args>number e_WindowWidth, number e_WindowHeight, number e_PageWidth, number e_PageHeight, number e_Type</Args>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Menu</Name>
-<Args>number e_ID, table e_ItemInfo</Args>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Key</Name>
-<Args>number e_Key, table e_Modifiers</Args>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Mouse Button</Name>
-<Args>number e_Type, number e_X, number e_Y</Args>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Mouse Move</Name>
-<Args>number e_X, number e_Y</Args>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Mouse Wheel</Name>
-<Args>table e_Flags, number e_Delta, number e_X, number e_Y</Args>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Object>
-<Type>7</Type>
-<Name>IN_USERNAME</Name>
-<VisibleAtDesignTime>1</VisibleAtDesignTime>
-<VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>0</Locked>
-<Enabled>1</Enabled>
-<ToolTip/>
-<Cursor>0</Cursor>
-<Group>0</Group>
-<MaintainAspectRatio>0</MaintainAspectRatio>
-<Pin>0</Pin>
-<TabIndex>-1</TabIndex>
-<AutoResize>0</AutoResize>
-<Coordinates>
-<Top>320</Top>
-<Bottom>345</Bottom>
-<Left>210</Left>
-<Right>450</Right>
-</Coordinates>
-<Ratios>
-<WidthRatio>-1.000000</WidthRatio>
-<HeightRatio>-1.000000</HeightRatio>
-</Ratios>
-<Event>
-<Name>On Key</Name>
-<Args>number e_Key, table e_Modifiers</Args>
-<Script>if e_Key == 9 then
-	Page.SetFocus("IN_PASSWORD");
-end
-
-if e_Key == 13 then
-	Page.ClickObject("LB_LOGIN_BUTTON");
-end</Script>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>5</DesignCodeLine>
-<DesignCodeCol>35</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Focus</Name>
-<Args/>
-<Script>Image.Load("IMG_USERNAME", "AutoPlay\\Images\\input_username_selected.png");
-Image.Load("IMG_PASSWORD", "AutoPlay\\Images\\input_password.png");
-Input.SetSelection("IN_USERNAME", 1, -1);</Script>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Char</Name>
-<Args>number e_Char, table e_Modifiers</Args>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Actions/>
-<Text>
-<Body>k.sad</Body>
-<TextColor>12632256</TextColor>
-<BackgroundColor>16777215</BackgroundColor>
-<FontData>
-<FontName>Nunito</FontName>
-<CharacterSet>0</CharacterSet>
-<Height>-19</Height>
-<Weight>400</Weight>
-<Italic>0</Italic>
-<Underline>0</Underline>
-<StrikeOut>0</StrikeOut>
-<AntiAlias>1</AntiAlias>
-</FontData>
-<Alignment>0</Alignment>
-<RightToLeftReadingOrder>0</RightToLeftReadingOrder>
-</Text>
-<Box>
-<BorderStyle>0</BorderStyle>
-<VerticalScrollbar>1</VerticalScrollbar>
-<HorizontalScrollbar>0</HorizontalScrollbar>
-<Style>0</Style>
-<Mode>0</Mode>
-<Mask/>
-<MaskSymbol> </MaskSymbol>
-<MaskRetMode>0</MaskRetMode>
-<ReadOnly>0</ReadOnly>
-</Box>
-</Object>
-<Object>
-<Type>7</Type>
-<Name>IN_PASSWORD</Name>
-<VisibleAtDesignTime>1</VisibleAtDesignTime>
-<VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>0</Locked>
-<Enabled>1</Enabled>
-<ToolTip/>
-<Cursor>0</Cursor>
-<Group>0</Group>
-<MaintainAspectRatio>0</MaintainAspectRatio>
-<Pin>0</Pin>
-<TabIndex>-1</TabIndex>
-<AutoResize>0</AutoResize>
-<Coordinates>
-<Top>373</Top>
-<Bottom>398</Bottom>
-<Left>211</Left>
-<Right>451</Right>
-</Coordinates>
-<Ratios>
-<WidthRatio>-1.000000</WidthRatio>
-<HeightRatio>-1.000000</HeightRatio>
-</Ratios>
-<Event>
-<Name>On Key</Name>
-<Args>number e_Key, table e_Modifiers</Args>
-<Script>if e_Key == 9 then
-	Page.SetFocus("IN_USERNAME");
-end
-
-if e_Key == 13 then
-	Page.ClickObject("LB_LOGIN_BUTTON");
-end</Script>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>5</DesignCodeLine>
-<DesignCodeCol>35</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Focus</Name>
-<Args/>
-<Script>Image.Load("IMG_PASSWORD", "AutoPlay\\Images\\input_password_selected.png");
-Image.Load("IMG_USERNAME", "AutoPlay\\Images\\input_username.png");
-Input.SetSelection("IN_PASSWORD", 1, -1);</Script>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>1</DesignCodeLine>
-<DesignCodeCol>67</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Char</Name>
-<Args>number e_Char, table e_Modifiers</Args>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Actions/>
-<Text>
-<Body/>
-<TextColor>12632256</TextColor>
-<BackgroundColor>16777215</BackgroundColor>
-<FontData>
-<FontName>Nunito</FontName>
-<CharacterSet>0</CharacterSet>
-<Height>-19</Height>
-<Weight>400</Weight>
-<Italic>0</Italic>
-<Underline>0</Underline>
-<StrikeOut>0</StrikeOut>
-<AntiAlias>1</AntiAlias>
-</FontData>
-<Alignment>0</Alignment>
-<RightToLeftReadingOrder>0</RightToLeftReadingOrder>
-</Text>
-<Box>
-<BorderStyle>0</BorderStyle>
-<VerticalScrollbar>1</VerticalScrollbar>
-<HorizontalScrollbar>0</HorizontalScrollbar>
-<Style>0</Style>
-<Mode>1</Mode>
-<Mask/>
-<MaskSymbol> </MaskSymbol>
-<MaskRetMode>0</MaskRetMode>
-<ReadOnly>0</ReadOnly>
-</Box>
-</Object>
-<Object>
-<Type>3</Type>
-<Name>IMG_AUTH_BG</Name>
-<VisibleAtDesignTime>1</VisibleAtDesignTime>
-<VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>1</Locked>
-<Enabled>1</Enabled>
-<ToolTip/>
-<Cursor>0</Cursor>
-<Group>0</Group>
-<MaintainAspectRatio>1</MaintainAspectRatio>
-<Pin>0</Pin>
-<TabIndex>-1</TabIndex>
-<AutoResize>0</AutoResize>
-<Coordinates>
-<Top>216</Top>
-<Bottom>539</Bottom>
-<Left>171</Left>
-<Right>516</Right>
-</Coordinates>
-<Ratios>
-<WidthRatio>-1.000000</WidthRatio>
-<HeightRatio>-1.000000</HeightRatio>
-</Ratios>
-<Event>
-<Name>On Click</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>-2147483648</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Right-Click</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>1763734627</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Enter</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>909269875</DesignCodeLine>
-<DesignCodeCol>1029519410</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Leave</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>22020371</DesignCodeLine>
-<DesignCodeCol>75</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Actions/>
-<NormalImage>
-<Filename>AutoPlay\Images\auth_form_bg.png</Filename>
-<UseTransColor>0</UseTransColor>
-<TransClr>16777215</TransClr>
-<TransTolerance>10</TransTolerance>
-<Opacity>100</Opacity>
-<HTMode>0</HTMode>
-</NormalImage>
-<MouseOverSndMode>0</MouseOverSndMode>
-<MouseOverSound/>
-<MouseClickSndMode>0</MouseClickSndMode>
-<MouseClickSound/>
-</Object>
-<Object>
-<Type>1</Type>
-<Name>LB_REGISTER</Name>
-<VisibleAtDesignTime>1</VisibleAtDesignTime>
-<VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>0</Locked>
-<Enabled>1</Enabled>
-<ToolTip/>
-<Cursor>0</Cursor>
-<Group>0</Group>
-<MaintainAspectRatio>1</MaintainAspectRatio>
-<Pin>0</Pin>
-<TabIndex>-1</TabIndex>
-<AutoResize>0</AutoResize>
-<Coordinates>
-<Top>476</Top>
-<Bottom>502</Bottom>
-<Left>253</Left>
-<Right>431</Right>
-</Coordinates>
-<Ratios>
-<WidthRatio>-1.000000</WidthRatio>
-<HeightRatio>-1.000000</HeightRatio>
-</Ratios>
-<Event>
-<Name>On Click</Name>
-<Args/>
-<Script>result = DialogEx.Show("DB_CONFIG", true, nil, nil);</Script>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>52</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Right-Click</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Enter</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Leave</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Actions/>
-<Text>
-<Body>Forgot your password ?</Body>
-<NormalColor>8398592</NormalColor>
-<HighlightColor>8398592</HighlightColor>
-<MouseDownColor>8398592</MouseDownColor>
-<DisabledColor>8398592</DisabledColor>
-<FontData>
-<FontName>Nunito</FontName>
-<CharacterSet>0</CharacterSet>
-<Height>-15</Height>
-<Weight>400</Weight>
-<Italic>1</Italic>
-<Underline>0</Underline>
-<StrikeOut>0</StrikeOut>
-<AntiAlias>1</AntiAlias>
-</FontData>
-<Alignment>0</Alignment>
-<Orientation>0</Orientation>
-<AutoSize>1</AutoSize>
-<MouseOverSndMode>0</MouseOverSndMode>
-<MouseOverSound/>
-<MouseClickSndMode>0</MouseClickSndMode>
-<MouseClickSound/>
-<OriginalRect>
-<Top>476</Top>
-<Bottom>502</Bottom>
-<Left>253</Left>
-<Right>431</Right>
-</OriginalRect>
-</Text>
-</Object>
-<Object>
-<Type>1</Type>
-<Name>LB_AUTH_TITLE</Name>
-<VisibleAtDesignTime>1</VisibleAtDesignTime>
-<VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>0</Locked>
-<Enabled>1</Enabled>
-<ToolTip/>
-<Cursor>0</Cursor>
-<Group>0</Group>
-<MaintainAspectRatio>1</MaintainAspectRatio>
-<Pin>0</Pin>
-<TabIndex>-1</TabIndex>
-<AutoResize>0</AutoResize>
-<Coordinates>
-<Top>247</Top>
-<Bottom>284</Bottom>
-<Left>232</Left>
-<Right>464</Right>
-</Coordinates>
-<Ratios>
-<WidthRatio>-1.000000</WidthRatio>
-<HeightRatio>-1.000000</HeightRatio>
-</Ratios>
-<Event>
-<Name>On Click</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>1802398766</DesignCodeLine>
-<DesignCodeCol>7012352</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Right-Click</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>50331659</DesignCodeLine>
-<DesignCodeCol>4</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Enter</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>1271</DesignCodeLine>
-<DesignCodeCol>1343</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Leave</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>1345</DesignCodeLine>
-<DesignCodeCol>1343</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Actions/>
-<Text>
-<Body>User Athentification</Body>
-<NormalColor>8398592</NormalColor>
-<HighlightColor>8398592</HighlightColor>
-<MouseDownColor>8398592</MouseDownColor>
-<DisabledColor>8398592</DisabledColor>
-<FontData>
-<FontName>Ubuntu Light</FontName>
-<CharacterSet>0</CharacterSet>
-<Height>-24</Height>
-<Weight>500</Weight>
-<Italic>0</Italic>
-<Underline>0</Underline>
-<StrikeOut>0</StrikeOut>
-<AntiAlias>1</AntiAlias>
-</FontData>
-<Alignment>0</Alignment>
-<Orientation>0</Orientation>
-<AutoSize>1</AutoSize>
-<MouseOverSndMode>0</MouseOverSndMode>
-<MouseOverSound/>
-<MouseClickSndMode>0</MouseClickSndMode>
-<MouseClickSound/>
-<OriginalRect>
-<Top>247</Top>
-<Bottom>284</Bottom>
-<Left>232</Left>
-<Right>464</Right>
-</OriginalRect>
-</Text>
-</Object>
-<Object>
-<Type>3</Type>
-<Name>IMG_USERNAME</Name>
-<VisibleAtDesignTime>1</VisibleAtDesignTime>
-<VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>1</Locked>
-<Enabled>1</Enabled>
-<ToolTip/>
-<Cursor>0</Cursor>
-<Group>0</Group>
-<MaintainAspectRatio>1</MaintainAspectRatio>
-<Pin>0</Pin>
-<TabIndex>-1</TabIndex>
-<AutoResize>0</AutoResize>
-<Coordinates>
-<Top>312</Top>
-<Bottom>352</Bottom>
-<Left>203</Left>
-<Right>483</Right>
-</Coordinates>
-<Ratios>
-<WidthRatio>-1.000000</WidthRatio>
-<HeightRatio>-1.000000</HeightRatio>
-</Ratios>
-<Event>
-<Name>On Click</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>1419</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Right-Click</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Enter</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>9</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Leave</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>4</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Actions/>
-<NormalImage>
-<Filename>AutoPlay\Images\input_username.png</Filename>
-<UseTransColor>0</UseTransColor>
-<TransClr>16777215</TransClr>
-<TransTolerance>10</TransTolerance>
-<Opacity>100</Opacity>
-<HTMode>0</HTMode>
-</NormalImage>
-<MouseOverSndMode>0</MouseOverSndMode>
-<MouseOverSound/>
-<MouseClickSndMode>0</MouseClickSndMode>
-<MouseClickSound/>
-</Object>
-<Object>
-<Type>3</Type>
-<Name>IMG_PASSWORD</Name>
-<VisibleAtDesignTime>1</VisibleAtDesignTime>
-<VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>1</Locked>
-<Enabled>1</Enabled>
-<ToolTip/>
-<Cursor>0</Cursor>
-<Group>0</Group>
-<MaintainAspectRatio>1</MaintainAspectRatio>
-<Pin>0</Pin>
-<TabIndex>-1</TabIndex>
-<AutoResize>0</AutoResize>
-<Coordinates>
-<Top>366</Top>
-<Bottom>406</Bottom>
-<Left>203</Left>
-<Right>483</Right>
-</Coordinates>
-<Ratios>
-<WidthRatio>-1.000000</WidthRatio>
-<HeightRatio>-1.000000</HeightRatio>
-</Ratios>
-<Event>
-<Name>On Click</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>59</DesignCodeLine>
-<DesignCodeCol>1543</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Right-Click</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>1081505792</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Enter</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>50331669</DesignCodeLine>
-<DesignCodeCol>3</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Leave</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>1547</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Actions/>
-<NormalImage>
-<Filename>AutoPlay\Images\input_password.png</Filename>
-<UseTransColor>0</UseTransColor>
-<TransClr>16777215</TransClr>
-<TransTolerance>10</TransTolerance>
-<Opacity>100</Opacity>
-<HTMode>0</HTMode>
-</NormalImage>
-<MouseOverSndMode>0</MouseOverSndMode>
-<MouseOverSound/>
-<MouseClickSndMode>0</MouseClickSndMode>
-<MouseClickSound/>
-</Object>
-<Object>
-<Type>3</Type>
-<Name>IMG_LOGIN_BUTTON</Name>
-<VisibleAtDesignTime>1</VisibleAtDesignTime>
-<VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>1</Locked>
-<Enabled>1</Enabled>
-<ToolTip/>
-<Cursor>1</Cursor>
-<Group>0</Group>
-<MaintainAspectRatio>1</MaintainAspectRatio>
-<Pin>0</Pin>
-<TabIndex>-1</TabIndex>
-<AutoResize>0</AutoResize>
-<Coordinates>
-<Top>416</Top>
-<Bottom>471</Bottom>
-<Left>271</Left>
-<Right>409</Right>
-</Coordinates>
-<Ratios>
-<WidthRatio>-1.000000</WidthRatio>
-<HeightRatio>-1.000000</HeightRatio>
-</Ratios>
-<Event>
-<Name>On Click</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Right-Click</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Enter</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Leave</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Actions/>
-<NormalImage>
-<Filename>AutoPlay\Images\login-button.png</Filename>
-<UseTransColor>0</UseTransColor>
-<TransClr>16777215</TransClr>
-<TransTolerance>10</TransTolerance>
-<Opacity>100</Opacity>
-<HTMode>0</HTMode>
-</NormalImage>
-<MouseOverSndMode>0</MouseOverSndMode>
-<MouseOverSound/>
-<MouseClickSndMode>0</MouseClickSndMode>
-<MouseClickSound/>
-</Object>
-<Object>
-<Type>1</Type>
-<Name>LB_LOGIN_BUTTON</Name>
-<VisibleAtDesignTime>1</VisibleAtDesignTime>
-<VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>0</Locked>
-<Enabled>1</Enabled>
-<ToolTip/>
-<Cursor>1</Cursor>
-<Group>0</Group>
-<MaintainAspectRatio>1</MaintainAspectRatio>
-<Pin>0</Pin>
-<TabIndex>-1</TabIndex>
-<AutoResize>0</AutoResize>
-<Coordinates>
-<Top>432</Top>
-<Bottom>463</Bottom>
-<Left>307</Left>
-<Right>373</Right>
-</Coordinates>
-<Ratios>
-<WidthRatio>-1.000000</WidthRatio>
-<HeightRatio>-1.000000</HeightRatio>
-</Ratios>
-<Event>
-<Name>On Click</Name>
-<Args/>
-<Script>local userName = Input.GetText("IN_USERNAME");
-local password = Input.GetText("IN_PASSWORD");
-
-if userName == "" then
-	Dialog.Message("Error", "Username can't be empty", MB_OK, MB_ICONSTOP, MB_DEFBUTTON1);
-	Page.SetFocus("IN_USERNAME");
-	Application.ExitScript();
-end
-
-if password == "" then
-	Dialog.Message("Error", "Password can't be empty", MB_OK, MB_ICONSTOP, MB_DEFBUTTON1);
-	Page.SetFocus("IN_PASSWORD");
-	Application.ExitScript();
-end
-
-
-local mySQLConnection = dbConnect();
-if mySQLConnection ~= nil then
-	mySQLCursor = mySQLConnection:execute("SELECT * FROM IT_USERS WHERE Username = '"..userName.."';");
-	row = mySQLCursor:fetch({},"a")
-	while row do
-		dbUsername = row.Username;
-		dbPassword = row.Password;
-	    row = mySQLCursor:fetch(row,"a");
-	end
-
-	if (String.CompareNoCase(userName, dbUsername) == 0 and String.CompareNoCase(Crypto.MD5DigestFromString(password), dbPassword) == 0) then
-		CURRENT_USER = dbUsername;
-		Page.Jump("HOME");
-	else
-		Dialog.Message("Error", "Invalid username/password.", MB_OK, MB_ICONSTOP, MB_DEFBUTTON1);
-		Page.SetFocus("IN_USERNAME");
-		Application.ExitScript();
-	end
-
-	mySQLCursor:close();
-	mySQLConnection:close();
-end</Script>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>17</DesignCodeLine>
-<DesignCodeCol>30</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Right-Click</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Enter</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Leave</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Actions/>
-<Text>
-<Body>LOGIN</Body>
-<NormalColor>16777215</NormalColor>
-<HighlightColor>16777215</HighlightColor>
-<MouseDownColor>16777215</MouseDownColor>
-<DisabledColor>16777215</DisabledColor>
-<FontData>
-<FontName>Nunito</FontName>
-<CharacterSet>0</CharacterSet>
-<Height>-19</Height>
-<Weight>400</Weight>
-<Italic>0</Italic>
-<Underline>0</Underline>
-<StrikeOut>0</StrikeOut>
-<AntiAlias>1</AntiAlias>
-</FontData>
-<Alignment>0</Alignment>
-<Orientation>0</Orientation>
-<AutoSize>1</AutoSize>
-<MouseOverSndMode>0</MouseOverSndMode>
-<MouseOverSound/>
-<MouseClickSndMode>0</MouseClickSndMode>
-<MouseClickSound/>
-<OriginalRect>
-<Top>432</Top>
-<Bottom>463</Bottom>
-<Left>307</Left>
-<Right>373</Right>
-</OriginalRect>
-</Text>
-</Object>
-<Object>
-<Type>3</Type>
-<Name>IMG_MATOS</Name>
-<VisibleAtDesignTime>1</VisibleAtDesignTime>
-<VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>1</Locked>
-<Enabled>1</Enabled>
-<ToolTip/>
-<Cursor>0</Cursor>
-<Group>0</Group>
-<MaintainAspectRatio>1</MaintainAspectRatio>
-<Pin>0</Pin>
-<TabIndex>-1</TabIndex>
-<AutoResize>0</AutoResize>
-<Coordinates>
-<Top>214</Top>
-<Bottom>564</Bottom>
-<Left>649</Left>
-<Right>1349</Right>
-</Coordinates>
-<Ratios>
-<WidthRatio>-1.000000</WidthRatio>
-<HeightRatio>-1.000000</HeightRatio>
-</Ratios>
-<Event>
-<Name>On Click</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>17664</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Right-Click</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>32</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Enter</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Leave</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>46</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Actions/>
-<NormalImage>
-<Filename>AutoPlay\Images\Matos.png</Filename>
-<UseTransColor>0</UseTransColor>
-<TransClr>16777215</TransClr>
-<TransTolerance>10</TransTolerance>
-<Opacity>100</Opacity>
-<HTMode>0</HTMode>
-</NormalImage>
-<MouseOverSndMode>0</MouseOverSndMode>
-<MouseOverSound/>
-<MouseClickSndMode>0</MouseClickSndMode>
-<MouseClickSound/>
-</Object>
-<HGuidelines>
-<Guideline>
-<pt>169</pt>
-<locked>0</locked>
-</Guideline>
-</HGuidelines>
-<VGuidelines/>
-</Page>
 <Page>
 <Name>HOME</Name>
 <InheritObs/>
@@ -3506,9 +2275,9 @@ end
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>78</Top>
-<Bottom>113</Bottom>
+<Bottom>116</Bottom>
 <Left>54</Left>
-<Right>181</Right>
+<Right>183</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -3618,7 +2387,7 @@ end
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>73</Top>
-<Bottom>98</Bottom>
+<Bottom>100</Bottom>
 <Left>234</Left>
 <Right>303</Right>
 </Coordinates>
@@ -3730,7 +2499,7 @@ end
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>93</Top>
-<Bottom>118</Bottom>
+<Bottom>120</Bottom>
 <Left>234</Left>
 <Right>265</Right>
 </Coordinates>
@@ -11271,6 +10040,927 @@ end
 <VGuidelines/>
 </Page>
 <SugDialogs>
+<PageDialog width="500" height="300" dialog_title="IT Stock Manager" dialog_style="2" movable="0" use_custom_icon="0" custom_icon="AutoPlay\Icons\server.ico" always_on_top="0" resizable="0" min_width="480" min_height="300" fit_custom_mask_to_window="1" custom_mask="">
+<Page>
+<Name>LOGIN</Name>
+<InheritObs/>
+<InheritBG/>
+<Description/>
+<Keywords/>
+<Background>
+<Type>2</Type>
+<ImageStyle>0</ImageStyle>
+<TopColor>16711680</TopColor>
+<BottomColor>16777215</BottomColor>
+<UseCustomBackgroundSettings>1</UseCustomBackgroundSettings>
+<TransitionEffect/>
+<TransProps/>
+<NormalImage>
+<Filename>AutoPlay\Images\bg_dialog_login.png</Filename>
+</NormalImage>
+</Background>
+<Event>
+<Name>On Preload</Name>
+<Args/>
+<Script>EXIT = 0;
+
+</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>1</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Show</Name>
+<Args/>
+<Script>DialogEx.SetFocus("IN_USERNAME");
+--DialogEx.ClickObject("IMG_LOGIN");</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>1</DesignCodeLine>
+<DesignCodeCol>2</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Close</Name>
+<Args/>
+<Script>if EXIT == 0 then
+	Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);
+end</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>1</DesignCodeLine>
+<DesignCodeCol>62</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Timer</Name>
+<Args>number e_ID</Args>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Audio</Name>
+<Args>number e_Channel, string e_State</Args>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Key</Name>
+<Args>number e_Key, table e_Modifiers</Args>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Mouse Button</Name>
+<Args>number e_Type, number e_X, number e_Y</Args>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Mouse Move</Name>
+<Args>number e_X, number e_Y</Args>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Mouse Wheel</Name>
+<Args>table e_Flags, number e_Delta, number e_X, number e_Y</Args>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Size</Name>
+<Args>number e_WindowWidth, number e_WindowHeight, number e_DialogWidth, number e_DialogHeight, number e_Type</Args>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Object>
+<Type>7</Type>
+<Name>IN_USERNAME</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>0</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>0</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>122</Top>
+<Bottom>147</Bottom>
+<Left>116</Left>
+<Right>356</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Key</Name>
+<Args>number e_Key, table e_Modifiers</Args>
+<Script>if e_Key == 9 then
+	DialogEx.SetFocus("IN_PASSWORD");
+end
+
+if e_Key == 13 then
+	DialogEx.ClickObject("IMG_LOGIN");
+end</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>5</DesignCodeLine>
+<DesignCodeCol>35</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Focus</Name>
+<Args/>
+<Script>Image.Load("IMG_USERNAME", "AutoPlay\\Images\\input_username_selected.png");
+Image.Load("IMG_PASSWORD", "AutoPlay\\Images\\input_password.png");
+Input.SetSelection("IN_USERNAME", 1, -1);</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>2</DesignCodeLine>
+<DesignCodeCol>41</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Char</Name>
+<Args>number e_Char, table e_Modifiers</Args>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<Text>
+<Body>k.sad</Body>
+<TextColor>12632256</TextColor>
+<BackgroundColor>16777215</BackgroundColor>
+<FontData>
+<FontName>Nunito</FontName>
+<CharacterSet>0</CharacterSet>
+<Height>-19</Height>
+<Weight>400</Weight>
+<Italic>0</Italic>
+<Underline>0</Underline>
+<StrikeOut>0</StrikeOut>
+<AntiAlias>1</AntiAlias>
+</FontData>
+<Alignment>0</Alignment>
+<RightToLeftReadingOrder>0</RightToLeftReadingOrder>
+</Text>
+<Box>
+<BorderStyle>0</BorderStyle>
+<VerticalScrollbar>1</VerticalScrollbar>
+<HorizontalScrollbar>0</HorizontalScrollbar>
+<Style>0</Style>
+<Mode>0</Mode>
+<Mask/>
+<MaskSymbol> </MaskSymbol>
+<MaskRetMode>0</MaskRetMode>
+<ReadOnly>0</ReadOnly>
+</Box>
+</Object>
+<Object>
+<Type>7</Type>
+<Name>IN_PASSWORD</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>0</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>0</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>170</Top>
+<Bottom>195</Bottom>
+<Left>117</Left>
+<Right>357</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Key</Name>
+<Args>number e_Key, table e_Modifiers</Args>
+<Script>if e_Key == 9 then
+	DialogEx.SetFocus("IN_USERNAME");
+end
+
+if e_Key == 13 then
+	DialogEx.ClickObject("IMG_LOGIN");
+end</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>5</DesignCodeLine>
+<DesignCodeCol>35</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Focus</Name>
+<Args/>
+<Script>Image.Load("IMG_PASSWORD", "AutoPlay\\Images\\input_password_selected.png");
+Image.Load("IMG_USERNAME", "AutoPlay\\Images\\input_username.png");
+Input.SetSelection("IN_PASSWORD", 1, -1);</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>1</DesignCodeLine>
+<DesignCodeCol>67</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Char</Name>
+<Args>number e_Char, table e_Modifiers</Args>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<Text>
+<Body>azerty</Body>
+<TextColor>12632256</TextColor>
+<BackgroundColor>16777215</BackgroundColor>
+<FontData>
+<FontName>Nunito</FontName>
+<CharacterSet>0</CharacterSet>
+<Height>-19</Height>
+<Weight>400</Weight>
+<Italic>0</Italic>
+<Underline>0</Underline>
+<StrikeOut>0</StrikeOut>
+<AntiAlias>1</AntiAlias>
+</FontData>
+<Alignment>0</Alignment>
+<RightToLeftReadingOrder>0</RightToLeftReadingOrder>
+</Text>
+<Box>
+<BorderStyle>0</BorderStyle>
+<VerticalScrollbar>1</VerticalScrollbar>
+<HorizontalScrollbar>0</HorizontalScrollbar>
+<Style>0</Style>
+<Mode>1</Mode>
+<Mask/>
+<MaskSymbol> </MaskSymbol>
+<MaskRetMode>0</MaskRetMode>
+<ReadOnly>0</ReadOnly>
+</Box>
+</Object>
+<Object>
+<Type>1</Type>
+<Name>LB_REGISTER</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>0</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>1</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>221</Top>
+<Bottom>247</Bottom>
+<Left>273</Left>
+<Right>414</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script>result = DialogEx.Show("DB_CONFIG", true, nil, nil);</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>52</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Right-Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Enter</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Leave</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<Text>
+<Body>Forgot password ?</Body>
+<NormalColor>16777215</NormalColor>
+<HighlightColor>16777215</HighlightColor>
+<MouseDownColor>16777215</MouseDownColor>
+<DisabledColor>16777215</DisabledColor>
+<FontData>
+<FontName>Nunito</FontName>
+<CharacterSet>0</CharacterSet>
+<Height>-15</Height>
+<Weight>400</Weight>
+<Italic>1</Italic>
+<Underline>0</Underline>
+<StrikeOut>0</StrikeOut>
+<AntiAlias>1</AntiAlias>
+</FontData>
+<Alignment>0</Alignment>
+<Orientation>0</Orientation>
+<AutoSize>1</AutoSize>
+<MouseOverSndMode>0</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>0</MouseClickSndMode>
+<MouseClickSound/>
+<OriginalRect>
+<Top>221</Top>
+<Bottom>247</Bottom>
+<Left>273</Left>
+<Right>414</Right>
+</OriginalRect>
+</Text>
+</Object>
+<Object>
+<Type>1</Type>
+<Name>LB_AUTH_TITLE</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>0</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>1</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>74</Top>
+<Bottom>111</Bottom>
+<Left>134</Left>
+<Right>366</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>1802398766</DesignCodeLine>
+<DesignCodeCol>7012352</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Right-Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>50331659</DesignCodeLine>
+<DesignCodeCol>4</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Enter</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>1271</DesignCodeLine>
+<DesignCodeCol>1343</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Leave</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>1345</DesignCodeLine>
+<DesignCodeCol>1343</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<Text>
+<Body>User Athentification</Body>
+<NormalColor>16777215</NormalColor>
+<HighlightColor>16777215</HighlightColor>
+<MouseDownColor>16777215</MouseDownColor>
+<DisabledColor>16777215</DisabledColor>
+<FontData>
+<FontName>Ubuntu Light</FontName>
+<CharacterSet>0</CharacterSet>
+<Height>-24</Height>
+<Weight>500</Weight>
+<Italic>0</Italic>
+<Underline>0</Underline>
+<StrikeOut>0</StrikeOut>
+<AntiAlias>1</AntiAlias>
+</FontData>
+<Alignment>0</Alignment>
+<Orientation>0</Orientation>
+<AutoSize>1</AutoSize>
+<MouseOverSndMode>0</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>0</MouseClickSndMode>
+<MouseClickSound/>
+<OriginalRect>
+<Top>74</Top>
+<Bottom>111</Bottom>
+<Left>134</Left>
+<Right>366</Right>
+</OriginalRect>
+</Text>
+</Object>
+<Object>
+<Type>3</Type>
+<Name>IMG_USERNAME</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>1</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>0</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>1</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>114</Top>
+<Bottom>154</Bottom>
+<Left>109</Left>
+<Right>389</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>1419</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Right-Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Enter</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>9</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Leave</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>4</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<NormalImage>
+<Filename>AutoPlay\Images\input_username.png</Filename>
+<UseTransColor>0</UseTransColor>
+<TransClr>16777215</TransClr>
+<TransTolerance>10</TransTolerance>
+<Opacity>100</Opacity>
+<HTMode>0</HTMode>
+</NormalImage>
+<MouseOverSndMode>0</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>0</MouseClickSndMode>
+<MouseClickSound/>
+</Object>
+<Object>
+<Type>3</Type>
+<Name>IMG_PASSWORD</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>1</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>0</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>1</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>163</Top>
+<Bottom>203</Bottom>
+<Left>109</Left>
+<Right>389</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>59</DesignCodeLine>
+<DesignCodeCol>1543</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Right-Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>1081505792</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Enter</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>50331669</DesignCodeLine>
+<DesignCodeCol>3</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Leave</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>1547</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<NormalImage>
+<Filename>AutoPlay\Images\input_password.png</Filename>
+<UseTransColor>0</UseTransColor>
+<TransClr>16777215</TransClr>
+<TransTolerance>10</TransTolerance>
+<Opacity>100</Opacity>
+<HTMode>0</HTMode>
+</NormalImage>
+<MouseOverSndMode>0</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>0</MouseClickSndMode>
+<MouseClickSound/>
+</Object>
+<Object>
+<Type>3</Type>
+<Name>IMG_LOGIN</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>1</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>1</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>213</Top>
+<Bottom>258</Bottom>
+<Left>110</Left>
+<Right>268</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script>local userName = Input.GetText("IN_USERNAME");
+local password = Input.GetText("IN_PASSWORD");
+
+if userName == "" then
+	Dialog.Message("Error", "Username can't be empty", MB_OK, MB_ICONSTOP, MB_DEFBUTTON1);
+	DialogEx.SetFocus("IN_USERNAME");
+	Application.ExitScript();
+end
+
+if password == "" then
+	Dialog.Message("Error", "Password can't be empty", MB_OK, MB_ICONSTOP, MB_DEFBUTTON1);
+	DialogEx.SetFocus("IN_PASSWORD");
+	Application.ExitScript();
+end
+
+
+local mySQLConnection = dbConnect();
+if mySQLConnection ~= nil then
+	mySQLCursor = mySQLConnection:execute("SELECT * FROM IT_USERS WHERE Username = '"..userName.."';");
+	row = mySQLCursor:fetch({},"a")
+	while row do
+		dbUsername = row.Username;
+		dbPassword = row.Password;
+	    row = mySQLCursor:fetch(row,"a");
+	end
+
+	if (String.CompareNoCase(userName, dbUsername) == 0 and String.CompareNoCase(Crypto.MD5DigestFromString(password), dbPassword) == 0) then
+		CURRENT_USER = dbUsername;
+		EXIT = 1;
+		DialogEx.Close(this);
+	else
+		Dialog.Message("Error", "Invalid username/password.", MB_OK, MB_ICONSTOP, MB_DEFBUTTON1);
+		DialogEx.SetFocus("IN_USERNAME");
+		Application.ExitScript();
+	end
+
+	mySQLCursor:close();
+	mySQLConnection:close();
+end</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>35</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Right-Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Enter</Name>
+<Args/>
+<Script>Image.Load("IMG_LOGIN", "AutoPlay\\Images\\btn_login_hover.png");
+</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Leave</Name>
+<Args/>
+<Script>Image.Load("IMG_LOGIN", "AutoPlay\\Images\\btn_login.png");</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>59</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<NormalImage>
+<Filename>AutoPlay\Images\btn_login.png</Filename>
+<UseTransColor>0</UseTransColor>
+<TransClr>16777215</TransClr>
+<TransTolerance>10</TransTolerance>
+<Opacity>100</Opacity>
+<HTMode>0</HTMode>
+</NormalImage>
+<MouseOverSndMode>0</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>0</MouseClickSndMode>
+<MouseClickSound/>
+</Object>
+<HGuidelines/>
+<VGuidelines/>
+</Page>
+</PageDialog>
 <PageDialog width="480" height="400" dialog_title="Database configuration" dialog_style="0" movable="1" use_custom_icon="1" custom_icon="AutoPlay\Icons\server.ico" always_on_top="0" resizable="0" min_width="480" min_height="300" fit_custom_mask_to_window="1" custom_mask="">
 <Page>
 <Name>DB_CONFIG</Name>
