@@ -1,0 +1,46 @@
+<ROOT>
+	<PAGE Name = "HOME">
+		<TR_MENU Width = "233" Height = "666" PosX = "0" PosY = "102">
+			<perWidth>17.05710102489</perWidth>
+			<perHeight>86.71875</perHeight>
+			<perPosX>0</perPosX>
+			<perPosY>13.28125</perPosY>
+		</TR_MENU>
+		<IMG_BLACK_BAR Width = "1133" Height = "48" PosX = "233" PosY = "54">
+			<perWidth>82.94289897511</perWidth>
+			<perHeight>6.25</perHeight>
+			<perPosX>17.05710102489</perPosX>
+			<perPosY>7.03125</perPosY>
+		</IMG_BLACK_BAR>
+		<IMG_LEFT_BAR_TITLE Width = "233" Height = "48" PosX = "0" PosY = "54">
+			<perWidth>17.05710102489</perWidth>
+			<perHeight>6.25</perHeight>
+			<perPosX>0</perPosX>
+			<perPosY>7.03125</perPosY>
+		</IMG_LEFT_BAR_TITLE>
+		<LB_PAGE_TITLE Width = "82" Height = "38" PosX = "72" PosY = "63">
+			<perWidth>6.0029282576867</perWidth>
+			<perHeight>4.9479166666667</perHeight>
+			<perPosX>5.2708638360176</perPosX>
+			<perPosY>8.203125</perPosY>
+		</LB_PAGE_TITLE>
+		<LB_HELLO Width = "87" Height = "27" PosX = "235" PosY = "55">
+			<perWidth>6.3689604685212</perWidth>
+			<perHeight>3.515625</perHeight>
+			<perPosX>17.203513909224</perPosX>
+			<perPosY>7.1614583333333</perPosY>
+		</LB_HELLO>
+		<LB_DATE_TIME Width = "171" Height = "27" PosX = "235" PosY = "76">
+			<perWidth>12.518301610542</perWidth>
+			<perHeight>3.515625</perHeight>
+			<perPosX>17.203513909224</perPosX>
+			<perPosY>9.8958333333333</perPosY>
+		</LB_DATE_TIME>
+		<IMG_LOGOUT Width = "36" Height = "36" PosX = "1321" PosY = "60">
+			<perWidth>2.6354319180088</perWidth>
+			<perHeight>4.6875</perHeight>
+			<perPosX>96.705710102489</perPosX>
+			<perPosY>7.8125</perPosY>
+		</IMG_LOGOUT>
+	</PAGE>
+</ROOT>

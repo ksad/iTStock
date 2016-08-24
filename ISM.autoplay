@@ -20,13 +20,13 @@
 <Width>1366</Width>
 <Height>768</Height>
 <WindowTitle>IT Stock Manager</WindowTitle>
-<WindowStyle>0</WindowStyle>
+<WindowStyle>2</WindowStyle>
 <FillColor>0</FillColor>
 </WindowStyles>
 <WindowOptions>
 <Movable>1</Movable>
 <AlwaysOnTop>0</AlwaysOnTop>
-<Resizable>1</Resizable>
+<Resizable>0</Resizable>
 <MinWidth>1366</MinWidth>
 <MinHeight>768</MinHeight>
 </WindowOptions>
@@ -64,8 +64,8 @@
 </AudioBGMusic>
 <Globals>
 <Script>MENU_TREE_INDEXS = {Home="1", Settings="2", NONE=""}
-ACCORDION_TOGGLE = "OFF";
 HEIGHT_BG_MENU_FORM = {200, 200, 200, 200};
+SAVE_XML = false;
 
 function dbConnect ()
 	if File.DoesExist("AutoPlay\\Docs\\db_access.enc") then
@@ -203,11 +203,191 @@ function PopUp (Status)
 	else
 		Application.ExitScript();
 	end
+end
+
+function setObjectsSizeAndPositions (pageName)
+	PAGEWIDTH = Page.GetSize().Width;
+	PAGEHEIGHT = Page.GetSize().Height;
+	
+	XML.Load("AutoPlay\\Docs\\XML\\xml_data_"..pageName..".xml");
+	
+	error = Application.GetLastError();
+	if (error ~= XML.OK) then
+	    Dialog.Message("Error", _tblErrorMessages[error]);
+	end
+	
+	allObjects = Page.EnumerateObjects();
+	
+	for i, object in pairs(allObjects) do
+		local objectType = Page.GetObjectType(object);
+		perWidth = String.ToNumber(XML.GetValue("ROOT/PAGE/"..object.."/perWidth"));
+		perHeight = String.ToNumber(XML.GetValue("ROOT/PAGE/"..object.."/perHeight"));	
+		NewWidth = (perWidth*PAGEWIDTH)/100;
+		NewHeight = (perHeight*PAGEHEIGHT)/100;
+		
+		perX = String.ToNumber(XML.GetValue("ROOT/PAGE/"..object.."/perPosX"));
+		perY = String.ToNumber(XML.GetValue("ROOT/PAGE/"..object.."/perPosY"));
+		NewX = (perX*PAGEWIDTH)/100
+		NewY = (perY*PAGEHEIGHT)/100
+	
+		if objectType ==0 then
+			Button.SetSize(object, NewWidth, NewHeight);
+			Button.SetPos(object, NewX, NewY);
+		elseif objectType ==1 then
+			Label.SetSize(object, NewWidth, NewHeight);
+			Label.SetPos(object, NewX, NewY);
+		elseif objectType ==2 then
+			Paragraph.SetSize(object, NewWidth, NewHeight);
+			Paragraph.SetPos(object, NewX, NewY);
+		elseif objectType ==3 then
+			Image.SetSize(object, NewWidth, NewHeight);
+			Image.SetPos(object, NewX, NewY);
+		elseif objectType ==4 then
+			Flash.SetSize(object, NewWidth, NewHeight);
+			Flash.SetPos(object, NewX, NewY);
+		elseif objectType ==5 then
+			Video.SetSize(object, NewWidth, NewHeight);
+			Video.SetPos(object, NewX, NewY);
+		elseif objectType ==6 then
+			Web.SetSize(object, NewWidth, NewHeight);
+			Web.SetPos(object, NewX, NewY);
+		elseif objectType ==7 then
+			Input.SetSize(object, NewWidth, NewHeight);
+			Input.SetPos(object, NewX, NewY);
+		elseif objectType ==8 then
+			Hotspot.SetSize(object, NewWidth, NewHeight);
+			Hotspot.SetPos(object, NewX, NewY);
+		elseif objectType ==9 then
+			ListBox.SetSize(object, NewWidth, NewHeight);
+			ListBox.SetPos(object, NewX, NewY);
+		elseif objectType ==10 then
+			ComboBox.SetSize(object, NewWidth, NewHeight);
+			ComboBox.SetPos(object, NewX, NewY);
+		elseif objectType ==11 then
+			Progress.SetSize(object, NewWidth, NewHeight);
+			Progress.SetPos(object, NewX, NewY);
+		elseif objectType ==12 then
+			Tree.SetSize(object, NewWidth, NewHeight);
+			Tree.SetPos(object, NewX, NewY);
+		elseif objectType ==13 then
+			RadioButton.SetSize(object, NewWidth, NewHeight);
+			RadioButton.SetPos(object, NewX, NewY);
+		elseif objectType ==14 then
+			RichText.SetSize(object, NewWidth, NewHeight);
+			RichText.SetPos(object, NewX, NewY);
+		elseif objectType ==15 then
+			CheckBox.SetSize(object, NewWidth, NewHeight);
+			CheckBox.SetPos(object, NewX, NewY);
+		elseif objectType ==16 then
+			SlideShow.SetSize(object, NewWidth, NewHeight);
+			SlideShow.SetPos(object, NewX, NewY);
+		elseif objectType ==17 then
+			Grid.SetSize(object, NewWidth, NewHeight);
+			Grid.SetPos(object, NewX, NewY);
+		elseif objectType ==18 then
+			PDF.SetSize(object, NewWidth, NewHeight);
+			PDF.SetPos(object, NewX, NewY);
+		elseif objectType ==19 then
+			QuickTime.SetSize(object, NewWidth, NewHeight);
+			QuickTime.SetPos(object, NewX, NewY);
+		elseif objectType ==20 then
+				xButton.SetSize(object, NewWidth, NewHeight);
+				xButton.SetPos(object, NewX, NewY);
+		elseif objectType ==40 then
+			Plugin.SetSize(object, NewWidth, NewHeight);
+			Plugin.SetPos(object, NewX, NewY);
+		else
+			Dialog.Message("Error", object.." : Object undifined", MB_OK, MB_ICONSTOP, MB_DEFBUTTON1);
+		end
+	end
+end
+
+function saveXmlData()
+	xml = '';
+
+	xml = xml..'&lt;ROOT&gt;\r\n';
+	xml = xml..'\t&lt;PAGE Name = "'..Application.GetCurrentPage()..'"&gt;\r\n';
+
+	allObjects = Page.EnumerateObjects();
+
+	for i,object in pairs (allObjects) do
+		local objectType = Page.GetObjectType(object);
+		if object ~= "BTN_SAVE_XML" then
+			if objectType ==0 and String.Find(object, "IGNORED", 1, false) == -1 then
+				objProp = Button.GetProperties(object);
+			elseif objectType ==1  and  String.Find(object, "IGNORED", 1, false) == -1 then
+				objProp = Label.GetProperties(object);
+			elseif objectType ==2  and  String.Find(object, "IGNORED", 1, false) == -1 then
+				objProp = Paragraph.GetProperties(object);
+			elseif objectType ==3  and  String.Find(object, "IGNORED", 1, false) == -1 then
+				objProp = Image.GetProperties(object);
+			elseif objectType ==4  and  String.Find(object, "IGNORED", 1, false) == -1 then
+				objProp = Flash.GetProperties(object);
+			elseif objectType ==5  and  String.Find(object, "IGNORED", 1, false) == -1 then
+				objProp = Video.GetProperties(object);
+			elseif objectType ==6  and  String.Find(object, "IGNORED", 1, false) == -1 then
+				objProp = Web.GetProperties(object);
+			elseif objectType ==7  and  String.Find(object, "IGNORED", 1, false) == -1 then
+				objProp = Input.GetProperties(object);
+			elseif objectType ==8  and  String.Find(object, "IGNORED", 1, false) == -1 then
+				objProp = Hotspot.GetProperties(object);
+			elseif objectType ==9  and  String.Find(object, "IGNORED", 1, false) == -1 then
+				objProp = Listbox.GetProperties(object);
+			elseif objectType ==10  and  String.Find(object, "IGNORED", 1, false) == -1 then
+				objProp = Combobox.GetProperties(object);
+			elseif objectType ==11  and  String.Find(object, "IGNORED", 1, false) == -1 then
+				objProp = Progress.GetProperties(object);
+			elseif objectType ==12  and  String.Find(object, "IGNORED", 1, false) == -1 then
+				objProp = Tree.GetProperties(object);
+			elseif objectType ==13  and  String.Find(object, "IGNORED", 1, false) == -1 then
+				objProp = RadioButton.GetProperties(object);
+			elseif objectType ==14  and  String.Find(object, "IGNORED", 1, false) == -1 then
+				objProp = RichText.GetProperties(object);
+			elseif objectType ==15  and  String.Find(object, "IGNORED", 1, false) == -1 then
+				objProp = CheckBox.GetProperties(object);
+			elseif objectType ==16  and  String.Find(object, "IGNORED", 1, false) == -1 then
+				objProp = SlideShow.GetProperties(object);
+			elseif objectType ==17  and  String.Find(object, "IGNORED", 1, false) == -1 then
+				objProp = Grid.GetProperties(object);
+			elseif objectType ==18  and  String.Find(object, "IGNORED", 1, false) == -1 then
+				objProp = PDF.GetProperties(object);
+			elseif objectType ==19  and  String.Find(object, "IGNORED", 1, false) == -1 then
+				objProp = QuickTime.GetProperties(object);
+			elseif objectType ==20  and  String.Find(object, "IGNORED", 1, false) == -1 then
+				objProp = xButton.GetProperties(object);
+			elseif objectType ==40  and  String.Find(object, "IGNORED", 1, false) == -1 then
+				objProp = Plugin.GetProperties(object);
+			else
+				Dialog.Message("Error", object.." : Object undifined", MB_OK, MB_ICONSTOP, MB_DEFBUTTON1);
+			end
+
+			xml = xml..'\t\t&lt;'..object..' Width = "'..objProp.Width..'" Height = "'..objProp.Height..'" PosX = "'..objProp.X..'" PosY = "'..objProp.Y..'"&gt;\r\n';
+
+			perWidth = (objProp.Width*100)/Page.GetSize().Width;
+			perHeight = (objProp.Height*100)/Page.GetSize().Height;
+
+			perX = (objProp.X*100)/Page.GetSize().Width;
+			perY = (objProp.Y*100)/Page.GetSize().Height;
+
+			xml = xml..'\t\t\t&lt;perWidth&gt;'..perWidth..'&lt;/perWidth&gt;\r\n';
+			xml = xml..'\t\t\t&lt;perHeight&gt;'..perHeight..'&lt;/perHeight&gt;\r\n';
+			xml = xml..'\t\t\t&lt;perPosX&gt;'..perX..'&lt;/perPosX&gt;\r\n';
+			xml = xml..'\t\t\t&lt;perPosY&gt;'..perY..'&lt;/perPosY&gt;\r\n';
+			xml = xml..'\t\t&lt;/'..object..'&gt;\r\n';
+		end
+	end
+
+
+	xml = xml..'\t&lt;/PAGE&gt;\r\n';
+	xml = xml..'&lt;/ROOT&gt;';
+
+	TextFile.WriteFromString("AutoPlay\\Docs\\XML\\xml_data_"..Application.GetCurrentPage()..".xml", xml, false);
+
 end</Script>
 <BookMarks count="0">
 </BookMarks>
-<DesignCodeLine>58</DesignCodeLine>
-<DesignCodeCol>46</DesignCodeCol>
+<DesignCodeLine>320</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 </Globals>
 <Defaults>
 <StartupPage>_PageFirst</StartupPage>
@@ -263,14 +443,15 @@ end</Script>
 <Event>
 <Name>On Startup</Name>
 <Args/>
-<Script>DialogEx.Show("LOGIN", true, nil, nil);</Script>
+<Script>Application.SaveValue("ITStock", "FirstRun", "Y");
+DialogEx.Show("LOGIN", true, nil, nil);</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeCol>50</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -297,7 +478,7 @@ end</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>4079394</DesignCodeLine>
+<DesignCodeLine>0</DesignCodeLine>
 <DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
@@ -311,7 +492,7 @@ end</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>28521</DesignCodeLine>
+<DesignCodeLine>0</DesignCodeLine>
 <DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
@@ -411,7 +592,7 @@ end</Script>
 <TransitionEffect/>
 <TransProps/>
 <NormalImage>
-<Filename>AutoPlay\Images\BG.png</Filename>
+<Filename>AutoPlay\Images\bg.png</Filename>
 </NormalImage>
 </Background>
 <Event>
@@ -434,14 +615,28 @@ end</Script>
 <Script>Label.SetText("LB_HELLO", "Hello "..CURRENT_USER);
 Label.SetText("LB_IP", "@IP : "..System.GetLANInfo().IP);
 Label.SetText("LB_DATE_TIME", System.GetTime(TIME_FMT_MIL).." "..System.GetDate(DATE_FMT_EUROPE));
-Page.StartTimer(1000, 2);</Script>
+Page.StartTimer(1000, 2);
+
+if SAVE_XML == true then
+	saveXmlData();
+	Page.Navigate(PAGE_NEXT);
+else
+	if Application.LoadValue("ITStock", "FirstRun") == "Y" then
+		Window.Maximize(Application.GetWndHandle());
+		setObjectsSizeAndPositions(this);
+		Window.Hide(Application.GetWndHandle());
+		Page.Navigate(PAGE_NEXT);
+	else
+		Window.Maximize(Application.GetWndHandle());
+	end
+end</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>2</DesignCodeLine>
-<DesignCodeCol>98</DesignCodeCol>
+<DesignCodeLine>11</DesignCodeLine>
+<DesignCodeCol>35</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -579,7 +774,7 @@ end
 <Name>TR_MENU</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>0</Locked>
+<Locked>1</Locked>
 <Enabled>1</Enabled>
 <ToolTip/>
 <Cursor>0</Cursor>
@@ -589,9 +784,9 @@ end
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>118</Top>
-<Bottom>756</Bottom>
-<Left>1</Left>
+<Top>102</Top>
+<Bottom>768</Bottom>
+<Left>0</Left>
 <Right>233</Right>
 </Coordinates>
 <Ratios>
@@ -760,7 +955,7 @@ end
 <Name>IMG_BLACK_BAR</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>0</Locked>
+<Locked>1</Locked>
 <Enabled>1</Enabled>
 <ToolTip/>
 <Cursor>0</Cursor>
@@ -770,9 +965,9 @@ end
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>72</Top>
-<Bottom>119</Bottom>
-<Left>232</Left>
+<Top>54</Top>
+<Bottom>102</Bottom>
+<Left>233</Left>
 <Right>1366</Right>
 </Coordinates>
 <Ratios>
@@ -854,7 +1049,7 @@ end
 <Name>IMG_LEFT_BAR_TITLE</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>0</Locked>
+<Locked>1</Locked>
 <Enabled>1</Enabled>
 <ToolTip/>
 <Cursor>0</Cursor>
@@ -864,8 +1059,8 @@ end
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>72</Top>
-<Bottom>118</Bottom>
+<Top>54</Top>
+<Bottom>102</Bottom>
 <Left>0</Left>
 <Right>233</Right>
 </Coordinates>
@@ -958,8 +1153,8 @@ end
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>79</Top>
-<Bottom>117</Bottom>
+<Top>63</Top>
+<Bottom>101</Bottom>
 <Left>72</Left>
 <Right>154</Right>
 </Coordinates>
@@ -1048,8 +1243,8 @@ end
 <MouseClickSndMode>0</MouseClickSndMode>
 <MouseClickSound/>
 <OriginalRect>
-<Top>79</Top>
-<Bottom>117</Bottom>
+<Top>63</Top>
+<Bottom>101</Bottom>
 <Left>72</Left>
 <Right>154</Right>
 </OriginalRect>
@@ -1070,10 +1265,10 @@ end
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>73</Top>
-<Bottom>100</Bottom>
-<Left>234</Left>
-<Right>303</Right>
+<Top>55</Top>
+<Bottom>82</Bottom>
+<Left>235</Left>
+<Right>304</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -1082,14 +1277,15 @@ end
 <Event>
 <Name>On Click</Name>
 <Args/>
-<Script/>
+<Script>DialogEx.Show("LOGIN", true, nil, nil);
+Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>7563118</DesignCodeLine>
-<DesignCodeCol>1078853642</DesignCodeCol>
+<DesignCodeLine>1</DesignCodeLine>
+<DesignCodeCol>61</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -1103,7 +1299,7 @@ end
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>1080528896</DesignCodeCol>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -1116,8 +1312,8 @@ end
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>28521</DesignCodeLine>
-<DesignCodeCol>-2147468503</DesignCodeCol>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -1130,8 +1326,8 @@ end
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>1684340746</DesignCodeLine>
-<DesignCodeCol>1079836672</DesignCodeCol>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -1160,122 +1356,10 @@ end
 <MouseClickSndMode>0</MouseClickSndMode>
 <MouseClickSound/>
 <OriginalRect>
-<Top>73</Top>
-<Bottom>100</Bottom>
-<Left>234</Left>
-<Right>303</Right>
-</OriginalRect>
-</Text>
-</Object>
-<Object>
-<Type>1</Type>
-<Name>LB_IP</Name>
-<VisibleAtDesignTime>1</VisibleAtDesignTime>
-<VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>0</Locked>
-<Enabled>1</Enabled>
-<ToolTip/>
-<Cursor>0</Cursor>
-<Group>0</Group>
-<MaintainAspectRatio>1</MaintainAspectRatio>
-<Pin>0</Pin>
-<TabIndex>-1</TabIndex>
-<AutoResize>0</AutoResize>
-<Coordinates>
-<Top>93</Top>
-<Bottom>120</Bottom>
-<Left>234</Left>
-<Right>265</Right>
-</Coordinates>
-<Ratios>
-<WidthRatio>-1.000000</WidthRatio>
-<HeightRatio>-1.000000</HeightRatio>
-</Ratios>
-<Event>
-<Name>On Click</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>7563118</DesignCodeLine>
-<DesignCodeCol>1078853642</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Right-Click</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>1080528896</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Enter</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>28521</DesignCodeLine>
-<DesignCodeCol>-2147468503</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Leave</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>1684340746</DesignCodeLine>
-<DesignCodeCol>1079836672</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Actions/>
-<Text>
-<Body>{IP}</Body>
-<NormalColor>16777215</NormalColor>
-<HighlightColor>16777215</HighlightColor>
-<MouseDownColor>16777215</MouseDownColor>
-<DisabledColor>12632256</DisabledColor>
-<FontData>
-<FontName>Nunito</FontName>
-<CharacterSet>0</CharacterSet>
-<Height>-16</Height>
-<Weight>400</Weight>
-<Italic>1</Italic>
-<Underline>0</Underline>
-<StrikeOut>0</StrikeOut>
-<AntiAlias>1</AntiAlias>
-</FontData>
-<Alignment>0</Alignment>
-<Orientation>0</Orientation>
-<AutoSize>1</AutoSize>
-<MouseOverSndMode>0</MouseOverSndMode>
-<MouseOverSound/>
-<MouseClickSndMode>0</MouseClickSndMode>
-<MouseClickSound/>
-<OriginalRect>
-<Top>93</Top>
-<Bottom>120</Bottom>
-<Left>234</Left>
-<Right>265</Right>
+<Top>55</Top>
+<Bottom>82</Bottom>
+<Left>235</Left>
+<Right>304</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -1294,10 +1378,10 @@ end
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>73</Top>
-<Bottom>100</Bottom>
-<Left>1191</Left>
-<Right>1298</Right>
+<Top>76</Top>
+<Bottom>103</Bottom>
+<Left>235</Left>
+<Right>342</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -1384,32 +1468,32 @@ end
 <MouseClickSndMode>0</MouseClickSndMode>
 <MouseClickSound/>
 <OriginalRect>
-<Top>73</Top>
-<Bottom>100</Bottom>
-<Left>1191</Left>
-<Right>1298</Right>
+<Top>76</Top>
+<Bottom>103</Bottom>
+<Left>235</Left>
+<Right>342</Right>
 </OriginalRect>
 </Text>
 </Object>
 <Object>
 <Type>3</Type>
-<Name>IMG_LOGOFF</Name>
+<Name>IMG_LOGOUT</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
 <Locked>0</Locked>
 <Enabled>1</Enabled>
 <ToolTip/>
-<Cursor>0</Cursor>
+<Cursor>1</Cursor>
 <Group>0</Group>
 <MaintainAspectRatio>1</MaintainAspectRatio>
 <Pin>0</Pin>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>90</Top>
-<Bottom>115</Bottom>
-<Left>1337</Left>
-<Right>1362</Right>
+<Top>60</Top>
+<Bottom>96</Bottom>
+<Left>1321</Left>
+<Right>1357</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -1418,14 +1502,14 @@ end
 <Event>
 <Name>On Click</Name>
 <Args/>
-<Script/>
+<Script>Application.Exit(0);</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>1632895086</DesignCodeLine>
-<DesignCodeCol>27507</DesignCodeCol>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>20</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -1438,8 +1522,8 @@ end
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>1632918638</DesignCodeLine>
-<DesignCodeCol>27507</DesignCodeCol>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -1452,8 +1536,8 @@ end
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>1868979310</DesignCodeLine>
-<DesignCodeCol>7566446</DesignCodeCol>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -1466,14 +1550,14 @@ end
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>1677734400</DesignCodeLine>
-<DesignCodeCol>3043941</DesignCodeCol>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\logout.png</Filename>
+<Filename>AutoPlay\Images\exit.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -1485,125 +1569,13 @@ end
 <MouseClickSndMode>0</MouseClickSndMode>
 <MouseClickSound/>
 </Object>
-<Object>
-<Type>1</Type>
-<Name>LB_LOGOFF</Name>
-<VisibleAtDesignTime>1</VisibleAtDesignTime>
-<VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>0</Locked>
-<Enabled>1</Enabled>
-<ToolTip/>
-<Cursor>0</Cursor>
-<Group>0</Group>
-<MaintainAspectRatio>1</MaintainAspectRatio>
-<Pin>0</Pin>
-<TabIndex>-1</TabIndex>
-<AutoResize>0</AutoResize>
-<Coordinates>
-<Top>93</Top>
-<Bottom>120</Bottom>
-<Left>1277</Left>
-<Right>1334</Right>
-</Coordinates>
-<Ratios>
-<WidthRatio>-1.000000</WidthRatio>
-<HeightRatio>-1.000000</HeightRatio>
-</Ratios>
-<Event>
-<Name>On Click</Name>
-<Args/>
-<Script>Page.Jump("LOGIN");</Script>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Right-Click</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Enter</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Leave</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Actions/>
-<Text>
-<Body>Logout</Body>
-<NormalColor>16777215</NormalColor>
-<HighlightColor>16777215</HighlightColor>
-<MouseDownColor>16777215</MouseDownColor>
-<DisabledColor>12632256</DisabledColor>
-<FontData>
-<FontName>Nunito</FontName>
-<CharacterSet>0</CharacterSet>
-<Height>-16</Height>
-<Weight>400</Weight>
-<Italic>1</Italic>
-<Underline>1</Underline>
-<StrikeOut>0</StrikeOut>
-<AntiAlias>1</AntiAlias>
-</FontData>
-<Alignment>0</Alignment>
-<Orientation>0</Orientation>
-<AutoSize>1</AutoSize>
-<MouseOverSndMode>0</MouseOverSndMode>
-<MouseOverSound/>
-<MouseClickSndMode>0</MouseClickSndMode>
-<MouseClickSound/>
-<OriginalRect>
-<Top>93</Top>
-<Bottom>120</Bottom>
-<Left>1277</Left>
-<Right>1334</Right>
-</OriginalRect>
-</Text>
-</Object>
 <HGuidelines/>
 <VGuidelines/>
 </Page>
 <Page>
 <Name>SETTINGS</Name>
 <InheritObs/>
-<InheritBG/>
+<InheritBG>HOME</InheritBG>
 <Description/>
 <Keywords/>
 <Background>
@@ -1611,7 +1583,7 @@ end
 <ImageStyle>0</ImageStyle>
 <TopColor>16711680</TopColor>
 <BottomColor>16777215</BottomColor>
-<UseCustomBackgroundSettings>1</UseCustomBackgroundSettings>
+<UseCustomBackgroundSettings>0</UseCustomBackgroundSettings>
 <TransitionEffect/>
 <TransProps/>
 <NormalImage>
@@ -1640,15 +1612,22 @@ Label.SetText("LB_IP", "@IP : "..System.GetLANInfo().IP);
 Label.SetText("LB_DATE_TIME", System.GetTime(TIME_FMT_MIL).." "..System.GetDate(DATE_FMT_EUROPE));
 Page.StartTimer(1000, 2);
 
-checkSQLServerStatus();
-loadDbAccess();</Script>
+if SAVE_XML == true then
+	saveXmlData();
+	Page.Navigate(PAGE_NEXT);
+else
+	if Application.LoadValue("ITStock", "FirstRun") == "Y" then
+		setObjectsSizeAndPositions(this);
+		Page.Navigate(PAGE_NEXT);
+	end
+end</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>6</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeLine>10</DesignCodeLine>
+<DesignCodeCol>35</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -1781,932 +1760,6 @@ end
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Object>
-<Type>12</Type>
-<Name>TR_MENU</Name>
-<VisibleAtDesignTime>1</VisibleAtDesignTime>
-<VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>0</Locked>
-<Enabled>1</Enabled>
-<ToolTip/>
-<Cursor>0</Cursor>
-<Group>0</Group>
-<MaintainAspectRatio>0</MaintainAspectRatio>
-<Pin>0</Pin>
-<TabIndex>-1</TabIndex>
-<AutoResize>0</AutoResize>
-<Coordinates>
-<Top>118</Top>
-<Bottom>756</Bottom>
-<Left>0</Left>
-<Right>232</Right>
-</Coordinates>
-<Ratios>
-<WidthRatio>-1.000000</WidthRatio>
-<HeightRatio>-1.000000</HeightRatio>
-</Ratios>
-<Event>
-<Name>On Select</Name>
-<Args>string e_NodeIndex</Args>
-<Script>leftMenuJump();</Script>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>15</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Double-Click</Name>
-<Args>string e_NodeIndex</Args>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Key</Name>
-<Args>number e_Key, table e_Modifiers</Args>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Focus</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On EditLabel</Name>
-<Args>string e_NodeIndex, string e_NewText, string e_OldText</Args>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Check</Name>
-<Args>string e_NodeIndex, boolean e_Checked</Args>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Expanded</Name>
-<Args>string e_NodeIndex, boolean e_Expanded</Args>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Actions/>
-<Options>
-<ImageList/>
-<BackgroundColor format="hex">ffffff</BackgroundColor>
-<TextColor format="hex">333333</TextColor>
-<TransparentImageListColor format="hex">000000</TransparentImageListColor>
-<ShowCheckBoxes>0</ShowCheckBoxes>
-<HasLines>0</HasLines>
-<LinesAtRoot>1</LinesAtRoot>
-<HasButtons>1</HasButtons>
-<EditLabels>0</EditLabels>
-<AlwaysShowSelection>1</AlwaysShowSelection>
-<UseImageList>1</UseImageList>
-<ReadOrder>0</ReadOrder>
-<Indent>0</Indent>
-<BorderMode>0</BorderMode>
-</Options>
-<Tree>
-<TreeRootCreated>1</TreeRootCreated>
-<tree_node>
-<AMSTreeData>
-<Text>Home</Text>
-<Data>HOME</Data>
-<Selected>0</Selected>
-<Expanded>0</Expanded>
-<NodeIndex>1</NodeIndex>
-<ImageIndex>-1</ImageIndex>
-<SelectedImageIndex>-1</SelectedImageIndex>
-<Checked>0</Checked>
-</AMSTreeData>
-<node_sibling>1</node_sibling>
-</tree_node>
-<tree_node>
-<AMSTreeData>
-<Text>Settings</Text>
-<Data>SETTINGS</Data>
-<Selected>0</Selected>
-<Expanded>1</Expanded>
-<NodeIndex>2</NodeIndex>
-<ImageIndex>-1</ImageIndex>
-<SelectedImageIndex>-1</SelectedImageIndex>
-<Checked>0</Checked>
-</AMSTreeData>
-<node_children>
-<tree_node>
-<AMSTreeData>
-<Text>Users managment</Text>
-<Data>USERS</Data>
-<Selected>0</Selected>
-<Expanded>0</Expanded>
-<NodeIndex>2.1</NodeIndex>
-<ImageIndex>-1</ImageIndex>
-<SelectedImageIndex>-1</SelectedImageIndex>
-<Checked>0</Checked>
-</AMSTreeData>
-<node_sibling>0</node_sibling>
-</tree_node>
-</node_children>
-<node_sibling>0</node_sibling>
-</tree_node>
-</Tree>
-<Font>
-<FontData>
-<FontName>Nunito</FontName>
-<CharacterSet>0</CharacterSet>
-<Height>-19</Height>
-<Weight>700</Weight>
-<Italic>0</Italic>
-<Underline>0</Underline>
-<StrikeOut>0</StrikeOut>
-<AntiAlias>1</AntiAlias>
-</FontData>
-</Font>
-</Object>
-<Object>
-<Type>3</Type>
-<Name>IMG_LEFT_MENU</Name>
-<VisibleAtDesignTime>1</VisibleAtDesignTime>
-<VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>0</Locked>
-<Enabled>1</Enabled>
-<ToolTip/>
-<Cursor>0</Cursor>
-<Group>0</Group>
-<MaintainAspectRatio>1</MaintainAspectRatio>
-<Pin>0</Pin>
-<TabIndex>-1</TabIndex>
-<AutoResize>0</AutoResize>
-<Coordinates>
-<Top>118</Top>
-<Bottom>756</Bottom>
-<Left>0</Left>
-<Right>232</Right>
-</Coordinates>
-<Ratios>
-<WidthRatio>-1.000000</WidthRatio>
-<HeightRatio>-1.000000</HeightRatio>
-</Ratios>
-<Event>
-<Name>On Click</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>59</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Right-Click</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>1078083584</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Enter</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>17747</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Leave</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>15145</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Actions/>
-<NormalImage>
-<Filename>AutoPlay\Images\bg_left_menu.png</Filename>
-<UseTransColor>0</UseTransColor>
-<TransClr>16777215</TransClr>
-<TransTolerance>10</TransTolerance>
-<Opacity>100</Opacity>
-<HTMode>0</HTMode>
-</NormalImage>
-<MouseOverSndMode>0</MouseOverSndMode>
-<MouseOverSound/>
-<MouseClickSndMode>0</MouseClickSndMode>
-<MouseClickSound/>
-</Object>
-<Object>
-<Type>3</Type>
-<Name>IMG_BLACK_BAR</Name>
-<VisibleAtDesignTime>1</VisibleAtDesignTime>
-<VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>0</Locked>
-<Enabled>1</Enabled>
-<ToolTip/>
-<Cursor>0</Cursor>
-<Group>0</Group>
-<MaintainAspectRatio>1</MaintainAspectRatio>
-<Pin>0</Pin>
-<TabIndex>-1</TabIndex>
-<AutoResize>0</AutoResize>
-<Coordinates>
-<Top>72</Top>
-<Bottom>120</Bottom>
-<Left>232</Left>
-<Right>1366</Right>
-</Coordinates>
-<Ratios>
-<WidthRatio>-1.000000</WidthRatio>
-<HeightRatio>-1.000000</HeightRatio>
-</Ratios>
-<Event>
-<Name>On Click</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>1082825728</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Right-Click</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>1082526720</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Enter</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>1082326016</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Leave</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>1399153664</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Actions/>
-<NormalImage>
-<Filename>AutoPlay\Images\nav_h.png</Filename>
-<UseTransColor>0</UseTransColor>
-<TransClr>16777215</TransClr>
-<TransTolerance>10</TransTolerance>
-<Opacity>100</Opacity>
-<HTMode>0</HTMode>
-</NormalImage>
-<MouseOverSndMode>0</MouseOverSndMode>
-<MouseOverSound/>
-<MouseClickSndMode>0</MouseClickSndMode>
-<MouseClickSound/>
-</Object>
-<Object>
-<Type>3</Type>
-<Name>IMG_LEFT_BAR_TITLE</Name>
-<VisibleAtDesignTime>1</VisibleAtDesignTime>
-<VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>0</Locked>
-<Enabled>1</Enabled>
-<ToolTip/>
-<Cursor>0</Cursor>
-<Group>0</Group>
-<MaintainAspectRatio>1</MaintainAspectRatio>
-<Pin>0</Pin>
-<TabIndex>-1</TabIndex>
-<AutoResize>0</AutoResize>
-<Coordinates>
-<Top>72</Top>
-<Bottom>118</Bottom>
-<Left>0</Left>
-<Right>232</Right>
-</Coordinates>
-<Ratios>
-<WidthRatio>-1.000000</WidthRatio>
-<HeightRatio>-1.000000</HeightRatio>
-</Ratios>
-<Event>
-<Name>On Click</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>25600</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Right-Click</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>100</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Enter</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>1079894016</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Leave</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>1080008704</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Actions/>
-<NormalImage>
-<Filename>AutoPlay\Images\bg_left_menu_title.png</Filename>
-<UseTransColor>0</UseTransColor>
-<TransClr>16777215</TransClr>
-<TransTolerance>10</TransTolerance>
-<Opacity>100</Opacity>
-<HTMode>0</HTMode>
-</NormalImage>
-<MouseOverSndMode>0</MouseOverSndMode>
-<MouseOverSound/>
-<MouseClickSndMode>0</MouseClickSndMode>
-<MouseClickSound/>
-</Object>
-<Object>
-<Type>1</Type>
-<Name>LB_PAGE_TITLE</Name>
-<VisibleAtDesignTime>1</VisibleAtDesignTime>
-<VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>0</Locked>
-<Enabled>1</Enabled>
-<ToolTip/>
-<Cursor>0</Cursor>
-<Group>0</Group>
-<MaintainAspectRatio>1</MaintainAspectRatio>
-<Pin>0</Pin>
-<TabIndex>-1</TabIndex>
-<AutoResize>0</AutoResize>
-<Coordinates>
-<Top>78</Top>
-<Bottom>116</Bottom>
-<Left>54</Left>
-<Right>183</Right>
-</Coordinates>
-<Ratios>
-<WidthRatio>-1.000000</WidthRatio>
-<HeightRatio>-1.000000</HeightRatio>
-</Ratios>
-<Event>
-<Name>On Click</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>7563118</DesignCodeLine>
-<DesignCodeCol>1078853642</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Right-Click</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>1080528896</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Enter</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>28521</DesignCodeLine>
-<DesignCodeCol>-2147468503</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Leave</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>1684340746</DesignCodeLine>
-<DesignCodeCol>1079836672</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Actions/>
-<Text>
-<Body>SETTINGS</Body>
-<NormalColor>16777215</NormalColor>
-<HighlightColor>16777215</HighlightColor>
-<MouseDownColor>16777215</MouseDownColor>
-<DisabledColor>12632256</DisabledColor>
-<FontData>
-<FontName>Nunito</FontName>
-<CharacterSet>0</CharacterSet>
-<Height>-24</Height>
-<Weight>700</Weight>
-<Italic>0</Italic>
-<Underline>0</Underline>
-<StrikeOut>0</StrikeOut>
-<AntiAlias>1</AntiAlias>
-</FontData>
-<Alignment>0</Alignment>
-<Orientation>0</Orientation>
-<AutoSize>1</AutoSize>
-<MouseOverSndMode>0</MouseOverSndMode>
-<MouseOverSound/>
-<MouseClickSndMode>0</MouseClickSndMode>
-<MouseClickSound/>
-<OriginalRect>
-<Top>78</Top>
-<Bottom>116</Bottom>
-<Left>54</Left>
-<Right>183</Right>
-</OriginalRect>
-</Text>
-</Object>
-<Object>
-<Type>1</Type>
-<Name>LB_HELLO</Name>
-<VisibleAtDesignTime>1</VisibleAtDesignTime>
-<VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>0</Locked>
-<Enabled>1</Enabled>
-<ToolTip/>
-<Cursor>0</Cursor>
-<Group>0</Group>
-<MaintainAspectRatio>1</MaintainAspectRatio>
-<Pin>0</Pin>
-<TabIndex>-1</TabIndex>
-<AutoResize>0</AutoResize>
-<Coordinates>
-<Top>73</Top>
-<Bottom>100</Bottom>
-<Left>234</Left>
-<Right>303</Right>
-</Coordinates>
-<Ratios>
-<WidthRatio>-1.000000</WidthRatio>
-<HeightRatio>-1.000000</HeightRatio>
-</Ratios>
-<Event>
-<Name>On Click</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>7563118</DesignCodeLine>
-<DesignCodeCol>1078853642</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Right-Click</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>1080528896</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Enter</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>28521</DesignCodeLine>
-<DesignCodeCol>-2147468503</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Leave</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>1684340746</DesignCodeLine>
-<DesignCodeCol>1079836672</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Actions/>
-<Text>
-<Body>{HELLO}</Body>
-<NormalColor>16777215</NormalColor>
-<HighlightColor>16777215</HighlightColor>
-<MouseDownColor>16777215</MouseDownColor>
-<DisabledColor>12632256</DisabledColor>
-<FontData>
-<FontName>Nunito</FontName>
-<CharacterSet>0</CharacterSet>
-<Height>-16</Height>
-<Weight>400</Weight>
-<Italic>1</Italic>
-<Underline>0</Underline>
-<StrikeOut>0</StrikeOut>
-<AntiAlias>1</AntiAlias>
-</FontData>
-<Alignment>0</Alignment>
-<Orientation>0</Orientation>
-<AutoSize>1</AutoSize>
-<MouseOverSndMode>0</MouseOverSndMode>
-<MouseOverSound/>
-<MouseClickSndMode>0</MouseClickSndMode>
-<MouseClickSound/>
-<OriginalRect>
-<Top>73</Top>
-<Bottom>100</Bottom>
-<Left>234</Left>
-<Right>303</Right>
-</OriginalRect>
-</Text>
-</Object>
-<Object>
-<Type>1</Type>
-<Name>LB_IP</Name>
-<VisibleAtDesignTime>1</VisibleAtDesignTime>
-<VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>0</Locked>
-<Enabled>1</Enabled>
-<ToolTip/>
-<Cursor>0</Cursor>
-<Group>0</Group>
-<MaintainAspectRatio>1</MaintainAspectRatio>
-<Pin>0</Pin>
-<TabIndex>-1</TabIndex>
-<AutoResize>0</AutoResize>
-<Coordinates>
-<Top>93</Top>
-<Bottom>120</Bottom>
-<Left>234</Left>
-<Right>265</Right>
-</Coordinates>
-<Ratios>
-<WidthRatio>-1.000000</WidthRatio>
-<HeightRatio>-1.000000</HeightRatio>
-</Ratios>
-<Event>
-<Name>On Click</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>7563118</DesignCodeLine>
-<DesignCodeCol>1078853642</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Right-Click</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>1080528896</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Enter</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>28521</DesignCodeLine>
-<DesignCodeCol>-2147468503</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Leave</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>1684340746</DesignCodeLine>
-<DesignCodeCol>1079836672</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Actions/>
-<Text>
-<Body>{IP}</Body>
-<NormalColor>16777215</NormalColor>
-<HighlightColor>16777215</HighlightColor>
-<MouseDownColor>16777215</MouseDownColor>
-<DisabledColor>12632256</DisabledColor>
-<FontData>
-<FontName>Nunito</FontName>
-<CharacterSet>0</CharacterSet>
-<Height>-16</Height>
-<Weight>400</Weight>
-<Italic>1</Italic>
-<Underline>0</Underline>
-<StrikeOut>0</StrikeOut>
-<AntiAlias>1</AntiAlias>
-</FontData>
-<Alignment>0</Alignment>
-<Orientation>0</Orientation>
-<AutoSize>1</AutoSize>
-<MouseOverSndMode>0</MouseOverSndMode>
-<MouseOverSound/>
-<MouseClickSndMode>0</MouseClickSndMode>
-<MouseClickSound/>
-<OriginalRect>
-<Top>93</Top>
-<Bottom>120</Bottom>
-<Left>234</Left>
-<Right>265</Right>
-</OriginalRect>
-</Text>
-</Object>
-<Object>
-<Type>1</Type>
-<Name>LB_DATE_TIME</Name>
-<VisibleAtDesignTime>1</VisibleAtDesignTime>
-<VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>0</Locked>
-<Enabled>1</Enabled>
-<ToolTip/>
-<Cursor>0</Cursor>
-<Group>0</Group>
-<MaintainAspectRatio>1</MaintainAspectRatio>
-<Pin>0</Pin>
-<TabIndex>-1</TabIndex>
-<AutoResize>0</AutoResize>
-<Coordinates>
-<Top>83</Top>
-<Bottom>110</Bottom>
-<Left>1191</Left>
-<Right>1298</Right>
-</Coordinates>
-<Ratios>
-<WidthRatio>-1.000000</WidthRatio>
-<HeightRatio>-1.000000</HeightRatio>
-</Ratios>
-<Event>
-<Name>On Click</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>7563118</DesignCodeLine>
-<DesignCodeCol>1078853642</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Right-Click</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>1080528896</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Enter</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>28521</DesignCodeLine>
-<DesignCodeCol>-2147468503</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Leave</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>1684340746</DesignCodeLine>
-<DesignCodeCol>1079836672</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Actions/>
-<Text>
-<Body>{DATA_TIME}</Body>
-<NormalColor>16777215</NormalColor>
-<HighlightColor>16777215</HighlightColor>
-<MouseDownColor>16777215</MouseDownColor>
-<DisabledColor>12632256</DisabledColor>
-<FontData>
-<FontName>Nunito</FontName>
-<CharacterSet>0</CharacterSet>
-<Height>-16</Height>
-<Weight>400</Weight>
-<Italic>1</Italic>
-<Underline>0</Underline>
-<StrikeOut>0</StrikeOut>
-<AntiAlias>1</AntiAlias>
-</FontData>
-<Alignment>0</Alignment>
-<Orientation>0</Orientation>
-<AutoSize>1</AutoSize>
-<MouseOverSndMode>0</MouseOverSndMode>
-<MouseOverSound/>
-<MouseClickSndMode>0</MouseClickSndMode>
-<MouseClickSound/>
-<OriginalRect>
-<Top>83</Top>
-<Bottom>110</Bottom>
-<Left>1191</Left>
-<Right>1298</Right>
-</OriginalRect>
-</Text>
-</Object>
 <Object>
 <Type>3</Type>
 <Name>IMG_ACCORDION1</Name>
@@ -2897,7 +1950,7 @@ end
 </Object>
 <Object>
 <Type>3</Type>
-<Name>Image2</Name>
+<Name>IMG_ACCORDION2</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
 <Locked>0</Locked>
@@ -2991,7 +2044,7 @@ end
 </Object>
 <Object>
 <Type>3</Type>
-<Name>Image3</Name>
+<Name>IMG_TOGGLE_DOWN2</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
 <Locked>0</Locked>
@@ -3085,7 +2138,7 @@ end
 </Object>
 <Object>
 <Type>3</Type>
-<Name>Image4</Name>
+<Name>IMG_ACCORDION3</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
 <Locked>0</Locked>
@@ -3179,7 +2232,7 @@ end
 </Object>
 <Object>
 <Type>3</Type>
-<Name>Image5</Name>
+<Name>IMG_TOGGLE_DOWN3</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
 <Locked>0</Locked>
@@ -3271,190 +2324,6 @@ end
 <MouseClickSndMode>0</MouseClickSndMode>
 <MouseClickSound/>
 </Object>
-<HGuidelines/>
-<VGuidelines/>
-</Page>
-<Page>
-<Name>SETTINGS-DB</Name>
-<InheritObs/>
-<InheritBG/>
-<Description/>
-<Keywords/>
-<Background>
-<Type>2</Type>
-<ImageStyle>0</ImageStyle>
-<TopColor>16711680</TopColor>
-<BottomColor>16777215</BottomColor>
-<UseCustomBackgroundSettings>1</UseCustomBackgroundSettings>
-<TransitionEffect/>
-<TransProps/>
-<NormalImage>
-<Filename>AutoPlay\Images\BG.png</Filename>
-</NormalImage>
-</Background>
-<Event>
-<Name>On Preload</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Show</Name>
-<Args/>
-<Script>Label.SetText("LB_HELLO", "Hello "..CURRENT_USER);
-Label.SetText("LB_IP", "@IP : "..System.GetLANInfo().IP);
-Label.SetText("LB_DATE_TIME", System.GetTime(TIME_FMT_MIL).." "..System.GetDate(DATE_FMT_EUROPE));
-Page.StartTimer(1000, 2);
-
-checkSQLServerStatus();
-loadDbAccess();</Script>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>6</DesignCodeLine>
-<DesignCodeCol>15</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Close</Name>
-<Args/>
-<Script>Tree.SetSelectedNode("TR_MENU", MENU_TREE_INDEXS.NONE);</Script>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>53</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Timer</Name>
-<Args>number e_ID</Args>
-<Script>if e_ID == 2 then
-	Label.SetText("LB_DATE_TIME", System.GetTime(TIME_FMT_MIL).." "..System.GetDate(DATE_FMT_EUROPE));
-end
-</Script>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>1</DesignCodeLine>
-<DesignCodeCol>1</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Audio</Name>
-<Args>number e_Channel, string e_State</Args>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Size</Name>
-<Args>number e_WindowWidth, number e_WindowHeight, number e_PageWidth, number e_PageHeight, number e_Type</Args>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Menu</Name>
-<Args>number e_ID, table e_ItemInfo</Args>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Key</Name>
-<Args>number e_Key, table e_Modifiers</Args>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Mouse Button</Name>
-<Args>number e_Type, number e_X, number e_Y</Args>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Mouse Move</Name>
-<Args>number e_X, number e_Y</Args>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Mouse Wheel</Name>
-<Args>table e_Flags, number e_Delta, number e_X, number e_Y</Args>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
 <Object>
 <Type>12</Type>
 <Name>TR_MENU</Name>
@@ -3470,10 +2339,10 @@ end
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>122</Top>
-<Bottom>760</Bottom>
+<Top>102</Top>
+<Bottom>768</Bottom>
 <Left>0</Left>
-<Right>232</Right>
+<Right>233</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -3614,27 +2483,12 @@ end
 <Text>Settings</Text>
 <Data>SETTINGS</Data>
 <Selected>0</Selected>
-<Expanded>1</Expanded>
+<Expanded>0</Expanded>
 <NodeIndex>2</NodeIndex>
 <ImageIndex>-1</ImageIndex>
 <SelectedImageIndex>-1</SelectedImageIndex>
 <Checked>0</Checked>
 </AMSTreeData>
-<node_children>
-<tree_node>
-<AMSTreeData>
-<Text>Users managment</Text>
-<Data>USERS</Data>
-<Selected>0</Selected>
-<Expanded>0</Expanded>
-<NodeIndex>2.1</NodeIndex>
-<ImageIndex>-1</ImageIndex>
-<SelectedImageIndex>-1</SelectedImageIndex>
-<Checked>0</Checked>
-</AMSTreeData>
-<node_sibling>0</node_sibling>
-</tree_node>
-</node_children>
 <node_sibling>0</node_sibling>
 </tree_node>
 </Tree>
@@ -3653,100 +2507,6 @@ end
 </Object>
 <Object>
 <Type>3</Type>
-<Name>IMG_LEFT_MENU</Name>
-<VisibleAtDesignTime>1</VisibleAtDesignTime>
-<VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>1</Locked>
-<Enabled>1</Enabled>
-<ToolTip/>
-<Cursor>0</Cursor>
-<Group>0</Group>
-<MaintainAspectRatio>1</MaintainAspectRatio>
-<Pin>0</Pin>
-<TabIndex>-1</TabIndex>
-<AutoResize>0</AutoResize>
-<Coordinates>
-<Top>118</Top>
-<Bottom>756</Bottom>
-<Left>0</Left>
-<Right>232</Right>
-</Coordinates>
-<Ratios>
-<WidthRatio>-1.000000</WidthRatio>
-<HeightRatio>-1.000000</HeightRatio>
-</Ratios>
-<Event>
-<Name>On Click</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>59</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Right-Click</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>1078083584</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Enter</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>17747</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Leave</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>15145</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Actions/>
-<NormalImage>
-<Filename>AutoPlay\Images\bg_left_menu.png</Filename>
-<UseTransColor>0</UseTransColor>
-<TransClr>16777215</TransClr>
-<TransTolerance>10</TransTolerance>
-<Opacity>100</Opacity>
-<HTMode>0</HTMode>
-</NormalImage>
-<MouseOverSndMode>0</MouseOverSndMode>
-<MouseOverSound/>
-<MouseClickSndMode>0</MouseClickSndMode>
-<MouseClickSound/>
-</Object>
-<Object>
-<Type>3</Type>
 <Name>IMG_BLACK_BAR</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
@@ -3760,9 +2520,9 @@ end
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>72</Top>
-<Bottom>120</Bottom>
-<Left>232</Left>
+<Top>54</Top>
+<Bottom>102</Bottom>
+<Left>233</Left>
 <Right>1366</Right>
 </Coordinates>
 <Ratios>
@@ -3854,10 +2614,10 @@ end
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>72</Top>
-<Bottom>120</Bottom>
+<Top>54</Top>
+<Bottom>102</Bottom>
 <Left>0</Left>
-<Right>232</Right>
+<Right>233</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -3948,10 +2708,10 @@ end
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>78</Top>
-<Bottom>113</Bottom>
-<Left>54</Left>
-<Right>181</Right>
+<Top>63</Top>
+<Bottom>101</Bottom>
+<Left>49</Left>
+<Right>193</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -4015,7 +2775,7 @@ end
 </Event>
 <Actions/>
 <Text>
-<Body>SETTINGS</Body>
+<Body>SETTTINGS</Body>
 <NormalColor>16777215</NormalColor>
 <HighlightColor>16777215</HighlightColor>
 <MouseDownColor>16777215</MouseDownColor>
@@ -4038,10 +2798,10 @@ end
 <MouseClickSndMode>0</MouseClickSndMode>
 <MouseClickSound/>
 <OriginalRect>
-<Top>78</Top>
-<Bottom>113</Bottom>
-<Left>54</Left>
-<Right>181</Right>
+<Top>63</Top>
+<Bottom>101</Bottom>
+<Left>49</Left>
+<Right>193</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -4060,10 +2820,10 @@ end
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>73</Top>
-<Bottom>98</Bottom>
-<Left>234</Left>
-<Right>303</Right>
+<Top>55</Top>
+<Bottom>82</Bottom>
+<Left>235</Left>
+<Right>304</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -4150,122 +2910,10 @@ end
 <MouseClickSndMode>0</MouseClickSndMode>
 <MouseClickSound/>
 <OriginalRect>
-<Top>73</Top>
-<Bottom>98</Bottom>
-<Left>234</Left>
-<Right>303</Right>
-</OriginalRect>
-</Text>
-</Object>
-<Object>
-<Type>1</Type>
-<Name>LB_IP</Name>
-<VisibleAtDesignTime>1</VisibleAtDesignTime>
-<VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>0</Locked>
-<Enabled>1</Enabled>
-<ToolTip/>
-<Cursor>0</Cursor>
-<Group>0</Group>
-<MaintainAspectRatio>1</MaintainAspectRatio>
-<Pin>0</Pin>
-<TabIndex>-1</TabIndex>
-<AutoResize>0</AutoResize>
-<Coordinates>
-<Top>93</Top>
-<Bottom>118</Bottom>
-<Left>234</Left>
-<Right>265</Right>
-</Coordinates>
-<Ratios>
-<WidthRatio>-1.000000</WidthRatio>
-<HeightRatio>-1.000000</HeightRatio>
-</Ratios>
-<Event>
-<Name>On Click</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>7563118</DesignCodeLine>
-<DesignCodeCol>1078853642</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Right-Click</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>1080528896</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Enter</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>28521</DesignCodeLine>
-<DesignCodeCol>-2147468503</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Leave</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>1684340746</DesignCodeLine>
-<DesignCodeCol>1079836672</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Actions/>
-<Text>
-<Body>{IP}</Body>
-<NormalColor>16777215</NormalColor>
-<HighlightColor>16777215</HighlightColor>
-<MouseDownColor>16777215</MouseDownColor>
-<DisabledColor>12632256</DisabledColor>
-<FontData>
-<FontName>Nunito</FontName>
-<CharacterSet>0</CharacterSet>
-<Height>-16</Height>
-<Weight>400</Weight>
-<Italic>1</Italic>
-<Underline>0</Underline>
-<StrikeOut>0</StrikeOut>
-<AntiAlias>1</AntiAlias>
-</FontData>
-<Alignment>0</Alignment>
-<Orientation>0</Orientation>
-<AutoSize>1</AutoSize>
-<MouseOverSndMode>0</MouseOverSndMode>
-<MouseOverSound/>
-<MouseClickSndMode>0</MouseClickSndMode>
-<MouseClickSound/>
-<OriginalRect>
-<Top>93</Top>
-<Bottom>118</Bottom>
-<Left>234</Left>
-<Right>265</Right>
+<Top>55</Top>
+<Bottom>82</Bottom>
+<Left>235</Left>
+<Right>304</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -4284,10 +2932,10 @@ end
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>83</Top>
-<Bottom>110</Bottom>
-<Left>1191</Left>
-<Right>1298</Right>
+<Top>76</Top>
+<Bottom>103</Bottom>
+<Left>235</Left>
+<Right>342</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -4374,13 +3022,301 @@ end
 <MouseClickSndMode>0</MouseClickSndMode>
 <MouseClickSound/>
 <OriginalRect>
-<Top>83</Top>
-<Bottom>110</Bottom>
-<Left>1191</Left>
-<Right>1298</Right>
+<Top>76</Top>
+<Bottom>103</Bottom>
+<Left>235</Left>
+<Right>342</Right>
 </OriginalRect>
 </Text>
 </Object>
+<Object>
+<Type>3</Type>
+<Name>IMG_LOGOUT</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>1</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>1</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>60</Top>
+<Bottom>96</Bottom>
+<Left>1321</Left>
+<Right>1357</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script>Application.Exit(0);</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>20</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Right-Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Enter</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Leave</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<NormalImage>
+<Filename>AutoPlay\Images\exit.png</Filename>
+<UseTransColor>0</UseTransColor>
+<TransClr>16777215</TransClr>
+<TransTolerance>10</TransTolerance>
+<Opacity>100</Opacity>
+<HTMode>0</HTMode>
+</NormalImage>
+<MouseOverSndMode>0</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>0</MouseClickSndMode>
+<MouseClickSound/>
+</Object>
+<HGuidelines/>
+<VGuidelines/>
+</Page>
+<Page>
+<Name>SETTINGS-DB</Name>
+<InheritObs/>
+<InheritBG>HOME</InheritBG>
+<Description/>
+<Keywords/>
+<Background>
+<Type>2</Type>
+<ImageStyle>0</ImageStyle>
+<TopColor>16711680</TopColor>
+<BottomColor>16777215</BottomColor>
+<UseCustomBackgroundSettings>0</UseCustomBackgroundSettings>
+<TransitionEffect/>
+<TransProps/>
+<NormalImage>
+<Filename>AutoPlay\Images\BG.png</Filename>
+</NormalImage>
+</Background>
+<Event>
+<Name>On Preload</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Show</Name>
+<Args/>
+<Script>Label.SetText("LB_HELLO", "Hello "..CURRENT_USER);
+Label.SetText("LB_IP", "@IP : "..System.GetLANInfo().IP);
+Label.SetText("LB_DATE_TIME", System.GetTime(TIME_FMT_MIL).." "..System.GetDate(DATE_FMT_EUROPE));
+Page.StartTimer(1000, 2);
+
+if SAVE_XML == true then
+	saveXmlData();
+	Page.Navigate(PAGE_NEXT);
+else
+	if Application.LoadValue("ITStock", "FirstRun") == "Y" then
+		setObjectsSizeAndPositions(this);
+		Page.Navigate(PAGE_NEXT);
+	end
+end
+
+checkSQLServerStatus();
+loadDbAccess();</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>8</DesignCodeLine>
+<DesignCodeCol>4</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Close</Name>
+<Args/>
+<Script>Tree.SetSelectedNode("TR_MENU", MENU_TREE_INDEXS.NONE);</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>53</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Timer</Name>
+<Args>number e_ID</Args>
+<Script>if e_ID == 2 then
+	Label.SetText("LB_DATE_TIME", System.GetTime(TIME_FMT_MIL).." "..System.GetDate(DATE_FMT_EUROPE));
+end
+</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>1</DesignCodeLine>
+<DesignCodeCol>1</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Audio</Name>
+<Args>number e_Channel, string e_State</Args>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Size</Name>
+<Args>number e_WindowWidth, number e_WindowHeight, number e_PageWidth, number e_PageHeight, number e_Type</Args>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Menu</Name>
+<Args>number e_ID, table e_ItemInfo</Args>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Key</Name>
+<Args>number e_Key, table e_Modifiers</Args>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Mouse Button</Name>
+<Args>number e_Type, number e_X, number e_Y</Args>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Mouse Move</Name>
+<Args>number e_X, number e_Y</Args>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Mouse Wheel</Name>
+<Args>table e_Flags, number e_Delta, number e_X, number e_Y</Args>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
 <Object>
 <Type>3</Type>
 <Name>IMG_ACCORDION1</Name>
@@ -4477,7 +3413,7 @@ end
 </Object>
 <Object>
 <Type>3</Type>
-<Name>IMG_TOGGLE_DOWN1</Name>
+<Name>IMG_TOGGLE_UP</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
 <Locked>0</Locked>
@@ -4571,7 +3507,7 @@ end
 </Object>
 <Object>
 <Type>3</Type>
-<Name>Image1</Name>
+<Name>IMG_BG_BODY</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
 <Locked>0</Locked>
@@ -4664,382 +3600,6 @@ end
 <MouseClickSound/>
 </Object>
 <Object>
-<Type>3</Type>
-<Name>Image2</Name>
-<VisibleAtDesignTime>1</VisibleAtDesignTime>
-<VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>0</Locked>
-<Enabled>1</Enabled>
-<ToolTip/>
-<Cursor>1</Cursor>
-<Group>0</Group>
-<MaintainAspectRatio>1</MaintainAspectRatio>
-<Pin>0</Pin>
-<TabIndex>-1</TabIndex>
-<AutoResize>0</AutoResize>
-<Coordinates>
-<Top>364</Top>
-<Bottom>414</Bottom>
-<Left>292</Left>
-<Right>1242</Right>
-</Coordinates>
-<Ratios>
-<WidthRatio>-1.000000</WidthRatio>
-<HeightRatio>-1.000000</HeightRatio>
-</Ratios>
-<Event>
-<Name>On Click</Name>
-<Args/>
-<Script>Page.Jump("SETTINGS-MENU2");</Script>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Right-Click</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Enter</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Leave</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Actions/>
-<NormalImage>
-<Filename>AutoPlay\Images\menu_2.png</Filename>
-<UseTransColor>0</UseTransColor>
-<TransClr>16777215</TransClr>
-<TransTolerance>10</TransTolerance>
-<Opacity>100</Opacity>
-<HTMode>0</HTMode>
-</NormalImage>
-<MouseOverSndMode>0</MouseOverSndMode>
-<MouseOverSound/>
-<MouseClickSndMode>0</MouseClickSndMode>
-<MouseClickSound/>
-</Object>
-<Object>
-<Type>3</Type>
-<Name>Image3</Name>
-<VisibleAtDesignTime>1</VisibleAtDesignTime>
-<VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>0</Locked>
-<Enabled>1</Enabled>
-<ToolTip/>
-<Cursor>1</Cursor>
-<Group>0</Group>
-<MaintainAspectRatio>1</MaintainAspectRatio>
-<Pin>0</Pin>
-<TabIndex>-1</TabIndex>
-<AutoResize>0</AutoResize>
-<Coordinates>
-<Top>364</Top>
-<Bottom>414</Bottom>
-<Left>1242</Left>
-<Right>1304</Right>
-</Coordinates>
-<Ratios>
-<WidthRatio>-1.000000</WidthRatio>
-<HeightRatio>-1.000000</HeightRatio>
-</Ratios>
-<Event>
-<Name>On Click</Name>
-<Args/>
-<Script>Page.Jump("SETTINGS-MENU2");</Script>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>28</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Right-Click</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Enter</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Leave</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Actions/>
-<NormalImage>
-<Filename>AutoPlay\Images\toggle_down.png</Filename>
-<UseTransColor>0</UseTransColor>
-<TransClr>16777215</TransClr>
-<TransTolerance>10</TransTolerance>
-<Opacity>100</Opacity>
-<HTMode>0</HTMode>
-</NormalImage>
-<MouseOverSndMode>0</MouseOverSndMode>
-<MouseOverSound/>
-<MouseClickSndMode>0</MouseClickSndMode>
-<MouseClickSound/>
-</Object>
-<Object>
-<Type>3</Type>
-<Name>Image4</Name>
-<VisibleAtDesignTime>1</VisibleAtDesignTime>
-<VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>0</Locked>
-<Enabled>1</Enabled>
-<ToolTip/>
-<Cursor>1</Cursor>
-<Group>0</Group>
-<MaintainAspectRatio>1</MaintainAspectRatio>
-<Pin>0</Pin>
-<TabIndex>-1</TabIndex>
-<AutoResize>0</AutoResize>
-<Coordinates>
-<Top>424</Top>
-<Bottom>474</Bottom>
-<Left>292</Left>
-<Right>1242</Right>
-</Coordinates>
-<Ratios>
-<WidthRatio>-1.000000</WidthRatio>
-<HeightRatio>-1.000000</HeightRatio>
-</Ratios>
-<Event>
-<Name>On Click</Name>
-<Args/>
-<Script>Page.Jump("SETTINGS-MENU3");</Script>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>25</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Right-Click</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Enter</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Leave</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Actions/>
-<NormalImage>
-<Filename>AutoPlay\Images\menu_3.png</Filename>
-<UseTransColor>0</UseTransColor>
-<TransClr>16777215</TransClr>
-<TransTolerance>10</TransTolerance>
-<Opacity>100</Opacity>
-<HTMode>0</HTMode>
-</NormalImage>
-<MouseOverSndMode>0</MouseOverSndMode>
-<MouseOverSound/>
-<MouseClickSndMode>0</MouseClickSndMode>
-<MouseClickSound/>
-</Object>
-<Object>
-<Type>3</Type>
-<Name>Image5</Name>
-<VisibleAtDesignTime>1</VisibleAtDesignTime>
-<VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>0</Locked>
-<Enabled>1</Enabled>
-<ToolTip/>
-<Cursor>1</Cursor>
-<Group>0</Group>
-<MaintainAspectRatio>1</MaintainAspectRatio>
-<Pin>0</Pin>
-<TabIndex>-1</TabIndex>
-<AutoResize>0</AutoResize>
-<Coordinates>
-<Top>424</Top>
-<Bottom>474</Bottom>
-<Left>1242</Left>
-<Right>1304</Right>
-</Coordinates>
-<Ratios>
-<WidthRatio>-1.000000</WidthRatio>
-<HeightRatio>-1.000000</HeightRatio>
-</Ratios>
-<Event>
-<Name>On Click</Name>
-<Args/>
-<Script>Page.Jump("SETTINGS-MENU3");</Script>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>28</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Right-Click</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Enter</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Leave</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Actions/>
-<NormalImage>
-<Filename>AutoPlay\Images\toggle_down.png</Filename>
-<UseTransColor>0</UseTransColor>
-<TransClr>16777215</TransClr>
-<TransTolerance>10</TransTolerance>
-<Opacity>100</Opacity>
-<HTMode>0</HTMode>
-</NormalImage>
-<MouseOverSndMode>0</MouseOverSndMode>
-<MouseOverSound/>
-<MouseClickSndMode>0</MouseClickSndMode>
-<MouseClickSound/>
-</Object>
-<Object>
 <Type>1</Type>
 <Name>LB_SQLSERVER_TITLE</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
@@ -5055,9 +3615,9 @@ end
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>205</Top>
-<Bottom>233</Bottom>
+<Bottom>236</Bottom>
 <Left>341</Left>
-<Right>538</Right>
+<Right>553</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -5145,9 +3705,9 @@ end
 <MouseClickSound/>
 <OriginalRect>
 <Top>205</Top>
-<Bottom>233</Bottom>
+<Bottom>236</Bottom>
 <Left>341</Left>
-<Right>538</Right>
+<Right>553</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -5167,9 +3727,9 @@ end
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>205</Top>
-<Bottom>233</Bottom>
+<Bottom>236</Bottom>
 <Left>582</Left>
-<Right>765</Right>
+<Right>758</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -5257,9 +3817,9 @@ end
 <MouseClickSound/>
 <OriginalRect>
 <Top>205</Top>
-<Bottom>233</Bottom>
+<Bottom>236</Bottom>
 <Left>582</Left>
-<Right>765</Right>
+<Right>758</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -6420,7 +4980,7 @@ end</Script>
 <RightToLeftReadingOrder>0</RightToLeftReadingOrder>
 </Text>
 <Box>
-<BorderStyle>0</BorderStyle>
+<BorderStyle>2</BorderStyle>
 <VerticalScrollbar>1</VerticalScrollbar>
 <HorizontalScrollbar>0</HorizontalScrollbar>
 <Style>0</Style>
@@ -6694,29 +5254,46 @@ end</Script>
 </OriginalRect>
 </Text>
 </Object>
-<HGuidelines/>
-<VGuidelines/>
-</Page>
-<Page>
-<Name>SETTINGS-MENU2</Name>
-<InheritObs/>
-<InheritBG/>
-<Description/>
-<Keywords/>
-<Background>
-<Type>2</Type>
-<ImageStyle>0</ImageStyle>
-<TopColor>16711680</TopColor>
-<BottomColor>16777215</BottomColor>
-<UseCustomBackgroundSettings>1</UseCustomBackgroundSettings>
-<TransitionEffect/>
-<TransProps/>
-<NormalImage>
-<Filename>AutoPlay\Images\BG.png</Filename>
-</NormalImage>
-</Background>
+<Object>
+<Type>3</Type>
+<Name>IMG_ACCORDION2</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>1</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>1</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>364</Top>
+<Bottom>414</Bottom>
+<Left>292</Left>
+<Right>1242</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
 <Event>
-<Name>On Preload</Name>
+<Name>On Click</Name>
+<Args/>
+<Script>Page.Jump("SETTINGS-MENU2");</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Right-Click</Name>
 <Args/>
 <Script/>
 <TreeStates>
@@ -6730,56 +5307,182 @@ end</Script>
 </BookMarks>
 </Event>
 <Event>
-<Name>On Show</Name>
+<Name>On Enter</Name>
 <Args/>
-<Script>Label.SetText("LB_HELLO", "Hello "..CURRENT_USER);
-Label.SetText("LB_IP", "@IP : "..System.GetLANInfo().IP);
-Label.SetText("LB_DATE_TIME", System.GetTime(TIME_FMT_MIL).." "..System.GetDate(DATE_FMT_EUROPE));
-Page.StartTimer(1000, 2);</Script>
+<Script/>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>3</DesignCodeLine>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Leave</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<NormalImage>
+<Filename>AutoPlay\Images\menu_2.png</Filename>
+<UseTransColor>0</UseTransColor>
+<TransClr>16777215</TransClr>
+<TransTolerance>10</TransTolerance>
+<Opacity>100</Opacity>
+<HTMode>0</HTMode>
+</NormalImage>
+<MouseOverSndMode>0</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>0</MouseClickSndMode>
+<MouseClickSound/>
+</Object>
+<Object>
+<Type>3</Type>
+<Name>IMG_TOGGLE_DOWN2</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>1</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>1</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>364</Top>
+<Bottom>414</Bottom>
+<Left>1242</Left>
+<Right>1304</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script>Page.Jump("SETTINGS-MENU2");</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>28</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Right-Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Enter</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Leave</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<NormalImage>
+<Filename>AutoPlay\Images\toggle_down.png</Filename>
+<UseTransColor>0</UseTransColor>
+<TransClr>16777215</TransClr>
+<TransTolerance>10</TransTolerance>
+<Opacity>100</Opacity>
+<HTMode>0</HTMode>
+</NormalImage>
+<MouseOverSndMode>0</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>0</MouseClickSndMode>
+<MouseClickSound/>
+</Object>
+<Object>
+<Type>3</Type>
+<Name>IMG_ACCORDION3</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>1</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>1</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>424</Top>
+<Bottom>474</Bottom>
+<Left>292</Left>
+<Right>1242</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script>Page.Jump("SETTINGS-MENU3");</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
 <DesignCodeCol>25</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
 <Event>
-<Name>On Close</Name>
+<Name>On Right-Click</Name>
 <Args/>
-<Script>Tree.SetSelectedNode("TR_MENU", MENU_TREE_INDEXS.NONE);</Script>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>53</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Timer</Name>
-<Args>number e_ID</Args>
-<Script>if e_ID == 2 then
-	Label.SetText("LB_DATE_TIME", System.GetTime(TIME_FMT_MIL).." "..System.GetDate(DATE_FMT_EUROPE));
-end
-</Script>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>1</DesignCodeLine>
-<DesignCodeCol>1</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Audio</Name>
-<Args>number e_Channel, string e_State</Args>
 <Script/>
 <TreeStates>
 <TreeState>0</TreeState>
@@ -6792,8 +5495,8 @@ end
 </BookMarks>
 </Event>
 <Event>
-<Name>On Size</Name>
-<Args>number e_WindowWidth, number e_WindowHeight, number e_PageWidth, number e_PageHeight, number e_Type</Args>
+<Name>On Enter</Name>
+<Args/>
 <Script/>
 <TreeStates>
 <TreeState>0</TreeState>
@@ -6806,8 +5509,74 @@ end
 </BookMarks>
 </Event>
 <Event>
-<Name>On Menu</Name>
-<Args>number e_ID, table e_ItemInfo</Args>
+<Name>On Leave</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<NormalImage>
+<Filename>AutoPlay\Images\menu_3.png</Filename>
+<UseTransColor>0</UseTransColor>
+<TransClr>16777215</TransClr>
+<TransTolerance>10</TransTolerance>
+<Opacity>100</Opacity>
+<HTMode>0</HTMode>
+</NormalImage>
+<MouseOverSndMode>0</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>0</MouseClickSndMode>
+<MouseClickSound/>
+</Object>
+<Object>
+<Type>3</Type>
+<Name>IMG_TOGGLE_DOWN3</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>1</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>1</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>424</Top>
+<Bottom>474</Bottom>
+<Left>1242</Left>
+<Right>1304</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script>Page.Jump("SETTINGS-MENU3");</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>28</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Right-Click</Name>
+<Args/>
 <Script/>
 <TreeStates>
 <TreeState>0</TreeState>
@@ -6820,8 +5589,8 @@ end
 </BookMarks>
 </Event>
 <Event>
-<Name>On Key</Name>
-<Args>number e_Key, table e_Modifiers</Args>
+<Name>On Enter</Name>
+<Args/>
 <Script/>
 <TreeStates>
 <TreeState>0</TreeState>
@@ -6834,8 +5603,8 @@ end
 </BookMarks>
 </Event>
 <Event>
-<Name>On Mouse Button</Name>
-<Args>number e_Type, number e_X, number e_Y</Args>
+<Name>On Leave</Name>
+<Args/>
 <Script/>
 <TreeStates>
 <TreeState>0</TreeState>
@@ -6847,40 +5616,26 @@ end
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Event>
-<Name>On Mouse Move</Name>
-<Args>number e_X, number e_Y</Args>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Mouse Wheel</Name>
-<Args>table e_Flags, number e_Delta, number e_X, number e_Y</Args>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
+<Actions/>
+<NormalImage>
+<Filename>AutoPlay\Images\toggle_down.png</Filename>
+<UseTransColor>0</UseTransColor>
+<TransClr>16777215</TransClr>
+<TransTolerance>10</TransTolerance>
+<Opacity>100</Opacity>
+<HTMode>0</HTMode>
+</NormalImage>
+<MouseOverSndMode>0</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>0</MouseClickSndMode>
+<MouseClickSound/>
+</Object>
 <Object>
 <Type>12</Type>
 <Name>TR_MENU</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>0</Locked>
+<Locked>1</Locked>
 <Enabled>1</Enabled>
 <ToolTip/>
 <Cursor>0</Cursor>
@@ -6890,10 +5645,10 @@ end
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>120</Top>
-<Bottom>758</Bottom>
+<Top>102</Top>
+<Bottom>768</Bottom>
 <Left>0</Left>
-<Right>232</Right>
+<Right>233</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -7034,27 +5789,12 @@ end
 <Text>Settings</Text>
 <Data>SETTINGS</Data>
 <Selected>0</Selected>
-<Expanded>1</Expanded>
+<Expanded>0</Expanded>
 <NodeIndex>2</NodeIndex>
 <ImageIndex>-1</ImageIndex>
 <SelectedImageIndex>-1</SelectedImageIndex>
 <Checked>0</Checked>
 </AMSTreeData>
-<node_children>
-<tree_node>
-<AMSTreeData>
-<Text>Users managment</Text>
-<Data>USERS</Data>
-<Selected>0</Selected>
-<Expanded>0</Expanded>
-<NodeIndex>2.1</NodeIndex>
-<ImageIndex>-1</ImageIndex>
-<SelectedImageIndex>-1</SelectedImageIndex>
-<Checked>0</Checked>
-</AMSTreeData>
-<node_sibling>0</node_sibling>
-</tree_node>
-</node_children>
 <node_sibling>0</node_sibling>
 </tree_node>
 </Tree>
@@ -7076,7 +5816,7 @@ end
 <Name>IMG_BLACK_BAR</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>0</Locked>
+<Locked>1</Locked>
 <Enabled>1</Enabled>
 <ToolTip/>
 <Cursor>0</Cursor>
@@ -7086,9 +5826,9 @@ end
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>72</Top>
-<Bottom>120</Bottom>
-<Left>232</Left>
+<Top>54</Top>
+<Bottom>102</Bottom>
+<Left>233</Left>
 <Right>1366</Right>
 </Coordinates>
 <Ratios>
@@ -7170,7 +5910,7 @@ end
 <Name>IMG_LEFT_BAR_TITLE</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>0</Locked>
+<Locked>1</Locked>
 <Enabled>1</Enabled>
 <ToolTip/>
 <Cursor>0</Cursor>
@@ -7180,10 +5920,10 @@ end
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>72</Top>
-<Bottom>120</Bottom>
+<Top>54</Top>
+<Bottom>102</Bottom>
 <Left>0</Left>
-<Right>232</Right>
+<Right>233</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -7274,10 +6014,10 @@ end
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>78</Top>
-<Bottom>116</Bottom>
-<Left>54</Left>
-<Right>183</Right>
+<Top>63</Top>
+<Bottom>101</Bottom>
+<Left>18</Left>
+<Right>221</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -7341,7 +6081,7 @@ end
 </Event>
 <Actions/>
 <Text>
-<Body>SETTINGS</Body>
+<Body>DB - SETTTINGS</Body>
 <NormalColor>16777215</NormalColor>
 <HighlightColor>16777215</HighlightColor>
 <MouseDownColor>16777215</MouseDownColor>
@@ -7364,10 +6104,10 @@ end
 <MouseClickSndMode>0</MouseClickSndMode>
 <MouseClickSound/>
 <OriginalRect>
-<Top>78</Top>
-<Bottom>116</Bottom>
-<Left>54</Left>
-<Right>183</Right>
+<Top>63</Top>
+<Bottom>101</Bottom>
+<Left>18</Left>
+<Right>221</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -7386,10 +6126,10 @@ end
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>73</Top>
-<Bottom>100</Bottom>
-<Left>234</Left>
-<Right>303</Right>
+<Top>55</Top>
+<Bottom>82</Bottom>
+<Left>235</Left>
+<Right>304</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -7398,14 +6138,15 @@ end
 <Event>
 <Name>On Click</Name>
 <Args/>
-<Script/>
+<Script>DialogEx.Show("LOGIN", true, nil, nil);
+Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>7563118</DesignCodeLine>
-<DesignCodeCol>1078853642</DesignCodeCol>
+<DesignCodeLine>1</DesignCodeLine>
+<DesignCodeCol>61</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -7419,7 +6160,7 @@ end
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>1080528896</DesignCodeCol>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -7432,8 +6173,8 @@ end
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>28521</DesignCodeLine>
-<DesignCodeCol>-2147468503</DesignCodeCol>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -7446,8 +6187,8 @@ end
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>1684340746</DesignCodeLine>
-<DesignCodeCol>1079836672</DesignCodeCol>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -7476,122 +6217,10 @@ end
 <MouseClickSndMode>0</MouseClickSndMode>
 <MouseClickSound/>
 <OriginalRect>
-<Top>73</Top>
-<Bottom>100</Bottom>
-<Left>234</Left>
-<Right>303</Right>
-</OriginalRect>
-</Text>
-</Object>
-<Object>
-<Type>1</Type>
-<Name>LB_IP</Name>
-<VisibleAtDesignTime>1</VisibleAtDesignTime>
-<VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>0</Locked>
-<Enabled>1</Enabled>
-<ToolTip/>
-<Cursor>0</Cursor>
-<Group>0</Group>
-<MaintainAspectRatio>1</MaintainAspectRatio>
-<Pin>0</Pin>
-<TabIndex>-1</TabIndex>
-<AutoResize>0</AutoResize>
-<Coordinates>
-<Top>93</Top>
-<Bottom>120</Bottom>
-<Left>234</Left>
-<Right>265</Right>
-</Coordinates>
-<Ratios>
-<WidthRatio>-1.000000</WidthRatio>
-<HeightRatio>-1.000000</HeightRatio>
-</Ratios>
-<Event>
-<Name>On Click</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>7563118</DesignCodeLine>
-<DesignCodeCol>1078853642</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Right-Click</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>1080528896</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Enter</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>28521</DesignCodeLine>
-<DesignCodeCol>-2147468503</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Leave</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>1684340746</DesignCodeLine>
-<DesignCodeCol>1079836672</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Actions/>
-<Text>
-<Body>{IP}</Body>
-<NormalColor>16777215</NormalColor>
-<HighlightColor>16777215</HighlightColor>
-<MouseDownColor>16777215</MouseDownColor>
-<DisabledColor>12632256</DisabledColor>
-<FontData>
-<FontName>Nunito</FontName>
-<CharacterSet>0</CharacterSet>
-<Height>-16</Height>
-<Weight>400</Weight>
-<Italic>1</Italic>
-<Underline>0</Underline>
-<StrikeOut>0</StrikeOut>
-<AntiAlias>1</AntiAlias>
-</FontData>
-<Alignment>0</Alignment>
-<Orientation>0</Orientation>
-<AutoSize>1</AutoSize>
-<MouseOverSndMode>0</MouseOverSndMode>
-<MouseOverSound/>
-<MouseClickSndMode>0</MouseClickSndMode>
-<MouseClickSound/>
-<OriginalRect>
-<Top>93</Top>
-<Bottom>120</Bottom>
-<Left>234</Left>
-<Right>265</Right>
+<Top>55</Top>
+<Bottom>82</Bottom>
+<Left>235</Left>
+<Right>304</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -7610,10 +6239,10 @@ end
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>83</Top>
-<Bottom>110</Bottom>
-<Left>1191</Left>
-<Right>1298</Right>
+<Top>76</Top>
+<Bottom>103</Bottom>
+<Left>235</Left>
+<Right>342</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -7700,16 +6329,301 @@ end
 <MouseClickSndMode>0</MouseClickSndMode>
 <MouseClickSound/>
 <OriginalRect>
-<Top>83</Top>
-<Bottom>110</Bottom>
-<Left>1191</Left>
-<Right>1298</Right>
+<Top>76</Top>
+<Bottom>103</Bottom>
+<Left>235</Left>
+<Right>342</Right>
 </OriginalRect>
 </Text>
 </Object>
 <Object>
 <Type>3</Type>
-<Name>IMG_ACCORDION1</Name>
+<Name>IMG_LOGOUT</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>1</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>1</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>60</Top>
+<Bottom>96</Bottom>
+<Left>1321</Left>
+<Right>1357</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script>Application.Exit(0);</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>20</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Right-Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Enter</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Leave</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<NormalImage>
+<Filename>AutoPlay\Images\exit.png</Filename>
+<UseTransColor>0</UseTransColor>
+<TransClr>16777215</TransClr>
+<TransTolerance>10</TransTolerance>
+<Opacity>100</Opacity>
+<HTMode>0</HTMode>
+</NormalImage>
+<MouseOverSndMode>0</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>0</MouseClickSndMode>
+<MouseClickSound/>
+</Object>
+<HGuidelines/>
+<VGuidelines/>
+</Page>
+<Page>
+<Name>SETTINGS-MENU2</Name>
+<InheritObs/>
+<InheritBG>HOME</InheritBG>
+<Description/>
+<Keywords/>
+<Background>
+<Type>2</Type>
+<ImageStyle>0</ImageStyle>
+<TopColor>16711680</TopColor>
+<BottomColor>16777215</BottomColor>
+<UseCustomBackgroundSettings>0</UseCustomBackgroundSettings>
+<TransitionEffect/>
+<TransProps/>
+<NormalImage>
+<Filename>AutoPlay\Images\BG.png</Filename>
+</NormalImage>
+</Background>
+<Event>
+<Name>On Preload</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Show</Name>
+<Args/>
+<Script>Label.SetText("LB_HELLO", "Hello "..CURRENT_USER);
+Label.SetText("LB_IP", "@IP : "..System.GetLANInfo().IP);
+Label.SetText("LB_DATE_TIME", System.GetTime(TIME_FMT_MIL).." "..System.GetDate(DATE_FMT_EUROPE));
+Page.StartTimer(1000, 2);
+
+if SAVE_XML == true then
+	saveXmlData();
+	Page.Navigate(PAGE_NEXT);
+else
+	if Application.LoadValue("ITStock", "FirstRun") == "Y" then
+		setObjectsSizeAndPositions(this);
+		Page.Navigate(PAGE_NEXT);
+	end
+end</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>10</DesignCodeLine>
+<DesignCodeCol>35</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Close</Name>
+<Args/>
+<Script>Tree.SetSelectedNode("TR_MENU", MENU_TREE_INDEXS.NONE);</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>53</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Timer</Name>
+<Args>number e_ID</Args>
+<Script>if e_ID == 2 then
+	Label.SetText("LB_DATE_TIME", System.GetTime(TIME_FMT_MIL).." "..System.GetDate(DATE_FMT_EUROPE));
+end
+</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>1</DesignCodeLine>
+<DesignCodeCol>1</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Audio</Name>
+<Args>number e_Channel, string e_State</Args>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Size</Name>
+<Args>number e_WindowWidth, number e_WindowHeight, number e_PageWidth, number e_PageHeight, number e_Type</Args>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Menu</Name>
+<Args>number e_ID, table e_ItemInfo</Args>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Key</Name>
+<Args>number e_Key, table e_Modifiers</Args>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Mouse Button</Name>
+<Args>number e_Type, number e_X, number e_Y</Args>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Mouse Move</Name>
+<Args>number e_X, number e_Y</Args>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Mouse Wheel</Name>
+<Args>table e_Flags, number e_Delta, number e_X, number e_Y</Args>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Object>
+<Type>3</Type>
+<Name>IMG_ACCORDION2</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
 <Locked>0</Locked>
@@ -7803,7 +6717,7 @@ end
 </Object>
 <Object>
 <Type>3</Type>
-<Name>IMG_TOGGLE_DOWN1</Name>
+<Name>IMG_TOGGLE_UP</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
 <Locked>0</Locked>
@@ -7897,7 +6811,7 @@ end
 </Object>
 <Object>
 <Type>3</Type>
-<Name>Image1</Name>
+<Name>IMG_BG_BODY</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
 <Locked>0</Locked>
@@ -7991,7 +6905,7 @@ end
 </Object>
 <Object>
 <Type>3</Type>
-<Name>Image4</Name>
+<Name>IMG_ACCORDION3</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
 <Locked>0</Locked>
@@ -8085,7 +6999,7 @@ end
 </Object>
 <Object>
 <Type>3</Type>
-<Name>Image5</Name>
+<Name>IMG_TOGGLE_DOWN3</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
 <Locked>0</Locked>
@@ -8179,7 +7093,7 @@ end
 </Object>
 <Object>
 <Type>3</Type>
-<Name>Image2</Name>
+<Name>IMG_ACCORDION1</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
 <Locked>0</Locked>
@@ -8273,7 +7187,7 @@ end
 </Object>
 <Object>
 <Type>3</Type>
-<Name>Image3</Name>
+<Name>IMG_TOGGLE_DOWN1</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
 <Locked>0</Locked>
@@ -8365,193 +7279,12 @@ end
 <MouseClickSndMode>0</MouseClickSndMode>
 <MouseClickSound/>
 </Object>
-<HGuidelines/>
-<VGuidelines/>
-</Page>
-<Page>
-<Name>SETTINGS-MENU3</Name>
-<InheritObs/>
-<InheritBG/>
-<Description/>
-<Keywords/>
-<Background>
-<Type>2</Type>
-<ImageStyle>0</ImageStyle>
-<TopColor>16711680</TopColor>
-<BottomColor>16777215</BottomColor>
-<UseCustomBackgroundSettings>1</UseCustomBackgroundSettings>
-<TransitionEffect/>
-<TransProps/>
-<NormalImage>
-<Filename>AutoPlay\Images\BG.png</Filename>
-</NormalImage>
-</Background>
-<Event>
-<Name>On Preload</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Show</Name>
-<Args/>
-<Script>Label.SetText("LB_HELLO", "Hello "..CURRENT_USER);
-Label.SetText("LB_IP", "@IP : "..System.GetLANInfo().IP);
-Label.SetText("LB_DATE_TIME", System.GetTime(TIME_FMT_MIL).." "..System.GetDate(DATE_FMT_EUROPE));
-Page.StartTimer(1000, 2);</Script>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Close</Name>
-<Args/>
-<Script>Tree.SetSelectedNode("TR_MENU", MENU_TREE_INDEXS.NONE);</Script>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>53</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Timer</Name>
-<Args>number e_ID</Args>
-<Script>if e_ID == 2 then
-	Label.SetText("LB_DATE_TIME", System.GetTime(TIME_FMT_MIL).." "..System.GetDate(DATE_FMT_EUROPE));
-end
-</Script>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>1</DesignCodeLine>
-<DesignCodeCol>1</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Audio</Name>
-<Args>number e_Channel, string e_State</Args>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Size</Name>
-<Args>number e_WindowWidth, number e_WindowHeight, number e_PageWidth, number e_PageHeight, number e_Type</Args>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Menu</Name>
-<Args>number e_ID, table e_ItemInfo</Args>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Key</Name>
-<Args>number e_Key, table e_Modifiers</Args>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Mouse Button</Name>
-<Args>number e_Type, number e_X, number e_Y</Args>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Mouse Move</Name>
-<Args>number e_X, number e_Y</Args>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Mouse Wheel</Name>
-<Args>table e_Flags, number e_Delta, number e_X, number e_Y</Args>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
 <Object>
 <Type>12</Type>
 <Name>TR_MENU</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>0</Locked>
+<Locked>1</Locked>
 <Enabled>1</Enabled>
 <ToolTip/>
 <Cursor>0</Cursor>
@@ -8561,10 +7294,10 @@ end
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>118</Top>
-<Bottom>756</Bottom>
+<Top>102</Top>
+<Bottom>768</Bottom>
 <Left>0</Left>
-<Right>232</Right>
+<Right>233</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -8705,27 +7438,12 @@ end
 <Text>Settings</Text>
 <Data>SETTINGS</Data>
 <Selected>0</Selected>
-<Expanded>1</Expanded>
+<Expanded>0</Expanded>
 <NodeIndex>2</NodeIndex>
 <ImageIndex>-1</ImageIndex>
 <SelectedImageIndex>-1</SelectedImageIndex>
 <Checked>0</Checked>
 </AMSTreeData>
-<node_children>
-<tree_node>
-<AMSTreeData>
-<Text>Users managment</Text>
-<Data>USERS</Data>
-<Selected>0</Selected>
-<Expanded>0</Expanded>
-<NodeIndex>2.1</NodeIndex>
-<ImageIndex>-1</ImageIndex>
-<SelectedImageIndex>-1</SelectedImageIndex>
-<Checked>0</Checked>
-</AMSTreeData>
-<node_sibling>0</node_sibling>
-</tree_node>
-</node_children>
 <node_sibling>0</node_sibling>
 </tree_node>
 </Tree>
@@ -8747,7 +7465,7 @@ end
 <Name>IMG_BLACK_BAR</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>0</Locked>
+<Locked>1</Locked>
 <Enabled>1</Enabled>
 <ToolTip/>
 <Cursor>0</Cursor>
@@ -8757,9 +7475,9 @@ end
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>72</Top>
-<Bottom>120</Bottom>
-<Left>232</Left>
+<Top>54</Top>
+<Bottom>102</Bottom>
+<Left>233</Left>
 <Right>1366</Right>
 </Coordinates>
 <Ratios>
@@ -8841,7 +7559,7 @@ end
 <Name>IMG_LEFT_BAR_TITLE</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>0</Locked>
+<Locked>1</Locked>
 <Enabled>1</Enabled>
 <ToolTip/>
 <Cursor>0</Cursor>
@@ -8851,10 +7569,10 @@ end
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>72</Top>
-<Bottom>118</Bottom>
+<Top>54</Top>
+<Bottom>102</Bottom>
 <Left>0</Left>
-<Right>232</Right>
+<Right>233</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -8945,10 +7663,10 @@ end
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>78</Top>
-<Bottom>116</Bottom>
-<Left>54</Left>
-<Right>183</Right>
+<Top>63</Top>
+<Bottom>101</Bottom>
+<Left>49</Left>
+<Right>193</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -9012,7 +7730,7 @@ end
 </Event>
 <Actions/>
 <Text>
-<Body>SETTINGS</Body>
+<Body>SETTTINGS</Body>
 <NormalColor>16777215</NormalColor>
 <HighlightColor>16777215</HighlightColor>
 <MouseDownColor>16777215</MouseDownColor>
@@ -9035,10 +7753,10 @@ end
 <MouseClickSndMode>0</MouseClickSndMode>
 <MouseClickSound/>
 <OriginalRect>
-<Top>78</Top>
-<Bottom>116</Bottom>
-<Left>54</Left>
-<Right>183</Right>
+<Top>63</Top>
+<Bottom>101</Bottom>
+<Left>49</Left>
+<Right>193</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -9057,10 +7775,10 @@ end
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>73</Top>
-<Bottom>100</Bottom>
-<Left>234</Left>
-<Right>303</Right>
+<Top>55</Top>
+<Bottom>82</Bottom>
+<Left>235</Left>
+<Right>304</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -9069,14 +7787,15 @@ end
 <Event>
 <Name>On Click</Name>
 <Args/>
-<Script/>
+<Script>DialogEx.Show("LOGIN", true, nil, nil);
+Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>7563118</DesignCodeLine>
-<DesignCodeCol>1078853642</DesignCodeCol>
+<DesignCodeLine>1</DesignCodeLine>
+<DesignCodeCol>61</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -9090,7 +7809,7 @@ end
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>1080528896</DesignCodeCol>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -9103,8 +7822,8 @@ end
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>28521</DesignCodeLine>
-<DesignCodeCol>-2147468503</DesignCodeCol>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -9117,8 +7836,8 @@ end
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>1684340746</DesignCodeLine>
-<DesignCodeCol>1079836672</DesignCodeCol>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -9147,122 +7866,10 @@ end
 <MouseClickSndMode>0</MouseClickSndMode>
 <MouseClickSound/>
 <OriginalRect>
-<Top>73</Top>
-<Bottom>100</Bottom>
-<Left>234</Left>
-<Right>303</Right>
-</OriginalRect>
-</Text>
-</Object>
-<Object>
-<Type>1</Type>
-<Name>LB_IP</Name>
-<VisibleAtDesignTime>1</VisibleAtDesignTime>
-<VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>0</Locked>
-<Enabled>1</Enabled>
-<ToolTip/>
-<Cursor>0</Cursor>
-<Group>0</Group>
-<MaintainAspectRatio>1</MaintainAspectRatio>
-<Pin>0</Pin>
-<TabIndex>-1</TabIndex>
-<AutoResize>0</AutoResize>
-<Coordinates>
-<Top>93</Top>
-<Bottom>120</Bottom>
-<Left>234</Left>
-<Right>265</Right>
-</Coordinates>
-<Ratios>
-<WidthRatio>-1.000000</WidthRatio>
-<HeightRatio>-1.000000</HeightRatio>
-</Ratios>
-<Event>
-<Name>On Click</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>7563118</DesignCodeLine>
-<DesignCodeCol>1078853642</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Right-Click</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>1080528896</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Enter</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>28521</DesignCodeLine>
-<DesignCodeCol>-2147468503</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Leave</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>1684340746</DesignCodeLine>
-<DesignCodeCol>1079836672</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Actions/>
-<Text>
-<Body>{IP}</Body>
-<NormalColor>16777215</NormalColor>
-<HighlightColor>16777215</HighlightColor>
-<MouseDownColor>16777215</MouseDownColor>
-<DisabledColor>12632256</DisabledColor>
-<FontData>
-<FontName>Nunito</FontName>
-<CharacterSet>0</CharacterSet>
-<Height>-16</Height>
-<Weight>400</Weight>
-<Italic>1</Italic>
-<Underline>0</Underline>
-<StrikeOut>0</StrikeOut>
-<AntiAlias>1</AntiAlias>
-</FontData>
-<Alignment>0</Alignment>
-<Orientation>0</Orientation>
-<AutoSize>1</AutoSize>
-<MouseOverSndMode>0</MouseOverSndMode>
-<MouseOverSound/>
-<MouseClickSndMode>0</MouseClickSndMode>
-<MouseClickSound/>
-<OriginalRect>
-<Top>93</Top>
-<Bottom>120</Bottom>
-<Left>234</Left>
-<Right>265</Right>
+<Top>55</Top>
+<Bottom>82</Bottom>
+<Left>235</Left>
+<Right>304</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -9281,10 +7888,10 @@ end
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>83</Top>
-<Bottom>110</Bottom>
-<Left>1191</Left>
-<Right>1298</Right>
+<Top>76</Top>
+<Bottom>103</Bottom>
+<Left>235</Left>
+<Right>342</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -9371,13 +7978,301 @@ end
 <MouseClickSndMode>0</MouseClickSndMode>
 <MouseClickSound/>
 <OriginalRect>
-<Top>83</Top>
-<Bottom>110</Bottom>
-<Left>1191</Left>
-<Right>1298</Right>
+<Top>76</Top>
+<Bottom>103</Bottom>
+<Left>235</Left>
+<Right>342</Right>
 </OriginalRect>
 </Text>
 </Object>
+<Object>
+<Type>3</Type>
+<Name>IMG_LOGOUT</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>1</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>1</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>60</Top>
+<Bottom>96</Bottom>
+<Left>1321</Left>
+<Right>1357</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script>Application.Exit(0);</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>20</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Right-Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Enter</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Leave</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<NormalImage>
+<Filename>AutoPlay\Images\exit.png</Filename>
+<UseTransColor>0</UseTransColor>
+<TransClr>16777215</TransClr>
+<TransTolerance>10</TransTolerance>
+<Opacity>100</Opacity>
+<HTMode>0</HTMode>
+</NormalImage>
+<MouseOverSndMode>0</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>0</MouseClickSndMode>
+<MouseClickSound/>
+</Object>
+<HGuidelines/>
+<VGuidelines/>
+</Page>
+<Page>
+<Name>SETTINGS-MENU3</Name>
+<InheritObs/>
+<InheritBG>HOME</InheritBG>
+<Description/>
+<Keywords/>
+<Background>
+<Type>2</Type>
+<ImageStyle>0</ImageStyle>
+<TopColor>16711680</TopColor>
+<BottomColor>16777215</BottomColor>
+<UseCustomBackgroundSettings>0</UseCustomBackgroundSettings>
+<TransitionEffect/>
+<TransProps/>
+<NormalImage>
+<Filename>AutoPlay\Images\BG.png</Filename>
+</NormalImage>
+</Background>
+<Event>
+<Name>On Preload</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Show</Name>
+<Args/>
+<Script>Label.SetText("LB_HELLO", "Hello "..CURRENT_USER);
+Label.SetText("LB_IP", "@IP : "..System.GetLANInfo().IP);
+Label.SetText("LB_DATE_TIME", System.GetTime(TIME_FMT_MIL).." "..System.GetDate(DATE_FMT_EUROPE));
+Page.StartTimer(1000, 2);
+
+if SAVE_XML == true then
+	saveXmlData();
+	Page.Navigate(PAGE_NEXT);
+else
+	if Application.LoadValue("ITStock", "FirstRun") == "Y" then
+		setObjectsSizeAndPositions(this);
+		Application.SaveValue("ITStock", "FirstRun", "N");
+		Page.Navigate(PAGE_FIRST);
+	end
+end
+
+</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>12</DesignCodeLine>
+<DesignCodeCol>2</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Close</Name>
+<Args/>
+<Script>Tree.SetSelectedNode("TR_MENU", MENU_TREE_INDEXS.NONE);</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>53</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Timer</Name>
+<Args>number e_ID</Args>
+<Script>if e_ID == 2 then
+	Label.SetText("LB_DATE_TIME", System.GetTime(TIME_FMT_MIL).." "..System.GetDate(DATE_FMT_EUROPE));
+end
+</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>1</DesignCodeLine>
+<DesignCodeCol>1</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Audio</Name>
+<Args>number e_Channel, string e_State</Args>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Size</Name>
+<Args>number e_WindowWidth, number e_WindowHeight, number e_PageWidth, number e_PageHeight, number e_Type</Args>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Menu</Name>
+<Args>number e_ID, table e_ItemInfo</Args>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Key</Name>
+<Args>number e_Key, table e_Modifiers</Args>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Mouse Button</Name>
+<Args>number e_Type, number e_X, number e_Y</Args>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Mouse Move</Name>
+<Args>number e_X, number e_Y</Args>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Mouse Wheel</Name>
+<Args>table e_Flags, number e_Delta, number e_X, number e_Y</Args>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
 <Object>
 <Type>3</Type>
 <Name>IMG_ACCORDION1</Name>
@@ -9474,7 +8369,7 @@ end
 </Object>
 <Object>
 <Type>3</Type>
-<Name>Image1</Name>
+<Name>IMG_ACCORDION2</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
 <Locked>0</Locked>
@@ -9568,7 +8463,7 @@ end
 </Object>
 <Object>
 <Type>3</Type>
-<Name>Image3</Name>
+<Name>IMG_ACCORDION3</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
 <Locked>0</Locked>
@@ -9756,7 +8651,7 @@ end
 </Object>
 <Object>
 <Type>3</Type>
-<Name>Image2</Name>
+<Name>IMG_TOGGLE_DOWN2</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
 <Locked>0</Locked>
@@ -9850,7 +8745,7 @@ end
 </Object>
 <Object>
 <Type>3</Type>
-<Name>Image4</Name>
+<Name>IMG_TOGGLE_UP</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
 <Locked>0</Locked>
@@ -9944,7 +8839,7 @@ end
 </Object>
 <Object>
 <Type>3</Type>
-<Name>Image5</Name>
+<Name>IMG_BG_BODY</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
 <Locked>0</Locked>
@@ -10025,6 +8920,806 @@ end
 <Actions/>
 <NormalImage>
 <Filename>AutoPlay\Images\bg_menu_body.png</Filename>
+<UseTransColor>0</UseTransColor>
+<TransClr>16777215</TransClr>
+<TransTolerance>10</TransTolerance>
+<Opacity>100</Opacity>
+<HTMode>0</HTMode>
+</NormalImage>
+<MouseOverSndMode>0</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>0</MouseClickSndMode>
+<MouseClickSound/>
+</Object>
+<Object>
+<Type>12</Type>
+<Name>TR_MENU</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>1</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>0</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>0</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>102</Top>
+<Bottom>768</Bottom>
+<Left>0</Left>
+<Right>233</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Select</Name>
+<Args>string e_NodeIndex</Args>
+<Script>leftMenuJump();</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>15</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Double-Click</Name>
+<Args>string e_NodeIndex</Args>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Key</Name>
+<Args>number e_Key, table e_Modifiers</Args>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Focus</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On EditLabel</Name>
+<Args>string e_NodeIndex, string e_NewText, string e_OldText</Args>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Check</Name>
+<Args>string e_NodeIndex, boolean e_Checked</Args>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Expanded</Name>
+<Args>string e_NodeIndex, boolean e_Expanded</Args>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<Options>
+<ImageList/>
+<BackgroundColor format="hex">ffffff</BackgroundColor>
+<TextColor format="hex">333333</TextColor>
+<TransparentImageListColor format="hex">000000</TransparentImageListColor>
+<ShowCheckBoxes>0</ShowCheckBoxes>
+<HasLines>0</HasLines>
+<LinesAtRoot>1</LinesAtRoot>
+<HasButtons>1</HasButtons>
+<EditLabels>0</EditLabels>
+<AlwaysShowSelection>1</AlwaysShowSelection>
+<UseImageList>1</UseImageList>
+<ReadOrder>0</ReadOrder>
+<Indent>0</Indent>
+<BorderMode>0</BorderMode>
+</Options>
+<Tree>
+<TreeRootCreated>1</TreeRootCreated>
+<tree_node>
+<AMSTreeData>
+<Text>Home</Text>
+<Data>HOME</Data>
+<Selected>0</Selected>
+<Expanded>0</Expanded>
+<NodeIndex>1</NodeIndex>
+<ImageIndex>-1</ImageIndex>
+<SelectedImageIndex>-1</SelectedImageIndex>
+<Checked>0</Checked>
+</AMSTreeData>
+<node_sibling>1</node_sibling>
+</tree_node>
+<tree_node>
+<AMSTreeData>
+<Text>Settings</Text>
+<Data>SETTINGS</Data>
+<Selected>0</Selected>
+<Expanded>0</Expanded>
+<NodeIndex>2</NodeIndex>
+<ImageIndex>-1</ImageIndex>
+<SelectedImageIndex>-1</SelectedImageIndex>
+<Checked>0</Checked>
+</AMSTreeData>
+<node_sibling>0</node_sibling>
+</tree_node>
+</Tree>
+<Font>
+<FontData>
+<FontName>Nunito</FontName>
+<CharacterSet>0</CharacterSet>
+<Height>-19</Height>
+<Weight>700</Weight>
+<Italic>0</Italic>
+<Underline>0</Underline>
+<StrikeOut>0</StrikeOut>
+<AntiAlias>1</AntiAlias>
+</FontData>
+</Font>
+</Object>
+<Object>
+<Type>3</Type>
+<Name>IMG_BLACK_BAR</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>1</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>0</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>1</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>54</Top>
+<Bottom>102</Bottom>
+<Left>233</Left>
+<Right>1366</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>1082825728</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Right-Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>1082526720</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Enter</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>1082326016</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Leave</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>1399153664</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<NormalImage>
+<Filename>AutoPlay\Images\nav_h.png</Filename>
+<UseTransColor>0</UseTransColor>
+<TransClr>16777215</TransClr>
+<TransTolerance>10</TransTolerance>
+<Opacity>100</Opacity>
+<HTMode>0</HTMode>
+</NormalImage>
+<MouseOverSndMode>0</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>0</MouseClickSndMode>
+<MouseClickSound/>
+</Object>
+<Object>
+<Type>3</Type>
+<Name>IMG_LEFT_BAR_TITLE</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>1</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>0</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>1</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>54</Top>
+<Bottom>102</Bottom>
+<Left>0</Left>
+<Right>233</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>25600</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Right-Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>100</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Enter</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>1079894016</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Leave</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>1080008704</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<NormalImage>
+<Filename>AutoPlay\Images\bg_left_menu_title.png</Filename>
+<UseTransColor>0</UseTransColor>
+<TransClr>16777215</TransClr>
+<TransTolerance>10</TransTolerance>
+<Opacity>100</Opacity>
+<HTMode>0</HTMode>
+</NormalImage>
+<MouseOverSndMode>0</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>0</MouseClickSndMode>
+<MouseClickSound/>
+</Object>
+<Object>
+<Type>1</Type>
+<Name>LB_PAGE_TITLE</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>0</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>1</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>63</Top>
+<Bottom>101</Bottom>
+<Left>49</Left>
+<Right>193</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>7563118</DesignCodeLine>
+<DesignCodeCol>1078853642</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Right-Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>1080528896</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Enter</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>28521</DesignCodeLine>
+<DesignCodeCol>-2147468503</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Leave</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>1684340746</DesignCodeLine>
+<DesignCodeCol>1079836672</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<Text>
+<Body>SETTTINGS</Body>
+<NormalColor>16777215</NormalColor>
+<HighlightColor>16777215</HighlightColor>
+<MouseDownColor>16777215</MouseDownColor>
+<DisabledColor>12632256</DisabledColor>
+<FontData>
+<FontName>Nunito</FontName>
+<CharacterSet>0</CharacterSet>
+<Height>-24</Height>
+<Weight>700</Weight>
+<Italic>0</Italic>
+<Underline>0</Underline>
+<StrikeOut>0</StrikeOut>
+<AntiAlias>1</AntiAlias>
+</FontData>
+<Alignment>0</Alignment>
+<Orientation>0</Orientation>
+<AutoSize>1</AutoSize>
+<MouseOverSndMode>0</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>0</MouseClickSndMode>
+<MouseClickSound/>
+<OriginalRect>
+<Top>63</Top>
+<Bottom>101</Bottom>
+<Left>49</Left>
+<Right>193</Right>
+</OriginalRect>
+</Text>
+</Object>
+<Object>
+<Type>1</Type>
+<Name>LB_HELLO</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>0</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>1</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>55</Top>
+<Bottom>82</Bottom>
+<Left>235</Left>
+<Right>304</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script>DialogEx.Show("LOGIN", true, nil, nil);
+Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>1</DesignCodeLine>
+<DesignCodeCol>61</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Right-Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Enter</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Leave</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<Text>
+<Body>{HELLO}</Body>
+<NormalColor>16777215</NormalColor>
+<HighlightColor>16777215</HighlightColor>
+<MouseDownColor>16777215</MouseDownColor>
+<DisabledColor>12632256</DisabledColor>
+<FontData>
+<FontName>Nunito</FontName>
+<CharacterSet>0</CharacterSet>
+<Height>-16</Height>
+<Weight>400</Weight>
+<Italic>1</Italic>
+<Underline>0</Underline>
+<StrikeOut>0</StrikeOut>
+<AntiAlias>1</AntiAlias>
+</FontData>
+<Alignment>0</Alignment>
+<Orientation>0</Orientation>
+<AutoSize>1</AutoSize>
+<MouseOverSndMode>0</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>0</MouseClickSndMode>
+<MouseClickSound/>
+<OriginalRect>
+<Top>55</Top>
+<Bottom>82</Bottom>
+<Left>235</Left>
+<Right>304</Right>
+</OriginalRect>
+</Text>
+</Object>
+<Object>
+<Type>1</Type>
+<Name>LB_DATE_TIME</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>0</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>1</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>76</Top>
+<Bottom>103</Bottom>
+<Left>235</Left>
+<Right>342</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>7563118</DesignCodeLine>
+<DesignCodeCol>1078853642</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Right-Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>1080528896</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Enter</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>28521</DesignCodeLine>
+<DesignCodeCol>-2147468503</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Leave</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>1684340746</DesignCodeLine>
+<DesignCodeCol>1079836672</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<Text>
+<Body>{DATA_TIME}</Body>
+<NormalColor>16777215</NormalColor>
+<HighlightColor>16777215</HighlightColor>
+<MouseDownColor>16777215</MouseDownColor>
+<DisabledColor>12632256</DisabledColor>
+<FontData>
+<FontName>Nunito</FontName>
+<CharacterSet>0</CharacterSet>
+<Height>-16</Height>
+<Weight>400</Weight>
+<Italic>1</Italic>
+<Underline>0</Underline>
+<StrikeOut>0</StrikeOut>
+<AntiAlias>1</AntiAlias>
+</FontData>
+<Alignment>0</Alignment>
+<Orientation>0</Orientation>
+<AutoSize>1</AutoSize>
+<MouseOverSndMode>0</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>0</MouseClickSndMode>
+<MouseClickSound/>
+<OriginalRect>
+<Top>76</Top>
+<Bottom>103</Bottom>
+<Left>235</Left>
+<Right>342</Right>
+</OriginalRect>
+</Text>
+</Object>
+<Object>
+<Type>3</Type>
+<Name>IMG_LOGOUT</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>1</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>1</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>60</Top>
+<Bottom>96</Bottom>
+<Left>1321</Left>
+<Right>1357</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script>Application.Exit(0);</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>20</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Right-Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Enter</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Leave</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<NormalImage>
+<Filename>AutoPlay\Images\exit.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -10895,8 +10590,8 @@ end</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>35</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeLine>28</DesignCodeLine>
+<DesignCodeCol>11</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -11021,7 +10716,7 @@ end</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>2</DesignCodeLine>
+<DesignCodeLine>3</DesignCodeLine>
 <DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
@@ -11029,7 +10724,12 @@ end</Script>
 <Event>
 <Name>On Close</Name>
 <Args/>
-<Script>Input.SetText("IN_DB_NAME", "Database");
+<Script>Input.SetEnabled("IN_DB_NAME", true);
+Input.SetEnabled("IN_DB_USERNAME", true);
+Input.SetEnabled("IN_DB_PASSWORD", true);
+Input.SetEnabled("IN_DB_ADDRESS", true);
+Input.SetEnabled("IN_DB_PORT", true);
+Input.SetText("IN_DB_NAME", "Database");
 Input.SetText("IN_DB_USERNAME", "Username");
 Input.SetText("IN_DB_PASSWORD", "Password");
 Input.SetText("IN_DB_PORT", "Port");
@@ -11039,14 +10739,21 @@ Image.Load("IMG_DB_NAME", "AutoPlay\\Images\\input.png");
 Image.Load("IMG_DB_USERNAME", "AutoPlay\\Images\\input.png");
 Image.Load("IMG_DB_PASSWORD", "AutoPlay\\Images\\input.png");
 Image.Load("IMG_DB_PORT", "AutoPlay\\Images\\input.png");
-Image.Load("IMG_DB_ADDRESS", "AutoPlay\\Images\\input.png");</Script>
+Image.Load("IMG_DB_ADDRESS", "AutoPlay\\Images\\input.png");
+Image.Load("IMG_SAVE_CONFIG_SERVER_IGNORED", "AutoPlay\\Images\\btn_save.png");
+Image.SetEnabled("IMG_DB_NAME", true);
+Image.SetEnabled("IMG_DB_USERNAME", true);
+Image.SetEnabled("IMG_DB_PASSWORD", true);
+Image.SetEnabled("IMG_DB_ADDRESS", true);
+Image.SetEnabled("IMG_DB_PORT", true);
+Image.SetEnabled("IMG_SAVE_CONFIG_SERVER_IGNORED", true);</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>10</DesignCodeLine>
-<DesignCodeCol>23</DesignCodeCol>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
