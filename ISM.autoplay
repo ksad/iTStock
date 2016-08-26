@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-1"?><DocumentData>
-<ProductVersion>8.2.0.0</ProductVersion>
+<ProductVersion>8.5.0.0</ProductVersion>
 <ProductID>{ABF9EF9E-ECF6-4019-8A3E-908A6CFF4D1A}</ProductID>
 <IRProductName>AutoPlay Media Studio 8</IRProductName>
-<ProductType/>
+<ProductType>Commercial</ProductType>
 <DocInfo>
 <Title/>
 <Author/>
@@ -12,7 +12,7 @@
 <Email/>
 <Comments/>
 <CreatedVersion>8.0.0.0 (Professional Edition Commercial)</CreatedVersion>
-<LastSavedVersion>8.2.0.0 (Professional Edition)</LastSavedVersion>
+<LastSavedVersion>8.5.0.0 (Professional Edition Commercial)</LastSavedVersion>
 </DocInfo>
 <ProjectInfo ToolTipStyle="0">
 <Office2007Theme Theme="5"/>
@@ -24,7 +24,7 @@
 <FillColor>0</FillColor>
 </WindowStyles>
 <WindowOptions>
-<Movable>1</Movable>
+<Movable>0</Movable>
 <AlwaysOnTop>0</AlwaysOnTop>
 <Resizable>0</Resizable>
 <MinWidth>1366</MinWidth>
@@ -451,7 +451,7 @@ DialogEx.Show("LOGIN", true, nil, nil);</Script>
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>50</DesignCodeCol>
+<DesignCodeCol>39</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -627,6 +627,8 @@ else
 		Window.Hide(Application.GetWndHandle());
 		Page.Navigate(PAGE_NEXT);
 	else
+		local windowLoadingHandle = Application.LoadValue("Loading", "windowHandle");
+		Window.Close(windowLoadingHandle, CLOSEWND_TERMINATE);
 		Window.Maximize(Application.GetWndHandle());
 	end
 end</Script>
@@ -635,8 +637,8 @@ end</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>11</DesignCodeLine>
-<DesignCodeCol>35</DesignCodeCol>
+<DesignCodeLine>12</DesignCodeLine>
+<DesignCodeCol>42</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -3183,8 +3185,8 @@ loadDbAccess();</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>8</DesignCodeLine>
-<DesignCodeCol>4</DesignCodeCol>
+<DesignCodeLine>10</DesignCodeLine>
+<DesignCodeCol>35</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -8136,11 +8138,11 @@ end
 </Script>
 <TreeStates>
 <TreeState>0</TreeState>
-<TreeState>0</TreeState>
+<TreeState>2</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>12</DesignCodeLine>
-<DesignCodeCol>2</DesignCodeCol>
+<DesignCodeCol>28</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -9735,7 +9737,7 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <VGuidelines/>
 </Page>
 <SugDialogs>
-<PageDialog width="500" height="300" dialog_title="IT Stock Manager" dialog_style="2" movable="0" use_custom_icon="0" custom_icon="AutoPlay\Icons\server.ico" always_on_top="0" resizable="0" min_width="480" min_height="300" fit_custom_mask_to_window="1" custom_mask="">
+<PageDialog width="500" height="300" dialog_title="IT Stock Manager" dialog_style="3" movable="0" use_custom_icon="0" custom_icon="AutoPlay\Icons\server.ico" always_on_top="0" resizable="0" min_width="480" min_height="300" fit_custom_mask_to_window="1" custom_mask="AutoPlay\Images\630_1.png">
 <Page>
 <Name>LOGIN</Name>
 <InheritObs/>
@@ -10575,6 +10577,8 @@ if mySQLConnection ~= nil then
 	if (String.CompareNoCase(userName, dbUsername) == 0 and String.CompareNoCase(Crypto.MD5DigestFromString(password), dbPassword) == 0) then
 		CURRENT_USER = dbUsername;
 		EXIT = 1;
+		File.Run("AutoPlay\\Docs\\Loading.exe", "", "", SW_SHOWNORMAL, false);
+		Application.Sleep(3000);
 		DialogEx.Close(this);
 	else
 		Dialog.Message("Error", "Invalid username/password.", MB_OK, MB_ICONSTOP, MB_DEFBUTTON1);
