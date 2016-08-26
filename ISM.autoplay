@@ -126,13 +126,13 @@ function checkSQLServerStatus()
 	Label.SetVisible("LB_SERVER_STATUS", true);
 	if checkSQLServer == 4 then
 		Label.SetText("LB_SERVER_STATUS", "Server is running");
-		Image.Load("IMG_SERVER_STATUS_IGNORED", "AutoPlay\\Images\\server_ok.png");
+		Image.Load("IMG_SERVER_STATUS", "AutoPlay\\Images\\server_ok.png");
 	elseif checkSQLServer == 0 then
 		Label.SetText("LB_SERVER_STATUS", "Server not found");
-		Image.Load("IMG_SERVER_STATUS_IGNORED", "AutoPlay\\Images\\server_ko.png");
+		Image.Load("IMG_SERVER_STATUS", "AutoPlay\\Images\\server_ko.png");
 	elseif checkSQLServer == 1 then
 		Label.SetText("LB_SERVER_STATUS", "Server stopped");
-		Image.Load("IMG_SERVER_STATUS_IGNORED", "AutoPlay\\Images\\server_ko.png");
+		Image.Load("IMG_SERVER_STATUS", "AutoPlay\\Images\\server_ko.png");
 	end
 	
 	return checkSQLServer;
@@ -143,33 +143,37 @@ function loadDbAccess ()
 	local db_access = TextFile.ReadToTable("AutoPlay\\Docs\\~tmp_db_access.txt");
 	File.Delete("AutoPlay\\Docs\\~tmp_db_access.txt", false, false, false, nil);
 
-	Input.SetText("IN_DB_NAME", String.TrimLeft(db_access[1], "[DB_NAME]="));
-	Input.SetText("IN_DB_USERNAME", String.TrimLeft(db_access[2], "[USER]="));
-	Input.SetText("IN_DB_PASSWORD", String.TrimLeft(db_access[3], "[PASSWORD]="));
-	Input.SetText("IN_DB_ADDRESS", String.TrimLeft(db_access[4], "[ADDRESS]="));
-	Input.SetText("IN_DB_PORT", String.TrimLeft(db_access[5], "[PORT]="));
+	Input.SetText("IN_DB_NAME_DBCF", String.TrimLeft(db_access[1], "[DB_NAME]="));
+	Input.SetText("IN_DB_USERNAME_DBCF", String.TrimLeft(db_access[2], "[USER]="));
+	Input.SetText("IN_DB_PASSWORD_DBCF", String.TrimLeft(db_access[3], "[PASSWORD]="));
+	Input.SetText("IN_DB_ADDRESS_DBCF", String.TrimLeft(db_access[4], "[ADDRESS]="));
+	Input.SetText("IN_DB_PORT_DBCF", String.TrimLeft(db_access[5], "[PORT]="));
 end
 
-function setDbConfigForm (currentObject)
-	local objectList = DialogEx.EnumerateObjects();
+function setDbConfigForm (currentObject, mode)
+	if mode == "Dialog" then
+		objectList = DialogEx.EnumerateObjects();
+	else
+		objectList = Page.EnumerateObjects();
+	end
 
 	for i, object in pairs(objectList) do
-		local objectType = DialogEx.GetObjectType(object);
+		if mode == "Dialog" then
+			objectType = DialogEx.GetObjectType(object);
+		else
+			objectType = Page.GetObjectType(object);
+		end
 		if object == currentObject then
 			local objectText = Input.GetText(object);
 			if objectText == "Database" or objectText == "Username" or objectText == "Password" or objectText == "Port" or objectText == "Address" then
 				Input.SetText(currentObject, "");
-				Image.Load(String.Replace(currentObject, "IN", "IMG", false), "AutoPlay\\Images\\input_selected.png");
 			else
 				Input.SetSelection(currentObject, 1, -1);
 			end
+			Image.Load(String.Replace(currentObject, "IN", "IMG", false), "AutoPlay\\Images\\input_selected.png");
 		else
-			if objectType == 3 and String.Find(object, "IGNORED", 1, false) == -1 then
-				if Label.IsVisible("LB_DB_ADDRESS") then
-					Image.Load(object, "AutoPlay\\Images\\input_mandatory.png");
-				else
-					Image.Load(object, "AutoPlay\\Images\\input.png");
-				end
+			if objectType == 3 and String.Find(object, "DBCF", 1, false) ~= -1 then
+				Image.Load(object, "AutoPlay\\Images\\input.png");
 			end
 
 			if objectType == 7 and Input.GetText(object) == "" then
@@ -229,7 +233,7 @@ function setObjectsSizeAndPositions (pageName)
 		perY = String.ToNumber(XML.GetValue("ROOT/PAGE/"..object.."/perPosY"));
 		NewX = (perX*PAGEWIDTH)/100
 		NewY = (perY*PAGEHEIGHT)/100
-	
+
 		if objectType ==0 then
 			Button.SetSize(object, NewWidth, NewHeight);
 			Button.SetPos(object, NewX, NewY);
@@ -252,8 +256,15 @@ function setObjectsSizeAndPositions (pageName)
 			Web.SetSize(object, NewWidth, NewHeight);
 			Web.SetPos(object, NewX, NewY);
 		elseif objectType ==7 then
-			Input.SetSize(object, NewWidth, NewHeight);
-			Input.SetPos(object, NewX, NewY);
+			perFont = String.ToNumber(XML.GetValue("ROOT/PAGE/"..object.."/perFontSize"));
+			newFontSize = (perFont*PAGEWIDTH)/100;
+			tblInputProps = {};
+			tblInputProps.FontSize = Math.Round(newFontSize, 0);
+			tblInputProps.Height = NewHeight;
+			tblInputProps.Width = NewWidth;
+			tblInputProps.X = NewX;
+			tblInputProps.Y = NewY;
+			Input.SetProperties(object, tblInputProps);
 		elseif objectType ==8 then
 			Hotspot.SetSize(object, NewWidth, NewHeight);
 			Hotspot.SetPos(object, NewX, NewY);
@@ -312,6 +323,7 @@ function saveXmlData()
 
 	for i,object in pairs (allObjects) do
 		local objectType = Page.GetObjectType(object);
+		xmlFont = "";
 		if object ~= "BTN_SAVE_XML" then
 			if objectType ==0 and String.Find(object, "IGNORED", 1, false) == -1 then
 				objProp = Button.GetProperties(object);
@@ -329,6 +341,9 @@ function saveXmlData()
 				objProp = Web.GetProperties(object);
 			elseif objectType ==7  and  String.Find(object, "IGNORED", 1, false) == -1 then
 				objProp = Input.GetProperties(object);
+				perFont = (objProp.FontSize*100)/Page.GetSize().Width;
+				xmlFont = '\t\t\t&lt;perFontSize&gt;'..perFont..'&lt;/perFontSize&gt;\r\n';
+				result = Dialog.Message("Notice", xmlFont, MB_OK, MB_ICONINFORMATION, MB_DEFBUTTON1);
 			elseif objectType ==8  and  String.Find(object, "IGNORED", 1, false) == -1 then
 				objProp = Hotspot.GetProperties(object);
 			elseif objectType ==9  and  String.Find(object, "IGNORED", 1, false) == -1 then
@@ -373,6 +388,9 @@ function saveXmlData()
 			xml = xml..'\t\t\t&lt;perHeight&gt;'..perHeight..'&lt;/perHeight&gt;\r\n';
 			xml = xml..'\t\t\t&lt;perPosX&gt;'..perX..'&lt;/perPosX&gt;\r\n';
 			xml = xml..'\t\t\t&lt;perPosY&gt;'..perY..'&lt;/perPosY&gt;\r\n';
+			if xmlFont ~= nil then
+				xml = xml..xmlFont;
+			end
 			xml = xml..'\t\t&lt;/'..object..'&gt;\r\n';
 		end
 	end
@@ -3512,7 +3530,7 @@ end
 <Name>IMG_BG_BODY</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>0</Locked>
+<Locked>1</Locked>
 <Enabled>1</Enabled>
 <ToolTip/>
 <Cursor>0</Cursor>
@@ -4015,10 +4033,10 @@ end
 </Object>
 <Object>
 <Type>3</Type>
-<Name>IMG_DB_NAME</Name>
+<Name>IMG_DB_NAME_DBCF</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>0</Locked>
+<Locked>1</Locked>
 <Enabled>1</Enabled>
 <ToolTip/>
 <Cursor>0</Cursor>
@@ -4109,10 +4127,10 @@ end
 </Object>
 <Object>
 <Type>3</Type>
-<Name>IMG_DB_USERNAME</Name>
+<Name>IMG_DB_USERNAME_DBCF</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>0</Locked>
+<Locked>1</Locked>
 <Enabled>1</Enabled>
 <ToolTip/>
 <Cursor>0</Cursor>
@@ -4203,10 +4221,10 @@ end
 </Object>
 <Object>
 <Type>3</Type>
-<Name>IMG_DB_PASSWORD</Name>
+<Name>IMG_DB_PASSWORD_DBCF</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>0</Locked>
+<Locked>1</Locked>
 <Enabled>1</Enabled>
 <ToolTip/>
 <Cursor>0</Cursor>
@@ -4297,10 +4315,10 @@ end
 </Object>
 <Object>
 <Type>3</Type>
-<Name>IMG_DB_PORT</Name>
+<Name>IMG_DB_PORT_DBCF</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>0</Locked>
+<Locked>1</Locked>
 <Enabled>1</Enabled>
 <ToolTip/>
 <Cursor>0</Cursor>
@@ -4391,10 +4409,10 @@ end
 </Object>
 <Object>
 <Type>3</Type>
-<Name>IMG_DB_ADDRESS</Name>
+<Name>IMG_DB_ADDRESS_DBCF</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>0</Locked>
+<Locked>1</Locked>
 <Enabled>1</Enabled>
 <ToolTip/>
 <Cursor>0</Cursor>
@@ -4485,7 +4503,7 @@ end
 </Object>
 <Object>
 <Type>7</Type>
-<Name>IN_DB_ADDRESS</Name>
+<Name>IN_DB_ADDRESS_DBCF</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
 <Locked>0</Locked>
@@ -4511,7 +4529,7 @@ end
 <Name>On Key</Name>
 <Args>number e_Key, table e_Modifiers</Args>
 <Script>if e_Key == 9 then
-	Page.SetFocus("IN_DB_NAME");
+	Page.SetFocus("IN_DB_NAME_DBCF");
 end
 
 if e_Key == 13 then
@@ -4587,7 +4605,7 @@ end</Script>
 </Object>
 <Object>
 <Type>7</Type>
-<Name>IN_DB_PORT</Name>
+<Name>IN_DB_PORT_DBCF</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
 <Locked>0</Locked>
@@ -4613,7 +4631,7 @@ end</Script>
 <Name>On Key</Name>
 <Args>number e_Key, table e_Modifiers</Args>
 <Script>if e_Key == 9 then
-	Page.SetFocus("IN_DB_USERNAME");
+	Page.SetFocus("IN_DB_USERNAME_DBCF");
 end
 
 if e_Key == 13 then
@@ -4689,7 +4707,7 @@ end</Script>
 </Object>
 <Object>
 <Type>7</Type>
-<Name>IN_DB_PASSWORD</Name>
+<Name>IN_DB_PASSWORD_DBCF</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
 <Locked>0</Locked>
@@ -4715,7 +4733,7 @@ end</Script>
 <Name>On Key</Name>
 <Args>number e_Key, table e_Modifiers</Args>
 <Script>if e_Key == 9 then
-	Page.SetFocus("IN_DB_PORT");
+	Page.SetFocus("IN_DB_PORT_DBCF");
 end
 
 if e_Key == 13 then
@@ -4791,7 +4809,7 @@ end</Script>
 </Object>
 <Object>
 <Type>7</Type>
-<Name>IN_DB_USERNAME</Name>
+<Name>IN_DB_USERNAME_DBCF</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
 <Locked>0</Locked>
@@ -4817,7 +4835,7 @@ end</Script>
 <Name>On Key</Name>
 <Args>number e_Key, table e_Modifiers</Args>
 <Script>if e_Key == 9 then
-	Page.SetFocus("IN_DB_PASSWORD");
+	Page.SetFocus("IN_DB_PASSWORD_DBCF");
 end
 
 if e_Key == 13 then
@@ -4893,7 +4911,7 @@ end</Script>
 </Object>
 <Object>
 <Type>7</Type>
-<Name>IN_DB_NAME</Name>
+<Name>IN_DB_NAME_DBCF</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
 <Locked>0</Locked>
@@ -4919,7 +4937,7 @@ end</Script>
 <Name>On Key</Name>
 <Args>number e_Key, table e_Modifiers</Args>
 <Script>if e_Key == 9 then
-	Page.SetFocus("IN_DB_USERNAME");
+	Page.SetFocus("IN_DB_USERNAME_DBCF");
 end
 
 if e_Key == 13 then
@@ -4982,7 +5000,7 @@ end</Script>
 <RightToLeftReadingOrder>0</RightToLeftReadingOrder>
 </Text>
 <Box>
-<BorderStyle>2</BorderStyle>
+<BorderStyle>0</BorderStyle>
 <VerticalScrollbar>1</VerticalScrollbar>
 <HorizontalScrollbar>0</HorizontalScrollbar>
 <Style>0</Style>
@@ -4992,269 +5010,6 @@ end</Script>
 <MaskRetMode>0</MaskRetMode>
 <ReadOnly>0</ReadOnly>
 </Box>
-</Object>
-<Object>
-<Type>3</Type>
-<Name>IMG_SAVE_CONFIG_SERVER</Name>
-<VisibleAtDesignTime>1</VisibleAtDesignTime>
-<VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>0</Locked>
-<Enabled>1</Enabled>
-<ToolTip/>
-<Cursor>1</Cursor>
-<Group>0</Group>
-<MaintainAspectRatio>1</MaintainAspectRatio>
-<Pin>0</Pin>
-<TabIndex>-1</TabIndex>
-<AutoResize>0</AutoResize>
-<Coordinates>
-<Top>292</Top>
-<Bottom>332</Bottom>
-<Left>1014</Left>
-<Right>1154</Right>
-</Coordinates>
-<Ratios>
-<WidthRatio>-1.000000</WidthRatio>
-<HeightRatio>-1.000000</HeightRatio>
-</Ratios>
-<Event>
-<Name>On Click</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Right-Click</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Enter</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Leave</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Actions/>
-<NormalImage>
-<Filename>AutoPlay\Images\login-button.png</Filename>
-<UseTransColor>0</UseTransColor>
-<TransClr>16777215</TransClr>
-<TransTolerance>10</TransTolerance>
-<Opacity>100</Opacity>
-<HTMode>0</HTMode>
-</NormalImage>
-<MouseOverSndMode>0</MouseOverSndMode>
-<MouseOverSound/>
-<MouseClickSndMode>0</MouseClickSndMode>
-<MouseClickSound/>
-</Object>
-<Object>
-<Type>1</Type>
-<Name>LB_SAVE_CONFIG_SERVER</Name>
-<VisibleAtDesignTime>1</VisibleAtDesignTime>
-<VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>0</Locked>
-<Enabled>1</Enabled>
-<ToolTip/>
-<Cursor>1</Cursor>
-<Group>0</Group>
-<MaintainAspectRatio>1</MaintainAspectRatio>
-<Pin>0</Pin>
-<TabIndex>-1</TabIndex>
-<AutoResize>0</AutoResize>
-<Coordinates>
-<Top>300</Top>
-<Bottom>331</Bottom>
-<Left>1057</Left>
-<Right>1113</Right>
-</Coordinates>
-<Ratios>
-<WidthRatio>-1.000000</WidthRatio>
-<HeightRatio>-1.000000</HeightRatio>
-</Ratios>
-<Event>
-<Name>On Click</Name>
-<Args/>
-<Script>local databaseName = Input.GetText("IN_DB_NAME");
-local userName = Input.GetText("IN_DB_USERNAME");
-local password = Input.GetText("IN_DB_PASSWORD");
-local serverAddress = Input.GetText("IN_DB_ADDRESS");
-local port = Input.GetText("IN_DB_PORT");
-
-if databaseName == "" or databaseName == "Database" then
-	Image.Load("IMG_DB_NAME", "AutoPlay\\Images\\input_mandatory.png");
-	Application.SetLastError(0616);
-end
-
-if userName == "" or userName == "Username" then
-	Image.Load("IMG_DB_USERNAME", "AutoPlay\\Images\\input_mandatory.png");
-	Application.SetLastError(0616);
-end
-
-if password == "" or password == "Password" then
-	Image.Load("IMG_DB_PASSWORD", "AutoPlay\\Images\\input_mandatory.png");
-	Application.SetLastError(0616);
-end
-
-if serverAddress == "" or serverAddress == "Address" then
-	Image.Load("IMG_DB_ADDRESS", "AutoPlay\\Images\\input_mandatory.png");
-	Application.SetLastError(0616);
-end
-
-if port == "" or port == "Port" then
-	Image.Load("IMG_DB_PORT", "AutoPlay\\Images\\input_mandatory.png");
-	Application.SetLastError(0616);
-else
-	local portIsValid = String.ToNumber(port);
-	if portIsValid == 0 then
-		Dialog.Message("Error", "Invalid port number.", MB_OK, MB_ICONSTOP, MB_DEFBUTTON1);
-		Image.Load("IMG_DB_PORT", "AutoPlay\\Images\\input_mandatory.png");
-		Application.ExitScript();
-	end
-end
-
-error = Application.GetLastError();
-if (error == 0616) then
-	Application.ExitScript();
-end
-
-local db_access = "[DB_NAME]="..databaseName.."\r\n".."[USER]="..userName.."\r\n".."[PASSWORD]="..password.."\r\n".."[ADDRESS]="..serverAddress.."\r\n".."[PORT]="..port;
-TextFile.WriteFromString("AutoPlay\\Docs\\db_access.txt", db_access, false);
-Crypto.BlowfishEncrypt("AutoPlay\\Docs\\db_access.txt", "AutoPlay\\Docs\\db_access.enc", "securestockitwiththispassword");
-File.Delete("AutoPlay\\Docs\\db_access.txt", false, false, false, nil);
-
--- Test for error
-error = Application.GetLastError();
-if (error ~= 0) then
-	PopUp("0");
-	Application.ExitScript();
-else
-	PopUp("1");
-	DialogEx.Close(this);
-	Page.Jump(this);
-end</Script>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>56</DesignCodeLine>
-<DesignCodeCol>15</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Right-Click</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Enter</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Leave</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Actions/>
-<Text>
-<Body>SAVE</Body>
-<NormalColor>16777215</NormalColor>
-<HighlightColor>16777215</HighlightColor>
-<MouseDownColor>16777215</MouseDownColor>
-<DisabledColor>16777215</DisabledColor>
-<FontData>
-<FontName>Nunito</FontName>
-<CharacterSet>0</CharacterSet>
-<Height>-19</Height>
-<Weight>400</Weight>
-<Italic>0</Italic>
-<Underline>0</Underline>
-<StrikeOut>0</StrikeOut>
-<AntiAlias>1</AntiAlias>
-</FontData>
-<Alignment>0</Alignment>
-<Orientation>0</Orientation>
-<AutoSize>1</AutoSize>
-<MouseOverSndMode>0</MouseOverSndMode>
-<MouseOverSound/>
-<MouseClickSndMode>0</MouseClickSndMode>
-<MouseClickSound/>
-<OriginalRect>
-<Top>300</Top>
-<Bottom>331</Bottom>
-<Left>1057</Left>
-<Right>1113</Right>
-</OriginalRect>
-</Text>
 </Object>
 <Object>
 <Type>3</Type>
@@ -6421,6 +6176,404 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <Actions/>
 <NormalImage>
 <Filename>AutoPlay\Images\exit.png</Filename>
+<UseTransColor>0</UseTransColor>
+<TransClr>16777215</TransClr>
+<TransTolerance>10</TransTolerance>
+<Opacity>100</Opacity>
+<HTMode>0</HTMode>
+</NormalImage>
+<MouseOverSndMode>0</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>0</MouseClickSndMode>
+<MouseClickSound/>
+</Object>
+<Object>
+<Type>3</Type>
+<Name>IMG_SAVE_CONFIG_SERVER</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>1</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>1</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>292</Top>
+<Bottom>337</Bottom>
+<Left>993</Left>
+<Right>1150</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script>local databaseName = Input.GetText("IN_DB_NAME_DBCF");
+local userName = Input.GetText("IN_DB_USERNAME_DBCF");
+local password = Input.GetText("IN_DB_PASSWORD_DBCF");
+local serverAddress = Input.GetText("IN_DB_ADDRESS_DBCF");
+local port = Input.GetText("IN_DB_PORT_DBCF");
+
+if databaseName == "" or databaseName == "Database" then
+	Image.Load("IMG_DB_NAME_DBCF", "AutoPlay\\Images\\input_mandatory.png");
+	Application.SetLastError(0616);
+end
+
+if userName == "" or userName == "Username" then
+	Image.Load("IMG_DB_USERNAME_DBCF", "AutoPlay\\Images\\input_mandatory.png");
+	Application.SetLastError(0616);
+end
+
+if password == "" or password == "Password" then
+	Image.Load("IMG_DB_PASSWORD_DBCF", "AutoPlay\\Images\\input_mandatory.png");
+	Application.SetLastError(0616);
+end
+
+if serverAddress == "" or serverAddress == "Address" then
+	Image.Load("IMG_DB_ADDRESS_DBCF", "AutoPlay\\Images\\input_mandatory.png");
+	Application.SetLastError(0616);
+end
+
+if port == "" or port == "Port" then
+	Image.Load("IMG_DB_PORT_DBCF", "AutoPlay\\Images\\input_mandatory.png");
+	Application.SetLastError(0616);
+else
+	local portIsValid = String.ToNumber(port);
+	if portIsValid == 0 then
+		Dialog.Message("Error", "Invalid port number.", MB_OK, MB_ICONSTOP, MB_DEFBUTTON1);
+		Image.Load("IMG_DB_PORT_DBCF", "AutoPlay\\Images\\input_mandatory.png");
+		Application.ExitScript();
+	end
+end
+
+error = Application.GetLastError();
+if (error == 0616) then
+	Application.ExitScript();
+end
+
+Image.SetVisible("IMG_DB_NAME_DBCF", false);
+Image.SetVisible("IMG_DB_USERNAME_DBCF", false);
+Image.SetVisible("IMG_DB_PASSWORD_DBCF", false);
+Image.SetVisible("IMG_DB_ADDRESS_DBCF", false);
+Image.SetVisible("IMG_DB_PORT_DBCF", false);
+Image.SetVisible("IMG_SAVE_CONFIG_SERVER", false);
+Input.SetVisible("IN_DB_NAME_DBCF", false);
+Input.SetVisible("IN_DB_USERNAME_DBCF", false);
+Input.SetVisible("IN_DB_PASSWORD_DBCF", false);
+Input.SetVisible("IN_DB_ADDRESS_DBCF", false);
+Input.SetVisible("IN_DB_PORT_DBCF", false);
+Label.SetVisible("LB_CHECK_DB_CONNECTION", true);
+Image.SetVisible("IMG_CHECK_DB_CONNECT", true);
+
+Application.Sleep(3000);
+
+MySQLConnection, err = MySQL:connect(databaseName, userName, password, serverAddress, port);
+
+Image.SetVisible("IMG_DB_NAME_DBCF", true);
+Image.SetVisible("IMG_DB_USERNAME_DBCF", true);
+Image.SetVisible("IMG_DB_PASSWORD_DBCF", true);
+Image.SetVisible("IMG_DB_ADDRESS_DBCF", true);
+Image.SetVisible("IMG_DB_PORT_DBCF", true);
+Image.SetVisible("IMG_SAVE_CONFIG_SERVER", true);
+Input.SetVisible("IN_DB_NAME_DBCF", true);
+Input.SetVisible("IN_DB_USERNAME_DBCF", true);
+Input.SetVisible("IN_DB_PASSWORD_DBCF", true);
+Input.SetVisible("IN_DB_ADDRESS_DBCF", true);
+Input.SetVisible("IN_DB_PORT_DBCF", true);
+Label.SetVisible("LB_CHECK_DB_CONNECTION", false);
+Image.SetVisible("IMG_CHECK_DB_CONNECT", false);
+
+if err then
+	-- If there is an error connecting to the database, display a dialog box with the error
+	Dialog.Message("Error coonection", err, MB_OK, MB_ICONSTOP, MB_DEFBUTTON1);
+	Application.ExitScript();
+end
+
+local db_access = "[DB_NAME]="..databaseName.."\r\n".."[USER]="..userName.."\r\n".."[PASSWORD]="..password.."\r\n".."[ADDRESS]="..serverAddress.."\r\n".."[PORT]="..port;
+TextFile.WriteFromString("AutoPlay\\Docs\\db_access.txt", db_access, false);
+Crypto.BlowfishEncrypt("AutoPlay\\Docs\\db_access.txt", "AutoPlay\\Docs\\db_access.enc", "securestockitwiththispassword");
+File.Delete("AutoPlay\\Docs\\db_access.txt", false, false, false, nil);
+
+-- Test for error
+error = Application.GetLastError();
+if (error ~= 0) then
+	PopUp("0");
+	Application.ExitScript();
+else
+	PopUp("1");
+	DialogEx.Close(this);
+end</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>57</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Right-Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Enter</Name>
+<Args/>
+<Script>if sqlServerStatus == 4 then
+	Image.Load("IMG_SAVE_CONFIG_SERVER", "AutoPlay\\Images\\btn_save_hover.png");
+end</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>1</DesignCodeLine>
+<DesignCodeCol>17</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Leave</Name>
+<Args/>
+<Script>if sqlServerStatus == 4 then
+	Image.Load("IMG_SAVE_CONFIG_SERVER", "AutoPlay\\Images\\btn_save.png");
+end</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>20</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<NormalImage>
+<Filename>AutoPlay\Images\btn_save.png</Filename>
+<UseTransColor>0</UseTransColor>
+<TransClr>16777215</TransClr>
+<TransTolerance>10</TransTolerance>
+<Opacity>100</Opacity>
+<HTMode>0</HTMode>
+</NormalImage>
+<MouseOverSndMode>0</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>0</MouseClickSndMode>
+<MouseClickSound/>
+</Object>
+<Object>
+<Type>1</Type>
+<Name>LB_CHECK_DB_CONNECTION</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>0</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>0</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>1</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>271</Top>
+<Bottom>300</Bottom>
+<Left>605</Left>
+<Right>1007</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Right-Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Enter</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Leave</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<Text>
+<Body>Checking connection to database, Please wait ...</Body>
+<NormalColor>14659176</NormalColor>
+<HighlightColor>14659176</HighlightColor>
+<MouseDownColor>14659176</MouseDownColor>
+<DisabledColor>14659176</DisabledColor>
+<FontData>
+<FontName>Nunito</FontName>
+<CharacterSet>0</CharacterSet>
+<Height>-17</Height>
+<Weight>700</Weight>
+<Italic>0</Italic>
+<Underline>0</Underline>
+<StrikeOut>0</StrikeOut>
+<AntiAlias>1</AntiAlias>
+</FontData>
+<Alignment>0</Alignment>
+<Orientation>0</Orientation>
+<AutoSize>1</AutoSize>
+<MouseOverSndMode>0</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>0</MouseClickSndMode>
+<MouseClickSound/>
+<OriginalRect>
+<Top>271</Top>
+<Bottom>300</Bottom>
+<Left>605</Left>
+<Right>1007</Right>
+</OriginalRect>
+</Text>
+</Object>
+<Object>
+<Type>3</Type>
+<Name>IMG_CHECK_DB_CONNECT</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>0</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>0</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>1</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>258</Top>
+<Bottom>303</Bottom>
+<Left>563</Left>
+<Right>608</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>11822</DesignCodeLine>
+<DesignCodeCol>658688</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Right-Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>1081534464</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Enter</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Leave</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>1080528896</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<NormalImage>
+<Filename>AutoPlay\Images\check_db_connection.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -8138,7 +8291,7 @@ end
 </Script>
 <TreeStates>
 <TreeState>0</TreeState>
-<TreeState>2</TreeState>
+<TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>12</DesignCodeLine>
@@ -10699,18 +10852,18 @@ end</Script>
 <Script>sqlServerStatus = checkSQLServerStatus();
 
 if sqlServerStatus ~= 4 then
-	Image.SetEnabled("IMG_DB_NAME", false);
-	Image.SetEnabled("IMG_DB_USERNAME", false);
-	Image.SetEnabled("IMG_DB_PASSWORD", false);
-	Image.SetEnabled("IMG_DB_ADDRESS", false);
-	Image.SetEnabled("IMG_DB_PORT", false);
-	Input.SetEnabled("IN_DB_NAME", false);
-	Input.SetEnabled("IN_DB_USERNAME", false);
-	Input.SetEnabled("IN_DB_PASSWORD", false);
-	Input.SetEnabled("IN_DB_ADDRESS", false);
-	Input.SetEnabled("IN_DB_PORT", false);
-	Image.Load("IMG_SAVE_CONFIG_SERVER_IGNORED", "AutoPlay\\Images\\btn_save_disabled.png");
-	Image.SetEnabled("IMG_SAVE_CONFIG_SERVER_IGNORED", false);
+	Image.SetEnabled("IMG_DB_NAME_DBCF", false);
+	Image.SetEnabled("IMG_DB_USERNAME_DBCF", false);
+	Image.SetEnabled("IMG_DB_PASSWORD_DBCF", false);
+	Image.SetEnabled("IMG_DB_ADDRESS_DBCF", false);
+	Image.SetEnabled("IMG_DB_PORT_DBCF", false);
+	Input.SetEnabled("IN_DB_NAME_DBCF", false);
+	Input.SetEnabled("IN_DB_USERNAME_DBCF", false);
+	Input.SetEnabled("IN_DB_PASSWORD_DBCF", false);
+	Input.SetEnabled("IN_DB_ADDRESS_DBCF", false);
+	Input.SetEnabled("IN_DB_PORT_DBCF", false);
+	Image.Load("IMG_SAVE_CONFIG_SERVER", "AutoPlay\\Images\\btn_save_disabled.png");
+	Image.SetEnabled("IMG_SAVE_CONFIG_SERVER", false);
 	
 	Dialog.Message("MySQL Service Error", "There is a problem with your MySQL Service.", MB_OK, MB_ICONSTOP, MB_DEFBUTTON1);
 	Application.ExitScript();
@@ -10728,29 +10881,29 @@ end</Script>
 <Event>
 <Name>On Close</Name>
 <Args/>
-<Script>Input.SetEnabled("IN_DB_NAME", true);
-Input.SetEnabled("IN_DB_USERNAME", true);
-Input.SetEnabled("IN_DB_PASSWORD", true);
-Input.SetEnabled("IN_DB_ADDRESS", true);
-Input.SetEnabled("IN_DB_PORT", true);
-Input.SetText("IN_DB_NAME", "Database");
-Input.SetText("IN_DB_USERNAME", "Username");
-Input.SetText("IN_DB_PASSWORD", "Password");
-Input.SetText("IN_DB_PORT", "Port");
-Input.SetText("IN_DB_ADDRESS", "Address");
+<Script>Input.SetEnabled("IN_DB_NAME_DBCF", true);
+Input.SetEnabled("IN_DB_USERNAME_DBCF", true);
+Input.SetEnabled("IN_DB_PASSWORD_DBCF", true);
+Input.SetEnabled("IN_DB_ADDRESS_DBCF", true);
+Input.SetEnabled("IN_DB_PORT_DBCF", true);
+Input.SetText("IN_DB_NAME_DBCF", "Database");
+Input.SetText("IN_DB_USERNAME_DBCF", "Username");
+Input.SetText("IN_DB_PASSWORD_DBCF", "Password");
+Input.SetText("IN_DB_PORT_DBCF", "Port");
+Input.SetText("IN_DB_ADDRESS_DBCF", "Address");
 
-Image.Load("IMG_DB_NAME", "AutoPlay\\Images\\input.png");
-Image.Load("IMG_DB_USERNAME", "AutoPlay\\Images\\input.png");
-Image.Load("IMG_DB_PASSWORD", "AutoPlay\\Images\\input.png");
-Image.Load("IMG_DB_PORT", "AutoPlay\\Images\\input.png");
-Image.Load("IMG_DB_ADDRESS", "AutoPlay\\Images\\input.png");
-Image.Load("IMG_SAVE_CONFIG_SERVER_IGNORED", "AutoPlay\\Images\\btn_save.png");
-Image.SetEnabled("IMG_DB_NAME", true);
-Image.SetEnabled("IMG_DB_USERNAME", true);
-Image.SetEnabled("IMG_DB_PASSWORD", true);
-Image.SetEnabled("IMG_DB_ADDRESS", true);
-Image.SetEnabled("IMG_DB_PORT", true);
-Image.SetEnabled("IMG_SAVE_CONFIG_SERVER_IGNORED", true);</Script>
+Image.Load("IMG_DB_NAME_DBCF", "AutoPlay\\Images\\input.png");
+Image.Load("IMG_DB_USERNAME_DBCF", "AutoPlay\\Images\\input.png");
+Image.Load("IMG_DB_PASSWORD_DBCF", "AutoPlay\\Images\\input.png");
+Image.Load("IMG_DB_PORT_DBCF", "AutoPlay\\Images\\input.png");
+Image.Load("IMG_DB_ADDRESS_DBCF", "AutoPlay\\Images\\input.png");
+Image.Load("IMG_SAVE_CONFIG_SERVER", "AutoPlay\\Images\\btn_save.png");
+Image.SetEnabled("IMG_DB_NAME_DBCF", true);
+Image.SetEnabled("IMG_DB_USERNAME_DBCF", true);
+Image.SetEnabled("IMG_DB_PASSWORD_DBCF", true);
+Image.SetEnabled("IMG_DB_ADDRESS_DBCF", true);
+Image.SetEnabled("IMG_DB_PORT_DBCF", true);
+Image.SetEnabled("IMG_SAVE_CONFIG_SERVER", true);</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
@@ -11085,7 +11238,7 @@ Image.SetEnabled("IMG_SAVE_CONFIG_SERVER_IGNORED", true);</Script>
 </Object>
 <Object>
 <Type>3</Type>
-<Name>IMG_SERVER_STATUS_IGNORED</Name>
+<Name>IMG_SERVER_STATUS</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
 <Locked>0</Locked>
@@ -11179,7 +11332,7 @@ Image.SetEnabled("IMG_SAVE_CONFIG_SERVER_IGNORED", true);</Script>
 </Object>
 <Object>
 <Type>3</Type>
-<Name>IMG_DB_NAME</Name>
+<Name>IMG_DB_NAME_DBCF</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
 <Locked>0</Locked>
@@ -11192,8 +11345,8 @@ Image.SetEnabled("IMG_SAVE_CONFIG_SERVER_IGNORED", true);</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>54</Top>
-<Bottom>94</Bottom>
+<Top>55</Top>
+<Bottom>95</Bottom>
 <Left>91</Left>
 <Right>371</Right>
 </Coordinates>
@@ -11273,7 +11426,7 @@ Image.SetEnabled("IMG_SAVE_CONFIG_SERVER_IGNORED", true);</Script>
 </Object>
 <Object>
 <Type>3</Type>
-<Name>IMG_DB_USERNAME</Name>
+<Name>IMG_DB_USERNAME_DBCF</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
 <Locked>0</Locked>
@@ -11367,7 +11520,7 @@ Image.SetEnabled("IMG_SAVE_CONFIG_SERVER_IGNORED", true);</Script>
 </Object>
 <Object>
 <Type>3</Type>
-<Name>IMG_DB_PASSWORD</Name>
+<Name>IMG_DB_PASSWORD_DBCF</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
 <Locked>0</Locked>
@@ -11461,7 +11614,7 @@ Image.SetEnabled("IMG_SAVE_CONFIG_SERVER_IGNORED", true);</Script>
 </Object>
 <Object>
 <Type>3</Type>
-<Name>IMG_DB_PORT</Name>
+<Name>IMG_DB_PORT_DBCF</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
 <Locked>0</Locked>
@@ -11555,7 +11708,7 @@ Image.SetEnabled("IMG_SAVE_CONFIG_SERVER_IGNORED", true);</Script>
 </Object>
 <Object>
 <Type>3</Type>
-<Name>IMG_DB_ADDRESS</Name>
+<Name>IMG_DB_ADDRESS_DBCF</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
 <Locked>0</Locked>
@@ -11649,7 +11802,7 @@ Image.SetEnabled("IMG_SAVE_CONFIG_SERVER_IGNORED", true);</Script>
 </Object>
 <Object>
 <Type>7</Type>
-<Name>IN_DB_ADDRESS</Name>
+<Name>IN_DB_ADDRESS_DBCF</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
 <Locked>0</Locked>
@@ -11675,7 +11828,7 @@ Image.SetEnabled("IMG_SAVE_CONFIG_SERVER_IGNORED", true);</Script>
 <Name>On Key</Name>
 <Args>number e_Key, table e_Modifiers</Args>
 <Script>if e_Key == 9 then
-	Page.SetFocus("IN_DB_NAME");
+	Page.SetFocus("IN_DB_NAME_DBCF");
 end
 
 if e_Key == 13 then
@@ -11694,10 +11847,10 @@ end</Script>
 <Event>
 <Name>On Focus</Name>
 <Args/>
-<Script>setDbConfigForm(this);</Script>
+<Script>setDbConfigForm(this, "Dialog");</Script>
 <TreeStates>
 <TreeState>0</TreeState>
-<TreeState>0</TreeState>
+<TreeState>2</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>0</DesignCodeLine>
@@ -11751,7 +11904,7 @@ end</Script>
 </Object>
 <Object>
 <Type>7</Type>
-<Name>IN_DB_PORT</Name>
+<Name>IN_DB_PORT_DBCF</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
 <Locked>0</Locked>
@@ -11777,7 +11930,7 @@ end</Script>
 <Name>On Key</Name>
 <Args>number e_Key, table e_Modifiers</Args>
 <Script>if e_Key == 9 then
-	Page.SetFocus("IN_DB_USERNAME");
+	Page.SetFocus("IN_DB_USERNAME_DBCF");
 end
 
 if e_Key == 13 then
@@ -11796,7 +11949,7 @@ end</Script>
 <Event>
 <Name>On Focus</Name>
 <Args/>
-<Script>setDbConfigForm(this);</Script>
+<Script>setDbConfigForm(this, "Dialog");</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
@@ -11853,7 +12006,7 @@ end</Script>
 </Object>
 <Object>
 <Type>7</Type>
-<Name>IN_DB_PASSWORD</Name>
+<Name>IN_DB_PASSWORD_DBCF</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
 <Locked>0</Locked>
@@ -11879,7 +12032,7 @@ end</Script>
 <Name>On Key</Name>
 <Args>number e_Key, table e_Modifiers</Args>
 <Script>if e_Key == 9 then
-	Page.SetFocus("IN_DB_PORT");
+	Page.SetFocus("IN_DB_PORT_DBCF");
 end
 
 if e_Key == 13 then
@@ -11898,7 +12051,7 @@ end</Script>
 <Event>
 <Name>On Focus</Name>
 <Args/>
-<Script>setDbConfigForm(this);</Script>
+<Script>setDbConfigForm(this, "Dialog");</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
@@ -11955,7 +12108,7 @@ end</Script>
 </Object>
 <Object>
 <Type>7</Type>
-<Name>IN_DB_USERNAME</Name>
+<Name>IN_DB_USERNAME_DBCF</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
 <Locked>0</Locked>
@@ -11981,7 +12134,7 @@ end</Script>
 <Name>On Key</Name>
 <Args>number e_Key, table e_Modifiers</Args>
 <Script>if e_Key == 9 then
-	Page.SetFocus("IN_DB_PASSWORD");
+	Page.SetFocus("IN_DB_PASSWORD_DBCF");
 end
 
 if e_Key == 13 then
@@ -12000,7 +12153,7 @@ end</Script>
 <Event>
 <Name>On Focus</Name>
 <Args/>
-<Script>setDbConfigForm(this);</Script>
+<Script>setDbConfigForm(this, "Dialog");</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
@@ -12057,7 +12210,7 @@ end</Script>
 </Object>
 <Object>
 <Type>7</Type>
-<Name>IN_DB_NAME</Name>
+<Name>IN_DB_NAME_DBCF</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
 <Locked>0</Locked>
@@ -12083,7 +12236,7 @@ end</Script>
 <Name>On Key</Name>
 <Args>number e_Key, table e_Modifiers</Args>
 <Script>if e_Key == 9 then
-	Page.SetFocus("IN_DB_USERNAME");
+	Page.SetFocus("IN_DB_USERNAME_DBCF");
 end
 
 if e_Key == 13 then
@@ -12102,14 +12255,14 @@ end</Script>
 <Event>
 <Name>On Focus</Name>
 <Args/>
-<Script>setDbConfigForm(this);</Script>
+<Script>setDbConfigForm(this, "Dialog");</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>22</DesignCodeCol>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -12159,7 +12312,7 @@ end</Script>
 </Object>
 <Object>
 <Type>3</Type>
-<Name>IMG_SERVER_IGNORED</Name>
+<Name>IMG_SERVER</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
 <Locked>0</Locked>
@@ -12253,7 +12406,7 @@ end</Script>
 </Object>
 <Object>
 <Type>3</Type>
-<Name>IMG_SAVE_CONFIG_SERVER_IGNORED</Name>
+<Name>IMG_SAVE_CONFIG_SERVER</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
 <Locked>0</Locked>
@@ -12278,40 +12431,40 @@ end</Script>
 <Event>
 <Name>On Click</Name>
 <Args/>
-<Script>local databaseName = Input.GetText("IN_DB_NAME");
-local userName = Input.GetText("IN_DB_USERNAME");
-local password = Input.GetText("IN_DB_PASSWORD");
-local serverAddress = Input.GetText("IN_DB_ADDRESS");
-local port = Input.GetText("IN_DB_PORT");
+<Script>local databaseName = Input.GetText("IN_DB_NAME_DBCF");
+local userName = Input.GetText("IN_DB_USERNAME_DBCF");
+local password = Input.GetText("IN_DB_PASSWORD_DBCF");
+local serverAddress = Input.GetText("IN_DB_ADDRESS_DBCF");
+local port = Input.GetText("IN_DB_PORT_DBCF");
 
 if databaseName == "" or databaseName == "Database" then
-	Image.Load("IMG_DB_NAME", "AutoPlay\\Images\\input_mandatory.png");
+	Image.Load("IMG_DB_NAME_DBCF", "AutoPlay\\Images\\input_mandatory.png");
 	Application.SetLastError(0616);
 end
 
 if userName == "" or userName == "Username" then
-	Image.Load("IMG_DB_USERNAME", "AutoPlay\\Images\\input_mandatory.png");
+	Image.Load("IMG_DB_USERNAME_DBCF", "AutoPlay\\Images\\input_mandatory.png");
 	Application.SetLastError(0616);
 end
 
 if password == "" or password == "Password" then
-	Image.Load("IMG_DB_PASSWORD", "AutoPlay\\Images\\input_mandatory.png");
+	Image.Load("IMG_DB_PASSWORD_DBCF", "AutoPlay\\Images\\input_mandatory.png");
 	Application.SetLastError(0616);
 end
 
 if serverAddress == "" or serverAddress == "Address" then
-	Image.Load("IMG_DB_ADDRESS", "AutoPlay\\Images\\input_mandatory.png");
+	Image.Load("IMG_DB_ADDRESS_DBCF", "AutoPlay\\Images\\input_mandatory.png");
 	Application.SetLastError(0616);
 end
 
 if port == "" or port == "Port" then
-	Image.Load("IMG_DB_PORT", "AutoPlay\\Images\\input_mandatory.png");
+	Image.Load("IMG_DB_PORT_DBCF", "AutoPlay\\Images\\input_mandatory.png");
 	Application.SetLastError(0616);
 else
 	local portIsValid = String.ToNumber(port);
 	if portIsValid == 0 then
 		Dialog.Message("Error", "Invalid port number.", MB_OK, MB_ICONSTOP, MB_DEFBUTTON1);
-		Image.Load("IMG_DB_PORT", "AutoPlay\\Images\\input_mandatory.png");
+		Image.Load("IMG_DB_PORT_DBCF", "AutoPlay\\Images\\input_mandatory.png");
 		Application.ExitScript();
 	end
 end
@@ -12321,18 +12474,18 @@ if (error == 0616) then
 	Application.ExitScript();
 end
 
-Image.SetVisible("IMG_DB_NAME", false);
-Image.SetVisible("IMG_DB_USERNAME", false);
-Image.SetVisible("IMG_DB_PASSWORD", false);
-Image.SetVisible("IMG_DB_ADDRESS", false);
-Image.SetVisible("IMG_DB_PORT", false);
-Input.SetVisible("IN_DB_NAME", false);
-Input.SetVisible("IN_DB_USERNAME", false);
-Input.SetVisible("IN_DB_PASSWORD", false);
-Input.SetVisible("IN_DB_ADDRESS", false);
-Input.SetVisible("IN_DB_PORT", false);
+Image.SetVisible("IMG_DB_NAME_DBCF", false);
+Image.SetVisible("IMG_DB_USERNAME_DBCF", false);
+Image.SetVisible("IMG_DB_PASSWORD_DBCF", false);
+Image.SetVisible("IMG_DB_ADDRESS_DBCF", false);
+Image.SetVisible("IMG_DB_PORT_DBCF", false);
+Input.SetVisible("IN_DB_NAME_DBCF", false);
+Input.SetVisible("IN_DB_USERNAME_DBCF", false);
+Input.SetVisible("IN_DB_PASSWORD_DBCF", false);
+Input.SetVisible("IN_DB_ADDRESS_DBCF", false);
+Input.SetVisible("IN_DB_PORT_DBCF", false);
 Label.SetVisible("LB_CHECK_DB_CONNECTION", true);
-Image.SetVisible("IMG_CHECK_DB_CONNECT_IGNORED", true);
+Image.SetVisible("IMG_CHECK_DB_CONNECT", true);
 
 Application.Sleep(3000);
 
@@ -12341,34 +12494,34 @@ if err then
 	-- If there is an error connecting to the database, display a dialog box with the error
 	Dialog.Message("Error coonection", err, MB_OK, MB_ICONSTOP, MB_DEFBUTTON1);
 	
-	Image.SetVisible("IMG_DB_NAME", true);
-	Image.SetVisible("IMG_DB_USERNAME", true);
-	Image.SetVisible("IMG_DB_PASSWORD", true);
-	Image.SetVisible("IMG_DB_ADDRESS", true);
-	Image.SetVisible("IMG_DB_PORT", true);
-	Input.SetVisible("IN_DB_NAME", true);
-	Input.SetVisible("IN_DB_USERNAME", true);
-	Input.SetVisible("IN_DB_PASSWORD", true);
-	Input.SetVisible("IN_DB_ADDRESS", true);
-	Input.SetVisible("IN_DB_PORT", true);
+	Image.SetVisible("IMG_DB_NAME_DBCF", true);
+	Image.SetVisible("IMG_DB_USERNAME_DBCF", true);
+	Image.SetVisible("IMG_DB_PASSWORD_DBCF", true);
+	Image.SetVisible("IMG_DB_ADDRESS_DBCF", true);
+	Image.SetVisible("IMG_DB_PORT_DBCF", true);
+	Input.SetVisible("IN_DB_NAME_DBCF", true);
+	Input.SetVisible("IN_DB_USERNAME_DBCF", true);
+	Input.SetVisible("IN_DB_PASSWORD_DBCF", true);
+	Input.SetVisible("IN_DB_ADDRESS_DBCF", true);
+	Input.SetVisible("IN_DB_PORT_DBCF", true);
 	
 	Label.SetVisible("LB_CHECK_DB_CONNECTION", false);
-	Image.SetVisible("IMG_CHECK_DB_CONNECT_IGNORED", false);
+	Image.SetVisible("IMG_CHECK_DB_CONNECT", false);
 	Application.ExitScript();
 end
 
-Image.SetVisible("IMG_DB_NAME", true);
-Image.SetVisible("IMG_DB_USERNAME", true);
-Image.SetVisible("IMG_DB_PASSWORD", true);
-Image.SetVisible("IMG_DB_ADDRESS", true);
-Image.SetVisible("IMG_DB_PORT", true);
-Input.SetVisible("IN_DB_NAME", true);
-Input.SetVisible("IN_DB_USERNAME", true);
-Input.SetVisible("IN_DB_PASSWORD", true);
-Input.SetVisible("IN_DB_ADDRESS", true);
-Input.SetVisible("IN_DB_PORT", true);
+Image.SetVisible("IMG_DB_NAME_DBCF", true);
+Image.SetVisible("IMG_DB_USERNAME_DBCF", true);
+Image.SetVisible("IMG_DB_PASSWORD_DBCF", true);
+Image.SetVisible("IMG_DB_ADDRESS_DBCF", true);
+Image.SetVisible("IMG_DB_PORT_DBCF", true);
+Input.SetVisible("IN_DB_NAME_DBCF", true);
+Input.SetVisible("IN_DB_USERNAME_DBCF", true);
+Input.SetVisible("IN_DB_PASSWORD_DBCF", true);
+Input.SetVisible("IN_DB_ADDRESS_DBCF", true);
+Input.SetVisible("IN_DB_PORT_DBCF", true);
 Label.SetVisible("LB_CHECK_DB_CONNECTION", false);
-Image.SetVisible("IMG_CHECK_DB_CONNECT_IGNORED", false);
+Image.SetVisible("IMG_CHECK_DB_CONNECT", false);
 
 local db_access = "[DB_NAME]="..databaseName.."\r\n".."[USER]="..userName.."\r\n".."[PASSWORD]="..password.."\r\n".."[ADDRESS]="..serverAddress.."\r\n".."[PORT]="..port;
 TextFile.WriteFromString("AutoPlay\\Docs\\db_access.txt", db_access, false);
@@ -12412,7 +12565,7 @@ end</Script>
 <Name>On Enter</Name>
 <Args/>
 <Script>if sqlServerStatus == 4 then
-	Image.Load("IMG_SAVE_CONFIG_SERVER_IGNORED", "AutoPlay\\Images\\btn_save_hover.png");
+	Image.Load("IMG_SAVE_CONFIG_SERVER", "AutoPlay\\Images\\btn_save_hover.png");
 end</Script>
 <TreeStates>
 <TreeState>0</TreeState>
@@ -12428,7 +12581,7 @@ end</Script>
 <Name>On Leave</Name>
 <Args/>
 <Script>if sqlServerStatus == 4 then
-	Image.Load("IMG_SAVE_CONFIG_SERVER_IGNORED", "AutoPlay\\Images\\btn_save.png");
+	Image.Load("IMG_SAVE_CONFIG_SERVER", "AutoPlay\\Images\\btn_save.png");
 end</Script>
 <TreeStates>
 <TreeState>0</TreeState>
@@ -12568,7 +12721,7 @@ end</Script>
 </Object>
 <Object>
 <Type>3</Type>
-<Name>IMG_CHECK_DB_CONNECT_IGNORED</Name>
+<Name>IMG_CHECK_DB_CONNECT</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>0</VisibleAtRunTime>
 <Locked>0</Locked>
