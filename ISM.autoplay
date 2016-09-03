@@ -63,7 +63,9 @@
 <Tracks/>
 </AudioBGMusic>
 <Globals>
-<Script>MENU_TREE_INDEXS = {Home="1", Settings="2", Users= "2.1", NONE=""}
+<Script>PROJEJCT_PAGE_WIDTH = 1366;
+PROJECT_PAGE_HEIGHT = 768;
+MENU_TREE_INDEXS = {Home="1", Settings="2", Users= "2.1", NONE=""}
 HEIGHT_BG_MENU_FORM = {200, 200, 200, 200};
 SAVE_XML = false;
 PAGE_LIMIT_RATIO = 2;
@@ -342,7 +344,7 @@ function saveXmlData()
 				objProp = Web.GetProperties(object);
 			elseif objectType ==7  and  String.Find(object, "IGNORED", 1, false) == -1 then
 				objProp = Input.GetProperties(object);
-				perFont = (objProp.FontSize*100)/Page.GetSize().Width;
+				perFont = (objProp.FontSize*100)/PROJEJCT_PAGE_WIDTH;
 				xmlFont = '\t\t\t&lt;perFontSize&gt;'..perFont..'&lt;/perFontSize&gt;\r\n';
 			elseif objectType ==8  and  String.Find(object, "IGNORED", 1, false) == -1 then
 				objProp = Hotspot.GetProperties(object);
@@ -378,11 +380,11 @@ function saveXmlData()
 
 			xml = xml..'\t\t&lt;'..object..' Width = "'..objProp.Width..'" Height = "'..objProp.Height..'" PosX = "'..objProp.X..'" PosY = "'..objProp.Y..'"&gt;\r\n';
 
-			perWidth = (objProp.Width*100)/Page.GetSize().Width;
-			perHeight = (objProp.Height*100)/Page.GetSize().Height;
+			perWidth = (objProp.Width*100)/PROJEJCT_PAGE_WIDTH;
+			perHeight = (objProp.Height*100)/PROJECT_PAGE_HEIGHT;
 
-			perX = (objProp.X*100)/Page.GetSize().Width;
-			perY = (objProp.Y*100)/Page.GetSize().Height;
+			perX = (objProp.X*100)/PROJEJCT_PAGE_WIDTH;
+			perY = (objProp.Y*100)/PROJECT_PAGE_HEIGHT;
 
 			xml = xml..'\t\t\t&lt;perWidth&gt;'..perWidth..'&lt;/perWidth&gt;\r\n';
 			xml = xml..'\t\t\t&lt;perHeight&gt;'..perHeight..'&lt;/perHeight&gt;\r\n';
