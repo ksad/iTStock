@@ -422,8 +422,8 @@ function resizeList (objectName)
 		
 		newGridHeight = Page.GetSize().Height - Grid.GetPos(objectName).Y - getLimitInPixel;
 	else
-		margin = 2;
-		newGridHeight = newGridHeight+4;
+		margin = 3;
+		newGridHeight = newGridHeight+20;
 	end
 
 	local gridWidth = Grid.GetSize(objectName).Width-margin;
@@ -449,8 +449,8 @@ end
 </Script>
 <BookMarks count="0">
 </BookMarks>
-<DesignCodeLine>4</DesignCodeLine>
-<DesignCodeCol>16</DesignCodeCol>
+<DesignCodeLine>350</DesignCodeLine>
+<DesignCodeCol>45</DesignCodeCol>
 </Globals>
 <Defaults>
 <StartupPage>_PageFirst</StartupPage>
@@ -3695,9 +3695,9 @@ end
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>205</Top>
-<Bottom>236</Bottom>
+<Bottom>233</Bottom>
 <Left>341</Left>
-<Right>553</Right>
+<Right>538</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -3807,9 +3807,9 @@ end
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>205</Top>
-<Bottom>236</Bottom>
+<Bottom>233</Bottom>
 <Left>582</Left>
-<Right>758</Right>
+<Right>765</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -5847,9 +5847,9 @@ end</Script>
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>63</Top>
-<Bottom>101</Bottom>
+<Bottom>98</Bottom>
 <Left>18</Left>
-<Right>221</Right>
+<Right>216</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -5959,7 +5959,7 @@ end</Script>
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>55</Top>
-<Bottom>82</Bottom>
+<Bottom>80</Bottom>
 <Left>235</Left>
 <Right>304</Right>
 </Coordinates>
@@ -6072,9 +6072,9 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>76</Top>
-<Bottom>103</Bottom>
+<Bottom>101</Bottom>
 <Left>235</Left>
-<Right>342</Right>
+<Right>341</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -6470,9 +6470,9 @@ end</Script>
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>271</Top>
-<Bottom>300</Bottom>
+<Bottom>296</Bottom>
 <Left>605</Left>
-<Right>1007</Right>
+<Right>991</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -7381,8 +7381,8 @@ end
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>65</Top>
-<Bottom>100</Bottom>
+<Top>66</Top>
+<Bottom>101</Bottom>
 <Left>71</Left>
 <Right>159</Right>
 </Coordinates>
@@ -7471,8 +7471,8 @@ end
 <MouseClickSndMode>0</MouseClickSndMode>
 <MouseClickSound/>
 <OriginalRect>
-<Top>65</Top>
-<Bottom>100</Bottom>
+<Top>66</Top>
+<Bottom>101</Bottom>
 <Left>71</Left>
 <Right>159</Right>
 </OriginalRect>
@@ -7823,14 +7823,16 @@ end
 <Event>
 <Name>On Key</Name>
 <Args>number e_Key, table e_Modifiers</Args>
-<Script/>
+<Script>if e_Key == 13 then
+	Page.ClickObject("IMG_SEARCH_GO");
+end</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeLine>1</DesignCodeLine>
+<DesignCodeCol>5</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -7844,8 +7846,8 @@ end
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>33</DesignCodeCol>
+<DesignCodeLine>1</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -7990,7 +7992,7 @@ end
 <Locked>0</Locked>
 <Enabled>1</Enabled>
 <ToolTip/>
-<Cursor>0</Cursor>
+<Cursor>1</Cursor>
 <Group>0</Group>
 <MaintainAspectRatio>1</MaintainAspectRatio>
 <Pin>0</Pin>
@@ -8009,14 +8011,66 @@ end
 <Event>
 <Name>On Click</Name>
 <Args/>
-<Script/>
+<Script>local searchText = Input.GetText("IN_SEARCH_USER");
+
+local usersListColumnsName = {"Lastname", "Firstname", "Username", "Role", "Sign_Check_List"}
+initList("GD_USERS_LIST", usersListColumnsName)
+
+local mySQLConnection = dbConnect();
+if mySQLConnection ~= nil then
+
+	if String.Find(searchText, "Search by", 1, false) == -1 then
+		if searchText == "" then
+			SQL = "SELECT * FROM IT_USERS;";
+			mySQLCursor = mySQLConnection:execute(SQL);
+			row = mySQLCursor:fetch({},"a")
+		else
+			for i,j in pairs (usersListColumnsName) do
+				SQL = "SELECT * FROM IT_USERS WHERE "..j.." LIKE '%"..searchText.."%';";
+				mySQLCursor = mySQLConnection:execute(SQL);
+				row = mySQLCursor:fetch({},"a")
+				if row then
+					break;
+				end
+			end
+		end
+
+		Grid.DeleteNonFixedRows("GD_USERS_LIST", true);
+		if not row then
+			Grid.SetGridLines("GD_USERS_LIST", GVL_HORZ);
+			index = Grid.InsertRow("GD_USERS_LIST", -1, true);
+			Grid.SetCellText("GD_USERS_LIST", index, 0, "No result", true);
+		else
+			while row do
+				username = row.Username;
+				lastname = row.Lastname;
+				firstname = row.Firstname;
+				role = row.Role;
+				signCheckList = row.Sign_Check_List;
+
+				index = Grid.InsertRow("GD_USERS_LIST", -1, true);
+				Grid.SetCellText("GD_USERS_LIST", index, 0, lastname, true);
+				Grid.SetCellText("GD_USERS_LIST", index, 1, firstname, true);
+				Grid.SetCellText("GD_USERS_LIST", index, 2, username, true);
+				Grid.SetCellText("GD_USERS_LIST", index, 3, role, true);
+				Grid.SetCellText("GD_USERS_LIST", index, 4, signCheckList, true);
+
+				row = mySQLCursor:fetch(row,"a");
+			end
+		end
+
+		resizeList("GD_USERS_LIST");
+		mySQLCursor:close();
+		mySQLConnection:close();
+	end
+end</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>1076</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeLine>15</DesignCodeLine>
+<DesignCodeCol>76</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -8029,8 +8083,8 @@ end
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>43899</DesignCodeLine>
-<DesignCodeCol>32</DesignCodeCol>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -8043,8 +8097,8 @@ end
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>3158064</DesignCodeLine>
-<DesignCodeCol>1017</DesignCodeCol>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -8057,8 +8111,8 @@ end
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>992551458</DesignCodeLine>
-<DesignCodeCol>2573</DesignCodeCol>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -9535,9 +9589,9 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>76</Top>
-<Bottom>103</Bottom>
+<Bottom>101</Bottom>
 <Left>235</Left>
-<Right>342</Right>
+<Right>341</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -11584,8 +11638,8 @@ end</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>5</DesignCodeLine>
-<DesignCodeCol>35</DesignCodeCol>
+<DesignCodeLine>4</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -11769,9 +11823,9 @@ Input.SetSelection("IN_PASSWORD", 1, -1);</Script>
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>221</Top>
-<Bottom>247</Bottom>
+<Bottom>244</Bottom>
 <Left>273</Left>
-<Right>414</Right>
+<Right>399</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -11859,9 +11913,9 @@ Input.SetSelection("IN_PASSWORD", 1, -1);</Script>
 <MouseClickSound/>
 <OriginalRect>
 <Top>221</Top>
-<Bottom>247</Bottom>
+<Bottom>244</Bottom>
 <Left>273</Left>
-<Right>414</Right>
+<Right>399</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -11881,9 +11935,9 @@ Input.SetSelection("IN_PASSWORD", 1, -1);</Script>
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>74</Top>
-<Bottom>111</Bottom>
+<Bottom>107</Bottom>
 <Left>134</Left>
-<Right>366</Right>
+<Right>347</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -11971,9 +12025,9 @@ Input.SetSelection("IN_PASSWORD", 1, -1);</Script>
 <MouseClickSound/>
 <OriginalRect>
 <Top>74</Top>
-<Bottom>111</Bottom>
+<Bottom>107</Bottom>
 <Left>134</Left>
-<Right>366</Right>
+<Right>347</Right>
 </OriginalRect>
 </Text>
 </Object>
