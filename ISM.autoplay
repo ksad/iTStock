@@ -63,7 +63,9 @@
 <Tracks/>
 </AudioBGMusic>
 <Globals>
-<Script>MENU_TREE_INDEXS = {Home="1", Settings="2", Users= "2.1", NONE=""}
+<Script>PROJEJCT_PAGE_WIDTH = 1366;
+PROJECT_PAGE_HEIGHT = 768;
+MENU_TREE_INDEXS = {Home="1", Settings="2", Users= "2.1", NONE=""}
 HEIGHT_BG_MENU_FORM = {200, 200, 200, 200};
 SAVE_XML = false;
 PAGE_LIMIT_RATIO = 2;
@@ -342,7 +344,7 @@ function saveXmlData()
 				objProp = Web.GetProperties(object);
 			elseif objectType ==7  and  String.Find(object, "IGNORED", 1, false) == -1 then
 				objProp = Input.GetProperties(object);
-				perFont = (objProp.FontSize*100)/Page.GetSize().Width;
+				perFont = (objProp.FontSize*100)/PROJEJCT_PAGE_WIDTH;
 				xmlFont = '\t\t\t&lt;perFontSize&gt;'..perFont..'&lt;/perFontSize&gt;\r\n';
 			elseif objectType ==8  and  String.Find(object, "IGNORED", 1, false) == -1 then
 				objProp = Hotspot.GetProperties(object);
@@ -378,11 +380,11 @@ function saveXmlData()
 
 			xml = xml..'\t\t&lt;'..object..' Width = "'..objProp.Width..'" Height = "'..objProp.Height..'" PosX = "'..objProp.X..'" PosY = "'..objProp.Y..'"&gt;\r\n';
 
-			perWidth = (objProp.Width*100)/Page.GetSize().Width;
-			perHeight = (objProp.Height*100)/Page.GetSize().Height;
+			perWidth = (objProp.Width*100)/PROJEJCT_PAGE_WIDTH;
+			perHeight = (objProp.Height*100)/PROJECT_PAGE_HEIGHT;
 
-			perX = (objProp.X*100)/Page.GetSize().Width;
-			perY = (objProp.Y*100)/Page.GetSize().Height;
+			perX = (objProp.X*100)/PROJEJCT_PAGE_WIDTH;
+			perY = (objProp.Y*100)/PROJECT_PAGE_HEIGHT;
 
 			xml = xml..'\t\t\t&lt;perWidth&gt;'..perWidth..'&lt;/perWidth&gt;\r\n';
 			xml = xml..'\t\t\t&lt;perHeight&gt;'..perHeight..'&lt;/perHeight&gt;\r\n';
@@ -420,8 +422,8 @@ function resizeList (objectName)
 		
 		newGridHeight = Page.GetSize().Height - Grid.GetPos(objectName).Y - getLimitInPixel;
 	else
-		margin = 2;
-		newGridHeight = newGridHeight+4;
+		margin = 3;
+		newGridHeight = newGridHeight+20;
 	end
 
 	local gridWidth = Grid.GetSize(objectName).Width-margin;
@@ -447,8 +449,8 @@ end
 </Script>
 <BookMarks count="0">
 </BookMarks>
-<DesignCodeLine>379</DesignCodeLine>
-<DesignCodeCol>46</DesignCodeCol>
+<DesignCodeLine>350</DesignCodeLine>
+<DesignCodeCol>45</DesignCodeCol>
 </Globals>
 <Defaults>
 <StartupPage>_PageFirst</StartupPage>
@@ -511,7 +513,7 @@ DialogEx.Show("LOGIN", true, nil, nil);</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeLine>1</DesignCodeLine>
 <DesignCodeCol>39</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
@@ -698,8 +700,8 @@ end</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>12</DesignCodeLine>
-<DesignCodeCol>42</DesignCodeCol>
+<DesignCodeLine>6</DesignCodeLine>
+<DesignCodeCol>1</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -1217,9 +1219,9 @@ end
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>63</Top>
-<Bottom>101</Bottom>
+<Bottom>98</Bottom>
 <Left>72</Left>
-<Right>154</Right>
+<Right>150</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -1307,9 +1309,9 @@ end
 <MouseClickSound/>
 <OriginalRect>
 <Top>63</Top>
-<Bottom>101</Bottom>
+<Bottom>98</Bottom>
 <Left>72</Left>
-<Right>154</Right>
+<Right>150</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -1329,7 +1331,7 @@ end
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>55</Top>
-<Bottom>82</Bottom>
+<Bottom>80</Bottom>
 <Left>235</Left>
 <Right>304</Right>
 </Coordinates>
@@ -1420,7 +1422,7 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <MouseClickSound/>
 <OriginalRect>
 <Top>55</Top>
-<Bottom>82</Bottom>
+<Bottom>80</Bottom>
 <Left>235</Left>
 <Right>304</Right>
 </OriginalRect>
@@ -1442,9 +1444,9 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>76</Top>
-<Bottom>103</Bottom>
+<Bottom>101</Bottom>
 <Left>235</Left>
-<Right>342</Right>
+<Right>341</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -1532,9 +1534,9 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <MouseClickSound/>
 <OriginalRect>
 <Top>76</Top>
-<Bottom>103</Bottom>
+<Bottom>101</Bottom>
 <Left>235</Left>
-<Right>342</Right>
+<Right>341</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -3693,9 +3695,9 @@ end
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>205</Top>
-<Bottom>236</Bottom>
+<Bottom>233</Bottom>
 <Left>341</Left>
-<Right>553</Right>
+<Right>538</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -3805,9 +3807,9 @@ end
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>205</Top>
-<Bottom>236</Bottom>
+<Bottom>233</Bottom>
 <Left>582</Left>
-<Right>758</Right>
+<Right>765</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -5845,9 +5847,9 @@ end</Script>
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>63</Top>
-<Bottom>101</Bottom>
+<Bottom>98</Bottom>
 <Left>18</Left>
-<Right>221</Right>
+<Right>216</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -5957,7 +5959,7 @@ end</Script>
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>55</Top>
-<Bottom>82</Bottom>
+<Bottom>80</Bottom>
 <Left>235</Left>
 <Right>304</Right>
 </Coordinates>
@@ -6070,9 +6072,9 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>76</Top>
-<Bottom>103</Bottom>
+<Bottom>101</Bottom>
 <Left>235</Left>
-<Right>342</Right>
+<Right>341</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -6468,9 +6470,9 @@ end</Script>
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>271</Top>
-<Bottom>300</Bottom>
+<Bottom>296</Bottom>
 <Left>605</Left>
-<Right>1007</Right>
+<Right>991</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -6887,6 +6889,100 @@ end
 </BookMarks>
 </Event>
 <Object>
+<Type>3</Type>
+<Name>IMG_SEARCHBAR</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>1</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>1</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>1</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>124</Top>
+<Bottom>169</Bottom>
+<Left>291</Left>
+<Right>1302</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Right-Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Enter</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Leave</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<NormalImage>
+<Filename>AutoPlay\Images\search_bar.png</Filename>
+<UseTransColor>0</UseTransColor>
+<TransClr>16777215</TransClr>
+<TransTolerance>10</TransTolerance>
+<Opacity>100</Opacity>
+<HTMode>0</HTMode>
+</NormalImage>
+<MouseOverSndMode>0</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>0</MouseClickSndMode>
+<MouseClickSound/>
+</Object>
+<Object>
 <Type>12</Type>
 <Name>TR_MENU</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
@@ -7285,8 +7381,8 @@ end
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>65</Top>
-<Bottom>103</Bottom>
+<Top>66</Top>
+<Bottom>101</Bottom>
 <Left>71</Left>
 <Right>159</Right>
 </Coordinates>
@@ -7375,8 +7471,8 @@ end
 <MouseClickSndMode>0</MouseClickSndMode>
 <MouseClickSound/>
 <OriginalRect>
-<Top>65</Top>
-<Bottom>103</Bottom>
+<Top>66</Top>
+<Bottom>101</Bottom>
 <Left>71</Left>
 <Right>159</Right>
 </OriginalRect>
@@ -7398,7 +7494,7 @@ end
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>55</Top>
-<Bottom>82</Bottom>
+<Bottom>80</Bottom>
 <Left>235</Left>
 <Right>304</Right>
 </Coordinates>
@@ -7488,7 +7584,7 @@ end
 <MouseClickSound/>
 <OriginalRect>
 <Top>55</Top>
-<Bottom>82</Bottom>
+<Bottom>80</Bottom>
 <Left>235</Left>
 <Right>304</Right>
 </OriginalRect>
@@ -7510,9 +7606,9 @@ end
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>76</Top>
-<Bottom>103</Bottom>
+<Bottom>101</Bottom>
 <Left>235</Left>
-<Right>342</Right>
+<Right>341</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -7600,9 +7696,9 @@ end
 <MouseClickSound/>
 <OriginalRect>
 <Top>76</Top>
-<Bottom>103</Bottom>
+<Bottom>101</Bottom>
 <Left>235</Left>
-<Right>342</Right>
+<Right>341</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -7727,14 +7823,16 @@ end
 <Event>
 <Name>On Key</Name>
 <Args>number e_Key, table e_Modifiers</Args>
-<Script/>
+<Script>if e_Key == 13 then
+	Page.ClickObject("IMG_SEARCH_GO");
+end</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeLine>1</DesignCodeLine>
+<DesignCodeCol>5</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -7748,8 +7846,8 @@ end
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>33</DesignCodeCol>
+<DesignCodeLine>1</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -7796,100 +7894,6 @@ end
 <MaskRetMode>0</MaskRetMode>
 <ReadOnly>0</ReadOnly>
 </Box>
-</Object>
-<Object>
-<Type>3</Type>
-<Name>IMG_SEARCHBAR</Name>
-<VisibleAtDesignTime>1</VisibleAtDesignTime>
-<VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>0</Locked>
-<Enabled>1</Enabled>
-<ToolTip/>
-<Cursor>1</Cursor>
-<Group>0</Group>
-<MaintainAspectRatio>1</MaintainAspectRatio>
-<Pin>0</Pin>
-<TabIndex>-1</TabIndex>
-<AutoResize>0</AutoResize>
-<Coordinates>
-<Top>124</Top>
-<Bottom>169</Bottom>
-<Left>291</Left>
-<Right>1302</Right>
-</Coordinates>
-<Ratios>
-<WidthRatio>-1.000000</WidthRatio>
-<HeightRatio>-1.000000</HeightRatio>
-</Ratios>
-<Event>
-<Name>On Click</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Right-Click</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Enter</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Leave</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Actions/>
-<NormalImage>
-<Filename>AutoPlay\Images\search_bar.png</Filename>
-<UseTransColor>0</UseTransColor>
-<TransClr>16777215</TransClr>
-<TransTolerance>10</TransTolerance>
-<Opacity>100</Opacity>
-<HTMode>0</HTMode>
-</NormalImage>
-<MouseOverSndMode>0</MouseOverSndMode>
-<MouseOverSound/>
-<MouseClickSndMode>0</MouseClickSndMode>
-<MouseClickSound/>
 </Object>
 <Object>
 <Type>17</Type>
@@ -7979,6 +7983,152 @@ end
 <AntiAlias>1</AntiAlias>
 </FontData>
 </Settings>
+</Object>
+<Object>
+<Type>3</Type>
+<Name>IMG_SEARCH_GO</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>1</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>1</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>124</Top>
+<Bottom>169</Bottom>
+<Left>1240</Left>
+<Right>1303</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script>local searchText = Input.GetText("IN_SEARCH_USER");
+
+local usersListColumnsName = {"Lastname", "Firstname", "Username", "Role", "Sign_Check_List"}
+initList("GD_USERS_LIST", usersListColumnsName)
+
+local mySQLConnection = dbConnect();
+if mySQLConnection ~= nil then
+
+	if String.Find(searchText, "Search by", 1, false) == -1 then
+		if searchText == "" then
+			SQL = "SELECT * FROM IT_USERS;";
+			mySQLCursor = mySQLConnection:execute(SQL);
+			row = mySQLCursor:fetch({},"a")
+		else
+			for i,j in pairs (usersListColumnsName) do
+				SQL = "SELECT * FROM IT_USERS WHERE "..j.." LIKE '%"..searchText.."%';";
+				mySQLCursor = mySQLConnection:execute(SQL);
+				row = mySQLCursor:fetch({},"a")
+				if row then
+					break;
+				end
+			end
+		end
+
+		Grid.DeleteNonFixedRows("GD_USERS_LIST", true);
+		if not row then
+			Grid.SetGridLines("GD_USERS_LIST", GVL_HORZ);
+			index = Grid.InsertRow("GD_USERS_LIST", -1, true);
+			Grid.SetCellText("GD_USERS_LIST", index, 0, "No result", true);
+		else
+			while row do
+				username = row.Username;
+				lastname = row.Lastname;
+				firstname = row.Firstname;
+				role = row.Role;
+				signCheckList = row.Sign_Check_List;
+
+				index = Grid.InsertRow("GD_USERS_LIST", -1, true);
+				Grid.SetCellText("GD_USERS_LIST", index, 0, lastname, true);
+				Grid.SetCellText("GD_USERS_LIST", index, 1, firstname, true);
+				Grid.SetCellText("GD_USERS_LIST", index, 2, username, true);
+				Grid.SetCellText("GD_USERS_LIST", index, 3, role, true);
+				Grid.SetCellText("GD_USERS_LIST", index, 4, signCheckList, true);
+
+				row = mySQLCursor:fetch(row,"a");
+			end
+		end
+
+		resizeList("GD_USERS_LIST");
+		mySQLCursor:close();
+		mySQLConnection:close();
+	end
+end</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>15</DesignCodeLine>
+<DesignCodeCol>76</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Right-Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Enter</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Leave</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<NormalImage>
+<Filename>AutoPlay\Images\search_go.png</Filename>
+<UseTransColor>0</UseTransColor>
+<TransClr>16777215</TransClr>
+<TransTolerance>10</TransTolerance>
+<Opacity>100</Opacity>
+<HTMode>0</HTMode>
+</NormalImage>
+<MouseOverSndMode>0</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>0</MouseClickSndMode>
+<MouseClickSound/>
 </Object>
 <HGuidelines/>
 <VGuidelines/>
@@ -9439,9 +9589,9 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>76</Top>
-<Bottom>103</Bottom>
+<Bottom>101</Bottom>
 <Left>235</Left>
-<Right>342</Right>
+<Right>341</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -11488,8 +11638,8 @@ end</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>5</DesignCodeLine>
-<DesignCodeCol>35</DesignCodeCol>
+<DesignCodeLine>4</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -11673,9 +11823,9 @@ Input.SetSelection("IN_PASSWORD", 1, -1);</Script>
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>221</Top>
-<Bottom>247</Bottom>
+<Bottom>244</Bottom>
 <Left>273</Left>
-<Right>414</Right>
+<Right>399</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -11763,9 +11913,9 @@ Input.SetSelection("IN_PASSWORD", 1, -1);</Script>
 <MouseClickSound/>
 <OriginalRect>
 <Top>221</Top>
-<Bottom>247</Bottom>
+<Bottom>244</Bottom>
 <Left>273</Left>
-<Right>414</Right>
+<Right>399</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -11785,9 +11935,9 @@ Input.SetSelection("IN_PASSWORD", 1, -1);</Script>
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>74</Top>
-<Bottom>111</Bottom>
+<Bottom>107</Bottom>
 <Left>134</Left>
-<Right>366</Right>
+<Right>347</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -11875,9 +12025,9 @@ Input.SetSelection("IN_PASSWORD", 1, -1);</Script>
 <MouseClickSound/>
 <OriginalRect>
 <Top>74</Top>
-<Bottom>111</Bottom>
+<Bottom>107</Bottom>
 <Left>134</Left>
-<Right>366</Right>
+<Right>347</Right>
 </OriginalRect>
 </Text>
 </Object>
