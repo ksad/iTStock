@@ -1,46 +1,22 @@
 <ROOT>
 	<PAGE Name = "SETTINGS-MENU3">
-		<IMG_ACCORDION1 Width = "950" Height = "50" PosX = "292" PosY = "144">
-			<perWidth>69.546120058565</perWidth>
-			<perHeight>6.5104166666667</perHeight>
-			<perPosX>21.376281112738</perPosX>
-			<perPosY>18.75</perPosY>
-		</IMG_ACCORDION1>
-		<IMG_ACCORDION2 Width = "950" Height = "50" PosX = "292" PosY = "204">
-			<perWidth>69.546120058565</perWidth>
-			<perHeight>6.5104166666667</perHeight>
-			<perPosX>21.376281112738</perPosX>
-			<perPosY>26.5625</perPosY>
-		</IMG_ACCORDION2>
-		<IMG_ACCORDION3 Width = "950" Height = "50" PosX = "292" PosY = "264">
-			<perWidth>69.546120058565</perWidth>
-			<perHeight>6.5104166666667</perHeight>
-			<perPosX>21.376281112738</perPosX>
-			<perPosY>34.375</perPosY>
+		<IMG_ACCORDION3 Width = "815" Height = "40" PosX = "367" PosY = "214">
+			<perWidth>59.663250366032</perWidth>
+			<perHeight>5.2083333333333</perHeight>
+			<perPosX>26.866764275256</perPosX>
+			<perPosY>27.864583333333</perPosY>
 		</IMG_ACCORDION3>
-		<IMG_TOGGLE_DOWN1 Width = "62" Height = "50" PosX = "1242" PosY = "144">
-			<perWidth>4.5387994143485</perWidth>
-			<perHeight>6.5104166666667</perHeight>
-			<perPosX>90.922401171303</perPosX>
-			<perPosY>18.75</perPosY>
-		</IMG_TOGGLE_DOWN1>
-		<IMG_TOGGLE_DOWN2 Width = "62" Height = "50" PosX = "1242" PosY = "204">
-			<perWidth>4.5387994143485</perWidth>
-			<perHeight>6.5104166666667</perHeight>
-			<perPosX>90.922401171303</perPosX>
-			<perPosY>26.5625</perPosY>
-		</IMG_TOGGLE_DOWN2>
-		<IMG_TOGGLE_UP Width = "62" Height = "50" PosX = "1242" PosY = "264">
-			<perWidth>4.5387994143485</perWidth>
-			<perHeight>6.5104166666667</perHeight>
-			<perPosX>90.922401171303</perPosX>
-			<perPosY>34.375</perPosY>
+		<IMG_TOGGLE_UP Width = "50" Height = "40" PosX = "1182" PosY = "214">
+			<perWidth>3.6603221083455</perWidth>
+			<perHeight>5.2083333333333</perHeight>
+			<perPosX>86.530014641288</perPosX>
+			<perPosY>27.864583333333</perPosY>
 		</IMG_TOGGLE_UP>
-		<IMG_BG_BODY Width = "1012" Height = "200" PosX = "292" PosY = "314">
-			<perWidth>74.084919472914</perWidth>
-			<perHeight>26.041666666667</perHeight>
-			<perPosX>21.376281112738</perPosX>
-			<perPosY>40.885416666667</perPosY>
+		<IMG_BG_BODY Width = "865" Height = "150" PosX = "367" PosY = "254">
+			<perWidth>63.323572474378</perWidth>
+			<perHeight>19.53125</perHeight>
+			<perPosX>26.866764275256</perPosX>
+			<perPosY>33.072916666667</perPosY>
 		</IMG_BG_BODY>
 		<TR_MENU Width = "233" Height = "666" PosX = "0" PosY = "102">
 			<perWidth>17.05710102489</perWidth>
@@ -84,5 +60,29 @@
 			<perPosX>96.705710102489</perPosX>
 			<perPosY>7.8125</perPosY>
 		</IMG_LOGOUT>
+		<IMG_ACCORDION1 Width = "815" Height = "40" PosX = "367" PosY = "115">
+			<perWidth>59.663250366032</perWidth>
+			<perHeight>5.2083333333333</perHeight>
+			<perPosX>26.866764275256</perPosX>
+			<perPosY>14.973958333333</perPosY>
+		</IMG_ACCORDION1>
+		<IMG_TOGGLE_DOWN1 Width = "50" Height = "40" PosX = "1182" PosY = "115">
+			<perWidth>3.6603221083455</perWidth>
+			<perHeight>5.2083333333333</perHeight>
+			<perPosX>86.530014641288</perPosX>
+			<perPosY>14.973958333333</perPosY>
+		</IMG_TOGGLE_DOWN1>
+		<IMG_ACCORDION2 Width = "815" Height = "40" PosX = "367" PosY = "165">
+			<perWidth>59.663250366032</perWidth>
+			<perHeight>5.2083333333333</perHeight>
+			<perPosX>26.866764275256</perPosX>
+			<perPosY>21.484375</perPosY>
+		</IMG_ACCORDION2>
+		<IMG_TOGGLE_DOWN2 Width = "50" Height = "40" PosX = "1182" PosY = "165">
+			<perWidth>3.6603221083455</perWidth>
+			<perHeight>5.2083333333333</perHeight>
+			<perPosX>86.530014641288</perPosX>
+			<perPosY>21.484375</perPosY>
+		</IMG_TOGGLE_DOWN2>
 	</PAGE>
 </ROOT>
