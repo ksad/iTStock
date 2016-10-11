@@ -349,9 +349,9 @@ function saveXmlData()
 			elseif objectType ==8  and  String.Find(object, "IGNORED", 1, false) == -1 then
 				objProp = Hotspot.GetProperties(object);
 			elseif objectType ==9  and  String.Find(object, "IGNORED", 1, false) == -1 then
-				objProp = Listbox.GetProperties(object);
+				objProp = ListBox.GetProperties(object);
 			elseif objectType ==10  and  String.Find(object, "IGNORED", 1, false) == -1 then
-				objProp = Combobox.GetProperties(object);
+				objProp = ComboBox.GetProperties(object);
 			elseif objectType ==11  and  String.Find(object, "IGNORED", 1, false) == -1 then
 				objProp = Progress.GetProperties(object);
 			elseif objectType ==12  and  String.Find(object, "IGNORED", 1, false) == -1 then
@@ -449,8 +449,8 @@ end
 </Script>
 <BookMarks count="0">
 </BookMarks>
-<DesignCodeLine>4</DesignCodeLine>
-<DesignCodeCol>16</DesignCodeCol>
+<DesignCodeLine>345</DesignCodeLine>
+<DesignCodeCol>3</DesignCodeCol>
 </Globals>
 <Defaults>
 <StartupPage>_PageFirst</StartupPage>
@@ -4239,14 +4239,14 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <Event>
 <Name>On Click</Name>
 <Args/>
-<Script>Page.Jump("SETTINGS-DB");</Script>
+<Script>Page.Jump("SETTINGS");</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeCol>19</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -4333,14 +4333,14 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <Event>
 <Name>On Click</Name>
 <Args/>
-<Script>Page.Jump("SETTINGS-DB");</Script>
+<Script>Page.Jump("SETTINGS");</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>25</DesignCodeCol>
+<DesignCodeCol>19</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -6889,100 +6889,6 @@ end
 </BookMarks>
 </Event>
 <Object>
-<Type>3</Type>
-<Name>IMG_SEARCHBAR</Name>
-<VisibleAtDesignTime>1</VisibleAtDesignTime>
-<VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>1</Locked>
-<Enabled>1</Enabled>
-<ToolTip/>
-<Cursor>1</Cursor>
-<Group>0</Group>
-<MaintainAspectRatio>1</MaintainAspectRatio>
-<Pin>0</Pin>
-<TabIndex>-1</TabIndex>
-<AutoResize>0</AutoResize>
-<Coordinates>
-<Top>124</Top>
-<Bottom>169</Bottom>
-<Left>291</Left>
-<Right>1302</Right>
-</Coordinates>
-<Ratios>
-<WidthRatio>-1.000000</WidthRatio>
-<HeightRatio>-1.000000</HeightRatio>
-</Ratios>
-<Event>
-<Name>On Click</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Right-Click</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Enter</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Leave</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Actions/>
-<NormalImage>
-<Filename>AutoPlay\Images\search_bar.png</Filename>
-<UseTransColor>0</UseTransColor>
-<TransClr>16777215</TransClr>
-<TransTolerance>10</TransTolerance>
-<Opacity>100</Opacity>
-<HTMode>0</HTMode>
-</NormalImage>
-<MouseOverSndMode>0</MouseOverSndMode>
-<MouseOverSound/>
-<MouseClickSndMode>0</MouseClickSndMode>
-<MouseClickSound/>
-</Object>
-<Object>
 <Type>12</Type>
 <Name>TR_MENU</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
@@ -7472,7 +7378,7 @@ end
 <MouseClickSound/>
 <OriginalRect>
 <Top>66</Top>
-<Bottom>101</Bottom>
+<Bottom>104</Bottom>
 <Left>71</Left>
 <Right>159</Right>
 </OriginalRect>
@@ -7584,7 +7490,7 @@ end
 <MouseClickSound/>
 <OriginalRect>
 <Top>55</Top>
-<Bottom>80</Bottom>
+<Bottom>82</Bottom>
 <Left>235</Left>
 <Right>304</Right>
 </OriginalRect>
@@ -7696,9 +7602,9 @@ end
 <MouseClickSound/>
 <OriginalRect>
 <Top>76</Top>
-<Bottom>101</Bottom>
+<Bottom>103</Bottom>
 <Left>235</Left>
-<Right>341</Right>
+<Right>342</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -7800,7 +7706,7 @@ end
 <Type>7</Type>
 <Name>IN_SEARCH_USER</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
-<VisibleAtRunTime>1</VisibleAtRunTime>
+<VisibleAtRunTime>0</VisibleAtRunTime>
 <Locked>0</Locked>
 <Enabled>1</Enabled>
 <ToolTip/>
@@ -7811,10 +7717,10 @@ end
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>134</Top>
-<Bottom>162</Bottom>
-<Left>344</Left>
-<Right>1232</Right>
+<Top>122</Top>
+<Bottom>148</Bottom>
+<Left>399</Left>
+<Right>1177</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -7823,31 +7729,72 @@ end
 <Event>
 <Name>On Key</Name>
 <Args>number e_Key, table e_Modifiers</Args>
-<Script>if e_Key == 13 then
-	Page.ClickObject("IMG_SEARCH_GO");
+<Script>local searchText = Input.GetText("IN_SEARCH_USER");
+
+local usersListColumnsName = {"Lastname", "Firstname", "Username", "Role"}
+initList("GD_USERS_LIST", usersListColumnsName)
+Grid.DeleteNonFixedRows("GD_USERS_LIST", true);
+
+local mySQLConnection = dbConnect();
+if mySQLConnection ~= nil then
+
+	if String.Find(searchText, "Search by", 1, false) == -1 then
+		if searchText == "" then
+			SQL = "SELECT * FROM IT_USERS;";
+		else
+			SQL = "SELECT * FROM IT_USERS WHERE Lastname LIKE '%"..searchText.."%';";
+		end
+		mySQLCursor = mySQLConnection:execute(SQL);
+		row = mySQLCursor:fetch({},"a")
+
+		if row then
+			while row do
+				username = row.Username;
+				lastname = row.Lastname;
+				firstname = row.Firstname;
+				role = row.Role;
+				signCheckList = row.Sign_Check_List;
+
+				index = Grid.InsertRow("GD_USERS_LIST", -1, true);
+				Grid.SetCellText("GD_USERS_LIST", index, 0, lastname, true);
+				Grid.SetCellText("GD_USERS_LIST", index, 1, firstname, true);
+				Grid.SetCellText("GD_USERS_LIST", index, 2, username, true);
+				Grid.SetCellText("GD_USERS_LIST", index, 3, role, true);
+				Grid.SetCellText("GD_USERS_LIST", index, 4, signCheckList, true);
+
+				row = mySQLCursor:fetch(row,"a");
+			end
+		else
+			Grid.SetGridLines("GD_USERS_LIST", GVL_HORZ);
+			index = Grid.InsertRow("GD_USERS_LIST", -1, true);
+			Grid.SetCellText("GD_USERS_LIST", index, 0, "No result", true);
+		end
+		resizeList("GD_USERS_LIST");
+		mySQLCursor:close();
+		mySQLConnection:close();
+	end
 end</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>1</DesignCodeLine>
-<DesignCodeCol>5</DesignCodeCol>
+<DesignCodeLine>40</DesignCodeLine>
+<DesignCodeCol>30</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
 <Event>
 <Name>On Focus</Name>
 <Args/>
-<Script>Input.SetText("IN_SEARCH_USER", "");
-</Script>
+<Script>Input.SetText("IN_SEARCH_USER", "");</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>1</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>36</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -7867,13 +7814,13 @@ end</Script>
 </Event>
 <Actions/>
 <Text>
-<Body>Search by : Lastname, Firstname, Username, Role</Body>
-<TextColor>14264160</TextColor>
-<BackgroundColor>15461355</BackgroundColor>
+<Body>Search</Body>
+<TextColor>2147483647</TextColor>
+<BackgroundColor>15066597</BackgroundColor>
 <FontData>
 <FontName>Nunito</FontName>
 <CharacterSet>0</CharacterSet>
-<Height>-21</Height>
+<Height>-19</Height>
 <Weight>400</Weight>
 <Italic>1</Italic>
 <Underline>0</Underline>
@@ -7910,10 +7857,10 @@ end</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>194</Top>
-<Bottom>346</Bottom>
-<Left>294</Left>
-<Right>1306</Right>
+<Top>182</Top>
+<Bottom>334</Bottom>
+<Left>367</Left>
+<Right>1232</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -7986,23 +7933,23 @@ end</Script>
 </Object>
 <Object>
 <Type>3</Type>
-<Name>IMG_SEARCH_GO</Name>
+<Name>IMG_ACCORDION1</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>0</Locked>
+<Locked>1</Locked>
 <Enabled>1</Enabled>
 <ToolTip/>
 <Cursor>1</Cursor>
 <Group>0</Group>
 <MaintainAspectRatio>1</MaintainAspectRatio>
-<Pin>0</Pin>
+<Pin>1</Pin>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>124</Top>
-<Bottom>169</Bottom>
-<Left>1240</Left>
-<Right>1303</Right>
+<Top>115</Top>
+<Bottom>155</Bottom>
+<Left>367</Left>
+<Right>1182</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -8011,66 +7958,17 @@ end</Script>
 <Event>
 <Name>On Click</Name>
 <Args/>
-<Script>local searchText = Input.GetText("IN_SEARCH_USER");
-
-local usersListColumnsName = {"Lastname", "Firstname", "Username", "Role", "Sign_Check_List"}
-initList("GD_USERS_LIST", usersListColumnsName)
-
-local mySQLConnection = dbConnect();
-if mySQLConnection ~= nil then
-
-	if String.Find(searchText, "Search by", 1, false) == -1 then
-		if searchText == "" then
-			SQL = "SELECT * FROM IT_USERS;";
-			mySQLCursor = mySQLConnection:execute(SQL);
-			row = mySQLCursor:fetch({},"a")
-		else
-			for i,j in pairs (usersListColumnsName) do
-				SQL = "SELECT * FROM IT_USERS WHERE "..j.." LIKE '%"..searchText.."%';";
-				mySQLCursor = mySQLConnection:execute(SQL);
-				row = mySQLCursor:fetch({},"a")
-				if row then
-					break;
-				end
-			end
-		end
-
-		Grid.DeleteNonFixedRows("GD_USERS_LIST", true);
-		if not row then
-			Grid.SetGridLines("GD_USERS_LIST", GVL_HORZ);
-			index = Grid.InsertRow("GD_USERS_LIST", -1, true);
-			Grid.SetCellText("GD_USERS_LIST", index, 0, "No result", true);
-		else
-			while row do
-				username = row.Username;
-				lastname = row.Lastname;
-				firstname = row.Firstname;
-				role = row.Role;
-				signCheckList = row.Sign_Check_List;
-
-				index = Grid.InsertRow("GD_USERS_LIST", -1, true);
-				Grid.SetCellText("GD_USERS_LIST", index, 0, lastname, true);
-				Grid.SetCellText("GD_USERS_LIST", index, 1, firstname, true);
-				Grid.SetCellText("GD_USERS_LIST", index, 2, username, true);
-				Grid.SetCellText("GD_USERS_LIST", index, 3, role, true);
-				Grid.SetCellText("GD_USERS_LIST", index, 4, signCheckList, true);
-
-				row = mySQLCursor:fetch(row,"a");
-			end
-		end
-
-		resizeList("GD_USERS_LIST");
-		mySQLCursor:close();
-		mySQLConnection:close();
-	end
-end</Script>
+<Script>--Page.Jump("USERS-SEARCH");
+Input.SetVisible("IN_SEARCH_USER", true);
+Page.SetFocus("IN_SEARCH_USER");
+</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>15</DesignCodeLine>
-<DesignCodeCol>76</DesignCodeCol>
+<DesignCodeLine>3</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -8118,7 +8016,101 @@ end</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\search_go.png</Filename>
+<Filename>AutoPlay\Images\menu_user_search.png</Filename>
+<UseTransColor>0</UseTransColor>
+<TransClr>16777215</TransClr>
+<TransTolerance>10</TransTolerance>
+<Opacity>100</Opacity>
+<HTMode>0</HTMode>
+</NormalImage>
+<MouseOverSndMode>0</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>0</MouseClickSndMode>
+<MouseClickSound/>
+</Object>
+<Object>
+<Type>3</Type>
+<Name>IMG_TOGGLE_DOWN1</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>1</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>1</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>115</Top>
+<Bottom>155</Bottom>
+<Left>1182</Left>
+<Right>1232</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script>Page.Jump("USERS-SEARCH");</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>19</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Right-Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Enter</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Leave</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<NormalImage>
+<Filename>AutoPlay\Images\toggle_down.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>

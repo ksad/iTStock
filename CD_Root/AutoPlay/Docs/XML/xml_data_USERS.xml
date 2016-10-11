@@ -1,11 +1,5 @@
 <ROOT>
 	<PAGE Name = "USERS">
-		<IMG_SEARCHBAR Width = "1011" Height = "45" PosX = "291" PosY = "124">
-			<perWidth>74.011713030747</perWidth>
-			<perHeight>5.859375</perHeight>
-			<perPosX>21.303074670571</perPosX>
-			<perPosY>16.145833333333</perPosY>
-		</IMG_SEARCHBAR>
 		<TR_MENU Width = "233" Height = "666" PosX = "0" PosY = "102">
 			<perWidth>17.05710102489</perWidth>
 			<perHeight>86.71875</perHeight>
@@ -48,24 +42,42 @@
 			<perPosX>96.705710102489</perPosX>
 			<perPosY>7.8125</perPosY>
 		</IMG_LOGOUT>
-		<IN_SEARCH_USER Width = "888" Height = "28" PosX = "344" PosY = "134">
-			<perWidth>65.007320644217</perWidth>
-			<perHeight>3.6458333333333</perHeight>
-			<perPosX>25.183016105417</perPosX>
-			<perPosY>17.447916666667</perPosY>
-			<perFontSize>1.1713030746706</perFontSize>
+		<IN_SEARCH_USER Width = "778" Height = "26" PosX = "399" PosY = "122">
+			<perWidth>56.954612005857</perWidth>
+			<perHeight>3.3854166666667</perHeight>
+			<perPosX>29.209370424597</perPosX>
+			<perPosY>15.885416666667</perPosY>
+			<perFontSize>1.0248901903367</perFontSize>
 		</IN_SEARCH_USER>
-		<GD_USERS_LIST Width = "1012" Height = "152" PosX = "294" PosY = "194">
-			<perWidth>74.084919472914</perWidth>
+		<GD_USERS_LIST Width = "865" Height = "152" PosX = "367" PosY = "182">
+			<perWidth>63.323572474378</perWidth>
 			<perHeight>19.791666666667</perHeight>
-			<perPosX>21.522693997072</perPosX>
-			<perPosY>25.260416666667</perPosY>
+			<perPosX>26.866764275256</perPosX>
+			<perPosY>23.697916666667</perPosY>
 		</GD_USERS_LIST>
-		<IMG_SEARCH_GO Width = "63" Height = "45" PosX = "1240" PosY = "124">
+		<IMG_SEARCH_GO Width = "63" Height = "45" PosX = "1239" PosY = "116">
 			<perWidth>4.6120058565154</perWidth>
 			<perHeight>5.859375</perHeight>
-			<perPosX>90.775988286969</perPosX>
-			<perPosY>16.145833333333</perPosY>
+			<perPosX>90.702781844802</perPosX>
+			<perPosY>15.104166666667</perPosY>
 		</IMG_SEARCH_GO>
+		<IMG_ACCORDION1 Width = "815" Height = "40" PosX = "367" PosY = "115">
+			<perWidth>59.663250366032</perWidth>
+			<perHeight>5.2083333333333</perHeight>
+			<perPosX>26.866764275256</perPosX>
+			<perPosY>14.973958333333</perPosY>
+		</IMG_ACCORDION1>
+		<IMG_TOGGLE_DOWN1 Width = "50" Height = "40" PosX = "1182" PosY = "115">
+			<perWidth>3.6603221083455</perWidth>
+			<perHeight>5.2083333333333</perHeight>
+			<perPosX>86.530014641288</perPosX>
+			<perPosY>14.973958333333</perPosY>
+		</IMG_TOGGLE_DOWN1>
+		<ListBox1 Width = "865" Height = "69" PosX = "367" PosY = "155">
+			<perWidth>63.323572474378</perWidth>
+			<perHeight>8.984375</perHeight>
+			<perPosX>26.866764275256</perPosX>
+			<perPosY>20.182291666667</perPosY>
+		</ListBox1>
 	</PAGE>
 </ROOT>
