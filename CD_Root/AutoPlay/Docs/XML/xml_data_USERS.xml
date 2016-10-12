@@ -55,12 +55,6 @@
 			<perPosX>26.866764275256</perPosX>
 			<perPosY>23.697916666667</perPosY>
 		</GD_USERS_LIST>
-		<IMG_SEARCH_GO Width = "63" Height = "45" PosX = "1239" PosY = "116">
-			<perWidth>4.6120058565154</perWidth>
-			<perHeight>5.859375</perHeight>
-			<perPosX>90.702781844802</perPosX>
-			<perPosY>15.104166666667</perPosY>
-		</IMG_SEARCH_GO>
 		<IMG_ACCORDION1 Width = "815" Height = "40" PosX = "367" PosY = "115">
 			<perWidth>59.663250366032</perWidth>
 			<perHeight>5.2083333333333</perHeight>
@@ -73,11 +67,5 @@
 			<perPosX>86.530014641288</perPosX>
 			<perPosY>14.973958333333</perPosY>
 		</IMG_TOGGLE_DOWN1>
-		<ListBox1 Width = "865" Height = "69" PosX = "367" PosY = "155">
-			<perWidth>63.323572474378</perWidth>
-			<perHeight>8.984375</perHeight>
-			<perPosX>26.866764275256</perPosX>
-			<perPosY>20.182291666667</perPosY>
-		</ListBox1>
 	</PAGE>
 </ROOT>
