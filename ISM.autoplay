@@ -955,7 +955,7 @@ end
 <Name>TR_MENU</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>1</Locked>
+<Locked>0</Locked>
 <Enabled>1</Enabled>
 <ToolTip/>
 <Cursor>0</Cursor>
@@ -1335,9 +1335,9 @@ end
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>63</Top>
-<Bottom>101</Bottom>
+<Bottom>98</Bottom>
 <Left>72</Left>
-<Right>154</Right>
+<Right>150</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -1425,9 +1425,9 @@ end
 <MouseClickSound/>
 <OriginalRect>
 <Top>63</Top>
-<Bottom>101</Bottom>
+<Bottom>98</Bottom>
 <Left>72</Left>
-<Right>154</Right>
+<Right>150</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -1447,7 +1447,7 @@ end
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>55</Top>
-<Bottom>82</Bottom>
+<Bottom>80</Bottom>
 <Left>235</Left>
 <Right>304</Right>
 </Coordinates>
@@ -1538,7 +1538,7 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <MouseClickSound/>
 <OriginalRect>
 <Top>55</Top>
-<Bottom>82</Bottom>
+<Bottom>80</Bottom>
 <Left>235</Left>
 <Right>304</Right>
 </OriginalRect>
@@ -1560,9 +1560,9 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>76</Top>
-<Bottom>103</Bottom>
+<Bottom>101</Bottom>
 <Left>235</Left>
-<Right>342</Right>
+<Right>341</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -1650,9 +1650,9 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <MouseClickSound/>
 <OriginalRect>
 <Top>76</Top>
-<Bottom>103</Bottom>
+<Bottom>101</Bottom>
 <Left>235</Left>
-<Right>342</Right>
+<Right>341</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -2905,9 +2905,9 @@ end
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>63</Top>
-<Bottom>101</Bottom>
+<Bottom>98</Bottom>
 <Left>49</Left>
-<Right>193</Right>
+<Right>191</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -2995,9 +2995,9 @@ end
 <MouseClickSound/>
 <OriginalRect>
 <Top>63</Top>
-<Bottom>101</Bottom>
+<Bottom>98</Bottom>
 <Left>49</Left>
-<Right>193</Right>
+<Right>191</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -3017,7 +3017,7 @@ end
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>55</Top>
-<Bottom>82</Bottom>
+<Bottom>80</Bottom>
 <Left>235</Left>
 <Right>304</Right>
 </Coordinates>
@@ -3107,7 +3107,7 @@ end
 <MouseClickSound/>
 <OriginalRect>
 <Top>55</Top>
-<Bottom>82</Bottom>
+<Bottom>80</Bottom>
 <Left>235</Left>
 <Right>304</Right>
 </OriginalRect>
@@ -3129,9 +3129,9 @@ end
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>76</Top>
-<Bottom>103</Bottom>
+<Bottom>101</Bottom>
 <Left>235</Left>
-<Right>342</Right>
+<Right>341</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -3219,9 +3219,9 @@ end
 <MouseClickSound/>
 <OriginalRect>
 <Top>76</Top>
-<Bottom>103</Bottom>
+<Bottom>101</Bottom>
 <Left>235</Left>
-<Right>342</Right>
+<Right>341</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -7628,9 +7628,9 @@ end
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>76</Top>
-<Bottom>103</Bottom>
+<Bottom>101</Bottom>
 <Left>235</Left>
-<Right>342</Right>
+<Right>341</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -8954,7 +8954,7 @@ end
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>65</Top>
-<Bottom>103</Bottom>
+<Bottom>100</Bottom>
 <Left>71</Left>
 <Right>159</Right>
 </Coordinates>
@@ -9044,7 +9044,7 @@ end
 <MouseClickSound/>
 <OriginalRect>
 <Top>65</Top>
-<Bottom>103</Bottom>
+<Bottom>100</Bottom>
 <Left>71</Left>
 <Right>159</Right>
 </OriginalRect>
@@ -9066,7 +9066,7 @@ end
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>55</Top>
-<Bottom>82</Bottom>
+<Bottom>80</Bottom>
 <Left>235</Left>
 <Right>304</Right>
 </Coordinates>
@@ -9156,7 +9156,7 @@ end
 <MouseClickSound/>
 <OriginalRect>
 <Top>55</Top>
-<Bottom>82</Bottom>
+<Bottom>80</Bottom>
 <Left>235</Left>
 <Right>304</Right>
 </OriginalRect>
@@ -9178,9 +9178,9 @@ end
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>76</Top>
-<Bottom>103</Bottom>
+<Bottom>101</Bottom>
 <Left>235</Left>
-<Right>342</Right>
+<Right>341</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -9268,9 +9268,9 @@ end
 <MouseClickSound/>
 <OriginalRect>
 <Top>76</Top>
-<Bottom>103</Bottom>
+<Bottom>101</Bottom>
 <Left>235</Left>
-<Right>342</Right>
+<Right>341</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -9893,9 +9893,9 @@ searchUsersWithFilter();</Script>
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>184</Top>
-<Bottom>211</Bottom>
+<Bottom>208</Bottom>
 <Left>986</Left>
-<Right>1113</Right>
+<Right>1106</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -9983,9 +9983,9 @@ searchUsersWithFilter();</Script>
 <MouseClickSound/>
 <OriginalRect>
 <Top>184</Top>
-<Bottom>211</Bottom>
+<Bottom>208</Bottom>
 <Left>986</Left>
-<Right>1113</Right>
+<Right>1106</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -10111,7 +10111,7 @@ searchUsersWithFilter();</Script>
 <Name>On Key</Name>
 <Args>number e_Key, table e_Modifiers</Args>
 <Script>if e_Key == 9 then
-	Page.SetFocus("IN_FIRSTNAME");
+	Page.SetFocus("IN_LASTNAME");
 end
 
 searchUsersWithFilter();</Script>
@@ -10120,8 +10120,8 @@ searchUsersWithFilter();</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>4</DesignCodeLine>
-<DesignCodeCol>24</DesignCodeCol>
+<DesignCodeLine>1</DesignCodeLine>
+<DesignCodeCol>28</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -10305,7 +10305,7 @@ searchUsersWithFilter();</Script>
 <Name>On Key</Name>
 <Args>number e_Key, table e_Modifiers</Args>
 <Script>if e_Key == 9 then
-	Page.SetFocus("IN_USERNAME");
+	Page.SetFocus("IN_FIRSTNAME");
 end
 
 searchUsersWithFilter();</Script>
@@ -10314,8 +10314,8 @@ searchUsersWithFilter();</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>4</DesignCodeLine>
-<DesignCodeCol>24</DesignCodeCol>
+<DesignCodeLine>1</DesignCodeLine>
+<DesignCodeCol>27</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -10499,7 +10499,7 @@ searchUsersWithFilter();</Script>
 <Name>On Key</Name>
 <Args>number e_Key, table e_Modifiers</Args>
 <Script>if e_Key == 9 then
-	Page.SetFocus("IN_LASTNAME");
+	Page.SetFocus("IN_USERNAME");
 end
 
 searchUsersWithFilter();</Script>
@@ -10508,8 +10508,8 @@ searchUsersWithFilter();</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>4</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeLine>1</DesignCodeLine>
+<DesignCodeCol>27</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -10587,9 +10587,9 @@ searchUsersWithFilter();</Script>
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>214</Top>
-<Bottom>238</Bottom>
+<Bottom>236</Bottom>
 <Left>1123</Left>
-<Right>1223</Right>
+<Right>1218</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -10683,9 +10683,9 @@ searchUsersWithFilter("reset");
 <MouseClickSound/>
 <OriginalRect>
 <Top>214</Top>
-<Bottom>238</Bottom>
+<Bottom>236</Bottom>
 <Left>1123</Left>
-<Right>1223</Right>
+<Right>1218</Right>
 </OriginalRect>
 </Text>
 </Object>
