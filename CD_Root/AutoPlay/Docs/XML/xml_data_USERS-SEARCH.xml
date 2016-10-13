@@ -130,5 +130,11 @@
 			<perPosX>82.210834553441</perPosX>
 			<perPosY>27.864583333333</perPosY>
 		</LB_CLS_FILTERS>
+		<IMG_ADD_USER Width = "35" Height = "35" PosX = "1136" PosY = "118">
+			<perWidth>2.5622254758419</perWidth>
+			<perHeight>4.5572916666667</perHeight>
+			<perPosX>83.162518301611</perPosX>
+			<perPosY>15.364583333333</perPosY>
+		</IMG_ADD_USER>
 	</PAGE>
 </ROOT>
