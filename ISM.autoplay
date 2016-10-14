@@ -69,6 +69,7 @@ MENU_TREE_INDEXS = {Home="1", Settings="2", Users= "2.1", NONE=""}
 HEIGHT_BG_MENU_FORM = {200, 200, 200, 200};
 SAVE_XML = false;
 PAGE_LIMIT_RATIO = 2;
+ENABLED  = 1;
 
 function dbConnect ()
 	if File.DoesExist("AutoPlay\\Docs\\db_access.enc") then
@@ -610,10 +611,26 @@ function searchUsersWithFilter(reset)
 		mySQLCursor:close();
 		mySQLConnection:close();
 	end
+end
+
+function hideGraphic (objectList, page)
+	if ENABLED == 1 then
+		tblPagePropeties ={};
+		tblPagePropeties.UseCustomSettings = false;
+		Application.SetPageProperties(page, tblPagePropeties);
+
+		tblTreeProps = {};
+		tblTreeProps.BackgroundColor = Math.HexColorToNumber("C8C8C8");
+		Tree.SetProperties("TR_MENU", tblTreeProps);
+
+		for i,j in pairs (objectList) do
+			Page.DeleteObject(j);
+		end
+	end
 end</Script>
 <BookMarks count="0">
 </BookMarks>
-<DesignCodeLine>206</DesignCodeLine>
+<DesignCodeLine>549</DesignCodeLine>
 <DesignCodeCol>0</DesignCodeCol>
 </Globals>
 <Defaults>
@@ -857,6 +874,8 @@ else
 		local windowLoadingHandle = Application.LoadValue("Loading", "windowHandle");
 		Window.Close(windowLoadingHandle, CLOSEWND_TERMINATE);
 		Window.Maximize(Application.GetWndHandle());
+		listToHide = {"IMG_LEFT_BAR_TITLE", "IMG_LOGOUT", "LB_DATE_TIME", "LB_HELLO", "LB_PAGE_TITLE", "IMG_BLACK_BAR"}
+		hideGraphic(listToHide, this);
 	end
 end</Script>
 <TreeStates>
@@ -864,8 +883,8 @@ end</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>6</DesignCodeLine>
-<DesignCodeCol>1</DesignCodeCol>
+<DesignCodeLine>18</DesignCodeLine>
+<DesignCodeCol>2</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -1259,7 +1278,18 @@ end
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\nav_h.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -1353,7 +1383,18 @@ end
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\bg_left_menu_title.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -1383,9 +1424,9 @@ end
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>63</Top>
-<Bottom>101</Bottom>
+<Bottom>98</Bottom>
 <Left>72</Left>
-<Right>154</Right>
+<Right>150</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -1447,7 +1488,18 @@ end
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <Text>
 <Body>HOME</Body>
 <NormalColor>16777215</NormalColor>
@@ -1495,7 +1547,7 @@ end
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>55</Top>
-<Bottom>82</Bottom>
+<Bottom>80</Bottom>
 <Left>235</Left>
 <Right>304</Right>
 </Coordinates>
@@ -1560,7 +1612,18 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <Text>
 <Body>{HELLO}</Body>
 <NormalColor>16777215</NormalColor>
@@ -1608,9 +1671,9 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>76</Top>
-<Bottom>103</Bottom>
+<Bottom>101</Bottom>
 <Left>235</Left>
-<Right>342</Right>
+<Right>341</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -1672,7 +1735,18 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <Text>
 <Body>{DATA_TIME}</Body>
 <NormalColor>16777215</NormalColor>
@@ -1784,7 +1858,18 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\exit.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -1849,14 +1934,17 @@ else
 		setObjectsSizeAndPositions(this);
 		Page.Navigate(PAGE_NEXT);
 	end
-end</Script>
+end
+
+listToHide = {"IMG_LEFT_BAR_TITLE", "IMG_LOGOUT", "LB_DATE_TIME", "LB_HELLO", "LB_PAGE_TITLE", "IMG_BLACK_BAR"}
+hideGraphic(listToHide, this);</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>10</DesignCodeLine>
-<DesignCodeCol>35</DesignCodeCol>
+<DesignCodeLine>15</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -2069,7 +2157,18 @@ end
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\menu_db.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -2163,7 +2262,18 @@ end
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\toggle_down.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -2257,7 +2367,18 @@ end
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\menu_2.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -2351,7 +2472,18 @@ end
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\toggle_down.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -2445,7 +2577,18 @@ end
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\menu_3.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -2539,7 +2682,18 @@ end
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\toggle_down.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -2829,7 +2983,18 @@ end
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\nav_h.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -2923,7 +3088,18 @@ end
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\bg_left_menu_title.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -2953,9 +3129,9 @@ end
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>63</Top>
-<Bottom>101</Bottom>
+<Bottom>98</Bottom>
 <Left>49</Left>
-<Right>193</Right>
+<Right>191</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -3017,7 +3193,18 @@ end
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <Text>
 <Body>SETTTINGS</Body>
 <NormalColor>16777215</NormalColor>
@@ -3043,9 +3230,9 @@ end
 <MouseClickSound/>
 <OriginalRect>
 <Top>63</Top>
-<Bottom>101</Bottom>
+<Bottom>98</Bottom>
 <Left>49</Left>
-<Right>193</Right>
+<Right>191</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -3065,7 +3252,7 @@ end
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>55</Top>
-<Bottom>82</Bottom>
+<Bottom>80</Bottom>
 <Left>235</Left>
 <Right>304</Right>
 </Coordinates>
@@ -3129,7 +3316,18 @@ end
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <Text>
 <Body>{HELLO}</Body>
 <NormalColor>16777215</NormalColor>
@@ -3155,7 +3353,7 @@ end
 <MouseClickSound/>
 <OriginalRect>
 <Top>55</Top>
-<Bottom>82</Bottom>
+<Bottom>80</Bottom>
 <Left>235</Left>
 <Right>304</Right>
 </OriginalRect>
@@ -3177,9 +3375,9 @@ end
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>76</Top>
-<Bottom>103</Bottom>
+<Bottom>101</Bottom>
 <Left>235</Left>
-<Right>342</Right>
+<Right>341</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -3241,7 +3439,18 @@ end
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <Text>
 <Body>{DATA_TIME}</Body>
 <NormalColor>16777215</NormalColor>
@@ -3267,9 +3476,9 @@ end
 <MouseClickSound/>
 <OriginalRect>
 <Top>76</Top>
-<Bottom>103</Bottom>
+<Bottom>101</Bottom>
 <Left>235</Left>
-<Right>342</Right>
+<Right>341</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -3353,7 +3562,18 @@ end
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\exit.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -3421,14 +3641,16 @@ else
 end
 
 checkSQLServerStatus();
-loadDbAccess();</Script>
+loadDbAccess();
+listToHide = {"IMG_LEFT_BAR_TITLE", "IMG_LOGOUT", "LB_DATE_TIME", "LB_HELLO", "LB_PAGE_TITLE", "IMG_BLACK_BAR"}
+hideGraphic(listToHide, this);</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>10</DesignCodeLine>
-<DesignCodeCol>35</DesignCodeCol>
+<DesignCodeLine>18</DesignCodeLine>
+<DesignCodeCol>30</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -3837,7 +4059,18 @@ end
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\nav_h.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -3931,7 +4164,18 @@ end
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\bg_left_menu_title.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -3961,9 +4205,9 @@ end
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>63</Top>
-<Bottom>101</Bottom>
+<Bottom>98</Bottom>
 <Left>18</Left>
-<Right>221</Right>
+<Right>216</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -4025,7 +4269,18 @@ end
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <Text>
 <Body>DB - SETTTINGS</Body>
 <NormalColor>16777215</NormalColor>
@@ -4073,7 +4328,7 @@ end
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>55</Top>
-<Bottom>82</Bottom>
+<Bottom>80</Bottom>
 <Left>235</Left>
 <Right>304</Right>
 </Coordinates>
@@ -4138,7 +4393,18 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <Text>
 <Body>{HELLO}</Body>
 <NormalColor>16777215</NormalColor>
@@ -4186,9 +4452,9 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>76</Top>
-<Bottom>103</Bottom>
+<Bottom>101</Bottom>
 <Left>235</Left>
-<Right>342</Right>
+<Right>341</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -4250,7 +4516,18 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <Text>
 <Body>{DATA_TIME}</Body>
 <NormalColor>16777215</NormalColor>
@@ -4362,7 +4639,18 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\exit.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -4456,7 +4744,18 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\menu_db_opened.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -4550,7 +4849,18 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\toggle_up.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -4644,7 +4954,18 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\menu_2.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -4738,7 +5059,18 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\toggle_down.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -4832,7 +5164,18 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\menu_3.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -4926,7 +5269,18 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\toggle_down.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -5020,7 +5374,18 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\bg_menu_body.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -5050,9 +5415,9 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>165</Top>
-<Bottom>193</Bottom>
+<Bottom>190</Bottom>
 <Left>411</Left>
-<Right>595</Right>
+<Right>589</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -5114,7 +5479,18 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <Text>
 <Body>MySQL Server Status :</Body>
 <NormalColor>12632256</NormalColor>
@@ -5162,9 +5538,9 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>165</Top>
-<Bottom>192</Bottom>
+<Bottom>189</Bottom>
 <Left>622</Left>
-<Right>770</Right>
+<Right>773</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -5226,7 +5602,18 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <Text>
 <Body>{SERVER_STATUS}</Body>
 <NormalColor>12632256</NormalColor>
@@ -5338,7 +5725,18 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\server_status.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -5432,7 +5830,18 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\server.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -5526,7 +5935,18 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <Text>
 <Body>Checking connection to database, Please wait ...</Body>
 <NormalColor>14659176</NormalColor>
@@ -5638,7 +6058,18 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\check_db_connection.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -5732,7 +6163,18 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\input.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -5826,7 +6268,18 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\input.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -5920,7 +6373,18 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\input.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -6014,7 +6478,18 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\input.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -6108,7 +6583,18 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\input.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -6300,7 +6786,18 @@ end</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\btn_save.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -6910,14 +7407,17 @@ if mySQLConnection ~= nil then
 	
 	mySQLCursor:close();
 	mySQLConnection:close();
-end</Script>
+end
+
+listToHide = {"IMG_LEFT_BAR_TITLE", "IMG_LOGOUT", "LB_DATE_TIME", "LB_HELLO", "LB_PAGE_TITLE", "IMG_BLACK_BAR"}
+hideGraphic(listToHide, this);</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>48</DesignCodeLine>
-<DesignCodeCol>3</DesignCodeCol>
+<DesignCodeLine>51</DesignCodeLine>
+<DesignCodeCol>30</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -7328,7 +7828,18 @@ end
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\nav_h.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -7422,7 +7933,18 @@ end
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\bg_left_menu_title.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -7452,7 +7974,7 @@ end
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>66</Top>
-<Bottom>104</Bottom>
+<Bottom>101</Bottom>
 <Left>71</Left>
 <Right>159</Right>
 </Coordinates>
@@ -7516,7 +8038,18 @@ end
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <Text>
 <Body>USERS</Body>
 <NormalColor>16777215</NormalColor>
@@ -7542,7 +8075,7 @@ end
 <MouseClickSound/>
 <OriginalRect>
 <Top>66</Top>
-<Bottom>104</Bottom>
+<Bottom>101</Bottom>
 <Left>71</Left>
 <Right>159</Right>
 </OriginalRect>
@@ -7564,7 +8097,7 @@ end
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>55</Top>
-<Bottom>82</Bottom>
+<Bottom>80</Bottom>
 <Left>235</Left>
 <Right>304</Right>
 </Coordinates>
@@ -7628,7 +8161,18 @@ end
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <Text>
 <Body>{HELLO}</Body>
 <NormalColor>16777215</NormalColor>
@@ -7654,7 +8198,7 @@ end
 <MouseClickSound/>
 <OriginalRect>
 <Top>55</Top>
-<Bottom>82</Bottom>
+<Bottom>80</Bottom>
 <Left>235</Left>
 <Right>304</Right>
 </OriginalRect>
@@ -7676,9 +8220,9 @@ end
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>76</Top>
-<Bottom>103</Bottom>
+<Bottom>101</Bottom>
 <Left>235</Left>
-<Right>342</Right>
+<Right>341</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -7740,7 +8284,18 @@ end
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <Text>
 <Body>{DATA_TIME}</Body>
 <NormalColor>16777215</NormalColor>
@@ -7766,9 +8321,9 @@ end
 <MouseClickSound/>
 <OriginalRect>
 <Top>76</Top>
-<Bottom>103</Bottom>
+<Bottom>101</Bottom>
 <Left>235</Left>
-<Right>342</Right>
+<Right>341</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -7852,7 +8407,18 @@ end
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\exit.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -8178,7 +8744,18 @@ Page.SetFocus("IN_SEARCH_USER");
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\menu_user_search.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -8272,7 +8849,18 @@ Page.SetFocus("IN_SEARCH_USER");
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\toggle_down.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -8372,14 +8960,17 @@ if mySQLConnection ~= nil then
 
 	mySQLCursor:close();
 	mySQLConnection:close();
-end</Script>
+end
+
+listToHide = {"IMG_LEFT_BAR_TITLE", "IMG_LOGOUT", "LB_DATE_TIME", "LB_HELLO", "LB_PAGE_TITLE", "IMG_BLACK_BAR"}
+hideGraphic(listToHide, this);</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>4</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeLine>51</DesignCodeLine>
+<DesignCodeCol>30</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -8877,7 +9468,18 @@ end
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\nav_h.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -8971,7 +9573,18 @@ end
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\bg_left_menu_title.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -9001,7 +9614,7 @@ end
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>65</Top>
-<Bottom>103</Bottom>
+<Bottom>100</Bottom>
 <Left>71</Left>
 <Right>159</Right>
 </Coordinates>
@@ -9065,7 +9678,18 @@ end
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <Text>
 <Body>USERS</Body>
 <NormalColor>16777215</NormalColor>
@@ -9091,7 +9715,7 @@ end
 <MouseClickSound/>
 <OriginalRect>
 <Top>65</Top>
-<Bottom>103</Bottom>
+<Bottom>100</Bottom>
 <Left>71</Left>
 <Right>159</Right>
 </OriginalRect>
@@ -9113,7 +9737,7 @@ end
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>55</Top>
-<Bottom>82</Bottom>
+<Bottom>80</Bottom>
 <Left>235</Left>
 <Right>304</Right>
 </Coordinates>
@@ -9177,7 +9801,18 @@ end
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <Text>
 <Body>{HELLO}</Body>
 <NormalColor>16777215</NormalColor>
@@ -9203,7 +9838,7 @@ end
 <MouseClickSound/>
 <OriginalRect>
 <Top>55</Top>
-<Bottom>82</Bottom>
+<Bottom>80</Bottom>
 <Left>235</Left>
 <Right>304</Right>
 </OriginalRect>
@@ -9225,9 +9860,9 @@ end
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>76</Top>
-<Bottom>103</Bottom>
+<Bottom>101</Bottom>
 <Left>235</Left>
-<Right>342</Right>
+<Right>341</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -9289,7 +9924,18 @@ end
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <Text>
 <Body>{DATA_TIME}</Body>
 <NormalColor>16777215</NormalColor>
@@ -9315,9 +9961,9 @@ end
 <MouseClickSound/>
 <OriginalRect>
 <Top>76</Top>
-<Bottom>103</Bottom>
+<Bottom>101</Bottom>
 <Left>235</Left>
-<Right>342</Right>
+<Right>341</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -9401,7 +10047,18 @@ end
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\exit.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -9495,7 +10152,18 @@ end
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\bg_menu_body.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -9589,7 +10257,18 @@ end
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\menu_search_user_opened.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -9683,7 +10362,18 @@ end
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\toggle_up.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -9910,7 +10600,18 @@ searchUsersWithFilter();</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\user_toggle_idle.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -9940,9 +10641,9 @@ searchUsersWithFilter();</Script>
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>184</Top>
-<Bottom>211</Bottom>
+<Bottom>208</Bottom>
 <Left>986</Left>
-<Right>1113</Right>
+<Right>1106</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -10004,7 +10705,18 @@ searchUsersWithFilter();</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <Text>
 <Body>Sign checkList : </Body>
 <NormalColor>12632256</NormalColor>
@@ -10030,9 +10742,9 @@ searchUsersWithFilter();</Script>
 <MouseClickSound/>
 <OriginalRect>
 <Top>184</Top>
-<Bottom>211</Bottom>
+<Bottom>208</Bottom>
 <Left>986</Left>
-<Right>1113</Right>
+<Right>1106</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -10116,7 +10828,18 @@ searchUsersWithFilter();</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\input.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -10310,7 +11033,18 @@ searchUsersWithFilter();</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\input.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -10504,7 +11238,18 @@ searchUsersWithFilter();</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\input.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -10704,7 +11449,18 @@ searchUsersWithFilter("reset");
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <Text>
 <Body>Clear all filters</Body>
 <NormalColor>12632256</NormalColor>
@@ -10817,7 +11573,18 @@ searchUsersWithFilter("reset");
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\add_user.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -10882,14 +11649,17 @@ else
 		setObjectsSizeAndPositions(this);
 		Page.Navigate(PAGE_NEXT);
 	end
-end</Script>
+end
+
+listToHide = {"IMG_LEFT_BAR_TITLE", "IMG_LOGOUT", "LB_DATE_TIME", "LB_HELLO", "LB_PAGE_TITLE", "IMG_BLACK_BAR"}
+hideGraphic(listToHide, this);</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>10</DesignCodeLine>
-<DesignCodeCol>35</DesignCodeCol>
+<DesignCodeLine>16</DesignCodeLine>
+<DesignCodeCol>30</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -11102,7 +11872,18 @@ end
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\menu_2.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -11196,7 +11977,18 @@ end
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\bg_menu_body.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -11471,7 +12263,18 @@ end
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\nav_h.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -11565,7 +12368,18 @@ end
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\bg_left_menu_title.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -11595,9 +12409,9 @@ end
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>63</Top>
-<Bottom>101</Bottom>
+<Bottom>98</Bottom>
 <Left>49</Left>
-<Right>193</Right>
+<Right>191</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -11659,7 +12473,18 @@ end
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <Text>
 <Body>SETTTINGS</Body>
 <NormalColor>16777215</NormalColor>
@@ -11685,9 +12510,9 @@ end
 <MouseClickSound/>
 <OriginalRect>
 <Top>63</Top>
-<Bottom>101</Bottom>
+<Bottom>98</Bottom>
 <Left>49</Left>
-<Right>193</Right>
+<Right>191</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -11707,7 +12532,7 @@ end
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>55</Top>
-<Bottom>82</Bottom>
+<Bottom>80</Bottom>
 <Left>235</Left>
 <Right>304</Right>
 </Coordinates>
@@ -11772,7 +12597,18 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <Text>
 <Body>{HELLO}</Body>
 <NormalColor>16777215</NormalColor>
@@ -11798,7 +12634,7 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <MouseClickSound/>
 <OriginalRect>
 <Top>55</Top>
-<Bottom>82</Bottom>
+<Bottom>80</Bottom>
 <Left>235</Left>
 <Right>304</Right>
 </OriginalRect>
@@ -11820,9 +12656,9 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>76</Top>
-<Bottom>103</Bottom>
+<Bottom>101</Bottom>
 <Left>235</Left>
-<Right>342</Right>
+<Right>341</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -11884,7 +12720,18 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <Text>
 <Body>{DATA_TIME}</Body>
 <NormalColor>16777215</NormalColor>
@@ -11910,9 +12757,9 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <MouseClickSound/>
 <OriginalRect>
 <Top>76</Top>
-<Bottom>103</Bottom>
+<Bottom>101</Bottom>
 <Left>235</Left>
-<Right>342</Right>
+<Right>341</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -11996,7 +12843,18 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\exit.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -12090,7 +12948,18 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\menu_db.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -12184,7 +13053,18 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\toggle_down.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -12278,7 +13158,18 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\menu_3.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -12372,7 +13263,18 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\toggle_down.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -12466,7 +13368,18 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\toggle_up.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -12534,14 +13447,15 @@ else
 	end
 end
 
-</Script>
+listToHide = {"IMG_LEFT_BAR_TITLE", "IMG_LOGOUT", "LB_DATE_TIME", "LB_HELLO", "LB_PAGE_TITLE", "IMG_BLACK_BAR"}
+hideGraphic(listToHide, this);</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>12</DesignCodeLine>
-<DesignCodeCol>28</DesignCodeCol>
+<DesignCodeLine>17</DesignCodeLine>
+<DesignCodeCol>30</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -12754,7 +13668,18 @@ end
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\menu_3.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -12848,7 +13773,18 @@ end
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\toggle_up.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -12942,7 +13878,18 @@ end
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\bg_menu_body.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -13217,7 +14164,18 @@ end
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\nav_h.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -13311,7 +14269,18 @@ end
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\bg_left_menu_title.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -13341,9 +14310,9 @@ end
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>63</Top>
-<Bottom>101</Bottom>
+<Bottom>98</Bottom>
 <Left>49</Left>
-<Right>193</Right>
+<Right>191</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -13405,7 +14374,18 @@ end
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <Text>
 <Body>SETTTINGS</Body>
 <NormalColor>16777215</NormalColor>
@@ -13431,9 +14411,9 @@ end
 <MouseClickSound/>
 <OriginalRect>
 <Top>63</Top>
-<Bottom>101</Bottom>
+<Bottom>98</Bottom>
 <Left>49</Left>
-<Right>193</Right>
+<Right>191</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -13453,7 +14433,7 @@ end
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>55</Top>
-<Bottom>82</Bottom>
+<Bottom>80</Bottom>
 <Left>235</Left>
 <Right>304</Right>
 </Coordinates>
@@ -13518,7 +14498,18 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <Text>
 <Body>{HELLO}</Body>
 <NormalColor>16777215</NormalColor>
@@ -13544,7 +14535,7 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <MouseClickSound/>
 <OriginalRect>
 <Top>55</Top>
-<Bottom>82</Bottom>
+<Bottom>80</Bottom>
 <Left>235</Left>
 <Right>304</Right>
 </OriginalRect>
@@ -13566,9 +14557,9 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>76</Top>
-<Bottom>103</Bottom>
+<Bottom>101</Bottom>
 <Left>235</Left>
-<Right>342</Right>
+<Right>341</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -13630,7 +14621,18 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <Text>
 <Body>{DATA_TIME}</Body>
 <NormalColor>16777215</NormalColor>
@@ -13656,9 +14658,9 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <MouseClickSound/>
 <OriginalRect>
 <Top>76</Top>
-<Bottom>103</Bottom>
+<Bottom>101</Bottom>
 <Left>235</Left>
-<Right>342</Right>
+<Right>341</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -13742,7 +14744,18 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\exit.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -13836,7 +14849,18 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\menu_db.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -13930,7 +14954,18 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\toggle_down.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -14024,7 +15059,18 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\menu_2.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -14118,7 +15164,18 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\toggle_down.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -14158,16 +15215,14 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <Event>
 <Name>On Preload</Name>
 <Args/>
-<Script>EXIT = 0;
-
-</Script>
+<Script>EXIT = 0;</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>1</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>9</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -14524,9 +15579,9 @@ Input.SetSelection("IN_PASSWORD", 1, -1);</Script>
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>221</Top>
-<Bottom>247</Bottom>
+<Bottom>244</Bottom>
 <Left>273</Left>
-<Right>414</Right>
+<Right>399</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -14588,7 +15643,18 @@ Input.SetSelection("IN_PASSWORD", 1, -1);</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <Text>
 <Body>Forgot password ?</Body>
 <NormalColor>16777215</NormalColor>
@@ -14614,9 +15680,9 @@ Input.SetSelection("IN_PASSWORD", 1, -1);</Script>
 <MouseClickSound/>
 <OriginalRect>
 <Top>221</Top>
-<Bottom>247</Bottom>
+<Bottom>244</Bottom>
 <Left>273</Left>
-<Right>414</Right>
+<Right>399</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -14636,9 +15702,9 @@ Input.SetSelection("IN_PASSWORD", 1, -1);</Script>
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>74</Top>
-<Bottom>111</Bottom>
+<Bottom>107</Bottom>
 <Left>134</Left>
-<Right>366</Right>
+<Right>347</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -14700,7 +15766,18 @@ Input.SetSelection("IN_PASSWORD", 1, -1);</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <Text>
 <Body>User Athentification</Body>
 <NormalColor>16777215</NormalColor>
@@ -14726,9 +15803,9 @@ Input.SetSelection("IN_PASSWORD", 1, -1);</Script>
 <MouseClickSound/>
 <OriginalRect>
 <Top>74</Top>
-<Bottom>111</Bottom>
+<Bottom>107</Bottom>
 <Left>134</Left>
-<Right>366</Right>
+<Right>347</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -14812,7 +15889,18 @@ Input.SetSelection("IN_PASSWORD", 1, -1);</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\input_username.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -14906,7 +15994,18 @@ Input.SetSelection("IN_PASSWORD", 1, -1);</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\input_password.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -15041,7 +16140,18 @@ end</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\btn_login.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -15136,7 +16246,18 @@ end</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <Text>
 <Body>New Label</Body>
 <NormalColor>10040064</NormalColor>
@@ -15451,7 +16572,18 @@ Image.SetEnabled("IMG_SAVE_CONFIG_SERVER", true);</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <Text>
 <Body>MySQL Server Status :</Body>
 <NormalColor>16777215</NormalColor>
@@ -15563,7 +16695,18 @@ Image.SetEnabled("IMG_SAVE_CONFIG_SERVER", true);</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <Text>
 <Body>{SERVER_STATUS}</Body>
 <NormalColor>16777215</NormalColor>
@@ -15675,7 +16818,18 @@ Image.SetEnabled("IMG_SAVE_CONFIG_SERVER", true);</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\server_status.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -15769,7 +16923,18 @@ Image.SetEnabled("IMG_SAVE_CONFIG_SERVER", true);</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\input.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -15863,7 +17028,18 @@ Image.SetEnabled("IMG_SAVE_CONFIG_SERVER", true);</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\input.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -15957,7 +17133,18 @@ Image.SetEnabled("IMG_SAVE_CONFIG_SERVER", true);</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\input.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -16051,7 +17238,18 @@ Image.SetEnabled("IMG_SAVE_CONFIG_SERVER", true);</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\input.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -16145,7 +17343,18 @@ Image.SetEnabled("IMG_SAVE_CONFIG_SERVER", true);</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\input.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -16749,7 +17958,18 @@ end</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\server.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -16952,7 +18172,18 @@ end</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\btn_save.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -17046,7 +18277,18 @@ end</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <Text>
 <Body>Checking connection to database, Please wait ...</Body>
 <NormalColor>16777215</NormalColor>
@@ -17158,7 +18400,18 @@ end</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\check_db_connection.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -17480,7 +18733,18 @@ end</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <Text>
 <Body>Working, Please wait ...</Body>
 <NormalColor>2147483647</NormalColor>
@@ -17759,7 +19023,18 @@ end</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <Text>
 <Body>Done ...</Body>
 <NormalColor>2147483647</NormalColor>
@@ -17871,7 +19146,18 @@ end</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\ok.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -18132,7 +19418,18 @@ end</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <Text>
 <Body>FAILED ...</Body>
 <NormalColor>2147483647</NormalColor>
@@ -18244,7 +19541,18 @@ end</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\error.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -18377,20 +19685,6 @@ Image.Load("IMG_TOGGLE_YES_NO", "AutoPlay\\Images\\user_toggle_idle.png");</Scri
 </BookMarks>
 </Event>
 <Event>
-<Name>On Size</Name>
-<Args>number e_WindowWidth, number e_WindowHeight, number e_DialogWidth, number e_DialogHeight, number e_Type</Args>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
 <Name>On Key</Name>
 <Args>number e_Key, table e_Modifiers</Args>
 <Script/>
@@ -18435,6 +19729,20 @@ Image.Load("IMG_TOGGLE_YES_NO", "AutoPlay\\Images\\user_toggle_idle.png");</Scri
 <Event>
 <Name>On Mouse Wheel</Name>
 <Args>table e_Flags, number e_Delta, number e_X, number e_Y</Args>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Size</Name>
+<Args>number e_WindowWidth, number e_WindowHeight, number e_DialogWidth, number e_DialogHeight, number e_Type</Args>
 <Script/>
 <TreeStates>
 <TreeState>0</TreeState>
@@ -18746,7 +20054,18 @@ end</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\btn_create.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -18851,7 +20170,18 @@ end</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\user_toggle_idle.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -18881,9 +20211,9 @@ end</Script>
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>329</Top>
-<Bottom>361</Bottom>
+<Bottom>357</Bottom>
 <Left>44</Left>
-<Right>200</Right>
+<Right>204</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -18945,7 +20275,18 @@ end</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <Text>
 <Body>Sign checkList : </Body>
 <NormalColor>16777215</NormalColor>
@@ -18971,9 +20312,9 @@ end</Script>
 <MouseClickSound/>
 <OriginalRect>
 <Top>329</Top>
-<Bottom>361</Bottom>
+<Bottom>357</Bottom>
 <Left>44</Left>
-<Right>200</Right>
+<Right>204</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -19160,7 +20501,18 @@ end</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\input.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -19356,7 +20708,18 @@ end</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\input.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -19577,7 +20940,18 @@ end</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\input.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -19803,7 +21177,18 @@ end</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\input.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -19965,9 +21350,9 @@ end</Script>
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>0</Top>
-<Bottom>37</Bottom>
+<Bottom>33</Bottom>
 <Left>302</Left>
-<Right>488</Right>
+<Right>484</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -20029,7 +21414,18 @@ end</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <Text>
 <Body>Create new user</Body>
 <NormalColor>16777215</NormalColor>
@@ -20055,9 +21451,9 @@ end</Script>
 <MouseClickSound/>
 <OriginalRect>
 <Top>0</Top>
-<Bottom>37</Bottom>
+<Bottom>33</Bottom>
 <Left>302</Left>
-<Right>488</Right>
+<Right>484</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -20141,7 +21537,18 @@ end</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <NormalImage>
 <Filename>AutoPlay\Images\notification.png</Filename>
 <UseTransColor>0</UseTransColor>
@@ -20171,9 +21578,9 @@ end</Script>
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>65</Top>
-<Bottom>97</Bottom>
+<Bottom>93</Bottom>
 <Left>511</Left>
-<Right>646</Right>
+<Right>647</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -20235,7 +21642,18 @@ end</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <Text>
 <Body>Access Roles </Body>
 <NormalColor>16777215</NormalColor>
@@ -20261,9 +21679,9 @@ end</Script>
 <MouseClickSound/>
 <OriginalRect>
 <Top>65</Top>
-<Bottom>97</Bottom>
+<Bottom>93</Bottom>
 <Left>511</Left>
-<Right>646</Right>
+<Right>647</Right>
 </OriginalRect>
 </Text>
 </Object>
