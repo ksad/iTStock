@@ -73,11 +73,11 @@
 			<perPosY>23.567708333333</perPosY>
 			<perFontSize>0.87847730600293</perFontSize>
 		</CB_ROLE>
-		<IMG_TOGGLE_YES_NO Width = "68" Height = "24" PosX = "1120" PosY = "183">
-			<perWidth>4.9780380673499</perWidth>
-			<perHeight>3.125</perHeight>
-			<perPosX>81.99121522694</perPosX>
-			<perPosY>23.828125</perPosY>
+		<IMG_TOGGLE_YES_NO Width = "55" Height = "25" PosX = "1117" PosY = "182">
+			<perWidth>4.0263543191801</perWidth>
+			<perHeight>3.2552083333333</perHeight>
+			<perPosX>81.771595900439</perPosX>
+			<perPosY>23.697916666667</perPosY>
 		</IMG_TOGGLE_YES_NO>
 		<LB_SIGN Width = "127" Height = "27" PosX = "986" PosY = "184">
 			<perWidth>9.2972181551977</perWidth>

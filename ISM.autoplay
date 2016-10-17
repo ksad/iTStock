@@ -630,8 +630,8 @@ function hideGraphic (objectList, page)
 end</Script>
 <BookMarks count="0">
 </BookMarks>
-<DesignCodeLine>549</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeLine>4</DesignCodeLine>
+<DesignCodeCol>16</DesignCodeCol>
 </Globals>
 <Defaults>
 <StartupPage>_PageFirst</StartupPage>
@@ -1492,9 +1492,9 @@ end
 <MouseClickSound/>
 <OriginalRect>
 <Top>63</Top>
-<Bottom>98</Bottom>
+<Bottom>101</Bottom>
 <Left>72</Left>
-<Right>150</Right>
+<Right>154</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -1605,7 +1605,7 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <MouseClickSound/>
 <OriginalRect>
 <Top>55</Top>
-<Bottom>80</Bottom>
+<Bottom>82</Bottom>
 <Left>235</Left>
 <Right>304</Right>
 </OriginalRect>
@@ -1717,9 +1717,9 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <MouseClickSound/>
 <OriginalRect>
 <Top>76</Top>
-<Bottom>101</Bottom>
+<Bottom>103</Bottom>
 <Left>235</Left>
-<Right>341</Right>
+<Right>342</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -2975,9 +2975,9 @@ end
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>63</Top>
-<Bottom>98</Bottom>
+<Bottom>101</Bottom>
 <Left>49</Left>
-<Right>191</Right>
+<Right>193</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -3087,7 +3087,7 @@ end
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>55</Top>
-<Bottom>80</Bottom>
+<Bottom>82</Bottom>
 <Left>235</Left>
 <Right>304</Right>
 </Coordinates>
@@ -3199,9 +3199,9 @@ end
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>76</Top>
-<Bottom>101</Bottom>
+<Bottom>103</Bottom>
 <Left>235</Left>
-<Right>341</Right>
+<Right>342</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -3985,9 +3985,9 @@ end
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>63</Top>
-<Bottom>98</Bottom>
+<Bottom>101</Bottom>
 <Left>18</Left>
-<Right>216</Right>
+<Right>221</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -4097,7 +4097,7 @@ end
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>55</Top>
-<Bottom>80</Bottom>
+<Bottom>82</Bottom>
 <Left>235</Left>
 <Right>304</Right>
 </Coordinates>
@@ -4210,9 +4210,9 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>76</Top>
-<Bottom>101</Bottom>
+<Bottom>103</Bottom>
 <Left>235</Left>
-<Right>341</Right>
+<Right>342</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -5074,9 +5074,9 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>165</Top>
-<Bottom>190</Bottom>
+<Bottom>193</Bottom>
 <Left>411</Left>
-<Right>589</Right>
+<Right>595</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -5186,9 +5186,9 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>165</Top>
-<Bottom>189</Bottom>
+<Bottom>192</Bottom>
 <Left>622</Left>
-<Right>773</Right>
+<Right>770</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -7479,7 +7479,7 @@ end
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>66</Top>
-<Bottom>101</Bottom>
+<Bottom>104</Bottom>
 <Left>71</Left>
 <Right>159</Right>
 </Coordinates>
@@ -7569,7 +7569,7 @@ end
 <MouseClickSound/>
 <OriginalRect>
 <Top>66</Top>
-<Bottom>101</Bottom>
+<Bottom>104</Bottom>
 <Left>71</Left>
 <Right>159</Right>
 </OriginalRect>
@@ -7591,7 +7591,7 @@ end
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>55</Top>
-<Bottom>80</Bottom>
+<Bottom>82</Bottom>
 <Left>235</Left>
 <Right>304</Right>
 </Coordinates>
@@ -7681,7 +7681,7 @@ end
 <MouseClickSound/>
 <OriginalRect>
 <Top>55</Top>
-<Bottom>80</Bottom>
+<Bottom>82</Bottom>
 <Left>235</Left>
 <Right>304</Right>
 </OriginalRect>
@@ -7703,9 +7703,9 @@ end
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>76</Top>
-<Bottom>101</Bottom>
+<Bottom>103</Bottom>
 <Left>235</Left>
-<Right>341</Right>
+<Right>342</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -7793,9 +7793,9 @@ end
 <MouseClickSound/>
 <OriginalRect>
 <Top>76</Top>
-<Bottom>101</Bottom>
+<Bottom>103</Bottom>
 <Left>235</Left>
-<Right>341</Right>
+<Right>342</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -7896,7 +7896,7 @@ end
 <Object>
 <Type>7</Type>
 <Name>IN_SEARCH_USER</Name>
-<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtDesignTime>0</VisibleAtDesignTime>
 <VisibleAtRunTime>0</VisibleAtRunTime>
 <Locked>0</Locked>
 <Enabled>1</Enabled>
@@ -7908,10 +7908,10 @@ end
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>122</Top>
-<Bottom>148</Bottom>
-<Left>399</Left>
-<Right>1177</Right>
+<Top>123</Top>
+<Bottom>149</Bottom>
+<Left>401</Left>
+<Right>1179</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -8005,7 +8005,7 @@ end</Script>
 </Event>
 <Actions/>
 <Text>
-<Body>Search</Body>
+<Body/>
 <TextColor>2147483647</TextColor>
 <BackgroundColor>15066597</BackgroundColor>
 <FontData>
@@ -8127,7 +8127,7 @@ end</Script>
 <Name>IMG_ACCORDION1</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>1</Locked>
+<Locked>0</Locked>
 <Enabled>1</Enabled>
 <ToolTip/>
 <Cursor>1</Cursor>
@@ -8207,7 +8207,7 @@ Page.SetFocus("IN_SEARCH_USER");
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\menu_user_search.png</Filename>
+<Filename>AutoPlay\Images\menu_search_user.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -8226,7 +8226,7 @@ Page.SetFocus("IN_SEARCH_USER");
 <VisibleAtRunTime>1</VisibleAtRunTime>
 <Locked>0</Locked>
 <Enabled>1</Enabled>
-<ToolTip/>
+<ToolTip>Advanced search</ToolTip>
 <Cursor>1</Cursor>
 <Group>0</Group>
 <MaintainAspectRatio>1</MaintainAspectRatio>
@@ -8301,7 +8301,7 @@ Page.SetFocus("IN_SEARCH_USER");
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\toggle_down.png</Filename>
+<Filename>AutoPlay\Images\toggle_user_advanced_search.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -9031,7 +9031,7 @@ end
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>65</Top>
-<Bottom>100</Bottom>
+<Bottom>103</Bottom>
 <Left>71</Left>
 <Right>159</Right>
 </Coordinates>
@@ -9121,7 +9121,7 @@ end
 <MouseClickSound/>
 <OriginalRect>
 <Top>65</Top>
-<Bottom>100</Bottom>
+<Bottom>103</Bottom>
 <Left>71</Left>
 <Right>159</Right>
 </OriginalRect>
@@ -9143,7 +9143,7 @@ end
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>55</Top>
-<Bottom>80</Bottom>
+<Bottom>82</Bottom>
 <Left>235</Left>
 <Right>304</Right>
 </Coordinates>
@@ -9233,7 +9233,7 @@ end
 <MouseClickSound/>
 <OriginalRect>
 <Top>55</Top>
-<Bottom>80</Bottom>
+<Bottom>82</Bottom>
 <Left>235</Left>
 <Right>304</Right>
 </OriginalRect>
@@ -9255,9 +9255,9 @@ end
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>76</Top>
-<Bottom>101</Bottom>
+<Bottom>103</Bottom>
 <Left>235</Left>
-<Right>341</Right>
+<Right>342</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -9345,9 +9345,9 @@ end
 <MouseClickSound/>
 <OriginalRect>
 <Top>76</Top>
-<Bottom>101</Bottom>
+<Bottom>103</Bottom>
 <Left>235</Left>
-<Right>341</Right>
+<Right>342</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -9858,14 +9858,14 @@ end</Script>
 <Cursor>1</Cursor>
 <Group>0</Group>
 <MaintainAspectRatio>1</MaintainAspectRatio>
-<Pin>1</Pin>
+<Pin>0</Pin>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>183</Top>
+<Top>182</Top>
 <Bottom>207</Bottom>
-<Left>1120</Left>
-<Right>1188</Right>
+<Left>1117</Left>
+<Right>1172</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -9970,9 +9970,9 @@ searchUsersWithFilter();</Script>
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>184</Top>
-<Bottom>208</Bottom>
+<Bottom>211</Bottom>
 <Left>986</Left>
-<Right>1106</Right>
+<Right>1113</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -10060,9 +10060,9 @@ searchUsersWithFilter();</Script>
 <MouseClickSound/>
 <OriginalRect>
 <Top>184</Top>
-<Bottom>208</Bottom>
+<Bottom>211</Bottom>
 <Left>986</Left>
-<Right>1106</Right>
+<Right>1113</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -11628,9 +11628,9 @@ end
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>63</Top>
-<Bottom>98</Bottom>
+<Bottom>101</Bottom>
 <Left>49</Left>
-<Right>191</Right>
+<Right>193</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -11740,7 +11740,7 @@ end
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>55</Top>
-<Bottom>80</Bottom>
+<Bottom>82</Bottom>
 <Left>235</Left>
 <Right>304</Right>
 </Coordinates>
@@ -11853,9 +11853,9 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>76</Top>
-<Bottom>101</Bottom>
+<Bottom>103</Bottom>
 <Left>235</Left>
-<Right>341</Right>
+<Right>342</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -18448,7 +18448,7 @@ Paragraph.SetText("PH_ERROR_MSG", lineJump..errorMsg);</Script>
 <VGuidelines/>
 </Page>
 </PageDialog>
-<PageDialog width="790" height="545" dialog_title="Create new user" dialog_style="0" movable="1" use_custom_icon="0" custom_icon="" always_on_top="0" resizable="0" min_width="790" min_height="545" fit_custom_mask_to_window="1" custom_mask="">
+<PageDialog width="790" height="545" dialog_title="Create new user" dialog_style="1" movable="1" use_custom_icon="0" custom_icon="" always_on_top="0" resizable="0" min_width="790" min_height="545" fit_custom_mask_to_window="1" custom_mask="">
 <Page>
 <Name>ADD_USER</Name>
 <InheritObs/>

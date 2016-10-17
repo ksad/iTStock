@@ -42,11 +42,11 @@
 			<perPosX>96.705710102489</perPosX>
 			<perPosY>7.8125</perPosY>
 		</IMG_LOGOUT>
-		<IN_SEARCH_USER Width = "778" Height = "26" PosX = "399" PosY = "122">
+		<IN_SEARCH_USER Width = "778" Height = "26" PosX = "401" PosY = "123">
 			<perWidth>56.954612005857</perWidth>
 			<perHeight>3.3854166666667</perHeight>
-			<perPosX>29.209370424597</perPosX>
-			<perPosY>15.885416666667</perPosY>
+			<perPosX>29.355783308931</perPosX>
+			<perPosY>16.015625</perPosY>
 			<perFontSize>1.0248901903367</perFontSize>
 		</IN_SEARCH_USER>
 		<GD_USERS_LIST Width = "865" Height = "152" PosX = "367" PosY = "182">
