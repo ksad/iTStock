@@ -355,8 +355,15 @@ function setObjectsSizeAndPositions (pageName)
 			Hotspot.SetSize(object, NewWidth, NewHeight);
 			Hotspot.SetPos(object, NewX, NewY);
 		elseif objectType ==9 then
-			ListBox.SetSize(object, NewWidth, NewHeight);
-			ListBox.SetPos(object, NewX, NewY);
+			perFont = String.ToNumber(XML.GetValue("ROOT/PAGE/"..object.."/perFontSize"));
+			newFontSize = (perFont*PAGEWIDTH)/100;
+			tblListBoxProps = {};
+			tblListBoxProps.FontSize = Math.Round(newFontSize, 0);
+			tblListBoxProps.Height = NewHeight;
+			tblListBoxProps.Width = NewWidth;
+			tblListBoxProps.X = NewX;
+			tblListBoxProps.Y = NewY;
+			ListBox.SetProperties(object, tblListBoxProps);
 		elseif objectType ==10 then
 			ComboBox.SetSize(object, NewWidth, NewHeight);
 			ComboBox.SetPos(object, NewX, NewY);
@@ -373,8 +380,15 @@ function setObjectsSizeAndPositions (pageName)
 			RichText.SetSize(object, NewWidth, NewHeight);
 			RichText.SetPos(object, NewX, NewY);
 		elseif objectType ==15 then
-			CheckBox.SetSize(object, NewWidth, NewHeight);
-			CheckBox.SetPos(object, NewX, NewY);
+			perFont = String.ToNumber(XML.GetValue("ROOT/PAGE/"..object.."/perFontSize"));
+			newFontSize = (perFont*PAGEWIDTH)/100;
+			tblCheckBoxProps = {};
+			tblCheckBoxProps.FontSize = Math.Round(newFontSize, 0);
+			tblCheckBoxProps.Height = NewHeight;
+			tblCheckBoxProps.Width = NewWidth;
+			tblCheckBoxProps.X = NewX;
+			tblCheckBoxProps.Y = NewY;
+			CheckBox.SetProperties(object, tblCheckBoxProps);
 		elseif objectType ==16 then
 			SlideShow.SetSize(object, NewWidth, NewHeight);
 			SlideShow.SetPos(object, NewX, NewY);
@@ -433,6 +447,8 @@ function saveXmlData()
 				objProp = Hotspot.GetProperties(object);
 			elseif objectType ==9  and  String.Find(object, "IGNORED", 1, false) == -1 then
 				objProp = ListBox.GetProperties(object);
+				perFont = (objProp.FontSize*100)/PROJEJCT_PAGE_WIDTH;
+				xmlFont = '\t\t\t&lt;perFontSize&gt;'..perFont..'&lt;/perFontSize&gt;\r\n';
 			elseif objectType ==10  and  String.Find(object, "IGNORED", 1, false) == -1 then
 				objProp = ComboBox.GetProperties(object);
 				perFont = (objProp.FontSize*100)/PROJEJCT_PAGE_WIDTH;
@@ -447,6 +463,8 @@ function saveXmlData()
 				objProp = RichText.GetProperties(object);
 			elseif objectType ==15  and  String.Find(object, "IGNORED", 1, false) == -1 then
 				objProp = CheckBox.GetProperties(object);
+				perFont = (objProp.FontSize*100)/PROJEJCT_PAGE_WIDTH;
+				xmlFont = '\t\t\t&lt;perFontSize&gt;'..perFont..'&lt;/perFontSize&gt;\r\n';
 			elseif objectType ==16  and  String.Find(object, "IGNORED", 1, false) == -1 then
 				objProp = SlideShow.GetProperties(object);
 			elseif objectType ==17  and  String.Find(object, "IGNORED", 1, false) == -1 then
@@ -533,7 +551,7 @@ function resizeList (objectName)
 end
 
 function searchUsersWithFilter(reset)
-	local usersListColumnsName = {"Lastname", "Firstname", "Username", "Role"}
+	local usersListColumnsName = {"Lastname", "Firsname", "Username", "Role", "Sign check list", "Status"}
 	initList("GD_USERS_LIST", usersListColumnsName)
 	Grid.DeleteNonFixedRows("GD_USERS_LIST", true);
 
@@ -575,11 +593,23 @@ function searchUsersWithFilter(reset)
 			local SignCheckStatus = String.Left(ImageStatus.Filename, 1);
 			searchBySignCheckList = "Sign_Check_List = '"..String.Upper(SignCheckStatus).."'";
 		end
+		
+		local LoadedImage = Image.GetFilename("IMG_CHECKBOX");
+		local ImageStatus = String.SplitPath(LoadedImage);
+		local searchByStatus  = ImageStatus.Filename;
 
+		if searchByStatus  == "checkbox_off" then
+			sqlTosearchByStatus = "Active = '0'";
+		end
+
+		if searchByStatus  == "checkbox_on" then
+			sqlTosearchByStatus = "Active = '1'";
+		end
+				
 		if reset then
-			SQL = "SELECT * FROM IT_USERS";	
+			SQL = "SELECT * FROM IT_USERS";
 		else
-			SQL = "SELECT * FROM IT_USERS WHERE "..sqlSearchByFirstname.." AND "..sqlSearchByLastname.." AND "..sqlSsearchByUsername.." AND "..sqlTosearchByRole.." AND "..searchBySignCheckList..";";	
+			SQL = "SELECT * FROM IT_USERS WHERE "..sqlSearchByFirstname.." AND "..sqlSearchByLastname.." AND "..sqlSsearchByUsername.." AND "..sqlTosearchByRole.." AND "..searchBySignCheckList.." AND "..sqlTosearchByStatus..";";
 		end
 
 		mySQLCursor = mySQLConnection:execute(SQL);
@@ -592,6 +622,7 @@ function searchUsersWithFilter(reset)
 				firstname = row.Firstname;
 				role = row.Role;
 				signCheckList = row.Sign_Check_List;
+				status = row.Active;
 
 				index = Grid.InsertRow("GD_USERS_LIST", -1, true);
 				Grid.SetCellText("GD_USERS_LIST", index, 0, lastname, true);
@@ -599,6 +630,11 @@ function searchUsersWithFilter(reset)
 				Grid.SetCellText("GD_USERS_LIST", index, 2, username, true);
 				Grid.SetCellText("GD_USERS_LIST", index, 3, role, true);
 				Grid.SetCellText("GD_USERS_LIST", index, 4, signCheckList, true);
+				if status == '1' then
+					Grid.SetCellText("GD_USERS_LIST", index, 5, "Active", true);
+				else
+					Grid.SetCellText("GD_USERS_LIST", index, 5, "Disabled", true);
+				end
 
 				row = mySQLCursor:fetch(row,"a");
 			end
@@ -630,8 +666,8 @@ function hideGraphic (objectList, page)
 end</Script>
 <BookMarks count="0">
 </BookMarks>
-<DesignCodeLine>4</DesignCodeLine>
-<DesignCodeCol>16</DesignCodeCol>
+<DesignCodeLine>540</DesignCodeLine>
+<DesignCodeCol>37</DesignCodeCol>
 </Globals>
 <Defaults>
 <StartupPage>_PageFirst</StartupPage>
@@ -883,8 +919,8 @@ end</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>18</DesignCodeLine>
-<DesignCodeCol>2</DesignCodeCol>
+<DesignCodeLine>21</DesignCodeLine>
+<DesignCodeCol>3</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -6901,7 +6937,7 @@ else
 	end
 end
 
-local usersListColumnsName = {"Lastname", "Firsname", "Username", "Role", "Sign check list"}
+local usersListColumnsName = {"Lastname", "Firsname", "Username", "Role", "Sign check list", "Status"}
 initList("GD_USERS_LIST", usersListColumnsName)
 
 local mySQLConnection = dbConnect();
@@ -6913,12 +6949,13 @@ if mySQLConnection ~= nil then
 	Grid.DeleteNonFixedRows("GD_USERS_LIST", true);
 
 	while row do
-		
+
 		username = row.Username;
 		lastname = row.Lastname;
 		firstname = row.Firstname;
 		role = row.Role;
 		signCheckList = row.Sign_Check_List;
+		status = row.Active;
 
 		index = Grid.InsertRow("GD_USERS_LIST", -1, true);
 		Grid.SetCellText("GD_USERS_LIST", index, 0, lastname, true);
@@ -6926,12 +6963,17 @@ if mySQLConnection ~= nil then
 		Grid.SetCellText("GD_USERS_LIST", index, 2, username, true);
 		Grid.SetCellText("GD_USERS_LIST", index, 3, role, true);
 		Grid.SetCellText("GD_USERS_LIST", index, 4, signCheckList, true);
+		if status == '1' then
+			Grid.SetCellText("GD_USERS_LIST", index, 5, "Active", true);
+		else
+			Grid.SetCellText("GD_USERS_LIST", index, 5, "Disabled", true);
+		end
 
 		row = mySQLCursor:fetch(row,"a");
 	end
-	
+
 	resizeList("GD_USERS_LIST");
-	
+
 	mySQLCursor:close();
 	mySQLConnection:close();
 end
@@ -6943,8 +6985,8 @@ hideGraphic(listToHide, this);</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>51</DesignCodeLine>
-<DesignCodeCol>30</DesignCodeCol>
+<DesignCodeLine>15</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -7920,57 +7962,57 @@ end
 <Event>
 <Name>On Key</Name>
 <Args>number e_Key, table e_Modifiers</Args>
-<Script>local searchText = Input.GetText("IN_SEARCH_USER");
-
-local usersListColumnsName = {"Lastname", "Firstname", "Username", "Role"}
-initList("GD_USERS_LIST", usersListColumnsName)
-Grid.DeleteNonFixedRows("GD_USERS_LIST", true);
-
-local mySQLConnection = dbConnect();
-if mySQLConnection ~= nil then
-
-	if String.Find(searchText, "Search by", 1, false) == -1 then
-		if searchText == "" then
-			SQL = "SELECT * FROM IT_USERS;";
-		else
-			SQL = "SELECT * FROM IT_USERS WHERE Lastname LIKE '%"..searchText.."%';";
-		end
-		mySQLCursor = mySQLConnection:execute(SQL);
+<Script>if e_Key ~= 13 and e_Key ~= 16 and e_Key ~= 17 and e_Key ~= 18 then
+	local searchText = Input.GetText("IN_SEARCH_USER");
+	
+	local usersListColumnsName = {"Lastname", "Firsname", "Username", "Role", "Sign check list", "Status"}
+	initList("GD_USERS_LIST", usersListColumnsName)
+	
+	local mySQLConnection = dbConnect();
+	if mySQLConnection ~= nil then
+		mySQLCursor = mySQLConnection:execute("SELECT * FROM IT_USERS;");
+	
 		row = mySQLCursor:fetch({},"a")
-
-		if row then
-			while row do
-				username = row.Username;
-				lastname = row.Lastname;
-				firstname = row.Firstname;
-				role = row.Role;
-				signCheckList = row.Sign_Check_List;
-
-				index = Grid.InsertRow("GD_USERS_LIST", -1, true);
-				Grid.SetCellText("GD_USERS_LIST", index, 0, lastname, true);
-				Grid.SetCellText("GD_USERS_LIST", index, 1, firstname, true);
-				Grid.SetCellText("GD_USERS_LIST", index, 2, username, true);
-				Grid.SetCellText("GD_USERS_LIST", index, 3, role, true);
-				Grid.SetCellText("GD_USERS_LIST", index, 4, signCheckList, true);
-
-				row = mySQLCursor:fetch(row,"a");
-			end
-		else
-			Grid.SetGridLines("GD_USERS_LIST", GVL_HORZ);
+	
+		Grid.DeleteNonFixedRows("GD_USERS_LIST", true);
+	
+		while row do
+	
+			username = row.Username;
+			lastname = row.Lastname;
+			firstname = row.Firstname;
+			role = row.Role;
+			signCheckList = row.Sign_Check_List;
+			status = row.Active;
+	
 			index = Grid.InsertRow("GD_USERS_LIST", -1, true);
-			Grid.SetCellText("GD_USERS_LIST", index, 0, "No result", true);
+			Grid.SetCellText("GD_USERS_LIST", index, 0, lastname, true);
+			Grid.SetCellText("GD_USERS_LIST", index, 1, firstname, true);
+			Grid.SetCellText("GD_USERS_LIST", index, 2, username, true);
+			Grid.SetCellText("GD_USERS_LIST", index, 3, role, true);
+			Grid.SetCellText("GD_USERS_LIST", index, 4, signCheckList, true);
+			if status == '1' then
+				Grid.SetCellText("GD_USERS_LIST", index, 5, "Active", true);
+			else
+				Grid.SetCellText("GD_USERS_LIST", index, 5, "Disabled", true);
+			end
+	
+			row = mySQLCursor:fetch(row,"a");
 		end
+	
 		resizeList("GD_USERS_LIST");
+	
 		mySQLCursor:close();
 		mySQLConnection:close();
 	end
+
 end</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeLine>44</DesignCodeLine>
 <DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
@@ -8088,7 +8130,7 @@ end</Script>
 <Actions/>
 <Settings>
 <Rows>4</Rows>
-<Columns>5</Columns>
+<Columns>6</Columns>
 <FixedRows>1</FixedRows>
 <FixedColumns>0</FixedColumns>
 <CustomColors>1</CustomColors>
@@ -8366,7 +8408,7 @@ else
 	end
 end
 
-local usersListColumnsName = {"Lastname", "Firsname", "Username", "Role", "Sign check list"}
+local usersListColumnsName = {"Lastname", "Firsname", "Username", "Role", "Sign check list", "Status"}
 initList("GD_USERS_LIST", usersListColumnsName)
 
 local mySQLConnection = dbConnect();
@@ -8384,6 +8426,7 @@ if mySQLConnection ~= nil then
 		firstname = row.Firstname;
 		role = row.Role;
 		signCheckList = row.Sign_Check_List;
+		status = row.Active;
 
 		index = Grid.InsertRow("GD_USERS_LIST", -1, true);
 		Grid.SetCellText("GD_USERS_LIST", index, 0, lastname, true);
@@ -8391,6 +8434,11 @@ if mySQLConnection ~= nil then
 		Grid.SetCellText("GD_USERS_LIST", index, 2, username, true);
 		Grid.SetCellText("GD_USERS_LIST", index, 3, role, true);
 		Grid.SetCellText("GD_USERS_LIST", index, 4, signCheckList, true);
+		if status == '1' then
+			Grid.SetCellText("GD_USERS_LIST", index, 5, "Active", true);
+		else
+			Grid.SetCellText("GD_USERS_LIST", index, 5, "Disabled", true);
+		end
 
 		row = mySQLCursor:fetch(row,"a");
 	end
@@ -8408,8 +8456,8 @@ hideGraphic(listToHide, this);</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>51</DesignCodeLine>
-<DesignCodeCol>30</DesignCodeCol>
+<DesignCodeLine>41</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -8557,8 +8605,8 @@ end
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>252</Top>
-<Bottom>404</Bottom>
+<Top>312</Top>
+<Bottom>464</Bottom>
 <Left>367</Left>
 <Right>1232</Right>
 </Coordinates>
@@ -8596,8 +8644,8 @@ end
 </Event>
 <Actions/>
 <Settings>
-<Rows>4</Rows>
-<Columns>5</Columns>
+<Rows>5</Rows>
+<Columns>6</Columns>
 <FixedRows>1</FixedRows>
 <FixedColumns>0</FixedColumns>
 <CustomColors>1</CustomColors>
@@ -9461,7 +9509,7 @@ end
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>155</Top>
-<Bottom>235</Bottom>
+<Bottom>275</Bottom>
 <Left>367</Left>
 <Right>1232</Right>
 </Coordinates>
@@ -9742,10 +9790,10 @@ end
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>181</Top>
-<Bottom>210</Bottom>
-<Left>862</Left>
-<Right>966</Right>
+<Top>179</Top>
+<Bottom>208</Bottom>
+<Left>999</Left>
+<Right>1144</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -9768,14 +9816,16 @@ end
 <Event>
 <Name>On Key</Name>
 <Args>number e_Key, table e_Modifiers</Args>
-<Script/>
+<Script>if e_Key ~= 13 then
+	Page.SetFocus("CHB_STATUS");
+end</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeLine>1</DesignCodeLine>
+<DesignCodeCol>29</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -9862,10 +9912,10 @@ end</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>182</Top>
-<Bottom>207</Bottom>
-<Left>1117</Left>
-<Right>1172</Right>
+<Top>231</Top>
+<Bottom>256</Bottom>
+<Left>762</Left>
+<Right>817</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -9893,8 +9943,8 @@ searchUsersWithFilter();</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>9</DesignCodeLine>
-<DesignCodeCol>58</DesignCodeCol>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -9969,10 +10019,10 @@ searchUsersWithFilter();</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>184</Top>
-<Bottom>211</Bottom>
-<Left>986</Left>
-<Right>1113</Right>
+<Top>233</Top>
+<Bottom>260</Bottom>
+<Left>637</Left>
+<Right>764</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -10059,10 +10109,10 @@ searchUsersWithFilter();</Script>
 <MouseClickSndMode>0</MouseClickSndMode>
 <MouseClickSound/>
 <OriginalRect>
-<Top>184</Top>
-<Bottom>211</Bottom>
-<Left>986</Left>
-<Right>1113</Right>
+<Top>233</Top>
+<Bottom>260</Bottom>
+<Left>637</Left>
+<Right>764</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -10083,8 +10133,8 @@ searchUsersWithFilter();</Script>
 <Coordinates>
 <Top>180</Top>
 <Bottom>210</Bottom>
-<Left>697</Left>
-<Right>847</Right>
+<Left>817</Left>
+<Right>967</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -10177,8 +10227,8 @@ searchUsersWithFilter();</Script>
 <Coordinates>
 <Top>183</Top>
 <Bottom>208</Bottom>
-<Left>701</Left>
-<Right>843</Right>
+<Left>821</Left>
+<Right>963</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -10191,14 +10241,16 @@ searchUsersWithFilter();</Script>
 	Page.SetFocus("IN_LASTNAME");
 end
 
-searchUsersWithFilter();</Script>
+if e_Key ~= 13 and e_Key ~= 16 and e_Key ~= 17 and e_Key ~= 18 then
+	searchUsersWithFilter();
+end</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>1</DesignCodeLine>
-<DesignCodeCol>28</DesignCodeCol>
+<DesignCodeLine>6</DesignCodeLine>
+<DesignCodeCol>3</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -10275,10 +10327,10 @@ searchUsersWithFilter();</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>180</Top>
-<Bottom>210</Bottom>
-<Left>377</Left>
-<Right>527</Right>
+<Top>181</Top>
+<Bottom>211</Bottom>
+<Left>459</Left>
+<Right>609</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -10371,8 +10423,8 @@ searchUsersWithFilter();</Script>
 <Coordinates>
 <Top>183</Top>
 <Bottom>208</Bottom>
-<Left>381</Left>
-<Right>523</Right>
+<Left>463</Left>
+<Right>605</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -10382,17 +10434,19 @@ searchUsersWithFilter();</Script>
 <Name>On Key</Name>
 <Args>number e_Key, table e_Modifiers</Args>
 <Script>if e_Key == 9 then
-	Page.SetFocus("IN_FIRSTNAME");
+		Page.SetFocus("IN_FIRSTNAME");
 end
 
-searchUsersWithFilter();</Script>
+if e_Key ~= 13 and e_Key ~= 16 and e_Key ~= 17 and e_Key ~= 18 then
+	searchUsersWithFilter();
+end</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>1</DesignCodeLine>
-<DesignCodeCol>27</DesignCodeCol>
+<DesignCodeLine>4</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -10471,8 +10525,8 @@ searchUsersWithFilter();</Script>
 <Coordinates>
 <Top>180</Top>
 <Bottom>210</Bottom>
-<Left>536</Left>
-<Right>686</Right>
+<Left>636</Left>
+<Right>786</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -10565,8 +10619,8 @@ searchUsersWithFilter();</Script>
 <Coordinates>
 <Top>183</Top>
 <Bottom>208</Bottom>
-<Left>540</Left>
-<Right>682</Right>
+<Left>640</Left>
+<Right>782</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -10579,14 +10633,16 @@ searchUsersWithFilter();</Script>
 	Page.SetFocus("IN_USERNAME");
 end
 
-searchUsersWithFilter();</Script>
+if e_Key ~= 13 and e_Key ~= 16 and e_Key ~= 17 and e_Key ~= 18 then
+	searchUsersWithFilter();
+end</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>1</DesignCodeLine>
-<DesignCodeCol>27</DesignCodeCol>
+<DesignCodeLine>6</DesignCodeLine>
+<DesignCodeCol>3</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -10663,10 +10719,10 @@ searchUsersWithFilter();</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>214</Top>
-<Bottom>238</Bottom>
-<Left>1123</Left>
-<Right>1223</Right>
+<Top>256</Top>
+<Bottom>278</Bottom>
+<Left>1124</Left>
+<Right>1219</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -10688,7 +10744,7 @@ searchUsersWithFilter("reset");
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>4</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeCol>74</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -10737,12 +10793,12 @@ searchUsersWithFilter("reset");
 <Actions/>
 <Text>
 <Body>Clear all filters</Body>
-<NormalColor>12632256</NormalColor>
-<HighlightColor>12632256</HighlightColor>
-<MouseDownColor>12632256</MouseDownColor>
+<NormalColor>6697728</NormalColor>
+<HighlightColor>6697728</HighlightColor>
+<MouseDownColor>6697728</MouseDownColor>
 <DisabledColor>12632256</DisabledColor>
 <FontData>
-<FontName>Nunito</FontName>
+<FontName/>
 <CharacterSet>0</CharacterSet>
 <Height>-13</Height>
 <Weight>700</Weight>
@@ -10759,10 +10815,10 @@ searchUsersWithFilter("reset");
 <MouseClickSndMode>0</MouseClickSndMode>
 <MouseClickSound/>
 <OriginalRect>
-<Top>214</Top>
-<Bottom>238</Bottom>
-<Left>1123</Left>
-<Right>1223</Right>
+<Top>256</Top>
+<Bottom>278</Bottom>
+<Left>1124</Left>
+<Right>1219</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -10860,6 +10916,225 @@ searchUsersWithFilter("reset");
 <MouseOverSound/>
 <MouseClickSndMode>0</MouseClickSndMode>
 <MouseClickSound/>
+</Object>
+<Object>
+<Type>3</Type>
+<Name>IMG_CHECKBOX</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>1</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>1</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>228</Top>
+<Bottom>258</Bottom>
+<Left>457</Left>
+<Right>487</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script>local LoadedImage = Image.GetFilename("IMG_CHECKBOX");
+local ImageStatus = String.SplitPath(LoadedImage);
+ImageStatus = ImageStatus.Filename;
+
+if ImageStatus == "checkbox_off" then
+	Image.Load("IMG_CHECKBOX", "AutoPlay\\Images\\checkbox_on.png");
+end
+
+if ImageStatus == "checkbox_on" then
+	Image.Load("IMG_CHECKBOX", "AutoPlay\\Images\\checkbox_off.png");
+end
+
+searchUsersWithFilter();</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Right-Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Enter</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Leave</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<NormalImage>
+<Filename>AutoPlay\Images\checkbox_on.png</Filename>
+<UseTransColor>0</UseTransColor>
+<TransClr>16777215</TransClr>
+<TransTolerance>10</TransTolerance>
+<Opacity>100</Opacity>
+<HTMode>0</HTMode>
+</NormalImage>
+<MouseOverSndMode>0</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>0</MouseClickSndMode>
+<MouseClickSound/>
+</Object>
+<Object>
+<Type>1</Type>
+<Name>LB_CHECKBOX</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>1</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>1</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>233</Top>
+<Bottom>260</Bottom>
+<Left>486</Left>
+<Right>538</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script>Page.ClickObject("IMG_CHECKBOX");
+</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>1</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Right-Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Enter</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Leave</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<Text>
+<Body>Active</Body>
+<NormalColor>12632256</NormalColor>
+<HighlightColor>12632256</HighlightColor>
+<MouseDownColor>12632256</MouseDownColor>
+<DisabledColor>12632256</DisabledColor>
+<FontData>
+<FontName>Nunito</FontName>
+<CharacterSet>0</CharacterSet>
+<Height>-16</Height>
+<Weight>400</Weight>
+<Italic>0</Italic>
+<Underline>0</Underline>
+<StrikeOut>0</StrikeOut>
+<AntiAlias>1</AntiAlias>
+</FontData>
+<Alignment>0</Alignment>
+<Orientation>0</Orientation>
+<AutoSize>1</AutoSize>
+<MouseOverSndMode>0</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>0</MouseClickSndMode>
+<MouseClickSound/>
+<OriginalRect>
+<Top>233</Top>
+<Bottom>260</Bottom>
+<Left>486</Left>
+<Right>538</Right>
+</OriginalRect>
+</Text>
 </Object>
 <HGuidelines/>
 <VGuidelines/>

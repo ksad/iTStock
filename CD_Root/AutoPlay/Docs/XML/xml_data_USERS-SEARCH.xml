@@ -1,10 +1,10 @@
 <ROOT>
 	<PAGE Name = "USERS-SEARCH">
-		<GD_USERS_LIST Width = "865" Height = "152" PosX = "367" PosY = "252">
+		<GD_USERS_LIST Width = "865" Height = "152" PosX = "367" PosY = "312">
 			<perWidth>63.323572474378</perWidth>
 			<perHeight>19.791666666667</perHeight>
 			<perPosX>26.866764275256</perPosX>
-			<perPosY>32.8125</perPosY>
+			<perPosY>40.625</perPosY>
 		</GD_USERS_LIST>
 		<TR_MENU Width = "233" Height = "666" PosX = "0" PosY = "102">
 			<perWidth>17.05710102489</perWidth>
@@ -48,9 +48,9 @@
 			<perPosX>96.705710102489</perPosX>
 			<perPosY>7.8125</perPosY>
 		</IMG_LOGOUT>
-		<IMG_BG_BODY Width = "865" Height = "80" PosX = "367" PosY = "155">
+		<IMG_BG_BODY Width = "865" Height = "120" PosX = "367" PosY = "155">
 			<perWidth>63.323572474378</perWidth>
-			<perHeight>10.416666666667</perHeight>
+			<perHeight>15.625</perHeight>
 			<perPosX>26.866764275256</perPosX>
 			<perPosY>20.182291666667</perPosY>
 		</IMG_BG_BODY>
@@ -66,69 +66,69 @@
 			<perPosX>86.530014641288</perPosX>
 			<perPosY>14.973958333333</perPosY>
 		</IMG_TOGGLE_UP>
-		<CB_ROLE Width = "104" Height = "29" PosX = "862" PosY = "181">
-			<perWidth>7.6134699853587</perWidth>
+		<CB_ROLE Width = "145" Height = "29" PosX = "999" PosY = "179">
+			<perWidth>10.614934114202</perWidth>
 			<perHeight>3.7760416666667</perHeight>
-			<perPosX>63.103953147877</perPosX>
-			<perPosY>23.567708333333</perPosY>
+			<perPosX>73.133235724744</perPosX>
+			<perPosY>23.307291666667</perPosY>
 			<perFontSize>0.87847730600293</perFontSize>
 		</CB_ROLE>
-		<IMG_TOGGLE_YES_NO Width = "55" Height = "25" PosX = "1117" PosY = "182">
+		<IMG_TOGGLE_YES_NO Width = "55" Height = "25" PosX = "762" PosY = "231">
 			<perWidth>4.0263543191801</perWidth>
 			<perHeight>3.2552083333333</perHeight>
-			<perPosX>81.771595900439</perPosX>
-			<perPosY>23.697916666667</perPosY>
+			<perPosX>55.783308931186</perPosX>
+			<perPosY>30.078125</perPosY>
 		</IMG_TOGGLE_YES_NO>
-		<LB_SIGN Width = "127" Height = "27" PosX = "986" PosY = "184">
+		<LB_SIGN Width = "127" Height = "27" PosX = "637" PosY = "233">
 			<perWidth>9.2972181551977</perWidth>
 			<perHeight>3.515625</perHeight>
-			<perPosX>72.181551976574</perPosX>
-			<perPosY>23.958333333333</perPosY>
+			<perPosX>46.632503660322</perPosX>
+			<perPosY>30.338541666667</perPosY>
 		</LB_SIGN>
-		<IMG_USERNAME_USF Width = "150" Height = "30" PosX = "697" PosY = "180">
+		<IMG_USERNAME_USF Width = "150" Height = "30" PosX = "817" PosY = "180">
 			<perWidth>10.980966325037</perWidth>
 			<perHeight>3.90625</perHeight>
-			<perPosX>51.024890190337</perPosX>
+			<perPosX>59.809663250366</perPosX>
 			<perPosY>23.4375</perPosY>
 		</IMG_USERNAME_USF>
-		<IN_USERNAME Width = "142" Height = "25" PosX = "701" PosY = "183">
+		<IN_USERNAME Width = "142" Height = "25" PosX = "821" PosY = "183">
 			<perWidth>10.395314787701</perWidth>
 			<perHeight>3.2552083333333</perHeight>
-			<perPosX>51.317715959004</perPosX>
+			<perPosX>60.102489019034</perPosX>
 			<perPosY>23.828125</perPosY>
 			<perFontSize>0.87847730600293</perFontSize>
 		</IN_USERNAME>
-		<IMG_LASTNAME_USF Width = "150" Height = "30" PosX = "377" PosY = "180">
+		<IMG_LASTNAME_USF Width = "150" Height = "30" PosX = "459" PosY = "181">
 			<perWidth>10.980966325037</perWidth>
 			<perHeight>3.90625</perHeight>
-			<perPosX>27.598828696925</perPosX>
-			<perPosY>23.4375</perPosY>
+			<perPosX>33.601756954612</perPosX>
+			<perPosY>23.567708333333</perPosY>
 		</IMG_LASTNAME_USF>
-		<IN_LASTNAME Width = "142" Height = "25" PosX = "381" PosY = "183">
+		<IN_LASTNAME Width = "142" Height = "25" PosX = "463" PosY = "183">
 			<perWidth>10.395314787701</perWidth>
 			<perHeight>3.2552083333333</perHeight>
-			<perPosX>27.891654465593</perPosX>
+			<perPosX>33.89458272328</perPosX>
 			<perPosY>23.828125</perPosY>
 			<perFontSize>0.87847730600293</perFontSize>
 		</IN_LASTNAME>
-		<IMG_FIRSTNAME_USF Width = "150" Height = "30" PosX = "536" PosY = "180">
+		<IMG_FIRSTNAME_USF Width = "150" Height = "30" PosX = "636" PosY = "180">
 			<perWidth>10.980966325037</perWidth>
 			<perHeight>3.90625</perHeight>
-			<perPosX>39.238653001464</perPosX>
+			<perPosX>46.559297218155</perPosX>
 			<perPosY>23.4375</perPosY>
 		</IMG_FIRSTNAME_USF>
-		<IN_FIRSTNAME Width = "142" Height = "25" PosX = "540" PosY = "183">
+		<IN_FIRSTNAME Width = "142" Height = "25" PosX = "640" PosY = "183">
 			<perWidth>10.395314787701</perWidth>
 			<perHeight>3.2552083333333</perHeight>
-			<perPosX>39.531478770132</perPosX>
+			<perPosX>46.852122986823</perPosX>
 			<perPosY>23.828125</perPosY>
 			<perFontSize>0.87847730600293</perFontSize>
 		</IN_FIRSTNAME>
-		<LB_CLS_FILTERS Width = "100" Height = "24" PosX = "1123" PosY = "214">
-			<perWidth>7.3206442166911</perWidth>
-			<perHeight>3.125</perHeight>
-			<perPosX>82.210834553441</perPosX>
-			<perPosY>27.864583333333</perPosY>
+		<LB_CLS_FILTERS Width = "95" Height = "22" PosX = "1124" PosY = "256">
+			<perWidth>6.9546120058565</perWidth>
+			<perHeight>2.8645833333333</perHeight>
+			<perPosX>82.284040995608</perPosX>
+			<perPosY>33.333333333333</perPosY>
 		</LB_CLS_FILTERS>
 		<IMG_ADD_USER Width = "35" Height = "35" PosX = "1136" PosY = "118">
 			<perWidth>2.5622254758419</perWidth>
@@ -136,5 +136,17 @@
 			<perPosX>83.162518301611</perPosX>
 			<perPosY>15.364583333333</perPosY>
 		</IMG_ADD_USER>
+		<IMG_CHECKBOX Width = "30" Height = "30" PosX = "457" PosY = "228">
+			<perWidth>2.1961932650073</perWidth>
+			<perHeight>3.90625</perHeight>
+			<perPosX>33.455344070278</perPosX>
+			<perPosY>29.6875</perPosY>
+		</IMG_CHECKBOX>
+		<LB_CHECKBOX Width = "52" Height = "27" PosX = "486" PosY = "233">
+			<perWidth>3.8067349926794</perWidth>
+			<perHeight>3.515625</perHeight>
+			<perPosX>35.578330893119</perPosX>
+			<perPosY>30.338541666667</perPosY>
+		</LB_CHECKBOX>
 	</PAGE>
 </ROOT>
