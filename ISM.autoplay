@@ -69,7 +69,7 @@ MENU_TREE_INDEXS = {Home="1", Settings="2", Users= "2.1", NONE=""}
 HEIGHT_BG_MENU_FORM = {200, 200, 200, 200};
 SAVE_XML = false;
 PAGE_LIMIT_RATIO = 2;
-ENABLED  = 1;
+ENABLED  = 0;
 
 function dbConnect ()
 	if File.DoesExist("AutoPlay\\Docs\\db_access.enc") then
@@ -281,18 +281,20 @@ function setUserCreateForm (currentObject)
 	end
 end
 
-function PopUp (Status)
-	ShowLoading = DialogEx.Show("LOADING", true, nil, nil);
+function PopUp (Status, showLoading)
+	if showLoading ~= 'NoLoading' then
+		ShowLoading = DialogEx.Show("LOADING", true, nil, nil);
+	end
 
-	if ShowLoading == 0 then
+	--if ShowLoading == 0 then
 		if Status == "1" then
 			DialogEx.Show("SUCCESS", true, nil, nil);
 		else
 			DialogEx.Show("FAILED", true, nil, nil);
 		end
-	else
-		Application.ExitScript();
-	end
+	--else
+	--	Application.ExitScript();
+	--end
 end
 
 function setObjectsSizeAndPositions (pageName)
@@ -666,8 +668,8 @@ function hideGraphic (objectList, page)
 end</Script>
 <BookMarks count="0">
 </BookMarks>
-<DesignCodeLine>540</DesignCodeLine>
-<DesignCodeCol>37</DesignCodeCol>
+<DesignCodeLine>6</DesignCodeLine>
+<DesignCodeCol>12</DesignCodeCol>
 </Globals>
 <Defaults>
 <StartupPage>_PageFirst</StartupPage>
@@ -13650,9 +13652,9 @@ end
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>63</Top>
-<Bottom>98</Bottom>
+<Bottom>101</Bottom>
 <Left>49</Left>
-<Right>191</Right>
+<Right>193</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -13762,7 +13764,7 @@ end
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>55</Top>
-<Bottom>80</Bottom>
+<Bottom>82</Bottom>
 <Left>235</Left>
 <Right>304</Right>
 </Coordinates>
@@ -13875,9 +13877,9 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>76</Top>
-<Bottom>101</Bottom>
+<Bottom>103</Bottom>
 <Left>235</Left>
-<Right>341</Right>
+<Right>342</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -14793,7 +14795,7 @@ Input.SetSelection("IN_PASSWORD", 1, -1);</Script>
 <FontData>
 <FontName>Nunito</FontName>
 <CharacterSet>0</CharacterSet>
-<Height>-19</Height>
+<Height>-16</Height>
 <Weight>400</Weight>
 <Italic>0</Italic>
 <Underline>0</Underline>
@@ -15269,7 +15271,6 @@ if password == "" then
 	Application.ExitScript();
 end
 
-
 local mySQLConnection = dbConnect();
 if mySQLConnection ~= nil then
 	mySQLCursor = mySQLConnection:execute("SELECT * FROM IT_USERS WHERE Username = '"..userName.."';");
@@ -15277,21 +15278,41 @@ if mySQLConnection ~= nil then
 	while row do
 		dbUsername = row.Username;
 		dbPassword = row.Password;
+		dbStatus = row.Active;
 	    row = mySQLCursor:fetch(row,"a");
 	end
 
-	if (String.CompareNoCase(userName, dbUsername) == 0 and String.CompareNoCase(Crypto.MD5DigestFromString(password), dbPassword) == 0) then
-		CURRENT_USER = dbUsername;
-		EXIT = 1;
-		File.Run("AutoPlay\\Docs\\Loading.exe", "", "", SW_SHOWNORMAL, false);
-		Application.Sleep(3000);
-		DialogEx.Close(this);
-	else
-		Dialog.Message("Error", "Invalid username/password.", MB_OK, MB_ICONSTOP, MB_DEFBUTTON1);
+	if not dbUsername then
+		Application.SaveValue("ITSTOCK", "ERROR_MSG", "The username "..userName.. " is not recognized.");
+		PopUp("0", "NoLoading");
 		DialogEx.SetFocus("IN_USERNAME");
-		Application.ExitScript();
+	else
+		if dbStatus == '1' then
+			if (String.CompareNoCase(userName, dbUsername) == 0 and String.CompareNoCase(Crypto.MD5DigestFromString(password), dbPassword) == 0) then
+				CURRENT_USER = dbUsername;
+				EXIT = 1;
+				mySQLCursor, err = mySQLConnection:execute("UPDATE IT_USERS SET `Lact_connection`=now() WHERE Username = '"..dbUsername.."';");
+				if err then
+					-- Insert into lof write function
+					Application.SaveValue("ITSTOCK", "ERROR_MSG", err);
+					PopUp("0", "NoLoading");
+					Application.ExitScript();
+				end
+				File.Run("AutoPlay\\Docs\\Loading.exe", "", "", SW_SHOWNORMAL, false);
+				Application.Sleep(3000);
+				DialogEx.Close(this);
+			else
+				Application.SaveValue("ITSTOCK", "ERROR_MSG", "Password incorrect.");
+				PopUp("0", "NoLoading");
+				DialogEx.SetFocus("IN_USERNAME");
+			end
+		else
+			Application.SaveValue("ITSTOCK", "ERROR_MSG", "The account "..dbUsername.. " is disabled, Please contact your administrator.");
+			PopUp("0", "NoLoading");
+		end
 	end
-
+	dbUsername = nil;
+	dbStatus = nil;
 	mySQLCursor:close();
 	mySQLConnection:close();
 end</Script>
@@ -15300,8 +15321,8 @@ end</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>27</DesignCodeLine>
-<DesignCodeCol>28</DesignCodeCol>
+<DesignCodeLine>57</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -18419,7 +18440,7 @@ Paragraph.SetText("PH_ERROR_MSG", lineJump..errorMsg);</Script>
 <Top>8</Top>
 <Bottom>35</Bottom>
 <Left>138</Left>
-<Right>213</Right>
+<Right>212</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -19164,8 +19185,8 @@ end</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>69</DesignCodeLine>
-<DesignCodeCol>3</DesignCodeCol>
+<DesignCodeLine>56</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
