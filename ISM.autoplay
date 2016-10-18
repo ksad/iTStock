@@ -668,8 +668,8 @@ function hideGraphic (objectList, page)
 end</Script>
 <BookMarks count="0">
 </BookMarks>
-<DesignCodeLine>6</DesignCodeLine>
-<DesignCodeCol>12</DesignCodeCol>
+<DesignCodeLine>523</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 </Globals>
 <Defaults>
 <StartupPage>_PageFirst</StartupPage>
@@ -685,7 +685,9 @@ end</Script>
 <Group>
 <CurrentGrounp>2</CurrentGrounp>
 </Group>
-<ActionPlugins/>
+<ActionPlugins>
+<Plugin>DXML\DXML.lmd</Plugin>
+</ActionPlugins>
 <TemplateInfo>
 <Name>Blank Project</Name>
 <Author>Indigo Rose Software Corporation</Author>
@@ -921,8 +923,8 @@ end</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>21</DesignCodeLine>
-<DesignCodeCol>3</DesignCodeCol>
+<DesignCodeLine>17</DesignCodeLine>
+<DesignCodeCol>2</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -6941,6 +6943,7 @@ end
 
 local usersListColumnsName = {"Lastname", "Firsname", "Username", "Role", "Sign check list", "Status"}
 initList("GD_USERS_LIST", usersListColumnsName)
+GRID_INITIALIZATION = 1;
 
 local mySQLConnection = dbConnect();
 if mySQLConnection ~= nil then
@@ -6980,14 +6983,16 @@ if mySQLConnection ~= nil then
 	mySQLConnection:close();
 end
 
+GRID_INITIALIZATION = 0;
 listToHide = {"IMG_LEFT_BAR_TITLE", "IMG_LOGOUT", "LB_DATE_TIME", "LB_HELLO", "LB_PAGE_TITLE", "IMG_BLACK_BAR"}
-hideGraphic(listToHide, this);</Script>
+hideGraphic(listToHide, this);
+DXML.ReadFromFile("AutoPlay\\Docs\\sample_empty.xml", "UpdatingUsers");</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>15</DesignCodeLine>
+<DesignCodeLine>0</DesignCodeLine>
 <DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
@@ -6997,14 +7002,16 @@ hideGraphic(listToHide, this);</Script>
 <Args/>
 <Script>Tree.SetSelectedNode("TR_MENU", MENU_TREE_INDEXS.Users);
 Grid.DeleteAllItems("GD_USERS_LIST");
-</Script>
+DXML.UnloadTable("UpdatingUsers");
+Image.SetVisible("IMG_SAVE_MODIFICATION", false);
+Image.SetVisible("IMG_CANCEL_UPDATE", false);</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>2</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeLine>4</DesignCodeLine>
+<DesignCodeCol>45</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -7746,8 +7753,8 @@ end
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>76</Top>
-<Bottom>103</Bottom>
+<Top>78</Top>
+<Bottom>105</Bottom>
 <Left>235</Left>
 <Right>342</Right>
 </Coordinates>
@@ -7836,8 +7843,8 @@ end
 <MouseClickSndMode>0</MouseClickSndMode>
 <MouseClickSound/>
 <OriginalRect>
-<Top>76</Top>
-<Bottom>103</Bottom>
+<Top>78</Top>
+<Bottom>105</Bottom>
 <Left>235</Left>
 <Right>342</Right>
 </OriginalRect>
@@ -7858,8 +7865,8 @@ end
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>60</Top>
-<Bottom>96</Bottom>
+<Top>64</Top>
+<Bottom>100</Bottom>
 <Left>1321</Left>
 <Right>1357</Right>
 </Coordinates>
@@ -7952,10 +7959,10 @@ end
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>123</Top>
-<Bottom>149</Bottom>
-<Left>401</Left>
-<Right>1179</Right>
+<Top>122</Top>
+<Bottom>148</Bottom>
+<Left>400</Left>
+<Right>1178</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -7964,29 +7971,29 @@ end
 <Event>
 <Name>On Key</Name>
 <Args>number e_Key, table e_Modifiers</Args>
-<Script>if e_Key ~= 13 and e_Key ~= 16 and e_Key ~= 17 and e_Key ~= 18 then
+<Script>Debug.ShowWindow(true);
+
+if e_Key ~= 13 and e_Key ~= 16 and e_Key ~= 17 and e_Key ~= 18 then
 	local searchText = Input.GetText("IN_SEARCH_USER");
 	
 	local usersListColumnsName = {"Lastname", "Firsname", "Username", "Role", "Sign check list", "Status"}
 	initList("GD_USERS_LIST", usersListColumnsName)
+	Grid.DeleteNonFixedRows("GD_USERS_LIST", true);
+	GRID_INITIALIZATION = 1;
 	
 	local mySQLConnection = dbConnect();
 	if mySQLConnection ~= nil then
-		mySQLCursor = mySQLConnection:execute("SELECT * FROM IT_USERS;");
-	
+		mySQLCursor = mySQLConnection:execute("SELECT * FROM IT_USERS WHERE Lastname like '%"..searchText.."%';");
+
 		row = mySQLCursor:fetch({},"a")
-	
-		Grid.DeleteNonFixedRows("GD_USERS_LIST", true);
-	
 		while row do
-	
 			username = row.Username;
 			lastname = row.Lastname;
 			firstname = row.Firstname;
 			role = row.Role;
 			signCheckList = row.Sign_Check_List;
 			status = row.Active;
-	
+
 			index = Grid.InsertRow("GD_USERS_LIST", -1, true);
 			Grid.SetCellText("GD_USERS_LIST", index, 0, lastname, true);
 			Grid.SetCellText("GD_USERS_LIST", index, 1, firstname, true);
@@ -8007,15 +8014,15 @@ end
 		mySQLCursor:close();
 		mySQLConnection:close();
 	end
-
+	GRID_INITIALIZATION = 0;
 end</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>44</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeLine>43</DesignCodeLine>
+<DesignCodeCol>25</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -8092,8 +8099,8 @@ end</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>182</Top>
-<Bottom>334</Bottom>
+<Top>183</Top>
+<Bottom>335</Bottom>
 <Left>367</Left>
 <Right>1232</Right>
 </Coordinates>
@@ -8104,28 +8111,155 @@ end</Script>
 <Event>
 <Name>On Cell Changed</Name>
 <Args>number e_Row, number e_Column, string e_OldText, string e_NewText</Args>
-<Script/>
+<Script>if GRID_INITIALIZATION == 0 and Grid.GetCellState("GD_USERS_LIST", e_Row, e_Column).Fixed == false then
+	if (String.CompareNoCase(e_OldText, e_NewText)) ~= 0 then
+		if e_Column == 3 then
+			local mySQLConnection = dbConnect();
+			if mySQLConnection ~= nil then
+				SQL = "SELECT DISTINCT(Role) FROM IT_USERS;";
+				mySQLCursor = mySQLConnection:execute(SQL);
+				row = mySQLCursor:fetch({},"a")
+
+				tblRoleList ={};
+				if row then
+					while row do
+						role = row.Role;
+						Table.Insert(tblRoleList, Table.Count(tblRoleList)+1, role);
+						row = mySQLCursor:fetch(row,"a");
+					end
+				else
+					Table.Insert(tblRoleList, 1, "No role defined");
+				end
+				mySQLCursor:close();
+				mySQLConnection:close();
+			end
+
+			for i,role in pairs(tblRoleList) do
+				if e_NewText == role then
+					Role = 1;
+				else
+					Role = 0;
+				end
+			end
+
+			if Role == 0 then
+				local selectedRole = Dialog.ComboBox("Select role", "Invalid data. Please select a valid role :", tblRoleList, "", false, false, MB_ICONSTOP);
+				if selectedRole == "" or selectedRole == "CANCEL" then
+					e_NewText = e_OldText;
+					Grid.SetCellText("GD_USERS_LIST", e_Row, e_Column, e_NewText, true);
+					Application.ExitScript();
+				else
+					if e_OldText == selectedRole then
+						Grid.SetCellText("GD_USERS_LIST", e_Row, e_Column, e_OldText, true);
+						Application.ExitScript();
+					else
+						e_NewText = selectedRole
+						Grid.SetCellText("GD_USERS_LIST", e_Row, e_Column, selectedRole, true);
+					end
+				end
+			end
+		end
+
+		if e_Column == 4 and (e_NewText ~= "Yes" and e_NewText ~= "No") then
+			Dialog.Message("Error", "Invalid data.\r\n Allowed value : Yes/No", MB_OK, MB_ICONSTOP, MB_DEFBUTTON1);
+			Grid.SetCellText("GD_USERS_LIST", e_Row, e_Column, e_OldText, true);
+			Application.ExitScript();
+		end
+
+		if e_Column == 5 and (e_NewText ~= "Active" and e_NewText ~= "Disabled") then
+			Dialog.Message("Error", "Invalid data.\r\n Allowed value : Active/Disabled", MB_OK, MB_ICONSTOP, MB_DEFBUTTON1);
+			Grid.SetCellText("GD_USERS_LIST", e_Row, e_Column, e_OldText, true);
+			Application.ExitScript();
+		end
+		local userAttrValue = DXML.GetAttribute("UpdatingUsers", "List/UpdatedUsers/User", "Username");
+
+		if userAttrValue == '' then
+			if e_Column == 2 then
+				DXML.InsertXML("UpdatingUsers", "List/UpdatedUsers/User", '&lt;User Username = "'..e_OldText..'" NewUsername = "'..e_NewText..'"&gt;&lt;/User&gt;', XML.REPLACE);
+			else
+				DXML.InsertXML("UpdatingUsers", "List/UpdatedUsers/User", '&lt;User Username = "'..thisUser..'" NewUsername = ""&gt;&lt;/User&gt;', XML.REPLACE);
+				DXML.InsertXML("UpdatingUsers", "List/UpdatedUsers/User/Field", '&lt;Field Name="'..Grid.GetCellText("GD_USERS_LIST", 0, e_Column)..'" OldText="'..e_OldText..'" NewText="'..e_NewText..'"/&gt;', XML.REPLACE);
+			end
+		else
+			if e_Column == 2 then
+				local nNodes = DXML.Count("UpdatingUsers", "List/UpdatedUsers", "User");
+				for i=1,nNodes do
+					local usernameAttrValue = DXML.GetAttribute("UpdatingUsers", "List/UpdatedUsers/User:"..i, "Username");
+					local newUsernameAttrValue = DXML.GetAttribute("UpdatingUsers", "List/UpdatedUsers/User:"..i, "NewUsername");
+
+					if e_OldText == usernameAttrValue or e_OldText == newUsernameAttrValue then
+						checkUserExist = 1;
+						nodeIndex = i;
+						break;
+					else
+						checkUserExist = 0;
+					end
+				end
+				if checkUserExist == 0 then
+					DXML.InsertXML("UpdatingUsers", "List/UpdatedUsers/User", '&lt;User Username = "'..e_OldText..'" NewUsername = "'..e_NewText..'"&gt;&lt;/User&gt;', XML.INSERT_BEFORE);
+				else
+					DXML.SetAttribute("UpdatingUsers", "List/UpdatedUsers/User:"..nodeIndex, "NewUsername", e_NewText);
+				end
+			else
+				local nNodes = DXML.Count("UpdatingUsers", "List/UpdatedUsers", "User");
+				for i=1,nNodes do
+					local usernameAttrValue = DXML.GetAttribute("UpdatingUsers", "List/UpdatedUsers/User:"..i, "Username");
+					local newUsernameAttrValue = DXML.GetAttribute("UpdatingUsers", "List/UpdatedUsers/User:"..i, "NewUsername");
+					if thisUser == usernameAttrValue or thisUser == newUsernameAttrValue then
+						checkUserExist = 1;
+						nodeIndex = i;
+						break;
+					else
+						checkUserExist = 0;
+					end
+				end
+				if checkUserExist == 0 then
+					DXML.InsertXML("UpdatingUsers", "List/UpdatedUsers/User", '&lt;User Username = "'..thisUser..'"&gt;&lt;Field Name="'..Grid.GetCellText("GD_USERS_LIST", 0, e_Column)..'" OldText="'..e_OldText..'" NewText="'..e_NewText..'"/&gt;&lt;/User&gt;', XML.INSERT_BEFORE);
+				else
+					DXML.InsertXML("UpdatingUsers", "List/UpdatedUsers/User:"..nodeIndex.."/Field", '&lt;Field Name="'..Grid.GetCellText("GD_USERS_LIST", 0, e_Column)..'" OldText="'..e_OldText..'" NewText="'..e_NewText..'"/&gt;', XML.INSERT_BEFORE);
+				end
+			end
+		end
+	end
+
+	Image.SetVisible("IMG_ACCORDION1", false);
+	Image.SetVisible("IMG_TOGGLE_DOWN1", false);
+	Input.SetVisible("IN_SEARCH_USER", false);
+	Image.SetVisible("IMG_SAVE_MODIFICATION", true);
+	Image.SetVisible("IMG_CANCEL_UPDATE", true);
+
+	tbCellProps = {};
+	tbCellProps.FaceName = "Nunito"
+	tbCellProps.Height = 14;
+	tbCellProps.Weight = FW_BOLD;
+	tbCellProps.Italic = true
+	local nCols = Grid.GetColumnCount("GD_USERS_LIST");
+	for i = 0, nCols do
+		Grid.SetCellFont("GD_USERS_LIST", e_Row, i, tbCellProps, true);
+		Grid.SetCellColors("GD_USERS_LIST", e_Row, i, {Background=16777215,Text=Math.HexColorToNumber("FF0000")}, true);
+	end
+end</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeLine>108</DesignCodeLine>
+<DesignCodeCol>5</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
 <Event>
 <Name>On Selection Changed</Name>
 <Args>number e_Row, number e_Column</Args>
-<Script/>
+<Script>thisUser = Grid.GetCellText("GD_USERS_LIST", e_Row, 2);</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeCol>55</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -8136,7 +8270,7 @@ end</Script>
 <FixedRows>1</FixedRows>
 <FixedColumns>0</FixedColumns>
 <CustomColors>1</CustomColors>
-<TextColor format="hex">808080</TextColor>
+<TextColor format="hex">c0c0c0</TextColor>
 <TextBkColor format="hex">ffffff</TextBkColor>
 <FixedTextColor format="hex">60a7d9</FixedTextColor>
 <FixedBkColor format="hex">ffffff</FixedBkColor>
@@ -8144,7 +8278,7 @@ end</Script>
 <GridBkColor format="hex">ffffff</GridBkColor>
 <ToolTipBackColor format="hex">ffffe1</ToolTipBackColor>
 <ToolTipTextColor format="hex">000000</ToolTipTextColor>
-<Editable>0</Editable>
+<Editable>1</Editable>
 <Selectable>1</Selectable>
 <CellDragAndDrop>0</CellDragAndDrop>
 <ResizableRows>0</ResizableRows>
@@ -8357,7 +8491,225 @@ Page.SetFocus("IN_SEARCH_USER");
 <MouseClickSndMode>0</MouseClickSndMode>
 <MouseClickSound/>
 </Object>
-<HGuidelines/>
+<Object>
+<Type>3</Type>
+<Name>IMG_SAVE_MODIFICATION</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>0</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>1</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>1</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>119</Top>
+<Bottom>153</Bottom>
+<Left>658</Left>
+<Right>778</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script>local dialogReturn = DialogEx.Show("UPDATE_USERS", true, nil, nil);</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>67</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Right-Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Enter</Name>
+<Args/>
+<Script>Image.Load("IMG_SAVE_MODIFICATION", "AutoPlay\\Images\\btn_update-user_hover.png");</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>69</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Leave</Name>
+<Args/>
+<Script>Image.Load("IMG_SAVE_MODIFICATION", "AutoPlay\\Images\\btn_update-user_normal.png");</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>47</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<NormalImage>
+<Filename>AutoPlay\Images\btn_update-user_normal.png</Filename>
+<UseTransColor>0</UseTransColor>
+<TransClr>16777215</TransClr>
+<TransTolerance>10</TransTolerance>
+<Opacity>100</Opacity>
+<HTMode>0</HTMode>
+</NormalImage>
+<MouseOverSndMode>0</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>0</MouseClickSndMode>
+<MouseClickSound/>
+</Object>
+<Object>
+<Type>3</Type>
+<Name>IMG_CANCEL_UPDATE</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>0</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>1</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>1</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>119</Top>
+<Bottom>153</Bottom>
+<Left>788</Left>
+<Right>908</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script>Image.SetVisible("IMG_ACCORDION1", true);
+Image.SetVisible("IMG_TOGGLE_DOWN1", true);
+Input.SetVisible("IN_SEARCH_USER", false);
+Image.SetVisible("IMG_SAVE_MODIFICATION", false);
+Image.SetVisible("IMG_CANCEL_UPDATE", false);
+
+tbCellProps = {};
+tbCellProps.FaceName = "Nunito"
+tbCellProps.Height = 14;
+tbCellProps.Weight = FW_NORMAL;
+tbCellProps.Italic = false
+local nCols = Grid.GetColumnCount("GD_USERS_LIST");
+local nRows = Grid.GetRowCount("GD_USERS_LIST");
+
+for i = 0, nRows do
+	for j = 0, nCols do
+		Grid.SetCellFont("GD_USERS_LIST", i, j, tbCellProps, true);
+		Grid.SetCellColors("GD_USERS_LIST", i, j, {Background=16777215,Text=GRID_CLR_DEFAULT}, true);
+	end
+end
+
+local nNodes = DXML.Count("UpdatingUsers", "List/UpdatedUsers", "User");
+for i=1,nNodes do
+	DXML.RemoveElement("UpdatingUsers", "List/UpdatedUsers/User:"..i);
+	DXML.InsertXML("UpdatingUsers", "List/UpdatedUsers/User", '&lt;User Username = "" NewUsername=""&gt;&lt;Field Name="" OldText="" NewText=""/&gt;&lt;/User&gt;', XML.REPLACE);
+end</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>5</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Right-Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Enter</Name>
+<Args/>
+<Script>Image.Load("IMG_CANCEL_UPDATE", "AutoPlay\\Images\\btn_cancel_hover.png");</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>33</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Leave</Name>
+<Args/>
+<Script>Image.Load("IMG_CANCEL_UPDATE", "AutoPlay\\Images\\btn_cancel.png");</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>33</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<NormalImage>
+<Filename>AutoPlay\Images\btn_cancel.png</Filename>
+<UseTransColor>0</UseTransColor>
+<TransClr>16777215</TransClr>
+<TransTolerance>10</TransTolerance>
+<Opacity>100</Opacity>
+<HTMode>0</HTMode>
+</NormalImage>
+<MouseOverSndMode>0</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>0</MouseClickSndMode>
+<MouseClickSound/>
+</Object>
+<HGuidelines>
+<Guideline>
+<pt>229</pt>
+<locked>0</locked>
+</Guideline>
+</HGuidelines>
 <VGuidelines/>
 </Page>
 <Page>
@@ -15291,7 +15643,7 @@ if mySQLConnection ~= nil then
 			if (String.CompareNoCase(userName, dbUsername) == 0 and String.CompareNoCase(Crypto.MD5DigestFromString(password), dbPassword) == 0) then
 				CURRENT_USER = dbUsername;
 				EXIT = 1;
-				mySQLCursor, err = mySQLConnection:execute("UPDATE IT_USERS SET `Lact_connection`=now() WHERE Username = '"..dbUsername.."';");
+				mySQLCursor, err = mySQLConnection:execute("UPDATE IT_USERS SET `Last_connection`=now() WHERE Username = '"..dbUsername.."';");
 				if err then
 					-- Insert into lof write function
 					Application.SaveValue("ITSTOCK", "ERROR_MSG", err);
@@ -15313,6 +15665,7 @@ if mySQLConnection ~= nil then
 	end
 	dbUsername = nil;
 	dbStatus = nil;
+
 	mySQLCursor:close();
 	mySQLConnection:close();
 end</Script>
@@ -15321,8 +15674,8 @@ end</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>57</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeLine>26</DesignCodeLine>
+<DesignCodeCol>13</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -18806,8 +19159,8 @@ end</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>6</DesignCodeLine>
-<DesignCodeCol>12</DesignCodeCol>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>

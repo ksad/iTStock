@@ -67,5 +67,17 @@
 			<perPosX>86.530014641288</perPosX>
 			<perPosY>14.973958333333</perPosY>
 		</IMG_TOGGLE_DOWN1>
+		<IMG_SAVE_MODIFICATION Width = "120" Height = "34" PosX = "658" PosY = "119">
+			<perWidth>8.7847730600293</perWidth>
+			<perHeight>4.4270833333333</perHeight>
+			<perPosX>48.169838945827</perPosX>
+			<perPosY>15.494791666667</perPosY>
+		</IMG_SAVE_MODIFICATION>
+		<IMG_CANCEL_UPDATE Width = "120" Height = "34" PosX = "788" PosY = "119">
+			<perWidth>8.7847730600293</perWidth>
+			<perHeight>4.4270833333333</perHeight>
+			<perPosX>57.686676427526</perPosX>
+			<perPosY>15.494791666667</perPosY>
+		</IMG_CANCEL_UPDATE>
 	</PAGE>
 </ROOT>

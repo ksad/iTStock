@@ -1,0 +1,7 @@
+<List>
+	<UpdatedUsers>
+		<User Username = "" NewUsername="">
+			<Field Name = "" OldText = "" NewText =""/>
+		</User>
+	</UpdatedUsers>
+</List>
