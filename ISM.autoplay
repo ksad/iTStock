@@ -668,8 +668,8 @@ function hideGraphic (objectList, page)
 end</Script>
 <BookMarks count="0">
 </BookMarks>
-<DesignCodeLine>523</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeLine>602</DesignCodeLine>
+<DesignCodeCol>3</DesignCodeCol>
 </Globals>
 <Defaults>
 <StartupPage>_PageFirst</StartupPage>
@@ -683,7 +683,7 @@ end</Script>
 <CustomSize>0</CustomSize>
 </TargetMedia>
 <Group>
-<CurrentGrounp>2</CurrentGrounp>
+<CurrentGrounp>4</CurrentGrounp>
 </Group>
 <ActionPlugins>
 <Plugin>DXML\DXML.lmd</Plugin>
@@ -6941,7 +6941,7 @@ else
 	end
 end
 
-local usersListColumnsName = {"Lastname", "Firsname", "Username", "Role", "Sign check list", "Status"}
+local usersListColumnsName = {"Lastname", "Firstname", "Username", "Role", "Sign check list", "Status"}
 initList("GD_USERS_LIST", usersListColumnsName)
 GRID_INITIALIZATION = 1;
 
@@ -6992,8 +6992,8 @@ DXML.ReadFromFile("AutoPlay\\Docs\\sample_empty.xml", "UpdatingUsers");</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeLine>58</DesignCodeLine>
+<DesignCodeCol>65</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -7011,7 +7011,7 @@ Image.SetVisible("IMG_CANCEL_UPDATE", false);</Script>
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>4</DesignCodeLine>
-<DesignCodeCol>45</DesignCodeCol>
+<DesignCodeCol>11</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -8518,14 +8518,43 @@ Page.SetFocus("IN_SEARCH_USER");
 <Event>
 <Name>On Click</Name>
 <Args/>
-<Script>local dialogReturn = DialogEx.Show("UPDATE_USERS", true, nil, nil);</Script>
+<Script>dialogReturn = DialogEx.Show("UPDATE_USERS", true, nil, nil);
+
+Image.SetVisible("IMG_ACCORDION1", true);
+Image.SetVisible("IMG_TOGGLE_DOWN1", true);
+Input.SetVisible("IN_SEARCH_USER", false);
+Image.SetVisible("IMG_SAVE_MODIFICATION", false);
+Image.SetVisible("IMG_CANCEL_UPDATE", false);
+
+tbCellProps = {};
+tbCellProps.FaceName = "Nunito"
+tbCellProps.Height = 14;
+tbCellProps.Weight = FW_NORMAL;
+tbCellProps.Italic = false
+local nCols = Grid.GetColumnCount("GD_USERS_LIST");
+local nRows = Grid.GetRowCount("GD_USERS_LIST");
+
+for i = 0, nRows do
+	for j = 0, nCols do
+		Grid.SetCellFont("GD_USERS_LIST", i, j, tbCellProps, true);
+		Grid.SetCellColors("GD_USERS_LIST", i, j, {Background=16777215,Text=GRID_CLR_DEFAULT}, true);
+	end
+end
+
+local nNodes = DXML.Count("UpdatingUsers", "List/UpdatedUsers", "User");
+for i=1,nNodes do
+	DXML.RemoveElement("UpdatingUsers", "List/UpdatedUsers/User:"..i);
+	DXML.InsertXML("UpdatingUsers", "List/UpdatedUsers/User", '&lt;User Username = "" NewUsername=""&gt;&lt;Field Name="" OldText="" NewText=""/&gt;&lt;/User&gt;', XML.REPLACE);
+end
+
+-- ADD load users grid function here to reset the grid</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>67</DesignCodeCol>
+<DesignCodeLine>1</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -8637,14 +8666,16 @@ local nNodes = DXML.Count("UpdatingUsers", "List/UpdatedUsers", "User");
 for i=1,nNodes do
 	DXML.RemoveElement("UpdatingUsers", "List/UpdatedUsers/User:"..i);
 	DXML.InsertXML("UpdatingUsers", "List/UpdatedUsers/User", '&lt;User Username = "" NewUsername=""&gt;&lt;Field Name="" OldText="" NewText=""/&gt;&lt;/User&gt;', XML.REPLACE);
-end</Script>
+end
+
+-- ADD load users grid function here to reset the grid</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>5</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeLine>27</DesignCodeLine>
+<DesignCodeCol>54</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -15639,7 +15670,7 @@ if mySQLConnection ~= nil then
 		PopUp("0", "NoLoading");
 		DialogEx.SetFocus("IN_USERNAME");
 	else
-		if dbStatus == '1' then
+		if dbStatus == 'Yes' then
 			if (String.CompareNoCase(userName, dbUsername) == 0 and String.CompareNoCase(Crypto.MD5DigestFromString(password), dbPassword) == 0) then
 				CURRENT_USER = dbUsername;
 				EXIT = 1;
@@ -15674,8 +15705,8 @@ end</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>26</DesignCodeLine>
-<DesignCodeCol>13</DesignCodeCol>
+<DesignCodeLine>31</DesignCodeLine>
+<DesignCodeCol>21</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -19538,8 +19569,8 @@ end</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>56</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeLine>54</DesignCodeLine>
+<DesignCodeCol>1</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -21114,7 +21145,7 @@ end</Script>
 <VGuidelines/>
 </Page>
 </PageDialog>
-<PageDialog width="700" height="545" dialog_title="Create new user" dialog_style="1" movable="1" use_custom_icon="0" custom_icon="" always_on_top="0" resizable="0" min_width="700" min_height="545" fit_custom_mask_to_window="1" custom_mask="">
+<PageDialog width="700" height="574" dialog_title="Create new user" dialog_style="1" movable="1" use_custom_icon="0" custom_icon="" always_on_top="0" resizable="0" min_width="700" min_height="545" fit_custom_mask_to_window="1" custom_mask="">
 <Page>
 <Name>UPDATE_USERS</Name>
 <InheritObs/>
@@ -21150,14 +21181,56 @@ end</Script>
 <Event>
 <Name>On Show</Name>
 <Args/>
-<Script/>
+<Script>local mySQLConnection = dbConnect();
+if mySQLConnection ~= nil then
+	local nNodes = DXML.Count("UpdatingUsers", "List/UpdatedUsers", "User");
+	for i=1,nNodes do
+		local updatedUsers = DXML.GetAttribute("UpdatingUsers", "List/UpdatedUsers/User:"..i, "Username");
+		SQL = "SELECT ID, Lastname, Firstname FROM IT_USERS WHERE Username = '"..updatedUsers.."';";
+		mySQLCursor = mySQLConnection:execute(SQL);
+		row = mySQLCursor:fetch({},"a")
+
+		if row then
+			while row do
+				id = row.ID;
+				lastname = row.Lastname;
+				firstname = row.Firstname
+
+				ListBox.AddItem("LBX_UPDATED_USERS", lastname.." "..firstname.." ("..updatedUsers..")", id);		
+				row = mySQLCursor:fetch(row,"a");
+			end
+		end
+	end
+
+	SQL = "SELECT DISTINCT(Role) FROM IT_Stock_Manager.IT_USERS;";
+	mySQLCursor = mySQLConnection:execute(SQL);
+	row = mySQLCursor:fetch({},"a")
+
+	if row then
+		while row do
+			role = row.Role;
+			local checkExistItem = ComboBox.FindItem("CB_ROLE", 1, LB_BYTEXT, role);
+			if checkExistItem == -1 then
+				ComboBox.AddItem("CB_ROLE", role, "");
+			end
+			row = mySQLCursor:fetch(row,"a");
+		end
+	else
+		ComboBox.AddItem("CB_ROLE", "No role defined", "");
+	end
+
+	mySQLCursor:close();
+	mySQLConnection:close();
+end
+
+ListBox.SelectItem("LBX_UPDATED_USERS", 1);</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeLine>15</DesignCodeLine>
+<DesignCodeCol>4</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -21294,10 +21367,10 @@ ListBox.DeleteItem("LBX_UPDATED_USERS", -1);</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>473</Top>
-<Bottom>518</Bottom>
-<Left>275</Left>
-<Right>432</Right>
+<Top>477</Top>
+<Bottom>522</Bottom>
+<Left>276</Left>
+<Right>433</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>3.488889</WidthRatio>
@@ -21388,10 +21461,10 @@ ListBox.DeleteItem("LBX_UPDATED_USERS", -1);</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>335</Top>
-<Bottom>366</Bottom>
-<Left>459</Left>
-<Right>525</Right>
+<Top>393</Top>
+<Bottom>420</Bottom>
+<Left>530</Left>
+<Right>587</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -21417,8 +21490,8 @@ end</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>11</DesignCodeLine>
-<DesignCodeCol>3</DesignCodeCol>
+<DesignCodeLine>5</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -21493,10 +21566,10 @@ end</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>336</Top>
-<Bottom>368</Bottom>
-<Left>291</Left>
-<Right>447</Right>
+<Top>392</Top>
+<Bottom>424</Bottom>
+<Left>416</Left>
+<Right>528</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -21560,7 +21633,7 @@ end</Script>
 </Event>
 <Actions/>
 <Text>
-<Body>Sign checkList : </Body>
+<Body>Signature : </Body>
 <NormalColor>16777215</NormalColor>
 <HighlightColor>16777215</HighlightColor>
 <MouseDownColor>16777215</MouseDownColor>
@@ -21583,10 +21656,10 @@ end</Script>
 <MouseClickSndMode>0</MouseClickSndMode>
 <MouseClickSound/>
 <OriginalRect>
-<Top>336</Top>
-<Bottom>368</Bottom>
-<Left>291</Left>
-<Right>447</Right>
+<Top>392</Top>
+<Bottom>424</Bottom>
+<Left>416</Left>
+<Right>528</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -21605,10 +21678,10 @@ end</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>286</Top>
-<Bottom>315</Bottom>
-<Left>291</Left>
-<Right>571</Right>
+<Top>345</Top>
+<Bottom>374</Bottom>
+<Left>312</Left>
+<Right>590</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -21695,202 +21768,6 @@ end</Script>
 </Object>
 <Object>
 <Type>3</Type>
-<Name>IMG_PASSWORD_UCF</Name>
-<VisibleAtDesignTime>1</VisibleAtDesignTime>
-<VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>0</Locked>
-<Enabled>1</Enabled>
-<ToolTip/>
-<Cursor>0</Cursor>
-<Group>0</Group>
-<MaintainAspectRatio>1</MaintainAspectRatio>
-<Pin>0</Pin>
-<TabIndex>-1</TabIndex>
-<AutoResize>0</AutoResize>
-<Coordinates>
-<Top>231</Top>
-<Bottom>271</Bottom>
-<Left>291</Left>
-<Right>571</Right>
-</Coordinates>
-<Ratios>
-<WidthRatio>-1.000000</WidthRatio>
-<HeightRatio>-1.000000</HeightRatio>
-</Ratios>
-<Event>
-<Name>On Click</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>1632895086</DesignCodeLine>
-<DesignCodeCol>27507</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Right-Click</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>1632918638</DesignCodeLine>
-<DesignCodeCol>27507</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Enter</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>1868979310</DesignCodeLine>
-<DesignCodeCol>7566446</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Leave</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>925761646</DesignCodeLine>
-<DesignCodeCol>122</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Actions/>
-<NormalImage>
-<Filename>AutoPlay\Images\input.png</Filename>
-<UseTransColor>0</UseTransColor>
-<TransClr>16777215</TransClr>
-<TransTolerance>10</TransTolerance>
-<Opacity>100</Opacity>
-<HTMode>0</HTMode>
-</NormalImage>
-<MouseOverSndMode>0</MouseOverSndMode>
-<MouseOverSound/>
-<MouseClickSndMode>0</MouseClickSndMode>
-<MouseClickSound/>
-</Object>
-<Object>
-<Type>7</Type>
-<Name>IN_PASSWORD_UCF</Name>
-<VisibleAtDesignTime>1</VisibleAtDesignTime>
-<VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>0</Locked>
-<Enabled>1</Enabled>
-<ToolTip/>
-<Cursor>0</Cursor>
-<Group>0</Group>
-<MaintainAspectRatio>0</MaintainAspectRatio>
-<Pin>0</Pin>
-<TabIndex>-1</TabIndex>
-<AutoResize>0</AutoResize>
-<Coordinates>
-<Top>236</Top>
-<Bottom>266</Bottom>
-<Left>296</Left>
-<Right>566</Right>
-</Coordinates>
-<Ratios>
-<WidthRatio>-1.000000</WidthRatio>
-<HeightRatio>-1.000000</HeightRatio>
-</Ratios>
-<Event>
-<Name>On Key</Name>
-<Args>number e_Key, table e_Modifiers</Args>
-<Script>if e_Key == 9 then
-	DialogEx.SetFocus("CB_ROLE");
-end
-
-if e_Key == 13 then
-	DialogEx.ClickObject("IMG_UPDATE_USER");
-end</Script>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>5</DesignCodeLine>
-<DesignCodeCol>9</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Focus</Name>
-<Args/>
-<Script>setUserCreateForm(this);</Script>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>24</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Char</Name>
-<Args>number e_Char, table e_Modifiers</Args>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Actions/>
-<Text>
-<Body>Password</Body>
-<TextColor>12632256</TextColor>
-<BackgroundColor>16777215</BackgroundColor>
-<FontData>
-<FontName>Nunito</FontName>
-<CharacterSet>0</CharacterSet>
-<Height>-19</Height>
-<Weight>400</Weight>
-<Italic>0</Italic>
-<Underline>0</Underline>
-<StrikeOut>0</StrikeOut>
-<AntiAlias>1</AntiAlias>
-</FontData>
-<Alignment>0</Alignment>
-<RightToLeftReadingOrder>0</RightToLeftReadingOrder>
-</Text>
-<Box>
-<BorderStyle>0</BorderStyle>
-<VerticalScrollbar>1</VerticalScrollbar>
-<HorizontalScrollbar>0</HorizontalScrollbar>
-<Style>0</Style>
-<Mode>1</Mode>
-<Mask/>
-<MaskSymbol> </MaskSymbol>
-<MaskRetMode>0</MaskRetMode>
-<ReadOnly>0</ReadOnly>
-</Box>
-</Object>
-<Object>
-<Type>3</Type>
 <Name>IMG_USERNAME_UCF</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
@@ -21904,10 +21781,10 @@ end</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>180</Top>
-<Bottom>220</Bottom>
-<Left>291</Left>
-<Right>571</Right>
+<Top>294</Top>
+<Bottom>334</Bottom>
+<Left>312</Left>
+<Right>592</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -21998,10 +21875,10 @@ end</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>186</Top>
-<Bottom>216</Bottom>
-<Left>296</Left>
-<Right>566</Right>
+<Top>300</Top>
+<Bottom>330</Bottom>
+<Left>317</Left>
+<Right>587</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -22125,10 +22002,10 @@ end</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>130</Top>
-<Bottom>170</Bottom>
-<Left>291</Left>
-<Right>571</Right>
+<Top>244</Top>
+<Bottom>284</Bottom>
+<Left>312</Left>
+<Right>592</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -22219,10 +22096,10 @@ end</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>136</Top>
-<Bottom>166</Bottom>
-<Left>296</Left>
-<Right>566</Right>
+<Top>250</Top>
+<Bottom>280</Bottom>
+<Left>317</Left>
+<Right>587</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -22351,10 +22228,10 @@ end</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>81</Top>
-<Bottom>121</Bottom>
-<Left>291</Left>
-<Right>571</Right>
+<Top>195</Top>
+<Bottom>235</Bottom>
+<Left>312</Left>
+<Right>592</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -22445,10 +22322,10 @@ end</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>86</Top>
-<Bottom>116</Bottom>
-<Left>296</Left>
-<Right>566</Right>
+<Top>200</Top>
+<Bottom>230</Bottom>
+<Left>317</Left>
+<Right>587</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -22689,10 +22566,10 @@ end</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>178</Top>
-<Bottom>208</Bottom>
-<Left>462</Left>
-<Right>492</Right>
+<Top>293</Top>
+<Bottom>323</Bottom>
+<Left>483</Left>
+<Right>513</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -22783,10 +22660,10 @@ end</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>85</Top>
-<Bottom>444</Bottom>
+<Top>75</Top>
+<Bottom>431</Bottom>
 <Left>28</Left>
-<Right>209</Right>
+<Right>258</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -22809,13 +22686,103 @@ end</Script>
 <Event>
 <Name>On Select</Name>
 <Args/>
-<Script/>
+<Script>local indexSelecteduser = ListBox.GetSelected("LBX_UPDATED_USERS")[1];
+local dataSelecteduser = ListBox.GetItemData("LBX_UPDATED_USERS", indexSelecteduser);
+
+local mySQLConnection = dbConnect();
+if mySQLConnection ~= nil then
+	SQL = "SELECT * FROM IT_USERS WHERE ID = '"..dataSelecteduser.."';";
+	mySQLCursor = mySQLConnection:execute(SQL);
+	row = mySQLCursor:fetch({},"a")
+
+	if row then
+		while row do
+			lastname = row.Lastname;
+			firstname = row.Firstname;
+			username = row.Username;
+		
+			Input.SetText("IN_LASTNAME_UCF", lastname);
+			Input.SetText("IN_FIRSTNAME_UCF", firstname);
+			Input.SetText("IN_USERNAME_UCF", username);
+
+			role = row.Role;
+			ComboBox.SetSelected("CB_ROLE", ComboBox.FindItem("CB_ROLE", -1, LB_BYTEXT, role));
+
+			if row.Sign_Check_List == "Yes" then
+				signCheckList ="Yes";
+				Image.Load("IMG_TOGGLE_YES_NO", "AutoPlay\\Images\\yes.png");
+			else
+				signCheckList ="No";
+				Image.Load("IMG_TOGGLE_YES_NO", "AutoPlay\\Images\\no.png");
+			end
+
+			if row.Active == "Yes" then
+				status = "Active";
+				Image.Load("IMG_CHECKBOX", "AutoPlay\\Images\\checkbox_on.png");
+			else
+				status = "Disabled";
+				Image.Load("IMG_CHECKBOX", "AutoPlay\\Images\\checkbox_off.png");
+			end
+
+			Paragraph.SetText("PH_OLD_CONFIG", "***** Old configration : *****\r\n".."Lastname : "..lastname.."\r\n".."Firstname : "..firstname.."\r\n".."Username : "..username.."\r\n".."Role : "..role.."\r\n".."Signature : "..signCheckList.." / ".."Status : "..status.."\r\n");
+			row = mySQLCursor:fetch(row,"a");
+		end
+	end
+end
+
+--DXML.SetFilePath("UpdatingUsers", "AutoPlay\\Docs\\new_xml.xml");
+--result = DXML.Save("UpdatingUsers");
+
+local nNodes = DXML.Count("UpdatingUsers", "List/UpdatedUsers", "User");
+for i=1,nNodes do
+	local updatedUser = DXML.GetAttribute("UpdatingUsers", "List/UpdatedUsers/User:"..i, "Username");
+	if username == updatedUser then
+		local updatedUsername = DXML.GetAttribute("UpdatingUsers", "List/UpdatedUsers/User:"..i, "NewUsername");
+		if updatedUsername ~= "" then
+			Input.SetText("IN_USERNAME_UCF", updatedUsername);
+		end
+
+		local nChilds = DXML.Count("UpdatingUsers", "List/UpdatedUsers/User:"..i, "Field")
+		for j=1, nChilds do
+			local fieldToFill = DXML.GetAttribute("UpdatingUsers", "List/UpdatedUsers/User:"..i.."/Field:"..j, "Name");
+			local textToFill = DXML.GetAttribute("UpdatingUsers", "List/UpdatedUsers/User:"..i.."/Field:"..j, "NewText");
+
+			if fieldToFill == "Lastname" then
+				Input.SetText("IN_LASTNAME_UCF", textToFill);
+			end
+
+			if fieldToFill == "Firstname" then
+				Input.SetText("IN_FIRSTNAME_UCF", textToFill);
+			end
+
+			if fieldToFill == "Role" then
+				ComboBox.SetSelected("CB_ROLE", ComboBox.FindItem("CB_ROLE", -1, LB_BYTEXT, textToFill));
+			end
+
+			if fieldToFill == "Sign check list" then
+				if textToFill == "Yes" then
+					Image.Load("IMG_TOGGLE_YES_NO", "AutoPlay\\Images\\yes.png");
+				else
+					Image.Load("IMG_TOGGLE_YES_NO", "AutoPlay\\Images\\no.png");
+				end
+			end
+
+			if fieldToFill == "Status" then
+				if textToFill == "Active" then
+					Image.Load("IMG_CHECKBOX", "AutoPlay\\Images\\checkbox_on.png");
+				else
+					Image.Load("IMG_CHECKBOX", "AutoPlay\\Images\\checkbox_off.png");
+				end
+			end
+		end			
+	end
+end</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeLine>90</DesignCodeLine>
 <DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
@@ -22903,10 +22870,10 @@ end</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>80</Top>
-<Bottom>130</Bottom>
-<Left>618</Left>
-<Right>668</Right>
+<Top>474</Top>
+<Bottom>524</Bottom>
+<Left>646</Left>
+<Right>696</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -22997,10 +22964,10 @@ end</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>383</Top>
-<Bottom>413</Bottom>
-<Left>292</Left>
-<Right>322</Right>
+<Top>395</Top>
+<Bottom>415</Bottom>
+<Left>314</Left>
+<Right>334</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -23019,16 +22986,14 @@ end
 
 if ImageStatus == "checkbox_on" then
 	Image.Load("IMG_CHECKBOX", "AutoPlay\\Images\\checkbox_off.png");
-end
-
-searchUsersWithFilter();</Script>
+end</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeLine>10</DesignCodeLine>
+<DesignCodeCol>3</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -23103,10 +23068,10 @@ searchUsersWithFilter();</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>385</Top>
-<Bottom>417</Bottom>
-<Left>328</Left>
-<Right>391</Right>
+<Top>392</Top>
+<Bottom>424</Bottom>
+<Left>338</Left>
+<Right>401</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -23194,10 +23159,10 @@ searchUsersWithFilter();</Script>
 <MouseClickSndMode>0</MouseClickSndMode>
 <MouseClickSound/>
 <OriginalRect>
-<Top>385</Top>
-<Bottom>417</Bottom>
-<Left>328</Left>
-<Right>391</Right>
+<Top>392</Top>
+<Bottom>424</Bottom>
+<Left>338</Left>
+<Right>401</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -23216,10 +23181,10 @@ searchUsersWithFilter();</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>473</Top>
-<Bottom>518</Bottom>
-<Left>445</Left>
-<Right>602</Right>
+<Top>477</Top>
+<Bottom>522</Bottom>
+<Left>444</Left>
+<Right>601</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>3.488889</WidthRatio>
@@ -23300,7 +23265,7 @@ searchUsersWithFilter();</Script>
 <Name>BG_LBX_UPDATED_USERS</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>1</Locked>
+<Locked>0</Locked>
 <Enabled>1</Enabled>
 <ToolTip/>
 <Cursor>0</Cursor>
@@ -23310,10 +23275,10 @@ searchUsersWithFilter();</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>80</Top>
-<Bottom>450</Bottom>
+<Top>70</Top>
+<Bottom>440</Bottom>
 <Left>17</Left>
-<Right>217</Right>
+<Right>267</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -23404,10 +23369,10 @@ searchUsersWithFilter();</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>473</Top>
-<Bottom>518</Bottom>
-<Left>105</Left>
-<Right>262</Right>
+<Top>477</Top>
+<Bottom>522</Bottom>
+<Left>106</Left>
+<Right>263</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>3.488889</WidthRatio>
@@ -23592,10 +23557,10 @@ searchUsersWithFilter();</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>288</Top>
-<Bottom>313</Bottom>
-<Left>580</Left>
-<Right>605</Right>
+<Top>347</Top>
+<Bottom>372</Bottom>
+<Left>601</Left>
+<Right>626</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -23670,6 +23635,118 @@ searchUsersWithFilter();</Script>
 <MouseOverSound/>
 <MouseClickSndMode>0</MouseClickSndMode>
 <MouseClickSound/>
+</Object>
+<Object>
+<Type>2</Type>
+<Name>PH_OLD_CONFIG</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>0</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>0</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>68</Top>
+<Bottom>185</Bottom>
+<Left>314</Left>
+<Right>611</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>1684828006</DesignCodeLine>
+<DesignCodeCol>3043941</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Right-Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>22</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Enter</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>5391702</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Leave</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>3290685</DesignCodeLine>
+<DesignCodeCol>24</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<Text>
+<Body>***** Old configuration *****</Body>
+<NormalColor>255</NormalColor>
+<HighlightColor>255</HighlightColor>
+<MouseDownColor>255</MouseDownColor>
+<DisabledColor>12632256</DisabledColor>
+<BorderColor>0</BorderColor>
+<BackColor>16777215</BackColor>
+<FontData>
+<FontName>Nunito</FontName>
+<CharacterSet>0</CharacterSet>
+<Height>-13</Height>
+<Weight>700</Weight>
+<Italic>1</Italic>
+<Underline>0</Underline>
+<StrikeOut>0</StrikeOut>
+<AntiAlias>1</AntiAlias>
+</FontData>
+<Alignment>0</Alignment>
+<TransBG>1</TransBG>
+<VSMode>2</VSMode>
+<HSMode>2</HSMode>
+<SBStyle>1</SBStyle>
+<SBSkin>Windows7</SBSkin>
+<Border>0</Border>
+<MouseOverSndMode>0</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>0</MouseClickSndMode>
+<MouseClickSound/>
+</Text>
 </Object>
 <HGuidelines/>
 <VGuidelines/>
