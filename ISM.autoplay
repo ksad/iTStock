@@ -6992,8 +6992,8 @@ DXML.ReadFromFile("AutoPlay\\Docs\\sample_empty.xml", "UpdatingUsers");</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>58</DesignCodeLine>
-<DesignCodeCol>65</DesignCodeCol>
+<DesignCodeLine>41</DesignCodeLine>
+<DesignCodeCol>23</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -15670,7 +15670,7 @@ if mySQLConnection ~= nil then
 		PopUp("0", "NoLoading");
 		DialogEx.SetFocus("IN_USERNAME");
 	else
-		if dbStatus == 'Yes' then
+		if dbStatus == '1' then
 			if (String.CompareNoCase(userName, dbUsername) == 0 and String.CompareNoCase(Crypto.MD5DigestFromString(password), dbPassword) == 0) then
 				CURRENT_USER = dbUsername;
 				EXIT = 1;
@@ -15706,7 +15706,7 @@ end</Script>
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>31</DesignCodeLine>
-<DesignCodeCol>21</DesignCodeCol>
+<DesignCodeCol>19</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
