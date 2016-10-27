@@ -8553,7 +8553,7 @@ end
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>1</DesignCodeLine>
+<DesignCodeLine>13</DesignCodeLine>
 <DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
@@ -21382,14 +21382,101 @@ ListBox.DeleteItem("LBX_UPDATED_USERS", -1);</Script>
 <Event>
 <Name>On Click</Name>
 <Args/>
-<Script/>
+<Script>local indexSelecteduser = ListBox.GetSelected("LBX_UPDATED_USERS")[1];
+local dataSelecteduser = ListBox.GetItemData("LBX_UPDATED_USERS", indexSelecteduser);
+
+local lastName = Input.GetText("IN_LASTNAME_UCF");
+local firstName = Input.GetText("IN_FIRSTNAME_UCF");
+local username = Input.GetText("IN_USERNAME_UCF");
+local role = ComboBox.GetItemText("CB_ROLE", ComboBox.GetSelected("CB_ROLE"));
+
+local LoadedImage = Image.GetFilename("IMG_TOGGLE_YES_NO");
+local ImageStatus = String.SplitPath(LoadedImage);
+local checkListSign = ImageStatus.Filename;
+if checkListSign == "yes" then
+	signature = "Yes"	
+else
+	signature = "No"
+end
+
+local LoadedImage = Image.GetFilename("IMG_CHECKBOX");
+local ImageStatus = String.SplitPath(LoadedImage);
+local status = ImageStatus.Filename;
+if status == "checkbox_on" then
+	accountStatus = 1;
+else
+	accountStatus = 0;
+end
+
+if lastName == "" or lastName == "Lastname" then
+	Image.Load("IMG_LASTNAME_UCF", "AutoPlay\\Images\\input_mandatory.png");
+	Application.SetLastError(0616);
+end
+
+if firstName == "" or firstName == "Firstname" then
+	Image.Load("IMG_FIRSTNAME_UCF", "AutoPlay\\Images\\input_mandatory.png");
+	Application.SetLastError(0616);
+end
+
+if username == "" or username == "Username" then
+	Image.Load("IMG_USERNAME_UCF", "AutoPlay\\Images\\input_mandatory.png");
+	Application.SetLastError(0616);
+end
+
+if password == "" or password == "Password" then
+	Image.Load("IMG_PASSWORD_UCF", "AutoPlay\\Images\\input_mandatory.png");
+	Application.SetLastError(0616);
+end
+
+if role == "Role" then
+	ComboBox.SetItemText("CB_ROLE", 1, "Role is mandatory");
+	ComboBox.SetSelected("CB_ROLE", 1);
+	Application.SetLastError(0616);
+end
+
+if checkListSign == "user_toggle_idle" then
+	tblLabelProps = {};
+	tblLabelProps.ColorNormal = Math.HexColorToNumber("FF0000");
+	tblLabelProps.ColorDown = Math.HexColorToNumber("FF0000");
+	tblLabelProps.ColorHighlight = Math.HexColorToNumber("FF0000");
+	tblLabelProps.ColorDisabled = Math.HexColorToNumber("FF0000");
+	Label.SetProperties("LB_SIGN", tblLabelProps);
+	Application.SetLastError(0616);
+end
+
+error = Application.GetLastError();
+if (error == 0616) then
+	Application.ExitScript();
+end
+
+local mySQLConnection = dbConnect();
+if mySQLConnection ~= nil then
+	SQL = "UPDATE `it_stock_manager`.`it_users` SET `Lastname`='"..lastName.."', `Firstname`='"..firstName.."', `Username`='"..username.."', `Role`='"..role.."', `Sign_Check_List`='"..signature.."', `Active`='"..accountStatus.."' WHERE ID = '"..dataSelecteduser.."';";
+	
+	Debug.ShowWindow(true);
+	Debug.Print(SQL);
+	
+	mySQLCursor, err = mySQLConnection:execute(SQL);
+	if err then
+		-- Insert into lof write function
+		Application.SaveValue("ITSTOCK", "ERROR_MSG", err);
+		PopUp("0");
+		Application.ExitScript();
+	else
+		local info = "User '"..username.."' successfly created.";
+		-- Insert into lof write function
+		Application.SaveValue("ITSTOCK", "INFO_MSG", info);
+		PopUp("1");
+		DialogEx.Close(this);
+	end
+end</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeLine>86</DesignCodeLine>
+<DesignCodeCol>4</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -21410,28 +21497,32 @@ ListBox.DeleteItem("LBX_UPDATED_USERS", -1);</Script>
 <Event>
 <Name>On Enter</Name>
 <Args/>
-<Script>Image.Load("IMG_UPDATE_USER", "AutoPlay\\Images\\btn_update-user_hover.png");</Script>
+<Script>if Image.IsEnabled("IMG_UPDATE_USER") then
+	Image.Load("IMG_UPDATE_USER", "AutoPlay\\Images\\btn_update-user_hover.png");
+end</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>63</DesignCodeCol>
+<DesignCodeCol>35</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
 <Event>
 <Name>On Leave</Name>
 <Args/>
-<Script>Image.Load("IMG_UPDATE_USER", "AutoPlay\\Images\\btn_update-user.png");</Script>
+<Script>if Image.IsEnabled("IMG_UPDATE_USER") then
+	Image.Load("IMG_UPDATE_USER", "AutoPlay\\Images\\btn_update-user.png");
+end</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeCol>35</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -21910,12 +22001,16 @@ if mySQLConnection ~= nil then
 		
 		tblImageProps = {};
 		tblImageProps.Visible = true;
-		if row then
+		if row and row.Username ~= username then
 			tblImageProps.ImageFile = "AutoPlay\\Images\\error.png";
 			tblImageProps.TooltipText = "User already exist";
+			Image.Load("IMG_UPDATE_USER", "AutoPlay\\Images\\btn_update-user_disabled.png");
+			Image.SetEnabled("IMG_UPDATE_USER", false);
 		else
 			tblImageProps.ImageFile = "AutoPlay\\Images\\ok.png";
 			tblImageProps.TooltipText = "Username available";
+			Image.Load("IMG_UPDATE_USER", "AutoPlay\\Images\\btn_update-user.png");
+			Image.SetEnabled("IMG_UPDATE_USER", true);
 		end
 		Image.SetProperties("IMG_NOTIFY", tblImageProps);
 		mySQLCursor:close();
@@ -21927,8 +22022,8 @@ end</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>3</DesignCodeCol>
+<DesignCodeLine>28</DesignCodeLine>
+<DesignCodeCol>74</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -22569,10 +22664,10 @@ end</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>293</Top>
-<Bottom>323</Bottom>
-<Left>483</Left>
-<Right>513</Right>
+<Top>300</Top>
+<Bottom>330</Bottom>
+<Left>600</Left>
+<Right>630</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -22665,8 +22760,8 @@ end</Script>
 <Coordinates>
 <Top>75</Top>
 <Bottom>431</Bottom>
-<Left>28</Left>
-<Right>258</Right>
+<Left>25</Left>
+<Right>255</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -22779,14 +22874,37 @@ for i=1,nNodes do
 			end
 		end			
 	end
+end
+
+local checkUsername = Input.GetText("IN_USERNAME_UCF");
+if checkUsername ~= "" then
+	SQL = "SELECT * FROM IT_USERS WHERE Username = '"..checkUsername.."';";	
+
+	mySQLCursor = mySQLConnection:execute(SQL);
+	row = mySQLCursor:fetch({},"a")
+	
+	tblImageProps = {};
+	tblImageProps.Visible = true;
+	if row and row.Username ~= username then
+		tblImageProps.ImageFile = "AutoPlay\\Images\\error.png";
+		tblImageProps.TooltipText = "User already exist";
+		Image.Load("IMG_UPDATE_USER", "AutoPlay\\Images\\btn_update-user_disabled.png");
+		Image.SetEnabled("IMG_UPDATE_USER", false);
+	else
+		tblImageProps.ImageFile = "AutoPlay\\Images\\ok.png";
+		tblImageProps.TooltipText = "Username available";
+		Image.Load("IMG_UPDATE_USER", "AutoPlay\\Images\\btn_update-user.png");
+		Image.SetEnabled("IMG_UPDATE_USER", true);
+	end
+	Image.SetProperties("IMG_NOTIFY", tblImageProps);
 end</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeLine>22</DesignCodeLine>
+<DesignCodeCol>10</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -23391,17 +23509,15 @@ ListBox.SelectItem("LBX_UPDATED_USERS", 1);
 
 local nItems = ListBox.GetCount("LBX_UPDATED_USERS");
 if nItems == 0 then
-	Image.Load(this, "AutoPlay\\Images\\btn_cancel_disabled.png");
-	result = Dialog.Message("Notice", nItems, MB_OK, MB_ICONINFORMATION, MB_DEFBUTTON1);
-	Image.SetEnabled(this, false);
+	DialogEx.Close(this);
 end</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>8</DesignCodeLine>
-<DesignCodeCol>22</DesignCodeCol>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
