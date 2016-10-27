@@ -21181,7 +21181,10 @@ end</Script>
 <Event>
 <Name>On Show</Name>
 <Args/>
-<Script>local mySQLConnection = dbConnect();
+<Script>Image.SetEnabled("IMG_CANCEL", true);
+Image.Load("IMG_CANCEL", "AutoPlay\\Images\\btn_cancel.png");
+
+local mySQLConnection = dbConnect();
 if mySQLConnection ~= nil then
 	local nNodes = DXML.Count("UpdatingUsers", "List/UpdatedUsers", "User");
 	for i=1,nNodes do
@@ -21229,8 +21232,8 @@ ListBox.SelectItem("LBX_UPDATED_USERS", 1);</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>15</DesignCodeLine>
-<DesignCodeCol>4</DesignCodeCol>
+<DesignCodeLine>1</DesignCodeLine>
+<DesignCodeCol>23</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -22782,7 +22785,7 @@ end</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>90</DesignCodeLine>
+<DesignCodeLine>0</DesignCodeLine>
 <DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
@@ -23265,7 +23268,7 @@ end</Script>
 <Name>BG_LBX_UPDATED_USERS</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>0</Locked>
+<Locked>1</Locked>
 <Enabled>1</Enabled>
 <ToolTip/>
 <Cursor>0</Cursor>
@@ -23381,14 +23384,24 @@ end</Script>
 <Event>
 <Name>On Click</Name>
 <Args/>
-<Script/>
+<Script>local indexSelecteduser = ListBox.GetSelected("LBX_UPDATED_USERS")[1];
+
+ListBox.DeleteItem("LBX_UPDATED_USERS", indexSelecteduser);
+ListBox.SelectItem("LBX_UPDATED_USERS", 1);
+
+local nItems = ListBox.GetCount("LBX_UPDATED_USERS");
+if nItems == 0 then
+	Image.Load(this, "AutoPlay\\Images\\btn_cancel_disabled.png");
+	result = Dialog.Message("Notice", nItems, MB_OK, MB_ICONINFORMATION, MB_DEFBUTTON1);
+	Image.SetEnabled(this, false);
+end</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeLine>8</DesignCodeLine>
+<DesignCodeCol>22</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -23409,28 +23422,32 @@ end</Script>
 <Event>
 <Name>On Enter</Name>
 <Args/>
-<Script>Image.Load("IMG_CANCEL", "AutoPlay\\Images\\btn_cancel_hover.png");</Script>
+<Script>if Image.IsEnabled("IMG_CANCEL") then
+	Image.Load(this, "AutoPlay\\Images\\btn_cancel_hover.png");
+end</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>39</DesignCodeCol>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
 <Event>
 <Name>On Leave</Name>
 <Args/>
-<Script>Image.Load("IMG_CANCEL", "AutoPlay\\Images\\btn_cancel.png");</Script>
+<Script>if Image.IsEnabled("IMG_CANCEL") then
+	Image.Load(this, "AutoPlay\\Images\\btn_cancel.png");
+end</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>27</DesignCodeCol>
+<DesignCodeLine>1</DesignCodeLine>
+<DesignCodeCol>1</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
