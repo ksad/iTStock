@@ -18,11 +18,11 @@
 			<perPosX>0</perPosX>
 			<perPosY>7.03125</perPosY>
 		</IMG_LEFT_BAR_TITLE>
-		<LB_PAGE_TITLE Width = "88" Height = "38" PosX = "71" PosY = "66">
+		<LB_PAGE_TITLE Width = "88" Height = "38" PosX = "72" PosY = "63">
 			<perWidth>6.4421669106881</perWidth>
 			<perHeight>4.9479166666667</perHeight>
-			<perPosX>5.1976573938507</perPosX>
-			<perPosY>8.59375</perPosY>
+			<perPosX>5.2708638360176</perPosX>
+			<perPosY>8.203125</perPosY>
 		</LB_PAGE_TITLE>
 		<LB_HELLO Width = "87" Height = "27" PosX = "235" PosY = "55">
 			<perWidth>6.3689604685212</perWidth>
@@ -42,18 +42,11 @@
 			<perPosX>96.705710102489</perPosX>
 			<perPosY>7.8125</perPosY>
 		</IMG_LOGOUT>
-		<IN_SEARCH_USER Width = "778" Height = "26" PosX = "401" PosY = "123">
-			<perWidth>56.954612005857</perWidth>
-			<perHeight>3.3854166666667</perHeight>
-			<perPosX>29.355783308931</perPosX>
-			<perPosY>16.015625</perPosY>
-			<perFontSize>1.0248901903367</perFontSize>
-		</IN_SEARCH_USER>
-		<GD_USERS_LIST Width = "865" Height = "152" PosX = "367" PosY = "182">
+		<GD_USERS_LIST Width = "865" Height = "152" PosX = "367" PosY = "183">
 			<perWidth>63.323572474378</perWidth>
 			<perHeight>19.791666666667</perHeight>
 			<perPosX>26.866764275256</perPosX>
-			<perPosY>23.697916666667</perPosY>
+			<perPosY>23.828125</perPosY>
 		</GD_USERS_LIST>
 		<IMG_ACCORDION1 Width = "815" Height = "40" PosX = "367" PosY = "115">
 			<perWidth>59.663250366032</perWidth>
@@ -73,11 +66,24 @@
 			<perPosX>48.169838945827</perPosX>
 			<perPosY>15.494791666667</perPosY>
 		</IMG_SAVE_MODIFICATION>
-		<IMG_CANCEL_UPDATE Width = "120" Height = "34" PosX = "788" PosY = "119">
+		<IMG_CANCEL_UPDATE Width = "120" Height = "34" PosX = "788" PosY = "120">
 			<perWidth>8.7847730600293</perWidth>
 			<perHeight>4.4270833333333</perHeight>
 			<perPosX>57.686676427526</perPosX>
-			<perPosY>15.494791666667</perPosY>
+			<perPosY>15.625</perPosY>
 		</IMG_CANCEL_UPDATE>
+		<IMG_CLEAR_SEARCH Width = "20" Height = "20" PosX = "1158" PosY = "126">
+			<perWidth>1.4641288433382</perWidth>
+			<perHeight>2.6041666666667</perHeight>
+			<perPosX>84.773060029283</perPosX>
+			<perPosY>16.40625</perPosY>
+		</IMG_CLEAR_SEARCH>
+		<IN_SEARCH_USER Width = "755" Height = "26" PosX = "401" PosY = "123">
+			<perWidth>55.270863836018</perWidth>
+			<perHeight>3.3854166666667</perHeight>
+			<perPosX>29.355783308931</perPosX>
+			<perPosY>16.015625</perPosY>
+			<perFontSize>1.0248901903367</perFontSize>
+		</IN_SEARCH_USER>
 	</PAGE>
 </ROOT>

@@ -66,10 +66,8 @@
 <Script>PROJEJCT_PAGE_WIDTH = 1366;
 PROJECT_PAGE_HEIGHT = 768;
 MENU_TREE_INDEXS = {Home="1", Settings="2", Users= "2.1", NONE=""}
-HEIGHT_BG_MENU_FORM = {200, 200, 200, 200};
 SAVE_XML = false;
 PAGE_LIMIT_RATIO = 2;
-ENABLED  = 0;
 
 function dbConnect ()
 	require("AutoPlay\\htdocs\\sources\\pg_database");
@@ -172,40 +170,6 @@ function leftMenuJump ()
 		Application.ExitScript();
 	else
 		Page.Jump(nodeMenuProperties.Data);
-	end
-end
-
-function setUserSearchForm (currentObject)
-	objectList = Page.EnumerateObjects();
-
-	for i, object in pairs(objectList) do
-		objectType = Page.GetObjectType(object);
-
-		if object == currentObject then
-			local objectText = Input.GetText(object);
-			if objectText == "Firstname" or objectText == "Username" or objectText == "Lastname" then
-				Input.SetText(currentObject, "");
-			else
-				Input.SetSelection(currentObject, 1, -1);
-			end
-			Image.Load(String.Replace(currentObject, "IN", "IMG", false).."_USF", "AutoPlay\\Images\\input_selected.png");
-		else
-			if objectType == 3 and String.Find(object, "USF", 1, false) ~= -1 then -- USF = User Search Form
-				Image.Load(object, "AutoPlay\\Images\\input.png");
-			end
-
-			if objectType == 7 and Input.GetText(object) == "" then
-				if String.Find(object, "FIRSTNAME", 1, false) ~= -1 then
-					Input.SetText(object, "Firstname");
-				elseif String.Find(object, "USERNAME", 1, false) ~= -1 then
-					Input.SetText(object, "Username");
-				elseif String.Find(object, "LASTNAME", 1, false) ~= -1 then
-					Input.SetText(object, "Lastname");
-				else
-					Input.SetText(object, "...");
-				end
-			end
-		end
 	end
 end
 
@@ -526,126 +490,11 @@ function resizeList (objectName)
 
 	Grid.SetListMode(objectName, true);
 	Grid.SetSingleRowSelection(objectName, true);
-end
-
-function searchUsersWithFilter(reset)
-	local usersListColumnsName = {"Lastname", "Firsname", "Username", "Role", "Sign check list", "Status"}
-	initList("GD_USERS_LIST", usersListColumnsName)
-	Grid.DeleteNonFixedRows("GD_USERS_LIST", true);
-
-	local mySQLConnection = dbConnect();
-	if mySQLConnection ~= nil then
-		local searchByFirstname = Input.GetText("IN_FIRSTNAME");
-		if searchByFirstname == "Firstname" then
-			sqlSearchByFirstname = "Firstname like '%%'";
-		else
-			sqlSearchByFirstname = "Firstname like '%"..searchByFirstname.."%'";
-		end
-
-		local searchByLastname = Input.GetText("IN_LASTNAME");
-		if searchByLastname == "Lastname" then
-			sqlSearchByLastname = "Lastname like '%%'";
-		else
-			sqlSearchByLastname = "Lastname like '%"..searchByLastname.."%'";
-		end
-
-		local searchByUsername = Input.GetText("IN_USERNAME");
-		if searchByUsername == "Username" then
-			sqlSsearchByUsername = "Username like '%%'";
-		else
-			sqlSsearchByUsername = "Username like '%"..searchByUsername.."%'";
-		end
-
-		local searchByRole = ComboBox.GetItemText("CB_ROLE", ComboBox.GetSelected("CB_ROLE"));
-		if searchByRole == "Role" then
-			sqlTosearchByRole = "Role like '%%'";
-		else
-			sqlTosearchByRole = "Role = '"..searchByRole.."'";
-		end
-
-		local LoadedImage = Image.GetFilename("IMG_TOGGLE_YES_NO");
-		local ImageStatus = String.SplitPath(LoadedImage);
-		if String.Find(ImageStatus.Filename, "idle", 1, false) ~= -1 then
-			searchBySignCheckList = "Sign_Check_List like '%%'";
-		else
-			local SignCheckStatus = String.Left(ImageStatus.Filename, 1);
-			searchBySignCheckList = "Sign_Check_List = '"..String.Upper(SignCheckStatus).."'";
-		end
-		
-		local LoadedImage = Image.GetFilename("IMG_CHECKBOX");
-		local ImageStatus = String.SplitPath(LoadedImage);
-		local searchByStatus  = ImageStatus.Filename;
-
-		if searchByStatus  == "checkbox_off" then
-			sqlTosearchByStatus = "Active = '0'";
-		end
-
-		if searchByStatus  == "checkbox_on" then
-			sqlTosearchByStatus = "Active = '1'";
-		end
-				
-		if reset then
-			SQL = "SELECT * FROM IT_USERS";
-		else
-			SQL = "SELECT * FROM IT_USERS WHERE "..sqlSearchByFirstname.." AND "..sqlSearchByLastname.." AND "..sqlSsearchByUsername.." AND "..sqlTosearchByRole.." AND "..searchBySignCheckList.." AND "..sqlTosearchByStatus..";";
-		end
-
-		mySQLCursor = mySQLConnection:execute(SQL);
-		row = mySQLCursor:fetch({},"a")
-
-		if row then
-			while row do
-				username = row.Username;
-				lastname = row.Lastname;
-				firstname = row.Firstname;
-				role = row.Role;
-				signCheckList = row.Sign_Check_List;
-				status = row.Active;
-
-				index = Grid.InsertRow("GD_USERS_LIST", -1, true);
-				Grid.SetCellText("GD_USERS_LIST", index, 0, lastname, true);
-				Grid.SetCellText("GD_USERS_LIST", index, 1, firstname, true);
-				Grid.SetCellText("GD_USERS_LIST", index, 2, username, true);
-				Grid.SetCellText("GD_USERS_LIST", index, 3, role, true);
-				Grid.SetCellText("GD_USERS_LIST", index, 4, signCheckList, true);
-				if status == '1' then
-					Grid.SetCellText("GD_USERS_LIST", index, 5, "Active", true);
-				else
-					Grid.SetCellText("GD_USERS_LIST", index, 5, "Disabled", true);
-				end
-
-				row = mySQLCursor:fetch(row,"a");
-			end
-		else
-			Grid.SetGridLines("GD_USERS_LIST", GVL_HORZ);
-			index = Grid.InsertRow("GD_USERS_LIST", -1, true);
-			Grid.SetCellText("GD_USERS_LIST", index, 0, "No result", true);
-		end
-		resizeList("GD_USERS_LIST");
-		mySQLCursor:close();
-		mySQLConnection:close();
-	end
-end
-
-function hideGraphic (objectList, page)
-	if ENABLED == 1 then
-		tblPagePropeties ={};
-		tblPagePropeties.UseCustomSettings = false;
-		Application.SetPageProperties(page, tblPagePropeties);
-
-		tblTreeProps = {};
-		tblTreeProps.BackgroundColor = Math.HexColorToNumber("C8C8C8");
-		Tree.SetProperties("TR_MENU", tblTreeProps);
-
-		for i,j in pairs (objectList) do
-			Page.DeleteObject(j);
-		end
-	end
 end</Script>
 <BookMarks count="0">
 </BookMarks>
-<DesignCodeLine>9</DesignCodeLine>
-<DesignCodeCol>51</DesignCodeCol>
+<DesignCodeLine>427</DesignCodeLine>
+<DesignCodeCol>3</DesignCodeCol>
 </Globals>
 <Defaults>
 <StartupPage>_PageFirst</StartupPage>
@@ -6760,78 +6609,32 @@ end</Script>
 <Event>
 <Name>On Show</Name>
 <Args/>
-<Script>loadPageHeader();
+<Script>require("AutoPlay\\htdocs\\sources\\pg_users");
+
+loadPageHeader();
 xmlDataPagesLoad(this);
-
-local usersListColumnsName = {"Lastname", "Firstname", "Username", "Role", "Sign check list", "Status"}
-initList("GD_USERS_LIST", usersListColumnsName)
-GRID_INITIALIZATION = 1;
-
-local mySQLConnection = dbConnect();
-if mySQLConnection ~= nil then
-	mySQLCursor = mySQLConnection:execute("SELECT * FROM IT_USERS;");
-
-	row = mySQLCursor:fetch({},"a")
-
-	Grid.DeleteNonFixedRows("GD_USERS_LIST", true);
-
-	while row do
-
-		username = row.Username;
-		lastname = row.Lastname;
-		firstname = row.Firstname;
-		role = row.Role;
-		signCheckList = row.Sign_Check_List;
-		status = row.Active;
-
-		index = Grid.InsertRow("GD_USERS_LIST", -1, true);
-		Grid.SetCellText("GD_USERS_LIST", index, 0, lastname, true);
-		Grid.SetCellText("GD_USERS_LIST", index, 1, firstname, true);
-		Grid.SetCellText("GD_USERS_LIST", index, 2, username, true);
-		Grid.SetCellText("GD_USERS_LIST", index, 3, role, true);
-		Grid.SetCellText("GD_USERS_LIST", index, 4, signCheckList, true);
-		if status == '1' then
-			Grid.SetCellText("GD_USERS_LIST", index, 5, "Active", true);
-		else
-			Grid.SetCellText("GD_USERS_LIST", index, 5, "Disabled", true);
-		end
-
-		row = mySQLCursor:fetch(row,"a");
-	end
-
-	resizeList("GD_USERS_LIST");
-
-	mySQLCursor:close();
-	mySQLConnection:close();
-end
-
-GRID_INITIALIZATION = 0;
-DXML.ReadFromFile("AutoPlay\\Docs\\sample_empty.xml", "UpdatingUsers");</Script>
+getUsersList();</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>45</DesignCodeLine>
-<DesignCodeCol>24</DesignCodeCol>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
 <Event>
 <Name>On Close</Name>
 <Args/>
-<Script>Tree.SetSelectedNode("TR_MENU", MENU_TREE_INDEXS.Users);
-Grid.DeleteAllItems("GD_USERS_LIST");
-DXML.UnloadTable("UpdatingUsers");
-Image.SetVisible("IMG_SAVE_MODIFICATION", false);
-Image.SetVisible("IMG_CANCEL_UPDATE", false);</Script>
+<Script>Tree.SetSelectedNode("TR_MENU", MENU_TREE_INDEXS.Users);</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>4</DesignCodeLine>
-<DesignCodeCol>11</DesignCodeCol>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>56</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -6977,14 +6780,19 @@ end
 <Event>
 <Name>On Select</Name>
 <Args>string e_NodeIndex</Args>
-<Script>leftMenuJump();</Script>
+<Script>if Image.IsVisible("IMG_CANCEL_UPDATE") then
+	Dialog.Message("Warning", "You have unsaved modifications, Please save or cancel the modifications.", MB_OK, MB_ICONINFORMATION, MB_DEFBUTTON1);
+	Application.ExitScript();
+end
+
+leftMenuJump();</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>15</DesignCodeCol>
+<DesignCodeLine>4</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -7349,10 +7157,10 @@ end
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>66</Top>
-<Bottom>104</Bottom>
-<Left>71</Left>
-<Right>159</Right>
+<Top>63</Top>
+<Bottom>101</Bottom>
+<Left>72</Left>
+<Right>160</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -7439,10 +7247,10 @@ end
 <MouseClickSndMode>0</MouseClickSndMode>
 <MouseClickSound/>
 <OriginalRect>
-<Top>66</Top>
-<Bottom>104</Bottom>
-<Left>71</Left>
-<Right>159</Right>
+<Top>63</Top>
+<Bottom>101</Bottom>
+<Left>72</Left>
+<Right>160</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -7573,8 +7381,8 @@ end
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>78</Top>
-<Bottom>105</Bottom>
+<Top>76</Top>
+<Bottom>103</Bottom>
 <Left>235</Left>
 <Right>342</Right>
 </Coordinates>
@@ -7663,8 +7471,8 @@ end
 <MouseClickSndMode>0</MouseClickSndMode>
 <MouseClickSound/>
 <OriginalRect>
-<Top>78</Top>
-<Bottom>105</Bottom>
+<Top>76</Top>
+<Bottom>103</Bottom>
 <Left>235</Left>
 <Right>342</Right>
 </OriginalRect>
@@ -7685,8 +7493,8 @@ end
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>64</Top>
-<Bottom>100</Bottom>
+<Top>60</Top>
+<Bottom>96</Bottom>
 <Left>1321</Left>
 <Right>1357</Right>
 </Coordinates>
@@ -7765,146 +7573,6 @@ end
 <MouseClickSound/>
 </Object>
 <Object>
-<Type>7</Type>
-<Name>IN_SEARCH_USER</Name>
-<VisibleAtDesignTime>0</VisibleAtDesignTime>
-<VisibleAtRunTime>0</VisibleAtRunTime>
-<Locked>0</Locked>
-<Enabled>1</Enabled>
-<ToolTip/>
-<Cursor>0</Cursor>
-<Group>0</Group>
-<MaintainAspectRatio>0</MaintainAspectRatio>
-<Pin>0</Pin>
-<TabIndex>-1</TabIndex>
-<AutoResize>0</AutoResize>
-<Coordinates>
-<Top>122</Top>
-<Bottom>148</Bottom>
-<Left>400</Left>
-<Right>1178</Right>
-</Coordinates>
-<Ratios>
-<WidthRatio>-1.000000</WidthRatio>
-<HeightRatio>-1.000000</HeightRatio>
-</Ratios>
-<Event>
-<Name>On Key</Name>
-<Args>number e_Key, table e_Modifiers</Args>
-<Script>Debug.ShowWindow(true);
-
-if e_Key ~= 13 and e_Key ~= 16 and e_Key ~= 17 and e_Key ~= 18 then
-	local searchText = Input.GetText("IN_SEARCH_USER");
-	
-	local usersListColumnsName = {"Lastname", "Firsname", "Username", "Role", "Sign check list", "Status"}
-	initList("GD_USERS_LIST", usersListColumnsName)
-	Grid.DeleteNonFixedRows("GD_USERS_LIST", true);
-	GRID_INITIALIZATION = 1;
-	
-	local mySQLConnection = dbConnect();
-	if mySQLConnection ~= nil then
-		mySQLCursor = mySQLConnection:execute("SELECT * FROM IT_USERS WHERE Lastname like '%"..searchText.."%';");
-
-		row = mySQLCursor:fetch({},"a")
-		while row do
-			username = row.Username;
-			lastname = row.Lastname;
-			firstname = row.Firstname;
-			role = row.Role;
-			signCheckList = row.Sign_Check_List;
-			status = row.Active;
-
-			index = Grid.InsertRow("GD_USERS_LIST", -1, true);
-			Grid.SetCellText("GD_USERS_LIST", index, 0, lastname, true);
-			Grid.SetCellText("GD_USERS_LIST", index, 1, firstname, true);
-			Grid.SetCellText("GD_USERS_LIST", index, 2, username, true);
-			Grid.SetCellText("GD_USERS_LIST", index, 3, role, true);
-			Grid.SetCellText("GD_USERS_LIST", index, 4, signCheckList, true);
-			if status == '1' then
-				Grid.SetCellText("GD_USERS_LIST", index, 5, "Active", true);
-			else
-				Grid.SetCellText("GD_USERS_LIST", index, 5, "Disabled", true);
-			end
-	
-			row = mySQLCursor:fetch(row,"a");
-		end
-	
-		resizeList("GD_USERS_LIST");
-	
-		mySQLCursor:close();
-		mySQLConnection:close();
-	end
-	GRID_INITIALIZATION = 0;
-end</Script>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>43</DesignCodeLine>
-<DesignCodeCol>25</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Focus</Name>
-<Args/>
-<Script>Input.SetText("IN_SEARCH_USER", "");</Script>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>36</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Char</Name>
-<Args>number e_Char, table e_Modifiers</Args>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Actions/>
-<Text>
-<Body/>
-<TextColor>2147483647</TextColor>
-<BackgroundColor>15066597</BackgroundColor>
-<FontData>
-<FontName>Nunito</FontName>
-<CharacterSet>0</CharacterSet>
-<Height>-19</Height>
-<Weight>400</Weight>
-<Italic>1</Italic>
-<Underline>0</Underline>
-<StrikeOut>0</StrikeOut>
-<AntiAlias>1</AntiAlias>
-</FontData>
-<Alignment>0</Alignment>
-<RightToLeftReadingOrder>0</RightToLeftReadingOrder>
-</Text>
-<Box>
-<BorderStyle>0</BorderStyle>
-<VerticalScrollbar>1</VerticalScrollbar>
-<HorizontalScrollbar>0</HorizontalScrollbar>
-<Style>0</Style>
-<Mode>0</Mode>
-<Mask/>
-<MaskSymbol> </MaskSymbol>
-<MaskRetMode>0</MaskRetMode>
-<ReadOnly>0</ReadOnly>
-</Box>
-</Object>
-<Object>
 <Type>17</Type>
 <Name>GD_USERS_LIST</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
@@ -7931,155 +7599,29 @@ end</Script>
 <Event>
 <Name>On Cell Changed</Name>
 <Args>number e_Row, number e_Column, string e_OldText, string e_NewText</Args>
-<Script>if GRID_INITIALIZATION == 0 and Grid.GetCellState("GD_USERS_LIST", e_Row, e_Column).Fixed == false then
-	if (String.CompareNoCase(e_OldText, e_NewText)) ~= 0 then
-		if e_Column == 3 then
-			local mySQLConnection = dbConnect();
-			if mySQLConnection ~= nil then
-				SQL = "SELECT DISTINCT(Role) FROM IT_USERS;";
-				mySQLCursor = mySQLConnection:execute(SQL);
-				row = mySQLCursor:fetch({},"a")
-
-				tblRoleList ={};
-				if row then
-					while row do
-						role = row.Role;
-						Table.Insert(tblRoleList, Table.Count(tblRoleList)+1, role);
-						row = mySQLCursor:fetch(row,"a");
-					end
-				else
-					Table.Insert(tblRoleList, 1, "No role defined");
-				end
-				mySQLCursor:close();
-				mySQLConnection:close();
-			end
-
-			for i,role in pairs(tblRoleList) do
-				if e_NewText == role then
-					Role = 1;
-				else
-					Role = 0;
-				end
-			end
-
-			if Role == 0 then
-				local selectedRole = Dialog.ComboBox("Select role", "Invalid data. Please select a valid role :", tblRoleList, "", false, false, MB_ICONSTOP);
-				if selectedRole == "" or selectedRole == "CANCEL" then
-					e_NewText = e_OldText;
-					Grid.SetCellText("GD_USERS_LIST", e_Row, e_Column, e_NewText, true);
-					Application.ExitScript();
-				else
-					if e_OldText == selectedRole then
-						Grid.SetCellText("GD_USERS_LIST", e_Row, e_Column, e_OldText, true);
-						Application.ExitScript();
-					else
-						e_NewText = selectedRole
-						Grid.SetCellText("GD_USERS_LIST", e_Row, e_Column, selectedRole, true);
-					end
-				end
-			end
-		end
-
-		if e_Column == 4 and (e_NewText ~= "Yes" and e_NewText ~= "No") then
-			Dialog.Message("Error", "Invalid data.\r\n Allowed value : Yes/No", MB_OK, MB_ICONSTOP, MB_DEFBUTTON1);
-			Grid.SetCellText("GD_USERS_LIST", e_Row, e_Column, e_OldText, true);
-			Application.ExitScript();
-		end
-
-		if e_Column == 5 and (e_NewText ~= "Active" and e_NewText ~= "Disabled") then
-			Dialog.Message("Error", "Invalid data.\r\n Allowed value : Active/Disabled", MB_OK, MB_ICONSTOP, MB_DEFBUTTON1);
-			Grid.SetCellText("GD_USERS_LIST", e_Row, e_Column, e_OldText, true);
-			Application.ExitScript();
-		end
-		local userAttrValue = DXML.GetAttribute("UpdatingUsers", "List/UpdatedUsers/User", "Username");
-
-		if userAttrValue == '' then
-			if e_Column == 2 then
-				DXML.InsertXML("UpdatingUsers", "List/UpdatedUsers/User", '&lt;User Username = "'..e_OldText..'" NewUsername = "'..e_NewText..'"&gt;&lt;/User&gt;', XML.REPLACE);
-			else
-				DXML.InsertXML("UpdatingUsers", "List/UpdatedUsers/User", '&lt;User Username = "'..thisUser..'" NewUsername = ""&gt;&lt;/User&gt;', XML.REPLACE);
-				DXML.InsertXML("UpdatingUsers", "List/UpdatedUsers/User/Field", '&lt;Field Name="'..Grid.GetCellText("GD_USERS_LIST", 0, e_Column)..'" OldText="'..e_OldText..'" NewText="'..e_NewText..'"/&gt;', XML.REPLACE);
-			end
-		else
-			if e_Column == 2 then
-				local nNodes = DXML.Count("UpdatingUsers", "List/UpdatedUsers", "User");
-				for i=1,nNodes do
-					local usernameAttrValue = DXML.GetAttribute("UpdatingUsers", "List/UpdatedUsers/User:"..i, "Username");
-					local newUsernameAttrValue = DXML.GetAttribute("UpdatingUsers", "List/UpdatedUsers/User:"..i, "NewUsername");
-
-					if e_OldText == usernameAttrValue or e_OldText == newUsernameAttrValue then
-						checkUserExist = 1;
-						nodeIndex = i;
-						break;
-					else
-						checkUserExist = 0;
-					end
-				end
-				if checkUserExist == 0 then
-					DXML.InsertXML("UpdatingUsers", "List/UpdatedUsers/User", '&lt;User Username = "'..e_OldText..'" NewUsername = "'..e_NewText..'"&gt;&lt;/User&gt;', XML.INSERT_BEFORE);
-				else
-					DXML.SetAttribute("UpdatingUsers", "List/UpdatedUsers/User:"..nodeIndex, "NewUsername", e_NewText);
-				end
-			else
-				local nNodes = DXML.Count("UpdatingUsers", "List/UpdatedUsers", "User");
-				for i=1,nNodes do
-					local usernameAttrValue = DXML.GetAttribute("UpdatingUsers", "List/UpdatedUsers/User:"..i, "Username");
-					local newUsernameAttrValue = DXML.GetAttribute("UpdatingUsers", "List/UpdatedUsers/User:"..i, "NewUsername");
-					if thisUser == usernameAttrValue or thisUser == newUsernameAttrValue then
-						checkUserExist = 1;
-						nodeIndex = i;
-						break;
-					else
-						checkUserExist = 0;
-					end
-				end
-				if checkUserExist == 0 then
-					DXML.InsertXML("UpdatingUsers", "List/UpdatedUsers/User", '&lt;User Username = "'..thisUser..'"&gt;&lt;Field Name="'..Grid.GetCellText("GD_USERS_LIST", 0, e_Column)..'" OldText="'..e_OldText..'" NewText="'..e_NewText..'"/&gt;&lt;/User&gt;', XML.INSERT_BEFORE);
-				else
-					DXML.InsertXML("UpdatingUsers", "List/UpdatedUsers/User:"..nodeIndex.."/Field", '&lt;Field Name="'..Grid.GetCellText("GD_USERS_LIST", 0, e_Column)..'" OldText="'..e_OldText..'" NewText="'..e_NewText..'"/&gt;', XML.INSERT_BEFORE);
-				end
-			end
-		end
-	end
-
-	Image.SetVisible("IMG_ACCORDION1", false);
-	Image.SetVisible("IMG_TOGGLE_DOWN1", false);
-	Input.SetVisible("IN_SEARCH_USER", false);
-	Image.SetVisible("IMG_SAVE_MODIFICATION", true);
-	Image.SetVisible("IMG_CANCEL_UPDATE", true);
-
-	tbCellProps = {};
-	tbCellProps.FaceName = "Nunito"
-	tbCellProps.Height = 14;
-	tbCellProps.Weight = FW_BOLD;
-	tbCellProps.Italic = true
-	local nCols = Grid.GetColumnCount("GD_USERS_LIST");
-	for i = 0, nCols do
-		Grid.SetCellFont("GD_USERS_LIST", e_Row, i, tbCellProps, true);
-		Grid.SetCellColors("GD_USERS_LIST", e_Row, i, {Background=16777215,Text=Math.HexColorToNumber("FF0000")}, true);
-	end
-end</Script>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>108</DesignCodeLine>
-<DesignCodeCol>5</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Selection Changed</Name>
-<Args>number e_Row, number e_Column</Args>
-<Script>thisUser = Grid.GetCellText("GD_USERS_LIST", e_Row, 2);</Script>
+<Script>markUpdatedUser(e_Row, e_Column, e_OldText, e_NewText, thisUser);</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>55</DesignCodeCol>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Selection Changed</Name>
+<Args>number e_Row, number e_Column</Args>
+<Script>GRID_INITIALIZATION = 0;
+thisUser = Grid.GetCellText("GD_USERS_LIST", e_Row, 2);</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -8150,13 +7692,13 @@ end</Script>
 <Script>--Page.Jump("USERS-SEARCH");
 Input.SetVisible("IN_SEARCH_USER", true);
 Page.SetFocus("IN_SEARCH_USER");
-</Script>
+Image.SetVisible("IMG_CLEAR_SEARCH", true);</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>3</DesignCodeLine>
+<DesignCodeLine>1</DesignCodeLine>
 <DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
@@ -8244,14 +7786,16 @@ Page.SetFocus("IN_SEARCH_USER");
 <Event>
 <Name>On Click</Name>
 <Args/>
-<Script>Page.Jump("USERS-SEARCH");</Script>
+<Script>Input.SetVisible("IN_SEARCH_USER", false);
+Image.SetVisible("IMG_CLEAR_SEARCH", false);
+Page.Jump("USERS-SEARCH");</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>11</DesignCodeCol>
+<DesignCodeLine>1</DesignCodeLine>
+<DesignCodeCol>41</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -8338,7 +7882,7 @@ Page.SetFocus("IN_SEARCH_USER");
 <Event>
 <Name>On Click</Name>
 <Args/>
-<Script>dialogReturn = DialogEx.Show("UPDATE_USERS", true, nil, nil);
+<Script>DialogEx.Show("UPDATE_USERS", true, nil, nil);
 
 Image.SetVisible("IMG_ACCORDION1", true);
 Image.SetVisible("IMG_TOGGLE_DOWN1", true);
@@ -8367,13 +7911,13 @@ for i=1,nNodes do
 	DXML.InsertXML("UpdatingUsers", "List/UpdatedUsers/User", '&lt;User Username = "" NewUsername=""&gt;&lt;Field Name="" OldText="" NewText=""/&gt;&lt;/User&gt;', XML.REPLACE);
 end
 
--- ADD load users grid function here to reset the grid</Script>
+getUsersList();</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>13</DesignCodeLine>
+<DesignCodeLine>1</DesignCodeLine>
 <DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
@@ -8409,14 +7953,14 @@ end
 <Event>
 <Name>On Leave</Name>
 <Args/>
-<Script>Image.Load("IMG_SAVE_MODIFICATION", "AutoPlay\\Images\\btn_update-user_normal.png");</Script>
+<Script>Image.Load("IMG_SAVE_MODIFICATION", "AutoPlay\\Images\\btn_update-user.png");</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>47</DesignCodeCol>
+<DesignCodeCol>55</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -8449,8 +7993,8 @@ end
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>119</Top>
-<Bottom>153</Bottom>
+<Top>120</Top>
+<Bottom>154</Bottom>
 <Left>788</Left>
 <Right>908</Right>
 </Coordinates>
@@ -8488,14 +8032,14 @@ for i=1,nNodes do
 	DXML.InsertXML("UpdatingUsers", "List/UpdatedUsers/User", '&lt;User Username = "" NewUsername=""&gt;&lt;Field Name="" OldText="" NewText=""/&gt;&lt;/User&gt;', XML.REPLACE);
 end
 
--- ADD load users grid function here to reset the grid</Script>
+getUsersList();</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>27</DesignCodeLine>
-<DesignCodeCol>54</DesignCodeCol>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>15</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -8555,6 +8099,202 @@ end
 <MouseClickSndMode>0</MouseClickSndMode>
 <MouseClickSound/>
 </Object>
+<Object>
+<Type>3</Type>
+<Name>IMG_CLEAR_SEARCH</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>0</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>1</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>1</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>126</Top>
+<Bottom>146</Bottom>
+<Left>1158</Left>
+<Right>1178</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script>Input.SetText("IN_SEARCH_USER", "");
+defaultSearchUser("IN_SEARCH_USER");</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>1</DesignCodeLine>
+<DesignCodeCol>34</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Right-Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Enter</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Leave</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<NormalImage>
+<Filename>AutoPlay\Images\close.png</Filename>
+<UseTransColor>0</UseTransColor>
+<TransClr>16777215</TransClr>
+<TransTolerance>10</TransTolerance>
+<Opacity>100</Opacity>
+<HTMode>0</HTMode>
+</NormalImage>
+<MouseOverSndMode>0</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>0</MouseClickSndMode>
+<MouseClickSound/>
+</Object>
+<Object>
+<Type>7</Type>
+<Name>IN_SEARCH_USER</Name>
+<VisibleAtDesignTime>0</VisibleAtDesignTime>
+<VisibleAtRunTime>0</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>0</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>0</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>123</Top>
+<Bottom>149</Bottom>
+<Left>401</Left>
+<Right>1156</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Key</Name>
+<Args>number e_Key, table e_Modifiers</Args>
+<Script>if e_Key ~= 16 and e_Key ~= 17 and e_Key ~= 18 then	
+	if e_Key == 13 or (e_Key == 8 and Input.GetText(this) == "" ) then
+		defaultSearchUser(this);
+	end
+end
+</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>4</DesignCodeLine>
+<DesignCodeCol>3</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Focus</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Char</Name>
+<Args>number e_Char, table e_Modifiers</Args>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<Text>
+<Body/>
+<TextColor>2147483647</TextColor>
+<BackgroundColor>15066597</BackgroundColor>
+<FontData>
+<FontName>Nunito</FontName>
+<CharacterSet>0</CharacterSet>
+<Height>-19</Height>
+<Weight>400</Weight>
+<Italic>1</Italic>
+<Underline>0</Underline>
+<StrikeOut>0</StrikeOut>
+<AntiAlias>1</AntiAlias>
+</FontData>
+<Alignment>0</Alignment>
+<RightToLeftReadingOrder>0</RightToLeftReadingOrder>
+</Text>
+<Box>
+<BorderStyle>0</BorderStyle>
+<VerticalScrollbar>1</VerticalScrollbar>
+<HorizontalScrollbar>0</HorizontalScrollbar>
+<Style>0</Style>
+<Mode>0</Mode>
+<Mask/>
+<MaskSymbol> </MaskSymbol>
+<MaskRetMode>0</MaskRetMode>
+<ReadOnly>0</ReadOnly>
+</Box>
+</Object>
 <HGuidelines>
 <Guideline>
 <pt>229</pt>
@@ -8598,56 +8338,20 @@ end
 <Event>
 <Name>On Show</Name>
 <Args/>
-<Script>loadPageHeader();
+<Script>require("AutoPlay\\htdocs\\sources\\pg_users");
+
+loadPageHeader();
 xmlDataPagesLoad(this);
+getUsersList();
 
-local usersListColumnsName = {"Lastname", "Firsname", "Username", "Role", "Sign check list", "Status"}
-initList("GD_USERS_LIST", usersListColumnsName)
-
-local mySQLConnection = dbConnect();
-if mySQLConnection ~= nil then
-	mySQLCursor = mySQLConnection:execute("SELECT * FROM IT_USERS;");
-
-	row = mySQLCursor:fetch({},"a")
-
-	Grid.DeleteNonFixedRows("GD_USERS_LIST", true);
-
-	while row do
-
-		username = row.Username;
-		lastname = row.Lastname;
-		firstname = row.Firstname;
-		role = row.Role;
-		signCheckList = row.Sign_Check_List;
-		status = row.Active;
-
-		index = Grid.InsertRow("GD_USERS_LIST", -1, true);
-		Grid.SetCellText("GD_USERS_LIST", index, 0, lastname, true);
-		Grid.SetCellText("GD_USERS_LIST", index, 1, firstname, true);
-		Grid.SetCellText("GD_USERS_LIST", index, 2, username, true);
-		Grid.SetCellText("GD_USERS_LIST", index, 3, role, true);
-		Grid.SetCellText("GD_USERS_LIST", index, 4, signCheckList, true);
-		if status == '1' then
-			Grid.SetCellText("GD_USERS_LIST", index, 5, "Active", true);
-		else
-			Grid.SetCellText("GD_USERS_LIST", index, 5, "Disabled", true);
-		end
-
-		row = mySQLCursor:fetch(row,"a");
-	end
-
-	resizeList("GD_USERS_LIST");
-
-	mySQLCursor:close();
-	mySQLConnection:close();
-end</Script>
+bgBodyHeight = Image.GetSize("IMG_BG_BODY").Height;</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>42</DesignCodeLine>
-<DesignCodeCol>3</DesignCodeCol>
+<DesignCodeLine>6</DesignCodeLine>
+<DesignCodeCol>51</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -8781,95 +8485,6 @@ end
 </BookMarks>
 </Event>
 <Object>
-<Type>17</Type>
-<Name>GD_USERS_LIST</Name>
-<VisibleAtDesignTime>1</VisibleAtDesignTime>
-<VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>0</Locked>
-<Enabled>1</Enabled>
-<ToolTip/>
-<Cursor>0</Cursor>
-<Group>0</Group>
-<MaintainAspectRatio>0</MaintainAspectRatio>
-<Pin>0</Pin>
-<TabIndex>-1</TabIndex>
-<AutoResize>0</AutoResize>
-<Coordinates>
-<Top>312</Top>
-<Bottom>464</Bottom>
-<Left>367</Left>
-<Right>1232</Right>
-</Coordinates>
-<Ratios>
-<WidthRatio>-1.000000</WidthRatio>
-<HeightRatio>-1.000000</HeightRatio>
-</Ratios>
-<Event>
-<Name>On Cell Changed</Name>
-<Args>number e_Row, number e_Column, string e_OldText, string e_NewText</Args>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Selection Changed</Name>
-<Args>number e_Row, number e_Column</Args>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Actions/>
-<Settings>
-<Rows>5</Rows>
-<Columns>6</Columns>
-<FixedRows>1</FixedRows>
-<FixedColumns>0</FixedColumns>
-<CustomColors>1</CustomColors>
-<TextColor format="hex">808080</TextColor>
-<TextBkColor format="hex">ffffff</TextBkColor>
-<FixedTextColor format="hex">60a7d9</FixedTextColor>
-<FixedBkColor format="hex">ffffff</FixedBkColor>
-<GridLineColor format="hex">c0c0c0</GridLineColor>
-<GridBkColor format="hex">ffffff</GridBkColor>
-<ToolTipBackColor format="hex">ffffe1</ToolTipBackColor>
-<ToolTipTextColor format="hex">000000</ToolTipTextColor>
-<Editable>0</Editable>
-<Selectable>1</Selectable>
-<CellDragAndDrop>0</CellDragAndDrop>
-<ResizableRows>0</ResizableRows>
-<ResizableColumns>0</ResizableColumns>
-<GridLines>2</GridLines>
-<CSVFile/>
-<CSVLoadMode>0</CSVLoadMode>
-<CSVDelimeter>,</CSVDelimeter>
-<CSVAutoSize>1</CSVAutoSize>
-<FontData>
-<FontName>Nunito</FontName>
-<CharacterSet>0</CharacterSet>
-<Height>-19</Height>
-<Weight>400</Weight>
-<Italic>0</Italic>
-<Underline>0</Underline>
-<StrikeOut>0</StrikeOut>
-<AntiAlias>1</AntiAlias>
-</FontData>
-</Settings>
-</Object>
-<Object>
 <Type>12</Type>
 <Name>TR_MENU</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
@@ -8896,14 +8511,19 @@ end
 <Event>
 <Name>On Select</Name>
 <Args>string e_NodeIndex</Args>
-<Script>leftMenuJump();</Script>
+<Script>if Image.IsVisible("IMG_CANCEL_UPDATE") then
+	Dialog.Message("Warning", "You have unsaved modifications, Please save or cancel the modifications.", MB_OK, MB_ICONINFORMATION, MB_DEFBUTTON1);
+	Application.ExitScript();
+end
+
+leftMenuJump();</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>15</DesignCodeCol>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -9688,7 +9308,7 @@ end
 <Name>IMG_BG_BODY</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>1</Locked>
+<Locked>0</Locked>
 <Enabled>1</Enabled>
 <ToolTip/>
 <Cursor>0</Cursor>
@@ -9980,10 +9600,10 @@ end
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>179</Top>
-<Bottom>208</Bottom>
-<Left>999</Left>
-<Right>1144</Right>
+<Top>181</Top>
+<Bottom>210</Bottom>
+<Left>998</Left>
+<Right>1143</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -9992,14 +9612,14 @@ end
 <Event>
 <Name>On Select</Name>
 <Args>number e_Selection</Args>
-<Script>searchUsersWithFilter();</Script>
+<Script>advancedSearchUsers();</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>24</DesignCodeCol>
+<DesignCodeCol>19</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -10102,10 +9722,10 @@ end</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>231</Top>
-<Bottom>256</Bottom>
-<Left>762</Left>
-<Right>817</Right>
+<Top>236</Top>
+<Bottom>261</Bottom>
+<Left>910</Left>
+<Right>965</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -10127,14 +9747,14 @@ if ImageStatus == "no" or ImageStatus == "user_toggle_idle" then
 	Image.Load("IMG_TOGGLE_YES_NO", "AutoPlay\\Images\\yes.png");
 end
 
-searchUsersWithFilter();</Script>
+advancedSearchUsers();</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeLine>13</DesignCodeLine>
+<DesignCodeCol>19</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -10209,10 +9829,10 @@ searchUsersWithFilter();</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>233</Top>
-<Bottom>260</Bottom>
-<Left>637</Left>
-<Right>764</Right>
+<Top>238</Top>
+<Bottom>265</Bottom>
+<Left>817</Left>
+<Right>903</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -10276,7 +9896,7 @@ searchUsersWithFilter();</Script>
 </Event>
 <Actions/>
 <Text>
-<Body>Sign checkList : </Body>
+<Body>Signature :</Body>
 <NormalColor>12632256</NormalColor>
 <HighlightColor>12632256</HighlightColor>
 <MouseDownColor>12632256</MouseDownColor>
@@ -10299,10 +9919,10 @@ searchUsersWithFilter();</Script>
 <MouseClickSndMode>0</MouseClickSndMode>
 <MouseClickSound/>
 <OriginalRect>
-<Top>233</Top>
-<Bottom>260</Bottom>
-<Left>637</Left>
-<Right>764</Right>
+<Top>238</Top>
+<Bottom>265</Bottom>
+<Left>817</Left>
+<Right>903</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -10432,15 +10052,15 @@ searchUsersWithFilter();</Script>
 end
 
 if e_Key ~= 13 and e_Key ~= 16 and e_Key ~= 17 and e_Key ~= 18 then
-	searchUsersWithFilter();
+	advancedSearchUsers();
 end</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>6</DesignCodeLine>
-<DesignCodeCol>3</DesignCodeCol>
+<DesignCodeLine>5</DesignCodeLine>
+<DesignCodeCol>20</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -10624,19 +10244,19 @@ end</Script>
 <Name>On Key</Name>
 <Args>number e_Key, table e_Modifiers</Args>
 <Script>if e_Key == 9 then
-		Page.SetFocus("IN_FIRSTNAME");
+	Page.SetFocus("IN_FIRSTNAME");
 end
 
 if e_Key ~= 13 and e_Key ~= 16 and e_Key ~= 17 and e_Key ~= 18 then
-	searchUsersWithFilter();
+	advancedSearchUsers();
 end</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>4</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeLine>5</DesignCodeLine>
+<DesignCodeCol>20</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -10824,15 +10444,15 @@ end</Script>
 end
 
 if e_Key ~= 13 and e_Key ~= 16 and e_Key ~= 17 and e_Key ~= 18 then
-	searchUsersWithFilter();
+	advancedSearchUsers();
 end</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>6</DesignCodeLine>
-<DesignCodeCol>3</DesignCodeCol>
+<DesignCodeLine>5</DesignCodeLine>
+<DesignCodeCol>20</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -10926,15 +10546,15 @@ Input.SetText("IN_FIRSTNAME", "Firstname");
 Input.SetText("IN_USERNAME", "Username");
 ComboBox.SetSelected("CB_ROLE", 1);
 Image.Load("IMG_TOGGLE_YES_NO", "AutoPlay\\Images\\user_toggle_idle.png");
-searchUsersWithFilter("reset");
+advancedSearchUsers("reset");
 </Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>4</DesignCodeLine>
-<DesignCodeCol>74</DesignCodeCol>
+<DesignCodeLine>5</DesignCodeLine>
+<DesignCodeCol>19</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -11039,15 +10659,14 @@ searchUsersWithFilter("reset");
 <Event>
 <Name>On Click</Name>
 <Args/>
-<Script>DialogEx.Show("ADD_USER", true, nil, nil);
-</Script>
+<Script>DialogEx.Show("ADD_USER", true, nil, nil);</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeCol>42</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -11122,10 +10741,10 @@ searchUsersWithFilter("reset");
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>228</Top>
-<Bottom>258</Bottom>
-<Left>457</Left>
-<Right>487</Right>
+<Top>239</Top>
+<Bottom>259</Bottom>
+<Left>701</Left>
+<Right>721</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -11140,19 +10759,21 @@ ImageStatus = ImageStatus.Filename;
 
 if ImageStatus == "checkbox_off" then
 	Image.Load("IMG_CHECKBOX", "AutoPlay\\Images\\checkbox_on.png");
+	Label.SetText("LB_CHECKBOX", "Active");
 end
 
 if ImageStatus == "checkbox_on" then
 	Image.Load("IMG_CHECKBOX", "AutoPlay\\Images\\checkbox_off.png");
+	Label.SetText("LB_CHECKBOX", "Disabled");
 end
 
-searchUsersWithFilter();</Script>
+advancedSearchUsers();</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeLine>14</DesignCodeLine>
 <DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
@@ -11228,10 +10849,10 @@ searchUsersWithFilter();</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>233</Top>
-<Bottom>260</Bottom>
-<Left>486</Left>
-<Right>538</Right>
+<Top>239</Top>
+<Bottom>266</Bottom>
+<Left>725</Left>
+<Right>777</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -11319,12 +10940,687 @@ searchUsersWithFilter();</Script>
 <MouseClickSndMode>0</MouseClickSndMode>
 <MouseClickSound/>
 <OriginalRect>
-<Top>233</Top>
-<Bottom>260</Bottom>
-<Left>486</Left>
-<Right>538</Right>
+<Top>239</Top>
+<Bottom>266</Bottom>
+<Left>725</Left>
+<Right>777</Right>
 </OriginalRect>
 </Text>
+</Object>
+<Object>
+<Type>17</Type>
+<Name>GD_USERS_LIST</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>0</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>0</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>293</Top>
+<Bottom>445</Bottom>
+<Left>367</Left>
+<Right>1232</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Cell Changed</Name>
+<Args>number e_Row, number e_Column, string e_OldText, string e_NewText</Args>
+<Script>markUpdatedUser(e_Row, e_Column, e_OldText, e_NewText, thisUser);</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Selection Changed</Name>
+<Args>number e_Row, number e_Column</Args>
+<Script>GRID_INITIALIZATION = 0;
+thisUser = Grid.GetCellText("GD_USERS_LIST", e_Row, 2);</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>24</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<Settings>
+<Rows>4</Rows>
+<Columns>6</Columns>
+<FixedRows>1</FixedRows>
+<FixedColumns>0</FixedColumns>
+<CustomColors>1</CustomColors>
+<TextColor format="hex">c0c0c0</TextColor>
+<TextBkColor format="hex">ffffff</TextBkColor>
+<FixedTextColor format="hex">60a7d9</FixedTextColor>
+<FixedBkColor format="hex">ffffff</FixedBkColor>
+<GridLineColor format="hex">c0c0c0</GridLineColor>
+<GridBkColor format="hex">ffffff</GridBkColor>
+<ToolTipBackColor format="hex">ffffe1</ToolTipBackColor>
+<ToolTipTextColor format="hex">000000</ToolTipTextColor>
+<Editable>1</Editable>
+<Selectable>1</Selectable>
+<CellDragAndDrop>0</CellDragAndDrop>
+<ResizableRows>0</ResizableRows>
+<ResizableColumns>0</ResizableColumns>
+<GridLines>2</GridLines>
+<CSVFile/>
+<CSVLoadMode>0</CSVLoadMode>
+<CSVDelimeter>,</CSVDelimeter>
+<CSVAutoSize>1</CSVAutoSize>
+<FontData>
+<FontName>Nunito</FontName>
+<CharacterSet>0</CharacterSet>
+<Height>-19</Height>
+<Weight>400</Weight>
+<Italic>0</Italic>
+<Underline>0</Underline>
+<StrikeOut>0</StrikeOut>
+<AntiAlias>1</AntiAlias>
+</FontData>
+</Settings>
+</Object>
+<Object>
+<Type>3</Type>
+<Name>IMG_EMAIL_USF</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>0</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>1</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>231</Top>
+<Bottom>261</Bottom>
+<Left>459</Left>
+<Right>609</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Right-Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Enter</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Leave</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<NormalImage>
+<Filename>AutoPlay\Images\input.png</Filename>
+<UseTransColor>0</UseTransColor>
+<TransClr>16777215</TransClr>
+<TransTolerance>10</TransTolerance>
+<Opacity>100</Opacity>
+<HTMode>0</HTMode>
+</NormalImage>
+<MouseOverSndMode>0</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>0</MouseClickSndMode>
+<MouseClickSound/>
+</Object>
+<Object>
+<Type>7</Type>
+<Name>IN_EMAIL</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>0</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>0</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>233</Top>
+<Bottom>258</Bottom>
+<Left>463</Left>
+<Right>605</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Key</Name>
+<Args>number e_Key, table e_Modifiers</Args>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Focus</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Char</Name>
+<Args>number e_Char, table e_Modifiers</Args>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<Text>
+<Body>Email</Body>
+<TextColor>12632256</TextColor>
+<BackgroundColor>16777215</BackgroundColor>
+<FontData>
+<FontName>Nunito</FontName>
+<CharacterSet>0</CharacterSet>
+<Height>-16</Height>
+<Weight>400</Weight>
+<Italic>0</Italic>
+<Underline>0</Underline>
+<StrikeOut>0</StrikeOut>
+<AntiAlias>1</AntiAlias>
+</FontData>
+<Alignment>0</Alignment>
+<RightToLeftReadingOrder>0</RightToLeftReadingOrder>
+</Text>
+<Box>
+<BorderStyle>0</BorderStyle>
+<VerticalScrollbar>1</VerticalScrollbar>
+<HorizontalScrollbar>0</HorizontalScrollbar>
+<Style>0</Style>
+<Mode>0</Mode>
+<Mask/>
+<MaskSymbol> </MaskSymbol>
+<MaskRetMode>0</MaskRetMode>
+<ReadOnly>0</ReadOnly>
+</Box>
+</Object>
+<Object>
+<Type>1</Type>
+<Name>LB_STATUS</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>1</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>1</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>238</Top>
+<Bottom>265</Bottom>
+<Left>636</Left>
+<Right>699</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script>Page.ClickObject("IMG_CHECKBOX");
+</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>1</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Right-Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Enter</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Leave</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<Text>
+<Body>Status :</Body>
+<NormalColor>12632256</NormalColor>
+<HighlightColor>12632256</HighlightColor>
+<MouseDownColor>12632256</MouseDownColor>
+<DisabledColor>12632256</DisabledColor>
+<FontData>
+<FontName>Nunito</FontName>
+<CharacterSet>0</CharacterSet>
+<Height>-16</Height>
+<Weight>400</Weight>
+<Italic>0</Italic>
+<Underline>0</Underline>
+<StrikeOut>0</StrikeOut>
+<AntiAlias>1</AntiAlias>
+</FontData>
+<Alignment>0</Alignment>
+<Orientation>0</Orientation>
+<AutoSize>1</AutoSize>
+<MouseOverSndMode>0</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>0</MouseClickSndMode>
+<MouseClickSound/>
+<OriginalRect>
+<Top>238</Top>
+<Bottom>265</Bottom>
+<Left>636</Left>
+<Right>699</Right>
+</OriginalRect>
+</Text>
+</Object>
+<Object>
+<Type>3</Type>
+<Name>IMG_CANCEL_UPDATE</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>0</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>1</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>1</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>170</Top>
+<Bottom>204</Bottom>
+<Left>788</Left>
+<Right>908</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script>Image.SetVisible("IMG_LASTNAME_USF", true);
+Input.SetVisible("IN_LASTNAME", true);
+Image.SetVisible("IMG_FIRSTNAME_USF", true);
+Input.SetVisible("IN_FIRSTNAME", true);
+Image.SetVisible("IMG_USERNAME_USF", true);
+Input.SetVisible("IN_USERNAME", true);
+ComboBox.SetVisible("CB_ROLE", true);
+Image.SetVisible("IMG_EMAIL_USF", true);
+Input.SetVisible("IN_EMAIL", true);
+Label.SetVisible("LB_STATUS", true);
+Image.SetVisible("IMG_CHECKBOX", true);
+Label.SetVisible("LB_CHECKBOX", true);
+Label.SetVisible("LB_SIGN", true);
+Image.SetVisible("IMG_TOGGLE_YES_NO", true);
+Label.SetVisible("LB_CLS_FILTERS", true);
+Image.SetVisible("IMG_SAVE_MODIFICATION", false);
+Image.SetVisible("IMG_CANCEL_UPDATE", false);
+Image.SetEnabled("IMG_TOGGLE_UP", true);
+Image.SetEnabled("IMG_ACCORDION1", true);
+Image.SetVisible("IMG_ADD_USER", true);
+
+Image.SetSize("IMG_BG_BODY", Image.GetSize("IMG_BG_BODY").Width, bgBodyHeight);
+local newGridPosY = Image.GetPos("IMG_BG_BODY").Y + bgBodyHeight + 18;
+Grid.SetPos("GD_USERS_LIST", Grid.GetPos("GD_USERS_LIST").X, newGridPosY);
+
+tbCellProps = {};
+tbCellProps.FaceName = "Nunito"
+tbCellProps.Height = 14;
+tbCellProps.Weight = FW_NORMAL;
+tbCellProps.Italic = false
+local nCols = Grid.GetColumnCount("GD_USERS_LIST");
+local nRows = Grid.GetRowCount("GD_USERS_LIST");
+
+for i = 0, nRows do
+	for j = 0, nCols do
+		Grid.SetCellFont("GD_USERS_LIST", i, j, tbCellProps, true);
+		Grid.SetCellColors("GD_USERS_LIST", i, j, {Background=16777215,Text=GRID_CLR_DEFAULT}, true);
+	end
+end
+
+local nNodes = DXML.Count("UpdatingUsers", "List/UpdatedUsers", "User");
+for i=1,nNodes do
+	DXML.RemoveElement("UpdatingUsers", "List/UpdatedUsers/User:"..i);
+	DXML.InsertXML("UpdatingUsers", "List/UpdatedUsers/User", '&lt;User Username = "" NewUsername=""&gt;&lt;Field Name="" OldText="" NewText=""/&gt;&lt;/User&gt;', XML.REPLACE);
+end
+
+getUsersList();</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>39</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Right-Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Enter</Name>
+<Args/>
+<Script>Image.Load("IMG_CANCEL_UPDATE", "AutoPlay\\Images\\btn_cancel_hover.png");</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>33</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Leave</Name>
+<Args/>
+<Script>Image.Load("IMG_CANCEL_UPDATE", "AutoPlay\\Images\\btn_cancel.png");</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>33</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<NormalImage>
+<Filename>AutoPlay\Images\btn_cancel.png</Filename>
+<UseTransColor>0</UseTransColor>
+<TransClr>16777215</TransClr>
+<TransTolerance>10</TransTolerance>
+<Opacity>100</Opacity>
+<HTMode>0</HTMode>
+</NormalImage>
+<MouseOverSndMode>0</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>0</MouseClickSndMode>
+<MouseClickSound/>
+</Object>
+<Object>
+<Type>3</Type>
+<Name>IMG_SAVE_MODIFICATION</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>0</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>1</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>1</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>170</Top>
+<Bottom>204</Bottom>
+<Left>658</Left>
+<Right>778</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script>DialogEx.Show("UPDATE_USERS", true, nil, nil);
+
+Image.SetVisible("IMG_LASTNAME_USF", true);
+Input.SetVisible("IN_LASTNAME", true);
+Image.SetVisible("IMG_FIRSTNAME_USF", true);
+Input.SetVisible("IN_FIRSTNAME", true);
+Image.SetVisible("IMG_USERNAME_USF", true);
+Input.SetVisible("IN_USERNAME", true);
+ComboBox.SetVisible("CB_ROLE", true);
+Image.SetVisible("IMG_EMAIL_USF", true);
+Input.SetVisible("IN_EMAIL", true);
+Label.SetVisible("LB_STATUS", true);
+Image.SetVisible("IMG_CHECKBOX", true);
+Label.SetVisible("LB_CHECKBOX", true);
+Label.SetVisible("LB_SIGN", true);
+Image.SetVisible("IMG_TOGGLE_YES_NO", true);
+Label.SetVisible("LB_CLS_FILTERS", true);
+Image.SetVisible("IMG_SAVE_MODIFICATION", false);
+Image.SetVisible("IMG_CANCEL_UPDATE", false);
+Image.SetEnabled("IMG_TOGGLE_UP", true);
+Image.SetEnabled("IMG_ACCORDION1", true);
+Image.SetVisible("IMG_ADD_USER", true);
+
+Image.SetSize("IMG_BG_BODY", Image.GetSize("IMG_BG_BODY").Width, bgBodyHeight);
+local newGridPosY = Image.GetPos("IMG_BG_BODY").Y + bgBodyHeight + 18;
+Grid.SetPos("GD_USERS_LIST", Grid.GetPos("GD_USERS_LIST").X, newGridPosY);
+
+tbCellProps = {};
+tbCellProps.FaceName = "Nunito"
+tbCellProps.Height = 14;
+tbCellProps.Weight = FW_NORMAL;
+tbCellProps.Italic = false
+local nCols = Grid.GetColumnCount("GD_USERS_LIST");
+local nRows = Grid.GetRowCount("GD_USERS_LIST");
+
+for i = 0, nRows do
+	for j = 0, nCols do
+		Grid.SetCellFont("GD_USERS_LIST", i, j, tbCellProps, true);
+		Grid.SetCellColors("GD_USERS_LIST", i, j, {Background=16777215,Text=GRID_CLR_DEFAULT}, true);
+	end
+end
+
+local nNodes = DXML.Count("UpdatingUsers", "List/UpdatedUsers", "User");
+for i=1,nNodes do
+	DXML.RemoveElement("UpdatingUsers", "List/UpdatedUsers/User:"..i);
+	DXML.InsertXML("UpdatingUsers", "List/UpdatedUsers/User", '&lt;User Username = "" NewUsername=""&gt;&lt;Field Name="" OldText="" NewText=""/&gt;&lt;/User&gt;', XML.REPLACE);
+end
+
+getUsersList();</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>25</DesignCodeLine>
+<DesignCodeCol>74</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Right-Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Enter</Name>
+<Args/>
+<Script>Image.Load("IMG_SAVE_MODIFICATION", "AutoPlay\\Images\\btn_update-user_hover.png");</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>69</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Leave</Name>
+<Args/>
+<Script>Image.Load("IMG_SAVE_MODIFICATION", "AutoPlay\\Images\\btn_update-user.png");</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<NormalImage>
+<Filename>AutoPlay\Images\btn_update-user.png</Filename>
+<UseTransColor>0</UseTransColor>
+<TransClr>16777215</TransClr>
+<TransTolerance>10</TransTolerance>
+<Opacity>100</Opacity>
+<HTMode>0</HTMode>
+</NormalImage>
+<MouseOverSndMode>0</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>0</MouseClickSndMode>
+<MouseClickSound/>
 </Object>
 <HGuidelines/>
 <VGuidelines/>
