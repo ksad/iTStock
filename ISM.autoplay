@@ -109,6 +109,44 @@ function loadPageHeader ()
 	Label.SetText("LB_DATE_TIME", System.GetTime(TIME_FMT_MIL).." "..System.GetDate(DATE_FMT_EUROPE));
 	Page.StartTimer(1000, 2);
 end
+
+function xmlDataPagesSetup (currentPage)
+	if SAVE_XML == true then
+		saveXmlData();
+		Page.Navigate(PAGE_NEXT);
+	else
+		if Application.LoadValue("ITStock", "FirstRun") == "Y" then
+			Window.Maximize(Application.GetWndHandle());
+			setObjectsSizeAndPositions(currentPage);
+			Window.Hide(Application.GetWndHandle());
+			Page.Navigate(PAGE_NEXT);
+		else
+			local windowLoadingHandle = Application.LoadValue("Loading", "windowHandle");
+			Window.Close(windowLoadingHandle, CLOSEWND_TERMINATE);
+			Window.Maximize(Application.GetWndHandle());
+		end
+	end
+end
+
+function xmlDataPagesLoad (currentPage)
+	if SAVE_XML == true then
+		saveXmlData();
+		Page.Navigate(PAGE_NEXT);
+	else
+		if Application.LoadValue("ITStock", "FirstRun") == "Y" then
+			setObjectsSizeAndPositions(currentPage);
+			local allPages = Application.GetPages();
+			local nCount = Table.Count(allPages);
+			if allPages[nCount] == currentPage then
+				Application.SaveValue("ITStock", "FirstRun", "N");
+				Page.Navigate(PAGE_FIRST);
+			else
+				Page.Navigate(PAGE_NEXT);
+			end
+		end
+	end
+end
+
 --[[
 	This function allow to jump from keft menu on each page to a specific page
 	Usage : Each element added in the tree list should have Data = Page name in (MAJ)
@@ -674,8 +712,8 @@ function hideGraphic (objectList, page)
 end</Script>
 <BookMarks count="0">
 </BookMarks>
-<DesignCodeLine>40</DesignCodeLine>
-<DesignCodeCol>23</DesignCodeCol>
+<DesignCodeLine>83</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 </Globals>
 <Defaults>
 <StartupPage>_PageFirst</StartupPage>
@@ -903,31 +941,14 @@ DialogEx.Show("LOGIN", true, nil, nil);</Script>
 <Name>On Show</Name>
 <Args/>
 <Script>loadPageHeader();
-
-if SAVE_XML == true then
-	saveXmlData();
-	Page.Navigate(PAGE_NEXT);
-else
-	if Application.LoadValue("ITStock", "FirstRun") == "Y" then
-		Window.Maximize(Application.GetWndHandle());
-		setObjectsSizeAndPositions(this);
-		Window.Hide(Application.GetWndHandle());
-		Page.Navigate(PAGE_NEXT);
-	else
-		local windowLoadingHandle = Application.LoadValue("Loading", "windowHandle");
-		Window.Close(windowLoadingHandle, CLOSEWND_TERMINATE);
-		Window.Maximize(Application.GetWndHandle());
-		listToHide = {"IMG_LEFT_BAR_TITLE", "IMG_LOGOUT", "LB_DATE_TIME", "LB_HELLO", "LB_PAGE_TITLE", "IMG_BLACK_BAR"}
-		hideGraphic(listToHide, this);
-	end
-end</Script>
+xmlDataPagesSetup(this);</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeLine>1</DesignCodeLine>
+<DesignCodeCol>22</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -1899,26 +1920,14 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <Name>On Show</Name>
 <Args/>
 <Script>loadPageHeader();
-
-if SAVE_XML == true then
-	saveXmlData();
-	Page.Navigate(PAGE_NEXT);
-else
-	if Application.LoadValue("ITStock", "FirstRun") == "Y" then
-		setObjectsSizeAndPositions(this);
-		Page.Navigate(PAGE_NEXT);
-	end
-end
-
-listToHide = {"IMG_LEFT_BAR_TITLE", "IMG_LOGOUT", "LB_DATE_TIME", "LB_HELLO", "LB_PAGE_TITLE", "IMG_BLACK_BAR"}
-hideGraphic(listToHide, this);</Script>
+xmlDataPagesLoad(this);</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>17</DesignCodeCol>
+<DesignCodeLine>1</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -3468,28 +3477,17 @@ end
 <Name>On Show</Name>
 <Args/>
 <Script>loadPageHeader();
-
-if SAVE_XML == true then
-	saveXmlData();
-	Page.Navigate(PAGE_NEXT);
-else
-	if Application.LoadValue("ITStock", "FirstRun") == "Y" then
-		setObjectsSizeAndPositions(this);
-		Page.Navigate(PAGE_NEXT);
-	end
-end
+xmlDataPagesLoad(this);
 
 checkSQLServerStatus();
-loadDbAccess();
-listToHide = {"IMG_LEFT_BAR_TITLE", "IMG_LOGOUT", "LB_DATE_TIME", "LB_HELLO", "LB_PAGE_TITLE", "IMG_BLACK_BAR"}
-hideGraphic(listToHide, this);</Script>
+loadDbAccess();</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>17</DesignCodeCol>
+<DesignCodeLine>1</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -6924,16 +6922,7 @@ end</Script>
 <Name>On Show</Name>
 <Args/>
 <Script>loadPageHeader();
-
-if SAVE_XML == true then
-	saveXmlData();
-	Page.Navigate(PAGE_NEXT);
-else
-	if Application.LoadValue("ITStock", "FirstRun") == "Y" then
-		setObjectsSizeAndPositions(this);
-		Page.Navigate(PAGE_NEXT);
-	end
-end
+xmlDataPagesLoad(this);
 
 local usersListColumnsName = {"Lastname", "Firstname", "Username", "Role", "Sign check list", "Status"}
 initList("GD_USERS_LIST", usersListColumnsName)
@@ -6978,16 +6967,14 @@ if mySQLConnection ~= nil then
 end
 
 GRID_INITIALIZATION = 0;
-listToHide = {"IMG_LEFT_BAR_TITLE", "IMG_LOGOUT", "LB_DATE_TIME", "LB_HELLO", "LB_PAGE_TITLE", "IMG_BLACK_BAR"}
-hideGraphic(listToHide, this);
 DXML.ReadFromFile("AutoPlay\\Docs\\sample_empty.xml", "UpdatingUsers");</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>17</DesignCodeCol>
+<DesignCodeLine>45</DesignCodeLine>
+<DesignCodeCol>24</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -8773,16 +8760,7 @@ end
 <Name>On Show</Name>
 <Args/>
 <Script>loadPageHeader();
-
-if SAVE_XML == true then
-	saveXmlData();
-	Page.Navigate(PAGE_NEXT);
-else
-	if Application.LoadValue("ITStock", "FirstRun") == "Y" then
-		setObjectsSizeAndPositions(this);
-		Page.Navigate(PAGE_NEXT);
-	end
-end
+xmlDataPagesLoad(this);
 
 local usersListColumnsName = {"Lastname", "Firsname", "Username", "Role", "Sign check list", "Status"}
 initList("GD_USERS_LIST", usersListColumnsName)
@@ -8823,17 +8801,14 @@ if mySQLConnection ~= nil then
 
 	mySQLCursor:close();
 	mySQLConnection:close();
-end
-
-listToHide = {"IMG_LEFT_BAR_TITLE", "IMG_LOGOUT", "LB_DATE_TIME", "LB_HELLO", "LB_PAGE_TITLE", "IMG_BLACK_BAR"}
-hideGraphic(listToHide, this);</Script>
+end</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>17</DesignCodeCol>
+<DesignCodeLine>42</DesignCodeLine>
+<DesignCodeCol>3</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -11551,26 +11526,14 @@ searchUsersWithFilter();</Script>
 <Name>On Show</Name>
 <Args/>
 <Script>loadPageHeader();
-
-if SAVE_XML == true then
-	saveXmlData();
-	Page.Navigate(PAGE_NEXT);
-else
-	if Application.LoadValue("ITStock", "FirstRun") == "Y" then
-		setObjectsSizeAndPositions(this);
-		Page.Navigate(PAGE_NEXT);
-	end
-end
-
-listToHide = {"IMG_LEFT_BAR_TITLE", "IMG_LOGOUT", "LB_DATE_TIME", "LB_HELLO", "LB_PAGE_TITLE", "IMG_BLACK_BAR"}
-hideGraphic(listToHide, this);</Script>
+xmlDataPagesLoad(this);</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>17</DesignCodeCol>
+<DesignCodeLine>1</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -13200,27 +13163,14 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <Name>On Show</Name>
 <Args/>
 <Script>loadPageHeader();
-
-if SAVE_XML == true then
-	saveXmlData();
-	Page.Navigate(PAGE_NEXT);
-else
-	if Application.LoadValue("ITStock", "FirstRun") == "Y" then
-		setObjectsSizeAndPositions(this);
-		Application.SaveValue("ITStock", "FirstRun", "N");
-		Page.Navigate(PAGE_FIRST);
-	end
-end
-
-listToHide = {"IMG_LEFT_BAR_TITLE", "IMG_LOGOUT", "LB_DATE_TIME", "LB_HELLO", "LB_PAGE_TITLE", "IMG_BLACK_BAR"}
-hideGraphic(listToHide, this);</Script>
+xmlDataPagesLoad(this);</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>17</DesignCodeCol>
+<DesignCodeLine>1</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
