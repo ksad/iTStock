@@ -72,10 +72,10 @@ PAGE_LIMIT_RATIO = 2;
 ENABLED  = 0;
 
 function dbConnect ()
-	if File.DoesExist("AutoPlay\\Docs\\db_access.enc") then
-		Crypto.BlowfishDecrypt("AutoPlay\\Docs\\db_access.enc", "AutoPlay\\Docs\\~tmp_db_access.txt", "securestockitwiththispassword");
-		local db_access = TextFile.ReadToTable("AutoPlay\\Docs\\~tmp_db_access.txt");
-		File.Delete("AutoPlay\\Docs\\~tmp_db_access.txt", false, false, false, nil);
+	if File.DoesExist("AutoPlay\\htdocs\\database\\db_access.enc") then
+		Crypto.BlowfishDecrypt("AutoPlay\\htdocs\\database\\db_access.enc", "AutoPlay\\htdocs\\database\\~tmp_db_access.txt", "securestockitwiththispassword");
+		local db_access = TextFile.ReadToTable("AutoPlay\\htdocs\\database\\~tmp_db_access.txt");
+		File.Delete("AutoPlay\\htdocs\\database\\~tmp_db_access.txt", false, false, false, nil);
 
 		dbName = String.TrimLeft(db_access[1], "[DB_NAME]=");
 		dbUser = String.TrimLeft(db_access[2], "[USER]=");
@@ -143,9 +143,9 @@ function checkSQLServerStatus()
 end
 
 function loadDbAccess ()
-	Crypto.BlowfishDecrypt("AutoPlay\\Docs\\db_access.enc", "AutoPlay\\Docs\\~tmp_db_access.txt", "securestockitwiththispassword");
-	local db_access = TextFile.ReadToTable("AutoPlay\\Docs\\~tmp_db_access.txt");
-	File.Delete("AutoPlay\\Docs\\~tmp_db_access.txt", false, false, false, nil);
+	Crypto.BlowfishDecrypt("AutoPlay\\htdocs\\database\\db_access.enc", "AutoPlay\\htdocs\\database\\~tmp_db_access.txt", "securestockitwiththispassword");
+	local db_access = TextFile.ReadToTable("AutoPlay\\htdocs\\database\\~tmp_db_access.txt");
+	File.Delete("AutoPlay\\htdocs\\database\\~tmp_db_access.txt", false, false, false, nil);
 
 	Input.SetText("IN_LASTNAME_UCF", String.TrimLeft(db_access[1], "[DB_NAME]="));
 	Input.SetText("IN_FIRSTNAME_UCF", String.TrimLeft(db_access[2], "[USER]="));
@@ -668,8 +668,8 @@ function hideGraphic (objectList, page)
 end</Script>
 <BookMarks count="0">
 </BookMarks>
-<DesignCodeLine>602</DesignCodeLine>
-<DesignCodeCol>3</DesignCodeCol>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 </Globals>
 <Defaults>
 <StartupPage>_PageFirst</StartupPage>
@@ -15227,14 +15227,15 @@ Input.SetSelection("IN_PASSWORD", 1, -1);</Script>
 <Event>
 <Name>On Click</Name>
 <Args/>
-<Script>result = DialogEx.Show("DB_CONFIG", true, nil, nil);</Script>
+<Script>Dialog.Message("Info", "Feature not supported yet.", MB_OK, MB_ICONINFORMATION, MB_DEFBUTTON1);
+</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>52</DesignCodeCol>
+<DesignCodeCol>50</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -15639,74 +15640,15 @@ Input.SetSelection("IN_PASSWORD", 1, -1);</Script>
 <Event>
 <Name>On Click</Name>
 <Args/>
-<Script>local userName = Input.GetText("IN_USERNAME");
-local password = Input.GetText("IN_PASSWORD");
-
-if userName == "" then
-	Dialog.Message("Error", "Username can't be empty", MB_OK, MB_ICONSTOP, MB_DEFBUTTON1);
-	DialogEx.SetFocus("IN_USERNAME");
-	Application.ExitScript();
-end
-
-if password == "" then
-	Dialog.Message("Error", "Password can't be empty", MB_OK, MB_ICONSTOP, MB_DEFBUTTON1);
-	DialogEx.SetFocus("IN_PASSWORD");
-	Application.ExitScript();
-end
-
-local mySQLConnection = dbConnect();
-if mySQLConnection ~= nil then
-	mySQLCursor = mySQLConnection:execute("SELECT * FROM IT_USERS WHERE Username = '"..userName.."';");
-	row = mySQLCursor:fetch({},"a")
-	while row do
-		dbUsername = row.Username;
-		dbPassword = row.Password;
-		dbStatus = row.Active;
-	    row = mySQLCursor:fetch(row,"a");
-	end
-
-	if not dbUsername then
-		Application.SaveValue("ITSTOCK", "ERROR_MSG", "The username "..userName.. " is not recognized.");
-		PopUp("0", "NoLoading");
-		DialogEx.SetFocus("IN_USERNAME");
-	else
-		if dbStatus == '1' then
-			if (String.CompareNoCase(userName, dbUsername) == 0 and String.CompareNoCase(Crypto.MD5DigestFromString(password), dbPassword) == 0) then
-				CURRENT_USER = dbUsername;
-				EXIT = 1;
-				mySQLCursor, err = mySQLConnection:execute("UPDATE IT_USERS SET `Last_connection`=now() WHERE Username = '"..dbUsername.."';");
-				if err then
-					-- Insert into lof write function
-					Application.SaveValue("ITSTOCK", "ERROR_MSG", err);
-					PopUp("0", "NoLoading");
-					Application.ExitScript();
-				end
-				File.Run("AutoPlay\\Docs\\Loading.exe", "", "", SW_SHOWNORMAL, false);
-				Application.Sleep(3000);
-				DialogEx.Close(this);
-			else
-				Application.SaveValue("ITSTOCK", "ERROR_MSG", "Password incorrect.");
-				PopUp("0", "NoLoading");
-				DialogEx.SetFocus("IN_USERNAME");
-			end
-		else
-			Application.SaveValue("ITSTOCK", "ERROR_MSG", "The account "..dbUsername.. " is disabled, Please contact your administrator.");
-			PopUp("0", "NoLoading");
-		end
-	end
-	dbUsername = nil;
-	dbStatus = nil;
-
-	mySQLCursor:close();
-	mySQLConnection:close();
-end</Script>
+<Script>require("Autoplay\\htdocs\\sources\\dlg_login")
+login ();</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>31</DesignCodeLine>
-<DesignCodeCol>19</DesignCodeCol>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
