@@ -103,6 +103,12 @@ function dbConnect ()
 	return MySQLConnection
 end
 
+function loadPageHeader ()
+	Label.SetText("LB_HELLO", "Hello "..CURRENT_USER);
+	Label.SetText("LB_IP", "@IP : "..System.GetLANInfo().IP);
+	Label.SetText("LB_DATE_TIME", System.GetTime(TIME_FMT_MIL).." "..System.GetDate(DATE_FMT_EUROPE));
+	Page.StartTimer(1000, 2);
+end
 --[[
 	This function allow to jump from keft menu on each page to a specific page
 	Usage : Each element added in the tree list should have Data = Page name in (MAJ)
@@ -668,8 +674,8 @@ function hideGraphic (objectList, page)
 end</Script>
 <BookMarks count="0">
 </BookMarks>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeLine>40</DesignCodeLine>
+<DesignCodeCol>23</DesignCodeCol>
 </Globals>
 <Defaults>
 <StartupPage>_PageFirst</StartupPage>
@@ -896,10 +902,7 @@ DialogEx.Show("LOGIN", true, nil, nil);</Script>
 <Event>
 <Name>On Show</Name>
 <Args/>
-<Script>Label.SetText("LB_HELLO", "Hello "..CURRENT_USER);
-Label.SetText("LB_IP", "@IP : "..System.GetLANInfo().IP);
-Label.SetText("LB_DATE_TIME", System.GetTime(TIME_FMT_MIL).." "..System.GetDate(DATE_FMT_EUROPE));
-Page.StartTimer(1000, 2);
+<Script>loadPageHeader();
 
 if SAVE_XML == true then
 	saveXmlData();
@@ -923,8 +926,8 @@ end</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>17</DesignCodeLine>
-<DesignCodeCol>2</DesignCodeCol>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -1895,10 +1898,7 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <Event>
 <Name>On Show</Name>
 <Args/>
-<Script>Label.SetText("LB_HELLO", "Hello "..CURRENT_USER);
-Label.SetText("LB_IP", "@IP : "..System.GetLANInfo().IP);
-Label.SetText("LB_DATE_TIME", System.GetTime(TIME_FMT_MIL).." "..System.GetDate(DATE_FMT_EUROPE));
-Page.StartTimer(1000, 2);
+<Script>loadPageHeader();
 
 if SAVE_XML == true then
 	saveXmlData();
@@ -1917,8 +1917,8 @@ hideGraphic(listToHide, this);</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>15</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>17</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -3105,9 +3105,9 @@ end
 <MouseClickSound/>
 <OriginalRect>
 <Top>63</Top>
-<Bottom>98</Bottom>
+<Bottom>101</Bottom>
 <Left>49</Left>
-<Right>191</Right>
+<Right>193</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -3217,7 +3217,7 @@ end
 <MouseClickSound/>
 <OriginalRect>
 <Top>55</Top>
-<Bottom>80</Bottom>
+<Bottom>82</Bottom>
 <Left>235</Left>
 <Right>304</Right>
 </OriginalRect>
@@ -3329,9 +3329,9 @@ end
 <MouseClickSound/>
 <OriginalRect>
 <Top>76</Top>
-<Bottom>101</Bottom>
+<Bottom>103</Bottom>
 <Left>235</Left>
-<Right>341</Right>
+<Right>342</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -3467,10 +3467,7 @@ end
 <Event>
 <Name>On Show</Name>
 <Args/>
-<Script>Label.SetText("LB_HELLO", "Hello "..CURRENT_USER);
-Label.SetText("LB_IP", "@IP : "..System.GetLANInfo().IP);
-Label.SetText("LB_DATE_TIME", System.GetTime(TIME_FMT_MIL).." "..System.GetDate(DATE_FMT_EUROPE));
-Page.StartTimer(1000, 2);
+<Script>loadPageHeader();
 
 if SAVE_XML == true then
 	saveXmlData();
@@ -3491,8 +3488,8 @@ hideGraphic(listToHide, this);</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>18</DesignCodeLine>
-<DesignCodeCol>30</DesignCodeCol>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>17</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -6926,10 +6923,7 @@ end</Script>
 <Event>
 <Name>On Show</Name>
 <Args/>
-<Script>Label.SetText("LB_HELLO", "Hello "..CURRENT_USER);
-Label.SetText("LB_IP", "@IP : "..System.GetLANInfo().IP);
-Label.SetText("LB_DATE_TIME", System.GetTime(TIME_FMT_MIL).." "..System.GetDate(DATE_FMT_EUROPE));
-Page.StartTimer(1000, 2);
+<Script>loadPageHeader();
 
 if SAVE_XML == true then
 	saveXmlData();
@@ -6992,8 +6986,8 @@ DXML.ReadFromFile("AutoPlay\\Docs\\sample_empty.xml", "UpdatingUsers");</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>41</DesignCodeLine>
-<DesignCodeCol>23</DesignCodeCol>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>17</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -8778,10 +8772,7 @@ end
 <Event>
 <Name>On Show</Name>
 <Args/>
-<Script>Label.SetText("LB_HELLO", "Hello "..CURRENT_USER);
-Label.SetText("LB_IP", "@IP : "..System.GetLANInfo().IP);
-Label.SetText("LB_DATE_TIME", System.GetTime(TIME_FMT_MIL).." "..System.GetDate(DATE_FMT_EUROPE));
-Page.StartTimer(1000, 2);
+<Script>loadPageHeader();
 
 if SAVE_XML == true then
 	saveXmlData();
@@ -8841,8 +8832,8 @@ hideGraphic(listToHide, this);</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>41</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>17</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -11559,10 +11550,7 @@ searchUsersWithFilter();</Script>
 <Event>
 <Name>On Show</Name>
 <Args/>
-<Script>Label.SetText("LB_HELLO", "Hello "..CURRENT_USER);
-Label.SetText("LB_IP", "@IP : "..System.GetLANInfo().IP);
-Label.SetText("LB_DATE_TIME", System.GetTime(TIME_FMT_MIL).." "..System.GetDate(DATE_FMT_EUROPE));
-Page.StartTimer(1000, 2);
+<Script>loadPageHeader();
 
 if SAVE_XML == true then
 	saveXmlData();
@@ -11581,8 +11569,8 @@ hideGraphic(listToHide, this);</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>16</DesignCodeLine>
-<DesignCodeCol>30</DesignCodeCol>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>17</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -12378,9 +12366,9 @@ end
 <MouseClickSound/>
 <OriginalRect>
 <Top>63</Top>
-<Bottom>98</Bottom>
+<Bottom>101</Bottom>
 <Left>49</Left>
-<Right>191</Right>
+<Right>193</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -12491,7 +12479,7 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <MouseClickSound/>
 <OriginalRect>
 <Top>55</Top>
-<Bottom>80</Bottom>
+<Bottom>82</Bottom>
 <Left>235</Left>
 <Right>304</Right>
 </OriginalRect>
@@ -12603,9 +12591,9 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <MouseClickSound/>
 <OriginalRect>
 <Top>76</Top>
-<Bottom>101</Bottom>
+<Bottom>103</Bottom>
 <Left>235</Left>
-<Right>341</Right>
+<Right>342</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -13211,10 +13199,7 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <Event>
 <Name>On Show</Name>
 <Args/>
-<Script>Label.SetText("LB_HELLO", "Hello "..CURRENT_USER);
-Label.SetText("LB_IP", "@IP : "..System.GetLANInfo().IP);
-Label.SetText("LB_DATE_TIME", System.GetTime(TIME_FMT_MIL).." "..System.GetDate(DATE_FMT_EUROPE));
-Page.StartTimer(1000, 2);
+<Script>loadPageHeader();
 
 if SAVE_XML == true then
 	saveXmlData();
@@ -13234,8 +13219,8 @@ hideGraphic(listToHide, this);</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>17</DesignCodeLine>
-<DesignCodeCol>30</DesignCodeCol>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>17</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -14125,9 +14110,9 @@ end
 <MouseClickSound/>
 <OriginalRect>
 <Top>63</Top>
-<Bottom>98</Bottom>
+<Bottom>101</Bottom>
 <Left>49</Left>
-<Right>191</Right>
+<Right>193</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -14238,7 +14223,7 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <MouseClickSound/>
 <OriginalRect>
 <Top>55</Top>
-<Bottom>80</Bottom>
+<Bottom>82</Bottom>
 <Left>235</Left>
 <Right>304</Right>
 </OriginalRect>
@@ -14350,9 +14335,9 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <MouseClickSound/>
 <OriginalRect>
 <Top>76</Top>
-<Bottom>101</Bottom>
+<Bottom>103</Bottom>
 <Left>235</Left>
-<Right>341</Right>
+<Right>342</Right>
 </OriginalRect>
 </Text>
 </Object>
