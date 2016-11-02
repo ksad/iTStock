@@ -19477,10 +19477,10 @@ Image.Load("IMG_TOGGLE_YES_NO", "AutoPlay\\Images\\user_toggle_idle.png");</Scri
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>401</Top>
-<Bottom>446</Bottom>
-<Left>103</Left>
-<Right>260</Right>
+<Top>471</Top>
+<Bottom>516</Bottom>
+<Left>39</Left>
+<Right>196</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>3.488889</WidthRatio>
@@ -19492,8 +19492,18 @@ Image.Load("IMG_TOGGLE_YES_NO", "AutoPlay\\Images\\user_toggle_idle.png");</Scri
 <Script>local lastName = Input.GetText("IN_LASTNAME_UCF");
 local firstName = Input.GetText("IN_FIRSTNAME_UCF");
 local username = Input.GetText("IN_USERNAME_UCF");
+local email = Input.GetText("IN_EMAIL_UCF");
 local password = Input.GetText("IN_PASSWORD_UCF");
 local role = ComboBox.GetItemText("CB_ROLE", ComboBox.GetSelected("CB_ROLE"));
+
+local LoadedImage = Image.GetFilename("IMG_CHECKBOX");
+local ImageStatus = String.SplitPath(LoadedImage);
+local status = ImageStatus.Filename;
+if status == "checkbox_on" then
+	accountStatus = 1;
+else
+	accountStatus = 0;
+end
 
 local LoadedImage = Image.GetFilename("IMG_TOGGLE_YES_NO");
 local ImageStatus = String.SplitPath(LoadedImage);
@@ -19511,6 +19521,11 @@ end
 
 if username == "" or username == "Username" then
 	Image.Load("IMG_USERNAME_UCF", "AutoPlay\\Images\\input_mandatory.png");
+	Application.SetLastError(0616);
+end
+
+if email == "" or email == "Email" then
+	Image.Load("IMG_EMAIL_UCF", "AutoPlay\\Images\\input_mandatory.png");
 	Application.SetLastError(0616);
 end
 
@@ -19535,7 +19550,6 @@ if checkListSign == "user_toggle_idle" then
 	Application.SetLastError(0616);
 end
 
-
 error = Application.GetLastError();
 if (error == 0616) then
 	Application.ExitScript();
@@ -19543,8 +19557,8 @@ end
 
 local mySQLConnection = dbConnect();
 if mySQLConnection ~= nil then
-	SQL = "INSERT INTO `IT_Stock_Manager`.`IT_USERS` (`ID`, `Lastname`, `Firstname`, `Username`, `Password`, `Role`, `Sign_Check_List`) VALUES (NULL,'"..lastName.."', '"..firstName.."', '"..username.."', '"..Crypto.MD5DigestFromString(password).."', '"..role.."', '"..String.Upper(String.Left(checkListSign, 1)).."');";
-	
+	SQL = "INSERT INTO `IT_Stock_Manager`.`IT_USERS` (`ID`, `Lastname`, `Firstname`, `Username`, `Email`, `Password`, `Role`, `Sign_Check_List`, `Active`, `Last_connection`, `Created`, `Created_By`, `Modified`, `Modified_By`) VALUES (NULL,'"..lastName.."', '"..firstName.."', '"..username.."', '"..email.."', '"..Crypto.MD5DigestFromString(password).."', '"..role.."', '"..checkListSign.."', '"..accountStatus.."', NULL, now(), '"..CURRENT_USER.."', NULL, NULL);";
+
 	mySQLCursor, err = mySQLConnection:execute(SQL);
 	if err then
 		-- Insert into lof write function
@@ -19564,8 +19578,8 @@ end</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>54</DesignCodeLine>
-<DesignCodeCol>1</DesignCodeCol>
+<DesignCodeLine>36</DesignCodeLine>
+<DesignCodeCol>29</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -19644,10 +19658,10 @@ end</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>328</Top>
-<Bottom>359</Bottom>
-<Left>212</Left>
-<Right>278</Right>
+<Top>423</Top>
+<Bottom>452</Bottom>
+<Left>147</Left>
+<Right>209</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -19749,10 +19763,10 @@ end</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>329</Top>
-<Bottom>361</Bottom>
-<Left>44</Left>
-<Right>200</Right>
+<Top>425</Top>
+<Bottom>457</Bottom>
+<Left>45</Left>
+<Right>139</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -19816,7 +19830,7 @@ end</Script>
 </Event>
 <Actions/>
 <Text>
-<Body>Sign checkList : </Body>
+<Body>Signature</Body>
 <NormalColor>16777215</NormalColor>
 <HighlightColor>16777215</HighlightColor>
 <MouseDownColor>16777215</MouseDownColor>
@@ -19839,10 +19853,10 @@ end</Script>
 <MouseClickSndMode>0</MouseClickSndMode>
 <MouseClickSound/>
 <OriginalRect>
-<Top>329</Top>
-<Bottom>361</Bottom>
-<Left>44</Left>
-<Right>200</Right>
+<Top>425</Top>
+<Bottom>457</Bottom>
+<Left>45</Left>
+<Right>139</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -19861,8 +19875,8 @@ end</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>279</Top>
-<Bottom>308</Bottom>
+<Top>329</Top>
+<Bottom>358</Bottom>
 <Left>44</Left>
 <Right>324</Right>
 </Coordinates>
@@ -19964,8 +19978,8 @@ end</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>224</Top>
-<Bottom>264</Bottom>
+<Top>274</Top>
+<Bottom>314</Bottom>
 <Left>44</Left>
 <Right>324</Right>
 </Coordinates>
@@ -20058,8 +20072,8 @@ end</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>229</Top>
-<Bottom>259</Bottom>
+<Top>279</Top>
+<Bottom>309</Bottom>
 <Left>49</Left>
 <Right>319</Right>
 </Coordinates>
@@ -20267,7 +20281,7 @@ end</Script>
 <Name>On Key</Name>
 <Args>number e_Key, table e_Modifiers</Args>
 <Script>if e_Key == 9 then
-	DialogEx.SetFocus("IN_PASSWORD_UCF");
+	DialogEx.SetFocus("IN_EMAIL_UCF");
 end
 
 if e_Key == 13 then
@@ -20303,8 +20317,8 @@ end</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>3</DesignCodeCol>
+<DesignCodeLine>4</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -21135,6 +21149,638 @@ end</Script>
 <Right>646</Right>
 </OriginalRect>
 </Text>
+</Object>
+<Object>
+<Type>3</Type>
+<Name>IMG_EMAIL_UCF</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>0</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>1</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>223</Top>
+<Bottom>263</Bottom>
+<Left>44</Left>
+<Right>324</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>1632895086</DesignCodeLine>
+<DesignCodeCol>27507</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Right-Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>1632918638</DesignCodeLine>
+<DesignCodeCol>27507</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Enter</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>1868979310</DesignCodeLine>
+<DesignCodeCol>7566446</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Leave</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>925761646</DesignCodeLine>
+<DesignCodeCol>122</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<NormalImage>
+<Filename>AutoPlay\Images\input.png</Filename>
+<UseTransColor>0</UseTransColor>
+<TransClr>16777215</TransClr>
+<TransTolerance>10</TransTolerance>
+<Opacity>100</Opacity>
+<HTMode>0</HTMode>
+</NormalImage>
+<MouseOverSndMode>0</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>0</MouseClickSndMode>
+<MouseClickSound/>
+</Object>
+<Object>
+<Type>7</Type>
+<Name>IN_EMAIL_UCF</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>0</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>0</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>229</Top>
+<Bottom>259</Bottom>
+<Left>49</Left>
+<Right>319</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Key</Name>
+<Args>number e_Key, table e_Modifiers</Args>
+<Script>if e_Key == 9 then
+	DialogEx.SetFocus("IN_PASSWORD_UCF");
+end
+
+if e_Key == 13 then
+	--DialogEx.ClickObject("IMG_CREATE_USER");
+end
+
+--[[local mySQLConnection = dbConnect();
+if mySQLConnection ~= nil then
+	local searchByUsername = Input.GetText("IN_USERNAME_UCF");
+
+	if searchByUsername ~= "" then
+		SQL = "SELECT * FROM IT_USERS WHERE Username = '"..searchByUsername.."';";	
+
+		mySQLCursor = mySQLConnection:execute(SQL);
+		row = mySQLCursor:fetch({},"a")
+		
+		tblImageProps = {};
+		tblImageProps.Visible = true;
+		if row then
+			tblImageProps.ImageFile = "AutoPlay\\Images\\error.png";
+			tblImageProps.TooltipText = "User already exist";
+		else
+			tblImageProps.ImageFile = "AutoPlay\\Images\\ok.png";
+			tblImageProps.TooltipText = "Username available";
+		end
+		Image.SetProperties("IMG_NOTIFY", tblImageProps);
+		mySQLCursor:close();
+		mySQLConnection:close();
+	end
+end]]</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>5</DesignCodeLine>
+<DesignCodeCol>3</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Focus</Name>
+<Args/>
+<Script>setUserCreateForm(this);</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>24</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Char</Name>
+<Args>number e_Char, table e_Modifiers</Args>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<Text>
+<Body>Email</Body>
+<TextColor>12632256</TextColor>
+<BackgroundColor>16777215</BackgroundColor>
+<FontData>
+<FontName>Nunito</FontName>
+<CharacterSet>0</CharacterSet>
+<Height>-19</Height>
+<Weight>400</Weight>
+<Italic>0</Italic>
+<Underline>0</Underline>
+<StrikeOut>0</StrikeOut>
+<AntiAlias>1</AntiAlias>
+</FontData>
+<Alignment>0</Alignment>
+<RightToLeftReadingOrder>0</RightToLeftReadingOrder>
+</Text>
+<Box>
+<BorderStyle>0</BorderStyle>
+<VerticalScrollbar>1</VerticalScrollbar>
+<HorizontalScrollbar>0</HorizontalScrollbar>
+<Style>0</Style>
+<Mode>0</Mode>
+<Mask/>
+<MaskSymbol/>
+<MaskRetMode>0</MaskRetMode>
+<ReadOnly>0</ReadOnly>
+</Box>
+</Object>
+<Object>
+<Type>3</Type>
+<Name>IMG_CHECKBOX</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>1</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>1</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>384</Top>
+<Bottom>409</Bottom>
+<Left>45</Left>
+<Right>70</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script>local LoadedImage = Image.GetFilename("IMG_CHECKBOX");
+local ImageStatus = String.SplitPath(LoadedImage);
+ImageStatus = ImageStatus.Filename;
+
+if ImageStatus == "checkbox_off" then
+	Image.Load("IMG_CHECKBOX", "AutoPlay\\Images\\checkbox_on.png");
+	Label.SetText("LB_CHECKBOX", "Active");
+end
+
+if ImageStatus == "checkbox_on" then
+	Image.Load("IMG_CHECKBOX", "AutoPlay\\Images\\checkbox_off.png");
+	Label.SetText("LB_CHECKBOX", "Disabled");
+end</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>12</DesignCodeLine>
+<DesignCodeCol>3</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Right-Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Enter</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Leave</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<NormalImage>
+<Filename>AutoPlay\Images\checkbox_on.png</Filename>
+<UseTransColor>0</UseTransColor>
+<TransClr>16777215</TransClr>
+<TransTolerance>10</TransTolerance>
+<Opacity>100</Opacity>
+<HTMode>0</HTMode>
+</NormalImage>
+<MouseOverSndMode>0</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>0</MouseClickSndMode>
+<MouseClickSound/>
+</Object>
+<Object>
+<Type>1</Type>
+<Name>LB_CHECKBOX</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>1</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>1</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>383</Top>
+<Bottom>417</Bottom>
+<Left>82</Left>
+<Right>151</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script>Page.ClickObject("IMG_CHECKBOX");
+</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>1</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Right-Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Enter</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Leave</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<Text>
+<Body>Active</Body>
+<NormalColor>16777215</NormalColor>
+<HighlightColor>16777215</HighlightColor>
+<MouseDownColor>16777215</MouseDownColor>
+<DisabledColor>16777215</DisabledColor>
+<FontData>
+<FontName>Nunito</FontName>
+<CharacterSet>0</CharacterSet>
+<Height>-21</Height>
+<Weight>700</Weight>
+<Italic>0</Italic>
+<Underline>0</Underline>
+<StrikeOut>0</StrikeOut>
+<AntiAlias>1</AntiAlias>
+</FontData>
+<Alignment>0</Alignment>
+<Orientation>0</Orientation>
+<AutoSize>1</AutoSize>
+<MouseOverSndMode>0</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>0</MouseClickSndMode>
+<MouseClickSound/>
+<OriginalRect>
+<Top>383</Top>
+<Bottom>417</Bottom>
+<Left>82</Left>
+<Right>151</Right>
+</OriginalRect>
+</Text>
+</Object>
+<Object>
+<Type>3</Type>
+<Name>IMG_CANCEL</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>1</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>1</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>471</Top>
+<Bottom>516</Bottom>
+<Left>209</Left>
+<Right>366</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>3.488889</WidthRatio>
+<HeightRatio>0.286624</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script>DialogEx.Close(this);</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Right-Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Enter</Name>
+<Args/>
+<Script>if Image.IsEnabled("IMG_CANCEL") then
+	Image.Load(this, "AutoPlay\\Images\\btn_cancel_hover.png");
+end</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Leave</Name>
+<Args/>
+<Script>if Image.IsEnabled("IMG_CANCEL") then
+	Image.Load(this, "AutoPlay\\Images\\btn_cancel.png");
+end</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>1</DesignCodeLine>
+<DesignCodeCol>1</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<NormalImage>
+<Filename>AutoPlay\Images\btn_cancel.png</Filename>
+<UseTransColor>0</UseTransColor>
+<TransClr>16777215</TransClr>
+<TransTolerance>10</TransTolerance>
+<Opacity>100</Opacity>
+<HTMode>0</HTMode>
+</NormalImage>
+<MouseOverSndMode>0</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>0</MouseClickSndMode>
+<MouseClickSound/>
+</Object>
+<Object>
+<Type>3</Type>
+<Name>IMG_CLOSE</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>1</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>1</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>5</Top>
+<Bottom>35</Bottom>
+<Left>755</Left>
+<Right>785</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script>DialogEx.Close(this);</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>21</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Right-Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Enter</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Leave</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<NormalImage>
+<Filename>AutoPlay\Images\close.png</Filename>
+<UseTransColor>0</UseTransColor>
+<TransClr>16777215</TransClr>
+<TransTolerance>10</TransTolerance>
+<Opacity>100</Opacity>
+<HTMode>0</HTMode>
+</NormalImage>
+<MouseOverSndMode>0</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>0</MouseClickSndMode>
+<MouseClickSound/>
 </Object>
 <HGuidelines/>
 <VGuidelines/>
