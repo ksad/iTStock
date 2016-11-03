@@ -493,8 +493,8 @@ function resizeList (objectName)
 end</Script>
 <BookMarks count="0">
 </BookMarks>
-<DesignCodeLine>427</DesignCodeLine>
-<DesignCodeCol>3</DesignCodeCol>
+<DesignCodeLine>31</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 </Globals>
 <Defaults>
 <StartupPage>_PageFirst</StartupPage>
@@ -1359,9 +1359,9 @@ end
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>55</Top>
-<Bottom>82</Bottom>
+<Bottom>83</Bottom>
 <Left>235</Left>
-<Right>304</Right>
+<Right>306</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -1450,9 +1450,9 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <MouseClickSound/>
 <OriginalRect>
 <Top>55</Top>
-<Bottom>82</Bottom>
+<Bottom>83</Bottom>
 <Left>235</Left>
-<Right>304</Right>
+<Right>306</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -1472,9 +1472,9 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>76</Top>
-<Bottom>103</Bottom>
+<Bottom>104</Bottom>
 <Left>235</Left>
-<Right>342</Right>
+<Right>348</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -1562,9 +1562,9 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <MouseClickSound/>
 <OriginalRect>
 <Top>76</Top>
-<Bottom>103</Bottom>
+<Bottom>104</Bottom>
 <Left>235</Left>
-<Right>342</Right>
+<Right>348</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -15288,7 +15288,7 @@ Input.SetSelection("IN_PASSWORD", 1, -1);</Script>
 <Top>221</Top>
 <Bottom>247</Bottom>
 <Left>273</Left>
-<Right>414</Right>
+<Right>415</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -15399,9 +15399,9 @@ Input.SetSelection("IN_PASSWORD", 1, -1);</Script>
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>74</Top>
-<Bottom>111</Bottom>
+<Bottom>109</Bottom>
 <Left>134</Left>
-<Right>366</Right>
+<Right>346</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -16000,9 +16000,9 @@ Image.SetEnabled("IMG_SAVE_CONFIG_SERVER", true);</Script>
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>9</Top>
-<Bottom>40</Bottom>
+<Bottom>41</Bottom>
 <Left>41</Left>
-<Right>253</Right>
+<Right>258</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -16090,9 +16090,9 @@ Image.SetEnabled("IMG_SAVE_CONFIG_SERVER", true);</Script>
 <MouseClickSound/>
 <OriginalRect>
 <Top>9</Top>
-<Bottom>40</Bottom>
+<Bottom>41</Bottom>
 <Left>41</Left>
-<Right>253</Right>
+<Right>258</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -16112,9 +16112,9 @@ Image.SetEnabled("IMG_SAVE_CONFIG_SERVER", true);</Script>
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>9</Top>
-<Bottom>40</Bottom>
+<Bottom>41</Bottom>
 <Left>282</Left>
-<Right>458</Right>
+<Right>466</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -16202,9 +16202,9 @@ Image.SetEnabled("IMG_SAVE_CONFIG_SERVER", true);</Script>
 <MouseClickSound/>
 <OriginalRect>
 <Top>9</Top>
-<Bottom>40</Bottom>
+<Bottom>41</Bottom>
 <Left>282</Left>
-<Right>458</Right>
+<Right>466</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -16774,108 +16774,6 @@ Image.SetEnabled("IMG_SAVE_CONFIG_SERVER", true);</Script>
 </Object>
 <Object>
 <Type>7</Type>
-<Name>IN_DB_ADDRESS_DBCF</Name>
-<VisibleAtDesignTime>1</VisibleAtDesignTime>
-<VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>0</Locked>
-<Enabled>1</Enabled>
-<ToolTip/>
-<Cursor>0</Cursor>
-<Group>0</Group>
-<MaintainAspectRatio>0</MaintainAspectRatio>
-<Pin>0</Pin>
-<TabIndex>-1</TabIndex>
-<AutoResize>0</AutoResize>
-<Coordinates>
-<Top>260</Top>
-<Bottom>290</Bottom>
-<Left>96</Left>
-<Right>366</Right>
-</Coordinates>
-<Ratios>
-<WidthRatio>-1.000000</WidthRatio>
-<HeightRatio>-1.000000</HeightRatio>
-</Ratios>
-<Event>
-<Name>On Key</Name>
-<Args>number e_Key, table e_Modifiers</Args>
-<Script>if e_Key == 9 then
-	DialogEx.SetFocus("IN_DB_NAME_DBCF");
-end
-
-if e_Key == 13 then
-	DialogEx.ClickObject("IMG_SAVE_CONFIG_SERVER");
-end</Script>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>5</DesignCodeLine>
-<DesignCodeCol>48</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Focus</Name>
-<Args/>
-<Script>setDbConfigForm(this, "Dialog");</Script>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>2</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>22</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Char</Name>
-<Args>number e_Char, table e_Modifiers</Args>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Actions/>
-<Text>
-<Body>Address</Body>
-<TextColor>12632256</TextColor>
-<BackgroundColor>16777215</BackgroundColor>
-<FontData>
-<FontName>Nunito</FontName>
-<CharacterSet>0</CharacterSet>
-<Height>-19</Height>
-<Weight>400</Weight>
-<Italic>0</Italic>
-<Underline>0</Underline>
-<StrikeOut>0</StrikeOut>
-<AntiAlias>1</AntiAlias>
-</FontData>
-<Alignment>0</Alignment>
-<RightToLeftReadingOrder>0</RightToLeftReadingOrder>
-</Text>
-<Box>
-<BorderStyle>0</BorderStyle>
-<VerticalScrollbar>1</VerticalScrollbar>
-<HorizontalScrollbar>0</HorizontalScrollbar>
-<Style>0</Style>
-<Mode>0</Mode>
-<Mask/>
-<MaskSymbol> </MaskSymbol>
-<MaskRetMode>0</MaskRetMode>
-<ReadOnly>0</ReadOnly>
-</Box>
-</Object>
-<Object>
-<Type>7</Type>
 <Name>IN_DB_PORT_DBCF</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
@@ -16902,7 +16800,7 @@ end</Script>
 <Name>On Key</Name>
 <Args>number e_Key, table e_Modifiers</Args>
 <Script>if e_Key == 9 then
-	DialogEx.SetFocus("IN_DB_USERNAME_DBCF");
+	DialogEx.SetFocus("IN_DB_ADDRESS_DBCF");
 end
 
 if e_Key == 13 then
@@ -17117,94 +17015,8 @@ end</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>5</DesignCodeLine>
-<DesignCodeCol>1</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Focus</Name>
-<Args/>
-<Script>setDbConfigForm(this, "Dialog");</Script>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>22</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Char</Name>
-<Args>number e_Char, table e_Modifiers</Args>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>925761646</DesignCodeLine>
-<DesignCodeCol>122</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Actions/>
-<NormalImage>
-<Filename>AutoPlay\Images\input.png</Filename>
-<UseTransColor>0</UseTransColor>
-<TransClr>16777215</TransClr>
-<TransTolerance>10</TransTolerance>
-<Opacity>100</Opacity>
-<HTMode>0</HTMode>
-</NormalImage>
-<MouseOverSndMode>0</MouseOverSndMode>
-<MouseOverSound/>
-<MouseClickSndMode>0</MouseClickSndMode>
-<MouseClickSound/>
-</Object>
-<Object>
-<Type>7</Type>
-<Name>IN_DB_ADDRESS_DBCF</Name>
-<VisibleAtDesignTime>1</VisibleAtDesignTime>
-<VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>0</Locked>
-<Enabled>1</Enabled>
-<ToolTip/>
-<Cursor>0</Cursor>
-<Group>0</Group>
-<MaintainAspectRatio>0</MaintainAspectRatio>
-<Pin>0</Pin>
-<TabIndex>-1</TabIndex>
-<AutoResize>0</AutoResize>
-<Coordinates>
-<Top>260</Top>
-<Bottom>290</Bottom>
-<Left>96</Left>
-<Right>366</Right>
-</Coordinates>
-<Ratios>
-<WidthRatio>-1.000000</WidthRatio>
-<HeightRatio>-1.000000</HeightRatio>
-</Ratios>
-<Event>
-<Name>On Key</Name>
-<Args>number e_Key, table e_Modifiers</Args>
-<Script>if e_Key == 9 then
-	DialogEx.SetFocus("IN_DB_NAME_DBCF");
-end
-
-if e_Key == 13 then
-	DialogEx.ClickObject("IMG_SAVE_CONFIG_SERVER");
-end</Script>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
 <DesignCodeLine>1</DesignCodeLine>
-<DesignCodeCol>26</DesignCodeCol>
+<DesignCodeCol>38</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -17214,11 +17026,11 @@ end</Script>
 <Script>setDbConfigForm(this, "Dialog");</Script>
 <TreeStates>
 <TreeState>0</TreeState>
-<TreeState>2</TreeState>
+<TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>22</DesignCodeCol>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -17294,7 +17106,7 @@ end</Script>
 <Name>On Key</Name>
 <Args>number e_Key, table e_Modifiers</Args>
 <Script>if e_Key == 9 then
-	DialogEx.SetFocus("IN_DB_ADDRESS_DBCF");
+	DialogEx.SetFocus("IN_DB_USERNAME_DBCF");
 end
 
 if e_Key == 13 then
@@ -17305,8 +17117,8 @@ end</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>5</DesignCodeLine>
-<DesignCodeCol>1</DesignCodeCol>
+<DesignCodeLine>2</DesignCodeLine>
+<DesignCodeCol>3</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -17496,7 +17308,7 @@ end</Script>
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeCol>28</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -17765,6 +17577,108 @@ end</Script>
 <MouseOverSound/>
 <MouseClickSndMode>0</MouseClickSndMode>
 <MouseClickSound/>
+</Object>
+<Object>
+<Type>7</Type>
+<Name>IN_DB_ADDRESS_DBCF</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>0</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>0</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>260</Top>
+<Bottom>290</Bottom>
+<Left>96</Left>
+<Right>366</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Key</Name>
+<Args>number e_Key, table e_Modifiers</Args>
+<Script>if e_Key == 9 then
+	DialogEx.SetFocus("IN_DB_NAME_DBCF");
+end
+
+if e_Key == 13 then
+	DialogEx.ClickObject("IMG_SAVE_CONFIG_SERVER");
+end</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>1</DesignCodeLine>
+<DesignCodeCol>38</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Focus</Name>
+<Args/>
+<Script>setDbConfigForm(this, "Dialog");</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Char</Name>
+<Args>number e_Char, table e_Modifiers</Args>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<Text>
+<Body>Address</Body>
+<TextColor>12632256</TextColor>
+<BackgroundColor>16777215</BackgroundColor>
+<FontData>
+<FontName>Nunito</FontName>
+<CharacterSet>0</CharacterSet>
+<Height>-19</Height>
+<Weight>400</Weight>
+<Italic>0</Italic>
+<Underline>0</Underline>
+<StrikeOut>0</StrikeOut>
+<AntiAlias>1</AntiAlias>
+</FontData>
+<Alignment>0</Alignment>
+<RightToLeftReadingOrder>0</RightToLeftReadingOrder>
+</Text>
+<Box>
+<BorderStyle>0</BorderStyle>
+<VerticalScrollbar>1</VerticalScrollbar>
+<HorizontalScrollbar>0</HorizontalScrollbar>
+<Style>0</Style>
+<Mode>0</Mode>
+<Mask/>
+<MaskSymbol> </MaskSymbol>
+<MaskRetMode>0</MaskRetMode>
+<ReadOnly>0</ReadOnly>
+</Box>
 </Object>
 <HGuidelines/>
 <VGuidelines/>
