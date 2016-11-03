@@ -396,3 +396,34 @@ function setUserSearchForm (currentObject)
 		end
 	end
 end
+
+function deleteUserAccount ()
+	local indexSelecteduser = ListBox.GetSelected("LBX_UPDATED_USERS")[1];
+	local dataSelecteduser = ListBox.GetItemData("LBX_UPDATED_USERS", indexSelecteduser);
+
+	local mySQLConnection = dbConnect();
+	if mySQLConnection ~= nil then
+		SQL = "DELETE FROM `it_stock_manager`.`it_users` WHERE ID = '"..dataSelecteduser.."';";
+
+		local userAction = Dialog.Message("Notice", "Delete user '"..updatedUsers.."', Please confirm.", MB_YESNO, MB_ICONINFORMATION, MB_DEFBUTTON1);
+
+		if userAction == IDYES then
+			mySQLCursor, err = mySQLConnection:execute(SQL);
+			if err then
+				-- Insert into lof write function
+				Application.SaveValue("ITSTOCK", "ERROR_MSG", err);
+				PopUp("0");
+				Application.ExitScript();
+			else
+				local info = "User '"..username.."' successfly created.";
+				-- Insert into lof write function
+				Application.SaveValue("ITSTOCK", "INFO_MSG", info);
+				PopUp("1");
+				DialogEx.Close(this);
+			end
+			DialogEx.ClickObject("IMG_CANCEL");
+		else
+			Application.ExitScript();
+		end
+	end
+end

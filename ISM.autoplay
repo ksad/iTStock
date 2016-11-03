@@ -16914,7 +16914,7 @@ end</Script>
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>1</DesignCodeLine>
-<DesignCodeCol>9</DesignCodeCol>
+<DesignCodeCol>39</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -18819,7 +18819,7 @@ Paragraph.SetText("PH_ERROR_MSG", lineJump..errorMsg);</Script>
 <Top>8</Top>
 <Bottom>35</Bottom>
 <Left>138</Left>
-<Right>212</Right>
+<Right>213</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -21822,14 +21822,16 @@ end</Script>
 <Event>
 <Name>On Show</Name>
 <Args/>
-<Script>Image.SetEnabled("IMG_CANCEL", true);
+<Script>require("AutoPlay\\htdocs\\sources\\pg_users");
+
+Image.SetEnabled("IMG_CANCEL", true);
 Image.Load("IMG_CANCEL", "AutoPlay\\Images\\btn_cancel.png");
 
 local mySQLConnection = dbConnect();
 if mySQLConnection ~= nil then
 	local nNodes = DXML.Count("UpdatingUsers", "List/UpdatedUsers", "User");
 	for i=1,nNodes do
-		local updatedUsers = DXML.GetAttribute("UpdatingUsers", "List/UpdatedUsers/User:"..i, "Username");
+		updatedUsers = DXML.GetAttribute("UpdatingUsers", "List/UpdatedUsers/User:"..i, "Username");
 		SQL = "SELECT ID, Lastname, Firstname FROM IT_USERS WHERE Username = '"..updatedUsers.."';";
 		mySQLCursor = mySQLConnection:execute(SQL);
 		row = mySQLCursor:fetch({},"a")
@@ -21874,7 +21876,7 @@ ListBox.SelectItem("LBX_UPDATED_USERS", 1);</Script>
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>1</DesignCodeLine>
-<DesignCodeCol>23</DesignCodeCol>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -22011,8 +22013,8 @@ ListBox.DeleteItem("LBX_UPDATED_USERS", -1);</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>477</Top>
-<Bottom>522</Bottom>
+<Top>517</Top>
+<Bottom>562</Bottom>
 <Left>276</Left>
 <Right>433</Right>
 </Coordinates>
@@ -22029,6 +22031,7 @@ local dataSelecteduser = ListBox.GetItemData("LBX_UPDATED_USERS", indexSelectedu
 local lastName = Input.GetText("IN_LASTNAME_UCF");
 local firstName = Input.GetText("IN_FIRSTNAME_UCF");
 local username = Input.GetText("IN_USERNAME_UCF");
+local email = Input.GetText("IN_EMAIL_UCF");
 local role = ComboBox.GetItemText("CB_ROLE", ComboBox.GetSelected("CB_ROLE"));
 
 local LoadedImage = Image.GetFilename("IMG_TOGGLE_YES_NO");
@@ -22064,6 +22067,11 @@ if username == "" or username == "Username" then
 	Application.SetLastError(0616);
 end
 
+if email == "" or email == "Email" then
+	Image.Load("IMG_USERNAME_UCF", "AutoPlay\\Images\\input_mandatory.png");
+	Application.SetLastError(0616);
+end
+
 if password == "" or password == "Password" then
 	Image.Load("IMG_PASSWORD_UCF", "AutoPlay\\Images\\input_mandatory.png");
 	Application.SetLastError(0616);
@@ -22092,11 +22100,8 @@ end
 
 local mySQLConnection = dbConnect();
 if mySQLConnection ~= nil then
-	SQL = "UPDATE `it_stock_manager`.`it_users` SET `Lastname`='"..lastName.."', `Firstname`='"..firstName.."', `Username`='"..username.."', `Role`='"..role.."', `Sign_Check_List`='"..signature.."', `Active`='"..accountStatus.."' WHERE ID = '"..dataSelecteduser.."';";
-	
-	Debug.ShowWindow(true);
-	Debug.Print(SQL);
-	
+	SQL = "UPDATE `it_stock_manager`.`it_users` SET `Lastname`='"..lastName.."', `Firstname`='"..firstName.."', `Username`='"..username.."', `Email`='"..email.."', `Role`='"..role.."', `Sign_Check_List`='"..signature.."', `Active`='"..accountStatus.."', `Modified`=now(), `Modified_By`='"..CURRENT_USER.."' WHERE ID = '"..dataSelecteduser.."';";
+
 	mySQLCursor, err = mySQLConnection:execute(SQL);
 	if err then
 		-- Insert into lof write function
@@ -22116,8 +22121,8 @@ end</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>86</DesignCodeLine>
-<DesignCodeCol>4</DesignCodeCol>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -22196,8 +22201,8 @@ end</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>393</Top>
-<Bottom>420</Bottom>
+<Top>443</Top>
+<Bottom>470</Bottom>
 <Left>530</Left>
 <Right>587</Right>
 </Coordinates>
@@ -22301,8 +22306,8 @@ end</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>392</Top>
-<Bottom>424</Bottom>
+<Top>442</Top>
+<Bottom>474</Bottom>
 <Left>416</Left>
 <Right>528</Right>
 </Coordinates>
@@ -22391,8 +22396,8 @@ end</Script>
 <MouseClickSndMode>0</MouseClickSndMode>
 <MouseClickSound/>
 <OriginalRect>
-<Top>392</Top>
-<Bottom>424</Bottom>
+<Top>442</Top>
+<Bottom>474</Bottom>
 <Left>416</Left>
 <Right>528</Right>
 </OriginalRect>
@@ -22413,8 +22418,8 @@ end</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>345</Top>
-<Bottom>374</Bottom>
+<Top>395</Top>
+<Bottom>424</Bottom>
 <Left>312</Left>
 <Right>590</Right>
 </Coordinates>
@@ -22484,7 +22489,7 @@ end</Script>
 </Options>
 <Font>
 <FontData>
-<FontName>Segoe UI</FontName>
+<FontName>Nunito</FontName>
 <CharacterSet>0</CharacterSet>
 <Height>-16</Height>
 <Weight>400</Weight>
@@ -23196,7 +23201,7 @@ end</Script>
 <Top>0</Top>
 <Bottom>37</Bottom>
 <Left>281</Left>
-<Right>419</Right>
+<Right>422</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -23260,7 +23265,7 @@ end</Script>
 </Event>
 <Actions/>
 <Text>
-<Body>Modify user</Body>
+<Body>Update user</Body>
 <NormalColor>16777215</NormalColor>
 <HighlightColor>16777215</HighlightColor>
 <MouseDownColor>16777215</MouseDownColor>
@@ -23286,7 +23291,7 @@ end</Script>
 <Top>0</Top>
 <Bottom>37</Bottom>
 <Left>281</Left>
-<Right>419</Right>
+<Right>422</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -23301,14 +23306,14 @@ end</Script>
 <Cursor>0</Cursor>
 <Group>0</Group>
 <MaintainAspectRatio>1</MaintainAspectRatio>
-<Pin>0</Pin>
+<Pin>1</Pin>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>300</Top>
-<Bottom>330</Bottom>
-<Left>600</Left>
-<Right>630</Right>
+<Top>299</Top>
+<Bottom>329</Bottom>
+<Left>597</Left>
+<Right>627</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -23399,10 +23404,10 @@ end</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>75</Top>
-<Bottom>431</Bottom>
-<Left>25</Left>
-<Right>255</Right>
+<Top>74</Top>
+<Bottom>481</Bottom>
+<Left>20</Left>
+<Right>293</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -23439,11 +23444,22 @@ if mySQLConnection ~= nil then
 			lastname = row.Lastname;
 			firstname = row.Firstname;
 			username = row.Username;
+			email = row.Email;
+			modified = row.Modified;
+			modifiedBy = row.Modified_By;
 		
 			Input.SetText("IN_LASTNAME_UCF", lastname);
 			Input.SetText("IN_FIRSTNAME_UCF", firstname);
 			Input.SetText("IN_USERNAME_UCF", username);
-
+			Input.SetText("IN_EMAIL_UCF", email);
+			if modified and modifiedBy then
+				lastModification = modified;
+				lastModificationBy = "("..modifiedBy..")";
+			else
+				lastModification = "--"
+				lastModificationBy = "";
+			end
+			
 			role = row.Role;
 			ComboBox.SetSelected("CB_ROLE", ComboBox.FindItem("CB_ROLE", -1, LB_BYTEXT, role));
 
@@ -23455,7 +23471,7 @@ if mySQLConnection ~= nil then
 				Image.Load("IMG_TOGGLE_YES_NO", "AutoPlay\\Images\\no.png");
 			end
 
-			if row.Active == "Yes" then
+			if row.Active == "1" then
 				status = "Active";
 				Image.Load("IMG_CHECKBOX", "AutoPlay\\Images\\checkbox_on.png");
 			else
@@ -23463,7 +23479,7 @@ if mySQLConnection ~= nil then
 				Image.Load("IMG_CHECKBOX", "AutoPlay\\Images\\checkbox_off.png");
 			end
 
-			Paragraph.SetText("PH_OLD_CONFIG", "***** Old configration : *****\r\n".."Lastname : "..lastname.."\r\n".."Firstname : "..firstname.."\r\n".."Username : "..username.."\r\n".."Role : "..role.."\r\n".."Signature : "..signCheckList.." / ".."Status : "..status.."\r\n");
+			Paragraph.SetText("PH_OLD_CONFIG", "***** Old informations : *****\r\n".."Fullname : "..firstname.." "..lastname.."\r\n".."Username : "..username.."\r\n".."Email : "..email.."\r\n".."Role : "..role.."\r\n".."Signature : "..signCheckList.." / ".."Status : "..status.."\r\nLast modification : "..lastModification.." "..lastModificationBy);
 			row = mySQLCursor:fetch(row,"a");
 		end
 	end
@@ -23538,14 +23554,15 @@ if checkUsername ~= "" then
 		Image.SetEnabled("IMG_UPDATE_USER", true);
 	end
 	Image.SetProperties("IMG_NOTIFY", tblImageProps);
-end</Script>
+end
+</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>22</DesignCodeLine>
-<DesignCodeCol>10</DesignCodeCol>
+<DesignCodeLine>49</DesignCodeLine>
+<DesignCodeCol>338</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -23632,8 +23649,8 @@ end</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>474</Top>
-<Bottom>524</Bottom>
+<Top>512</Top>
+<Bottom>562</Bottom>
 <Left>646</Left>
 <Right>696</Right>
 </Coordinates>
@@ -23726,8 +23743,8 @@ end</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>395</Top>
-<Bottom>415</Bottom>
+<Top>445</Top>
+<Bottom>465</Bottom>
 <Left>314</Left>
 <Right>334</Right>
 </Coordinates>
@@ -23830,8 +23847,8 @@ end</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>392</Top>
-<Bottom>424</Bottom>
+<Top>442</Top>
+<Bottom>474</Bottom>
 <Left>338</Left>
 <Right>401</Right>
 </Coordinates>
@@ -23921,8 +23938,8 @@ end</Script>
 <MouseClickSndMode>0</MouseClickSndMode>
 <MouseClickSound/>
 <OriginalRect>
-<Top>392</Top>
-<Bottom>424</Bottom>
+<Top>442</Top>
+<Bottom>474</Bottom>
 <Left>338</Left>
 <Right>401</Right>
 </OriginalRect>
@@ -23943,8 +23960,8 @@ end</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>477</Top>
-<Bottom>522</Bottom>
+<Top>517</Top>
+<Bottom>562</Bottom>
 <Left>444</Left>
 <Right>601</Right>
 </Coordinates>
@@ -23955,14 +23972,14 @@ end</Script>
 <Event>
 <Name>On Click</Name>
 <Args/>
-<Script/>
+<Script>deleteUserAccount();</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeCol>17</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -24038,9 +24055,9 @@ end</Script>
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>70</Top>
-<Bottom>440</Bottom>
+<Bottom>485</Bottom>
 <Left>17</Left>
-<Right>267</Right>
+<Right>297</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -24131,8 +24148,8 @@ end</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>477</Top>
-<Bottom>522</Bottom>
+<Top>517</Top>
+<Bottom>562</Bottom>
 <Left>106</Left>
 <Right>263</Right>
 </Coordinates>
@@ -24230,7 +24247,7 @@ end</Script>
 <Locked>0</Locked>
 <Enabled>1</Enabled>
 <ToolTip/>
-<Cursor>0</Cursor>
+<Cursor>1</Cursor>
 <Group>0</Group>
 <MaintainAspectRatio>1</MaintainAspectRatio>
 <Pin>0</Pin>
@@ -24249,14 +24266,14 @@ end</Script>
 <Event>
 <Name>On Click</Name>
 <Args/>
-<Script/>
+<Script>DialogEx.Close(this);</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>4079394</DesignCodeLine>
-<DesignCodeCol>2573</DesignCodeCol>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>19</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -24269,8 +24286,8 @@ end</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>4079394</DesignCodeLine>
-<DesignCodeCol>26478</DesignCodeCol>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -24283,8 +24300,8 @@ end</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>690120045</DesignCodeLine>
-<DesignCodeCol>3866683</DesignCodeCol>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -24297,8 +24314,8 @@ end</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>690120045</DesignCodeLine>
-<DesignCodeCol>3866683</DesignCodeCol>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -24331,10 +24348,10 @@ end</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>347</Top>
-<Bottom>372</Bottom>
-<Left>601</Left>
-<Right>626</Right>
+<Top>397</Top>
+<Bottom>422</Bottom>
+<Left>600</Left>
+<Right>625</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -24428,7 +24445,7 @@ end</Script>
 <Top>68</Top>
 <Bottom>185</Bottom>
 <Left>314</Left>
-<Right>611</Right>
+<Right>691</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -24492,17 +24509,17 @@ end</Script>
 </Event>
 <Actions/>
 <Text>
-<Body>***** Old configuration *****</Body>
-<NormalColor>255</NormalColor>
-<HighlightColor>255</HighlightColor>
-<MouseDownColor>255</MouseDownColor>
+<Body>***** Old informations *****</Body>
+<NormalColor>4915392</NormalColor>
+<HighlightColor>4915392</HighlightColor>
+<MouseDownColor>4915392</MouseDownColor>
 <DisabledColor>12632256</DisabledColor>
 <BorderColor>0</BorderColor>
 <BackColor>16777215</BackColor>
 <FontData>
 <FontName>Nunito</FontName>
 <CharacterSet>0</CharacterSet>
-<Height>-13</Height>
+<Height>-12</Height>
 <Weight>700</Weight>
 <Italic>1</Italic>
 <Underline>0</Underline>
@@ -24521,6 +24538,227 @@ end</Script>
 <MouseClickSndMode>0</MouseClickSndMode>
 <MouseClickSound/>
 </Text>
+</Object>
+<Object>
+<Type>3</Type>
+<Name>IMG_EMAIL_UCF</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>0</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>1</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>345</Top>
+<Bottom>385</Bottom>
+<Left>313</Left>
+<Right>593</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>1632895086</DesignCodeLine>
+<DesignCodeCol>27507</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Right-Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>1632918638</DesignCodeLine>
+<DesignCodeCol>27507</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Enter</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>1868979310</DesignCodeLine>
+<DesignCodeCol>7566446</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Leave</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>925761646</DesignCodeLine>
+<DesignCodeCol>122</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<NormalImage>
+<Filename>AutoPlay\Images\input.png</Filename>
+<UseTransColor>0</UseTransColor>
+<TransClr>16777215</TransClr>
+<TransTolerance>10</TransTolerance>
+<Opacity>100</Opacity>
+<HTMode>0</HTMode>
+</NormalImage>
+<MouseOverSndMode>0</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>0</MouseClickSndMode>
+<MouseClickSound/>
+</Object>
+<Object>
+<Type>7</Type>
+<Name>IN_EMAIL_UCF</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>0</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>0</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>351</Top>
+<Bottom>381</Bottom>
+<Left>318</Left>
+<Right>588</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Key</Name>
+<Args>number e_Key, table e_Modifiers</Args>
+<Script>if e_Key == 9 then
+	DialogEx.SetFocus("IN_PASSWORD_UCF");
+end
+
+if e_Key == 13 then
+	--DialogEx.ClickObject("IMG_CREATE_USER");
+end
+
+--[[local mySQLConnection = dbConnect();
+if mySQLConnection ~= nil then
+	local searchByUsername = Input.GetText("IN_USERNAME_UCF");
+
+	if searchByUsername ~= "" then
+		SQL = "SELECT * FROM IT_USERS WHERE Username = '"..searchByUsername.."';";	
+
+		mySQLCursor = mySQLConnection:execute(SQL);
+		row = mySQLCursor:fetch({},"a")
+		
+		tblImageProps = {};
+		tblImageProps.Visible = true;
+		if row then
+			tblImageProps.ImageFile = "AutoPlay\\Images\\error.png";
+			tblImageProps.TooltipText = "User already exist";
+		else
+			tblImageProps.ImageFile = "AutoPlay\\Images\\ok.png";
+			tblImageProps.TooltipText = "Username available";
+		end
+		Image.SetProperties("IMG_NOTIFY", tblImageProps);
+		mySQLCursor:close();
+		mySQLConnection:close();
+	end
+end]]</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>5</DesignCodeLine>
+<DesignCodeCol>3</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Focus</Name>
+<Args/>
+<Script>setUserCreateForm(this);</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>24</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Char</Name>
+<Args>number e_Char, table e_Modifiers</Args>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<Text>
+<Body>Email</Body>
+<TextColor>12632256</TextColor>
+<BackgroundColor>16777215</BackgroundColor>
+<FontData>
+<FontName>Nunito</FontName>
+<CharacterSet>0</CharacterSet>
+<Height>-19</Height>
+<Weight>400</Weight>
+<Italic>0</Italic>
+<Underline>0</Underline>
+<StrikeOut>0</StrikeOut>
+<AntiAlias>1</AntiAlias>
+</FontData>
+<Alignment>0</Alignment>
+<RightToLeftReadingOrder>0</RightToLeftReadingOrder>
+</Text>
+<Box>
+<BorderStyle>0</BorderStyle>
+<VerticalScrollbar>1</VerticalScrollbar>
+<HorizontalScrollbar>0</HorizontalScrollbar>
+<Style>0</Style>
+<Mode>0</Mode>
+<Mask/>
+<MaskSymbol/>
+<MaskRetMode>0</MaskRetMode>
+<ReadOnly>0</ReadOnly>
+</Box>
 </Object>
 <HGuidelines/>
 <VGuidelines/>
