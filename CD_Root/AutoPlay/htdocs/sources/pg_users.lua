@@ -376,10 +376,10 @@ function setUserSearchForm (currentObject)
 			else
 				Input.SetSelection(currentObject, 1, -1);
 			end
-			Image.Load(String.Replace(currentObject, "IN", "IMG", false).."_USF", "AutoPlay\\Images\\input_selected.png");
+			Image.Load(String.Replace(currentObject, "IN", "IMG", false).."_USF", "AutoPlay\\htdocs\\images\\inputs\\input_selected.png");
 		else
 			if objectType == 3 and String.Find(object, "USF", 1, false) ~= -1 then -- USF = User Search Form
-				Image.Load(object, "AutoPlay\\Images\\input.png");
+				Image.Load(object, "AutoPlay\\htdocs\\images\\inputs\\input.png");
 			end
 
 			if objectType == 7 and Input.GetText(object) == "" then

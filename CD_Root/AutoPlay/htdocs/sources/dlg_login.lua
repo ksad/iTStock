@@ -41,7 +41,7 @@ function login ()
 						PopUp("0", "NoLoading");
 						Application.ExitScript();
 					end
-					File.Run("AutoPlay\\Docs\\Loading.exe", "", "", SW_SHOWNORMAL, false);
+					File.Run("AutoPlay\\htdocs\\images\\animations\\Loading.exe", "", "", SW_SHOWNORMAL, false);
 					Application.Sleep(3000);
 					DialogEx.Close(this);
 				else

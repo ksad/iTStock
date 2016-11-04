@@ -186,10 +186,10 @@ function setUserCreateForm (currentObject)
 			else
 				Input.SetSelection(currentObject, 1, -1);
 			end
-			Image.Load(String.Replace(currentObject, "IN", "IMG", false), "AutoPlay\\Images\\input_selected.png");
+			Image.Load(String.Replace(currentObject, "IN", "IMG", false), "AutoPlay\\htdocs\\images\\inputs\\input_selected.png");
 		else
 			if objectType == 3 and String.Find(object, "UCF", 1, false) ~= -1 then -- UCF = User Create Form
-				Image.Load(object, "AutoPlay\\Images\\input.png");
+				Image.Load(object, "AutoPlay\\htdocs\\images\\inputs\\input.png");
 			end
 
 			if objectType == 7 and Input.GetText(object) == "" then
@@ -493,8 +493,8 @@ function resizeList (objectName)
 end</Script>
 <BookMarks count="0">
 </BookMarks>
-<DesignCodeLine>3</DesignCodeLine>
-<DesignCodeCol>16</DesignCodeCol>
+<DesignCodeLine>305</DesignCodeLine>
+<DesignCodeCol>4</DesignCodeCol>
 </Globals>
 <Defaults>
 <StartupPage>_PageFirst</StartupPage>
@@ -701,7 +701,7 @@ DialogEx.Show("LOGIN", true, nil, nil);</Script>
 <TransitionEffect/>
 <TransProps/>
 <NormalImage>
-<Filename>AutoPlay\Images\bg.png</Filename>
+<Filename>AutoPlay\htdocs\images\backgrounds\bg_global.png</Filename>
 </NormalImage>
 </Background>
 <Event>
@@ -1125,7 +1125,7 @@ end
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\nav_h.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\menus\\nav_h.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -1219,7 +1219,7 @@ end
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\bg_left_menu_title.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\menus\\left_menu_title.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -1650,7 +1650,7 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\exit.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\icons\\exit.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -1680,7 +1680,7 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <TransitionEffect/>
 <TransProps/>
 <NormalImage>
-<Filename>AutoPlay\Images\BG.png</Filename>
+<Filename>AutoPlay\htdocs\images\backgrounds\bg_global.png</Filename>
 </NormalImage>
 </Background>
 <Event>
@@ -1923,7 +1923,7 @@ end
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\menu_db.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\menus\\menu_db.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -2017,7 +2017,7 @@ end
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\toggle_down.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\buttons\\toggle_down.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -2111,7 +2111,7 @@ end
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\menu_2.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\menus\\menu_2.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -2205,7 +2205,7 @@ end
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\toggle_down.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\buttons\\toggle_down.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -2299,7 +2299,7 @@ end
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\menu_3.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\menus\\menu_3.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -2393,7 +2393,7 @@ end
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\toggle_down.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\buttons\\toggle_down.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -2683,7 +2683,7 @@ end
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\nav_h.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\menus\\nav_h.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -2777,7 +2777,7 @@ end
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\bg_left_menu_title.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\menus\\left_menu_title.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -3207,7 +3207,7 @@ end
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\exit.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\icons\\exit.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -3237,7 +3237,7 @@ end
 <TransitionEffect/>
 <TransProps/>
 <NormalImage>
-<Filename>AutoPlay\Images\BG.png</Filename>
+<Filename>AutoPlay\htdocs\images\backgrounds\bg_global.png</Filename>
 </NormalImage>
 </Background>
 <Event>
@@ -3268,7 +3268,7 @@ loadDbAccess();</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeLine>5</DesignCodeLine>
 <DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
@@ -3680,7 +3680,7 @@ end
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\nav_h.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\menus\\nav_h.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -3774,7 +3774,7 @@ end
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\bg_left_menu_title.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\menus\\left_menu_title.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -4205,7 +4205,7 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\exit.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\icons\\exit.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -4299,7 +4299,7 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\menu_db_opened.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\menus\\menu_db_opened.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -4393,7 +4393,7 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\toggle_up.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\buttons\\toggle_up.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -4487,7 +4487,7 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\menu_2.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\menus\\menu_2.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -4581,7 +4581,7 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\toggle_down.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\buttons\\toggle_down.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -4675,7 +4675,7 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\menu_3.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\menus\\menu_3.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -4769,7 +4769,7 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\toggle_down.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\buttons\\toggle_down.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -4863,7 +4863,7 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\bg_menu_body.png</Filename>
+<Filename>AutoPlay\htdocs\images\backgrounds\bg_menu_body.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -5181,7 +5181,7 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\server_status.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\icons\\server_status.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -5275,7 +5275,7 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\server.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\icons\\server.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -5481,7 +5481,7 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\check_db_connection.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\icons\\check_db_connection.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -5575,7 +5575,7 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\input.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\inputs\\input.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -5669,7 +5669,7 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\input.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\inputs\\input.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -5763,7 +5763,7 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\input.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\inputs\\input.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -5857,7 +5857,7 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\input.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\inputs\\input.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -5951,7 +5951,7 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\input.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\inputs\\input.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -6019,7 +6019,7 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <Name>On Enter</Name>
 <Args/>
 <Script>if sqlServerStatus == 4 then
-	Image.Load("IMG_SAVE_CONFIG_SERVER", "AutoPlay\\Images\\btn_save_hover.png");
+	Image.Load("IMG_SAVE_CONFIG_SERVER", "AutoPlay\\htdocs\\images\\icons\\btn_save_hover.png");
 end</Script>
 <TreeStates>
 <TreeState>0</TreeState>
@@ -6035,7 +6035,7 @@ end</Script>
 <Name>On Leave</Name>
 <Args/>
 <Script>if sqlServerStatus == 4 then
-	Image.Load("IMG_SAVE_CONFIG_SERVER", "AutoPlay\\Images\\btn_save.png");
+	Image.Load("IMG_SAVE_CONFIG_SERVER", "AutoPlay\\htdocs\\images\\icons\\btn_save.png");
 end</Script>
 <TreeStates>
 <TreeState>0</TreeState>
@@ -6049,7 +6049,7 @@ end</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\btn_save.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\buttons\\btn_save.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -6589,7 +6589,7 @@ end</Script>
 <TransitionEffect/>
 <TransProps/>
 <NormalImage>
-<Filename>AutoPlay\Images\BG.png</Filename>
+<Filename>AutoPlay\htdocs\images\backgrounds\bg_global.png</Filename>
 </NormalImage>
 </Background>
 <Event>
@@ -7036,7 +7036,7 @@ leftMenuJump();</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\nav_h.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\menus\\nav_h.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -7130,7 +7130,7 @@ leftMenuJump();</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\bg_left_menu_title.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\menus\\left_menu_title.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -7560,7 +7560,7 @@ leftMenuJump();</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\exit.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\icons\\exit.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -7747,7 +7747,7 @@ Image.SetVisible("IMG_CLEAR_SEARCH", true);</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\menu_search_user.png</Filename>
+<Filename>AutoPlay\htdocs\images\menus\menu_search_user.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -7843,7 +7843,7 @@ Page.Jump("USERS-SEARCH");</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\toggle_user_advanced_search.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\buttons\\advanced_search.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -7939,7 +7939,7 @@ getUsersList();</Script>
 <Event>
 <Name>On Enter</Name>
 <Args/>
-<Script>Image.Load("IMG_SAVE_MODIFICATION", "AutoPlay\\Images\\btn_update-user_hover.png");</Script>
+<Script>Image.Load("IMG_SAVE_MODIFICATION", "AutoPlay\\htdocs\\images\\icons\\btn_update-user_hover.png");</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
@@ -7953,7 +7953,7 @@ getUsersList();</Script>
 <Event>
 <Name>On Leave</Name>
 <Args/>
-<Script>Image.Load("IMG_SAVE_MODIFICATION", "AutoPlay\\Images\\btn_update-user.png");</Script>
+<Script>Image.Load("IMG_SAVE_MODIFICATION", "AutoPlay\\htdocs\\images\\icons\\btn_update-user.png");</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
@@ -7966,7 +7966,7 @@ getUsersList();</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\btn_update-user.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\buttons\\btn_update-user.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -8060,7 +8060,7 @@ getUsersList();</Script>
 <Event>
 <Name>On Enter</Name>
 <Args/>
-<Script>Image.Load("IMG_CANCEL_UPDATE", "AutoPlay\\Images\\btn_cancel_hover.png");</Script>
+<Script>Image.Load("IMG_CANCEL_UPDATE", "AutoPlay\\htdocs\\images\\icons\\btn_cancel_hover.png");</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
@@ -8074,7 +8074,7 @@ getUsersList();</Script>
 <Event>
 <Name>On Leave</Name>
 <Args/>
-<Script>Image.Load("IMG_CANCEL_UPDATE", "AutoPlay\\Images\\btn_cancel.png");</Script>
+<Script>Image.Load("IMG_CANCEL_UPDATE", "AutoPlay\\htdocs\\images\\icons\\btn_cancel.png");</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
@@ -8087,7 +8087,7 @@ getUsersList();</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\btn_cancel.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\buttons\\btn_cancel.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -8182,7 +8182,7 @@ defaultSearchUser("IN_SEARCH_USER");</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\close.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\icons\\close.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -8318,7 +8318,7 @@ end
 <TransitionEffect/>
 <TransProps/>
 <NormalImage>
-<Filename>AutoPlay\Images\BG.png</Filename>
+<Filename>AutoPlay\htdocs\images\backgrounds\bg_global.png</Filename>
 </NormalImage>
 </Background>
 <Event>
@@ -8767,7 +8767,7 @@ leftMenuJump();</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\nav_h.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\menus\\nav_h.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -8861,7 +8861,7 @@ leftMenuJump();</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\bg_left_menu_title.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\menus\\left_menu_title.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -9291,7 +9291,7 @@ leftMenuJump();</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\exit.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\icons\\exit.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -9385,7 +9385,7 @@ leftMenuJump();</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\bg_menu_body.png</Filename>
+<Filename>AutoPlay\htdocs\images\backgrounds\bg_menu_body.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -9479,7 +9479,7 @@ leftMenuJump();</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\menu_search_user_opened.png</Filename>
+<Filename>AutoPlay\htdocs\images\menus\menu_search_user_opened.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -9573,7 +9573,7 @@ leftMenuJump();</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\toggle_up.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\buttons\\toggle_up.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -9740,11 +9740,11 @@ local ImageStatus = String.SplitPath(LoadedImage);
 ImageStatus = ImageStatus.Filename;
 
 if ImageStatus == "yes" then
-	Image.Load("IMG_TOGGLE_YES_NO", "AutoPlay\\Images\\no.png");
+	Image.Load("IMG_TOGGLE_YES_NO", "AutoPlay\\htdocs\\images\\icons\\no.png");
 end
 
-if ImageStatus == "no" or ImageStatus == "user_toggle_idle" then
-	Image.Load("IMG_TOGGLE_YES_NO", "AutoPlay\\Images\\yes.png");
+if ImageStatus == "no" or ImageStatus == "switch_yes_no_idle" then
+	Image.Load("IMG_TOGGLE_YES_NO", "AutoPlay\\htdocs\\images\\icons\\yes.png");
 end
 
 advancedSearchUsers();</Script>
@@ -9802,7 +9802,7 @@ advancedSearchUsers();</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\user_toggle_idle.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\icons\\switch_yes_no_idle.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -10008,7 +10008,7 @@ advancedSearchUsers();</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\input.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\inputs\\input.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -10204,7 +10204,7 @@ end</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\input.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\inputs\\input.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -10400,7 +10400,7 @@ end</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\input.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\inputs\\input.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -10545,7 +10545,7 @@ end</Script>
 Input.SetText("IN_FIRSTNAME", "Firstname");
 Input.SetText("IN_USERNAME", "Username");
 ComboBox.SetSelected("CB_ROLE", 1);
-Image.Load("IMG_TOGGLE_YES_NO", "AutoPlay\\Images\\user_toggle_idle.png");
+Image.Load("IMG_TOGGLE_YES_NO", "AutoPlay\\htdocs\\images\\icons\\switch_yes_no_idle.png");
 advancedSearchUsers("reset");
 </Script>
 <TreeStates>
@@ -10714,7 +10714,7 @@ advancedSearchUsers("reset");
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\add_user.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\icons\\add_user.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -10758,12 +10758,12 @@ local ImageStatus = String.SplitPath(LoadedImage);
 ImageStatus = ImageStatus.Filename;
 
 if ImageStatus == "checkbox_off" then
-	Image.Load("IMG_CHECKBOX", "AutoPlay\\Images\\checkbox_on.png");
+	Image.Load("IMG_CHECKBOX", "AutoPlay\\htdocs\\images\\icons\\checkbox_on.png");
 	Label.SetText("LB_CHECKBOX", "Active");
 end
 
 if ImageStatus == "checkbox_on" then
-	Image.Load("IMG_CHECKBOX", "AutoPlay\\Images\\checkbox_off.png");
+	Image.Load("IMG_CHECKBOX", "AutoPlay\\htdocs\\images\\icons\\checkbox_off.png");
 	Label.SetText("LB_CHECKBOX", "Disabled");
 end
 
@@ -10822,7 +10822,7 @@ advancedSearchUsers();</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\checkbox_on.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\icons\\checkbox_on.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -11119,7 +11119,7 @@ thisUser = Grid.GetCellText("GD_USERS_LIST", e_Row, 2);</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\input.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\inputs\\input.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -11441,7 +11441,7 @@ getUsersList();</Script>
 <Event>
 <Name>On Enter</Name>
 <Args/>
-<Script>Image.Load("IMG_CANCEL_UPDATE", "AutoPlay\\Images\\btn_cancel_hover.png");</Script>
+<Script>Image.Load("IMG_CANCEL_UPDATE", "AutoPlay\\htdocs\\images\\icons\\btn_cancel_hover.png");</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
@@ -11455,7 +11455,7 @@ getUsersList();</Script>
 <Event>
 <Name>On Leave</Name>
 <Args/>
-<Script>Image.Load("IMG_CANCEL_UPDATE", "AutoPlay\\Images\\btn_cancel.png");</Script>
+<Script>Image.Load("IMG_CANCEL_UPDATE", "AutoPlay\\htdocs\\images\\icons\\btn_cancel.png");</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
@@ -11468,7 +11468,7 @@ getUsersList();</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\btn_cancel.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\buttons\\btn_cancel.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -11583,7 +11583,7 @@ getUsersList();</Script>
 <Event>
 <Name>On Enter</Name>
 <Args/>
-<Script>Image.Load("IMG_SAVE_MODIFICATION", "AutoPlay\\Images\\btn_update-user_hover.png");</Script>
+<Script>Image.Load("IMG_SAVE_MODIFICATION", "AutoPlay\\htdocs\\images\\icons\\btn_update-user_hover.png");</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
@@ -11597,7 +11597,7 @@ getUsersList();</Script>
 <Event>
 <Name>On Leave</Name>
 <Args/>
-<Script>Image.Load("IMG_SAVE_MODIFICATION", "AutoPlay\\Images\\btn_update-user.png");</Script>
+<Script>Image.Load("IMG_SAVE_MODIFICATION", "AutoPlay\\htdocs\\images\\icons\\btn_update-user.png");</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
@@ -11610,7 +11610,7 @@ getUsersList();</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\btn_update-user.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\buttons\\btn_update-user.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -11640,7 +11640,7 @@ getUsersList();</Script>
 <TransitionEffect/>
 <TransProps/>
 <NormalImage>
-<Filename>AutoPlay\Images\BG.png</Filename>
+<Filename>AutoPlay\htdocs\images\backgrounds\bg_global.png</Filename>
 </NormalImage>
 </Background>
 <Event>
@@ -11883,7 +11883,7 @@ end
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\menu_2.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\menus\\menu_2.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -11977,7 +11977,7 @@ end
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\bg_menu_body.png</Filename>
+<Filename>AutoPlay\htdocs\images\backgrounds\bg_menu_body.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -12252,7 +12252,7 @@ end
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\nav_h.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\menus\\nav_h.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -12346,7 +12346,7 @@ end
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\bg_left_menu_title.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\menus\\left_menu_title.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -12777,7 +12777,7 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\exit.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\icons\\exit.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -12871,7 +12871,7 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\menu_db.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\menus\\menu_db.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -12965,7 +12965,7 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\toggle_down.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\buttons\\toggle_down.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -13059,7 +13059,7 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\menu_3.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\menus\\menu_3.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -13153,7 +13153,7 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\toggle_down.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\buttons\\toggle_down.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -13247,7 +13247,7 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\toggle_up.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\buttons\\toggle_up.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -13277,7 +13277,7 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <TransitionEffect/>
 <TransProps/>
 <NormalImage>
-<Filename>AutoPlay\Images\BG.png</Filename>
+<Filename>AutoPlay\htdocs\images\backgrounds\bg_global.png</Filename>
 </NormalImage>
 </Background>
 <Event>
@@ -13520,7 +13520,7 @@ end
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\menu_3.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\menus\\menu_3.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -13614,7 +13614,7 @@ end
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\toggle_up.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\buttons\\toggle_up.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -13708,7 +13708,7 @@ end
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\bg_menu_body.png</Filename>
+<Filename>AutoPlay\htdocs\images\backgrounds\bg_menu_body.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -13983,7 +13983,7 @@ end
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\nav_h.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\menus\\nav_h.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -14077,7 +14077,7 @@ end
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\bg_left_menu_title.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\menus\\left_menu_title.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -14508,7 +14508,7 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\exit.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\icons\\exit.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -14602,7 +14602,7 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\menu_db.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\menus\\menu_db.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -14696,7 +14696,7 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\toggle_down.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\buttons\\toggle_down.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -14790,7 +14790,7 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\menu_2.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\menus\\menu_2.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -14884,7 +14884,7 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\toggle_down.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\buttons\\toggle_down.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -14900,7 +14900,7 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <VGuidelines/>
 </Page>
 <SugDialogs>
-<PageDialog width="500" height="300" dialog_title="IT Stock Manager" dialog_style="3" movable="0" use_custom_icon="0" custom_icon="AutoPlay\Icons\server.ico" always_on_top="0" resizable="0" min_width="480" min_height="300" fit_custom_mask_to_window="1" custom_mask="AutoPlay\Images\630_1.png">
+<PageDialog width="500" height="300" dialog_title="IT Stock Manager" dialog_style="3" movable="0" use_custom_icon="0" custom_icon="AutoPlay\Icons\server.ico" always_on_top="0" resizable="0" min_width="480" min_height="300" fit_custom_mask_to_window="1" custom_mask="AutoPlay\htdocs\images\backgrounds\bg_login.png">
 <Page>
 <Name>LOGIN</Name>
 <InheritObs/>
@@ -14916,7 +14916,7 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <TransitionEffect/>
 <TransProps/>
 <NormalImage>
-<Filename>AutoPlay\Images\bg_dialog_login.png</Filename>
+<Filename>AutoPlay\htdocs\images\backgrounds\bg_dialog_login.png</Filename>
 </NormalImage>
 </Background>
 <Event>
@@ -15109,8 +15109,8 @@ end</Script>
 <Event>
 <Name>On Focus</Name>
 <Args/>
-<Script>Image.Load("IMG_USERNAME", "AutoPlay\\Images\\input_username_selected.png");
-Image.Load("IMG_PASSWORD", "AutoPlay\\Images\\input_password.png");
+<Script>Image.Load("IMG_USERNAME", "AutoPlay\\htdocs\\images\\inputs\\input_username_selected.png");
+Image.Load("IMG_PASSWORD", "AutoPlay\\htdocs\\images\\inputs\\input_password.png");
 Input.SetSelection("IN_USERNAME", 1, -1);</Script>
 <TreeStates>
 <TreeState>0</TreeState>
@@ -15213,8 +15213,8 @@ end</Script>
 <Event>
 <Name>On Focus</Name>
 <Args/>
-<Script>Image.Load("IMG_PASSWORD", "AutoPlay\\Images\\input_password_selected.png");
-Image.Load("IMG_USERNAME", "AutoPlay\\Images\\input_username.png");
+<Script>Image.Load("IMG_PASSWORD", "AutoPlay\\htdocs\\images\\inputs\\input_password_selected.png");
+Image.Load("IMG_USERNAME", "AutoPlay\\htdocs\\images\\inputs\\input_username.png");
 Input.SetSelection("IN_PASSWORD", 1, -1);</Script>
 <TreeStates>
 <TreeState>0</TreeState>
@@ -15288,7 +15288,7 @@ Input.SetSelection("IN_PASSWORD", 1, -1);</Script>
 <Top>221</Top>
 <Bottom>247</Bottom>
 <Left>273</Left>
-<Right>415</Right>
+<Right>414</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -15399,9 +15399,9 @@ Input.SetSelection("IN_PASSWORD", 1, -1);</Script>
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>74</Top>
-<Bottom>109</Bottom>
+<Bottom>111</Bottom>
 <Left>134</Left>
-<Right>346</Right>
+<Right>366</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -15500,7 +15500,7 @@ Input.SetSelection("IN_PASSWORD", 1, -1);</Script>
 <Name>IMG_USERNAME</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>1</Locked>
+<Locked>0</Locked>
 <Enabled>1</Enabled>
 <ToolTip/>
 <Cursor>0</Cursor>
@@ -15577,7 +15577,7 @@ Input.SetSelection("IN_PASSWORD", 1, -1);</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\input_username.png</Filename>
+<Filename>AutoPlay\htdocs\images\inputs\input_username.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -15594,7 +15594,7 @@ Input.SetSelection("IN_PASSWORD", 1, -1);</Script>
 <Name>IMG_PASSWORD</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>1</Locked>
+<Locked>0</Locked>
 <Enabled>1</Enabled>
 <ToolTip/>
 <Cursor>0</Cursor>
@@ -15671,7 +15671,7 @@ Input.SetSelection("IN_PASSWORD", 1, -1);</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\input_password.png</Filename>
+<Filename>AutoPlay\htdocs\images\inputs\input_password.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -15739,7 +15739,7 @@ login ();</Script>
 <Event>
 <Name>On Enter</Name>
 <Args/>
-<Script>Image.Load("IMG_LOGIN", "AutoPlay\\Images\\btn_login_hover.png");
+<Script>Image.Load("IMG_LOGIN", "AutoPlay\\htdocs\\images\\icons\\btn_login_hover.png");
 </Script>
 <TreeStates>
 <TreeState>0</TreeState>
@@ -15754,7 +15754,7 @@ login ();</Script>
 <Event>
 <Name>On Leave</Name>
 <Args/>
-<Script>Image.Load("IMG_LOGIN", "AutoPlay\\Images\\btn_login.png");</Script>
+<Script>Image.Load("IMG_LOGIN", "AutoPlay\\htdocs\\images\\icons\\btn_login.png");</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
@@ -15767,7 +15767,7 @@ login ();</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\btn_login.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\buttons\\btn_login.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -15799,7 +15799,7 @@ login ();</Script>
 <TransitionEffect/>
 <TransProps/>
 <NormalImage>
-<Filename>AutoPlay\Images\bg_db-config.png</Filename>
+<Filename>AutoPlay\htdocs\images\backgrounds\bg_db-config.png</Filename>
 </NormalImage>
 </Background>
 <Event>
@@ -15834,7 +15834,7 @@ if sqlServerStatus ~= 4 then
 	Input.SetEnabled("IN_DB_PASSWORD_DBCF", false);
 	Input.SetEnabled("IN_DB_ADDRESS_DBCF", false);
 	Input.SetEnabled("IN_DB_PORT_DBCF", false);
-	Image.Load("IMG_SAVE_CONFIG_SERVER", "AutoPlay\\Images\\btn_save_disabled.png");
+	Image.Load("IMG_SAVE_CONFIG_SERVER", "AutoPlay\\htdocs\\images\\icons\\btn_save_disabled.png");
 	Image.SetEnabled("IMG_SAVE_CONFIG_SERVER", false);
 	
 	Dialog.Message("MySQL Service Error", "There is a problem with your MySQL Service.", MB_OK, MB_ICONSTOP, MB_DEFBUTTON1);
@@ -15864,12 +15864,12 @@ Input.SetText("IN_DB_PASSWORD_DBCF", "Password");
 Input.SetText("IN_DB_PORT_DBCF", "Port");
 Input.SetText("IN_DB_ADDRESS_DBCF", "Address");
 
-Image.Load("IMG_DB_NAME_DBCF", "AutoPlay\\Images\\input.png");
-Image.Load("IMG_DB_USERNAME_DBCF", "AutoPlay\\Images\\input.png");
-Image.Load("IMG_DB_PASSWORD_DBCF", "AutoPlay\\Images\\input.png");
-Image.Load("IMG_DB_PORT_DBCF", "AutoPlay\\Images\\input.png");
-Image.Load("IMG_DB_ADDRESS_DBCF", "AutoPlay\\Images\\input.png");
-Image.Load("IMG_SAVE_CONFIG_SERVER", "AutoPlay\\Images\\btn_save.png");
+Image.Load("IMG_DB_NAME_DBCF", "AutoPlay\\htdocs\\images\\inputs\\input.png");
+Image.Load("IMG_DB_USERNAME_DBCF", "AutoPlay\\htdocs\\images\\inputs\\input.png");
+Image.Load("IMG_DB_PASSWORD_DBCF", "AutoPlay\\htdocs\\images\\inputs\\input.png");
+Image.Load("IMG_DB_PORT_DBCF", "AutoPlay\\htdocs\\images\\inputs\\input.png");
+Image.Load("IMG_DB_ADDRESS_DBCF", "AutoPlay\\htdocs\\images\\inputs\\input.png");
+Image.Load("IMG_SAVE_CONFIG_SERVER", "AutoPlay\\htdocs\\images\\icons\\btn_save.png");
 Image.SetEnabled("IMG_DB_NAME_DBCF", true);
 Image.SetEnabled("IMG_DB_USERNAME_DBCF", true);
 Image.SetEnabled("IMG_DB_PASSWORD_DBCF", true);
@@ -16090,9 +16090,9 @@ Image.SetEnabled("IMG_SAVE_CONFIG_SERVER", true);</Script>
 <MouseClickSound/>
 <OriginalRect>
 <Top>9</Top>
-<Bottom>41</Bottom>
+<Bottom>40</Bottom>
 <Left>41</Left>
-<Right>258</Right>
+<Right>253</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -16202,9 +16202,9 @@ Image.SetEnabled("IMG_SAVE_CONFIG_SERVER", true);</Script>
 <MouseClickSound/>
 <OriginalRect>
 <Top>9</Top>
-<Bottom>41</Bottom>
+<Bottom>40</Bottom>
 <Left>282</Left>
-<Right>466</Right>
+<Right>458</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -16290,7 +16290,7 @@ Image.SetEnabled("IMG_SAVE_CONFIG_SERVER", true);</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\server_status.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\icons\\server_status.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -16384,7 +16384,7 @@ Image.SetEnabled("IMG_SAVE_CONFIG_SERVER", true);</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\input.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\inputs\\input.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -16478,7 +16478,7 @@ Image.SetEnabled("IMG_SAVE_CONFIG_SERVER", true);</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\input.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\inputs\\input.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -16572,7 +16572,7 @@ Image.SetEnabled("IMG_SAVE_CONFIG_SERVER", true);</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\input.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\inputs\\input.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -16666,7 +16666,7 @@ Image.SetEnabled("IMG_SAVE_CONFIG_SERVER", true);</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\input.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\inputs\\input.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -16760,7 +16760,7 @@ Image.SetEnabled("IMG_SAVE_CONFIG_SERVER", true);</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\input.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\inputs\\input.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -17262,7 +17262,7 @@ end</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\server.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\icons\\server.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -17330,7 +17330,7 @@ end</Script>
 <Name>On Enter</Name>
 <Args/>
 <Script>if sqlServerStatus == 4 then
-	Image.Load("IMG_SAVE_CONFIG_SERVER", "AutoPlay\\Images\\btn_save_hover.png");
+	Image.Load("IMG_SAVE_CONFIG_SERVER", "AutoPlay\\htdocs\\images\\icons\\btn_save_hover.png");
 end</Script>
 <TreeStates>
 <TreeState>0</TreeState>
@@ -17346,7 +17346,7 @@ end</Script>
 <Name>On Leave</Name>
 <Args/>
 <Script>if sqlServerStatus == 4 then
-	Image.Load("IMG_SAVE_CONFIG_SERVER", "AutoPlay\\Images\\btn_save.png");
+	Image.Load("IMG_SAVE_CONFIG_SERVER", "AutoPlay\\htdocs\\images\\icons\\btn_save.png");
 end</Script>
 <TreeStates>
 <TreeState>0</TreeState>
@@ -17360,7 +17360,7 @@ end</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\btn_save.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\buttons\\btn_save.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -17566,7 +17566,7 @@ end</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\check_db_connection.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\icons\\check_db_connection.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -17901,7 +17901,7 @@ end</Script>
 </Event>
 <Actions/>
 <WEB_BROWSER>
-<InitialPage>AutoPlay\Docs\Loading.html</InitialPage>
+<InitialPage>AutoPlay\htdocs\images\html\Loading.html</InitialPage>
 <AltMode>1</AltMode>
 <AltImage/>
 <ShowBorder>0</ShowBorder>
@@ -18402,7 +18402,7 @@ Paragraph.SetText("PH_INFO_MSG", infoMsg);</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\ok.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\icons\\ok.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -18909,7 +18909,7 @@ Paragraph.SetText("PH_ERROR_MSG", lineJump..errorMsg);</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\error.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\icons\\error.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -19053,7 +19053,7 @@ Paragraph.SetText("PH_ERROR_MSG", lineJump..errorMsg);</Script>
 <TransitionEffect/>
 <TransProps/>
 <NormalImage>
-<Filename>AutoPlay\Images\bg_db-config.png</Filename>
+<Filename>AutoPlay\htdocs\images\backgrounds\bg_db-config.png</Filename>
 </NormalImage>
 </Background>
 <Event>
@@ -19112,7 +19112,7 @@ Input.SetText("IN_LASTNAME_UCF", "Username");
 Input.SetText("IN_USERNAME_UCF", "Lastname");
 Input.SetText("IN_PASSWORD_UCF", "Password");
 ComboBox.SetSelected("CB_ROLE", 1);
-Image.Load("IMG_TOGGLE_YES_NO", "AutoPlay\\Images\\user_toggle_idle.png");</Script>
+Image.Load("IMG_TOGGLE_YES_NO", "AutoPlay\\htdocs\\images\\icons\\switch_yes_no_idle.png");</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
@@ -19424,27 +19424,27 @@ local ImageStatus = String.SplitPath(LoadedImage);
 local checkListSign = ImageStatus.Filename;
 
 if lastName == "" or lastName == "Lastname" then
-	Image.Load("IMG_LASTNAME_UCF", "AutoPlay\\Images\\input_mandatory.png");
+	Image.Load("IMG_LASTNAME_UCF", "AutoPlay\\htdocs\\images\\inputs\\input_mandatory.png");
 	Application.SetLastError(0616);
 end
 
 if firstName == "" or firstName == "Firstname" then
-	Image.Load("IMG_FIRSTNAME_UCF", "AutoPlay\\Images\\input_mandatory.png");
+	Image.Load("IMG_FIRSTNAME_UCF", "AutoPlay\\htdocs\\images\\inputs\\input_mandatory.png");
 	Application.SetLastError(0616);
 end
 
 if username == "" or username == "Username" then
-	Image.Load("IMG_USERNAME_UCF", "AutoPlay\\Images\\input_mandatory.png");
+	Image.Load("IMG_USERNAME_UCF", "AutoPlay\\htdocs\\images\\inputs\\input_mandatory.png");
 	Application.SetLastError(0616);
 end
 
 if email == "" or email == "Email" then
-	Image.Load("IMG_EMAIL_UCF", "AutoPlay\\Images\\input_mandatory.png");
+	Image.Load("IMG_EMAIL_UCF", "AutoPlay\\htdocs\\images\\inputs\\input_mandatory.png");
 	Application.SetLastError(0616);
 end
 
 if password == "" or password == "Password" then
-	Image.Load("IMG_PASSWORD_UCF", "AutoPlay\\Images\\input_mandatory.png");
+	Image.Load("IMG_PASSWORD_UCF", "AutoPlay\\htdocs\\images\\inputs\\input_mandatory.png");
 	Application.SetLastError(0616);
 end
 
@@ -19454,7 +19454,7 @@ if role == "Role" then
 	Application.SetLastError(0616);
 end
 
-if checkListSign == "user_toggle_idle" then
+if checkListSign == "switch_yes_no_idle" then
 	tblLabelProps = {};
 	tblLabelProps.ColorNormal = Math.HexColorToNumber("FF0000");
 	tblLabelProps.ColorDown = Math.HexColorToNumber("FF0000");
@@ -19515,7 +19515,7 @@ end</Script>
 <Name>On Enter</Name>
 <Args/>
 <Script>if sqlServerStatus == 4 then
-	Image.Load("IMG_CREATE_USER", "AutoPlay\\Images\\btn_save_hover.png");
+	Image.Load("IMG_CREATE_USER", "AutoPlay\\htdocs\\images\\icons\\btn_save_hover.png");
 end</Script>
 <TreeStates>
 <TreeState>0</TreeState>
@@ -19531,7 +19531,7 @@ end</Script>
 <Name>On Leave</Name>
 <Args/>
 <Script>if sqlServerStatus == 4 then
-	Image.Load("IMG_CREATE_USER", "AutoPlay\\Images\\btn_save.png");
+	Image.Load("IMG_CREATE_USER", "AutoPlay\\htdocs\\images\\icons\\btn_save.png");
 end</Script>
 <TreeStates>
 <TreeState>0</TreeState>
@@ -19545,7 +19545,7 @@ end</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\btn_create.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\buttons\\btn_create.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -19590,11 +19590,11 @@ local ImageStatus = String.SplitPath(LoadedImage);
 ImageStatus = ImageStatus.Filename;
 
 if ImageStatus == "yes" then
-	Image.Load("IMG_TOGGLE_YES_NO", "AutoPlay\\Images\\no.png");
+	Image.Load("IMG_TOGGLE_YES_NO", "AutoPlay\\htdocs\\images\\icons\\no.png");
 end
 
-if ImageStatus == "no" or ImageStatus == "user_toggle_idle" then
-	Image.Load("IMG_TOGGLE_YES_NO", "AutoPlay\\Images\\yes.png");
+if ImageStatus == "no" or ImageStatus == "switch_yes_no_idle" then
+	Image.Load("IMG_TOGGLE_YES_NO", "AutoPlay\\htdocs\\images\\icons\\yes.png");
 end</Script>
 <TreeStates>
 <TreeState>0</TreeState>
@@ -19650,7 +19650,7 @@ end</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\user_toggle_idle.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\icons\\switch_yes_no_idle.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -19835,7 +19835,7 @@ end</Script>
 <Event>
 <Name>On Focus</Name>
 <Args/>
-<Script>Image.Load("IMG_PASSWORD_UCF", "AutoPlay\\Images\\input.png");
+<Script>Image.Load("IMG_PASSWORD_UCF", "AutoPlay\\htdocs\\images\\inputs\\input.png");
 if password == "Password" or password == "" then
 	Input.SetText("IN_PASSWORD_UCF", "Password");
 end</Script>
@@ -19959,7 +19959,7 @@ end</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\input.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\inputs\\input.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -20155,7 +20155,7 @@ end</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\input.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\inputs\\input.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -20215,10 +20215,10 @@ if mySQLConnection ~= nil then
 		tblImageProps = {};
 		tblImageProps.Visible = true;
 		if row then
-			tblImageProps.ImageFile = "AutoPlay\\Images\\error.png";
+			tblImageProps.ImageFile = "AutoPlay\\htdocs\\images\\icons\\error.png";
 			tblImageProps.TooltipText = "User already exist";
 		else
-			tblImageProps.ImageFile = "AutoPlay\\Images\\ok.png";
+			tblImageProps.ImageFile = "AutoPlay\\htdocs\\images\\icons\\ok.png";
 			tblImageProps.TooltipText = "Username available";
 		end
 		Image.SetProperties("IMG_NOTIFY", tblImageProps);
@@ -20376,7 +20376,7 @@ end</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\input.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\inputs\\input.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -20441,10 +20441,10 @@ if mySQLConnection ~= nil then
 		tblImageProps = {};
 		tblImageProps.Visible = true;
 		if row then
-			tblImageProps.ImageFile = "AutoPlay\\Images\\error.png";
+			tblImageProps.ImageFile = "AutoPlay\\htdocs\\images\\icons\\error.png";
 			tblImageProps.TooltipText = "User already exist";
 		else
-			tblImageProps.ImageFile = "AutoPlay\\Images\\ok.png";
+			tblImageProps.ImageFile = "AutoPlay\\htdocs\\images\\icons\\ok.png";
 			tblImageProps.TooltipText = "Username available";
 		end
 		Image.SetProperties("IMG_NOTIFY", tblImageProps);
@@ -20602,7 +20602,7 @@ end</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\input.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\inputs\\input.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -20667,10 +20667,10 @@ if mySQLConnection ~= nil then
 		tblImageProps = {};
 		tblImageProps.Visible = true;
 		if row then
-			tblImageProps.ImageFile = "AutoPlay\\Images\\error.png";
+			tblImageProps.ImageFile = "AutoPlay\\htdocs\\images\\icons\\error.png";
 			tblImageProps.TooltipText = "User already exist";
 		else
-			tblImageProps.ImageFile = "AutoPlay\\Images\\ok.png";
+			tblImageProps.ImageFile = "AutoPlay\\htdocs\\images\\icons\\ok.png";
 			tblImageProps.TooltipText = "Username available";
 		end
 		Image.SetProperties("IMG_NOTIFY", tblImageProps);
@@ -20940,7 +20940,7 @@ end</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\notification.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\icons\\notification.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -21146,7 +21146,7 @@ end</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\input.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\inputs\\input.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -21206,10 +21206,10 @@ if mySQLConnection ~= nil then
 		tblImageProps = {};
 		tblImageProps.Visible = true;
 		if row then
-			tblImageProps.ImageFile = "AutoPlay\\Images\\error.png";
+			tblImageProps.ImageFile = "AutoPlay\\htdocs\\images\\icons\\error.png";
 			tblImageProps.TooltipText = "User already exist";
 		else
-			tblImageProps.ImageFile = "AutoPlay\\Images\\ok.png";
+			tblImageProps.ImageFile = "AutoPlay\\htdocs\\images\\icons\\ok.png";
 			tblImageProps.TooltipText = "Username available";
 		end
 		Image.SetProperties("IMG_NOTIFY", tblImageProps);
@@ -21317,12 +21317,12 @@ local ImageStatus = String.SplitPath(LoadedImage);
 ImageStatus = ImageStatus.Filename;
 
 if ImageStatus == "checkbox_off" then
-	Image.Load("IMG_CHECKBOX", "AutoPlay\\Images\\checkbox_on.png");
+	Image.Load("IMG_CHECKBOX", "AutoPlay\\htdocs\\images\\icons\\checkbox_on.png");
 	Label.SetText("LB_CHECKBOX", "Active");
 end
 
 if ImageStatus == "checkbox_on" then
-	Image.Load("IMG_CHECKBOX", "AutoPlay\\Images\\checkbox_off.png");
+	Image.Load("IMG_CHECKBOX", "AutoPlay\\htdocs\\images\\icons\\checkbox_off.png");
 	Label.SetText("LB_CHECKBOX", "Disabled");
 end</Script>
 <TreeStates>
@@ -21379,7 +21379,7 @@ end</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\checkbox_on.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\icons\\checkbox_on.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -21560,7 +21560,7 @@ end</Script>
 <Name>On Enter</Name>
 <Args/>
 <Script>if Image.IsEnabled("IMG_CANCEL") then
-	Image.Load(this, "AutoPlay\\Images\\btn_cancel_hover.png");
+	Image.Load(this, "AutoPlay\\htdocs\\images\\icons\\btn_cancel_hover.png");
 end</Script>
 <TreeStates>
 <TreeState>0</TreeState>
@@ -21576,7 +21576,7 @@ end</Script>
 <Name>On Leave</Name>
 <Args/>
 <Script>if Image.IsEnabled("IMG_CANCEL") then
-	Image.Load(this, "AutoPlay\\Images\\btn_cancel.png");
+	Image.Load(this, "AutoPlay\\htdocs\\images\\icons\\btn_cancel.png");
 end</Script>
 <TreeStates>
 <TreeState>0</TreeState>
@@ -21590,7 +21590,7 @@ end</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\btn_cancel.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\buttons\\btn_cancel.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -21684,7 +21684,7 @@ end</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\close.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\icons\\close.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -21716,7 +21716,7 @@ end</Script>
 <TransitionEffect/>
 <TransProps/>
 <NormalImage>
-<Filename>AutoPlay\Images\bg_db-config.png</Filename>
+<Filename>AutoPlay\htdocs\images\backgrounds\bg_db-config.png</Filename>
 </NormalImage>
 </Background>
 <Event>
@@ -21739,7 +21739,7 @@ end</Script>
 <Script>require("AutoPlay\\htdocs\\sources\\pg_users");
 
 Image.SetEnabled("IMG_CANCEL", true);
-Image.Load("IMG_CANCEL", "AutoPlay\\Images\\btn_cancel.png");
+Image.Load("IMG_CANCEL", "AutoPlay\\htdocs\\images\\icons\\btn_cancel.png");
 
 local mySQLConnection = dbConnect();
 if mySQLConnection ~= nil then
@@ -21802,7 +21802,7 @@ Input.SetText("IN_LASTNAME_UCF", "Username");
 Input.SetText("IN_USERNAME_UCF", "Lastname");
 Input.SetText("IN_PASSWORD_UCF", "Password");
 ComboBox.SetSelected("CB_ROLE", 1);
-Image.Load("IMG_TOGGLE_YES_NO", "AutoPlay\\Images\\user_toggle_idle.png");
+Image.Load("IMG_TOGGLE_YES_NO", "AutoPlay\\htdocs\\images\\icons\\switch_yes_no_idle.png");
 ListBox.DeleteItem("LBX_UPDATED_USERS", -1);</Script>
 <TreeStates>
 <TreeState>0</TreeState>
@@ -21967,27 +21967,27 @@ else
 end
 
 if lastName == "" or lastName == "Lastname" then
-	Image.Load("IMG_LASTNAME_UCF", "AutoPlay\\Images\\input_mandatory.png");
+	Image.Load("IMG_LASTNAME_UCF", "AutoPlay\\htdocs\\images\\inputs\\input_mandatory.png");
 	Application.SetLastError(0616);
 end
 
 if firstName == "" or firstName == "Firstname" then
-	Image.Load("IMG_FIRSTNAME_UCF", "AutoPlay\\Images\\input_mandatory.png");
+	Image.Load("IMG_FIRSTNAME_UCF", "AutoPlay\\htdocs\\images\\inputs\\input_mandatory.png");
 	Application.SetLastError(0616);
 end
 
 if username == "" or username == "Username" then
-	Image.Load("IMG_USERNAME_UCF", "AutoPlay\\Images\\input_mandatory.png");
+	Image.Load("IMG_USERNAME_UCF", "AutoPlay\\htdocs\\images\\inputs\\input_mandatory.png");
 	Application.SetLastError(0616);
 end
 
 if email == "" or email == "Email" then
-	Image.Load("IMG_USERNAME_UCF", "AutoPlay\\Images\\input_mandatory.png");
+	Image.Load("IMG_USERNAME_UCF", "AutoPlay\\htdocs\\images\\inputs\\input_mandatory.png");
 	Application.SetLastError(0616);
 end
 
 if password == "" or password == "Password" then
-	Image.Load("IMG_PASSWORD_UCF", "AutoPlay\\Images\\input_mandatory.png");
+	Image.Load("IMG_PASSWORD_UCF", "AutoPlay\\htdocs\\images\\inputs\\input_mandatory.png");
 	Application.SetLastError(0616);
 end
 
@@ -21997,7 +21997,7 @@ if role == "Role" then
 	Application.SetLastError(0616);
 end
 
-if checkListSign == "user_toggle_idle" then
+if checkListSign == "switch_yes_no_idle" then
 	tblLabelProps = {};
 	tblLabelProps.ColorNormal = Math.HexColorToNumber("FF0000");
 	tblLabelProps.ColorDown = Math.HexColorToNumber("FF0000");
@@ -22058,7 +22058,7 @@ end</Script>
 <Name>On Enter</Name>
 <Args/>
 <Script>if Image.IsEnabled("IMG_UPDATE_USER") then
-	Image.Load("IMG_UPDATE_USER", "AutoPlay\\Images\\btn_update-user_hover.png");
+	Image.Load("IMG_UPDATE_USER", "AutoPlay\\htdocs\\images\\icons\\btn_update-user_hover.png");
 end</Script>
 <TreeStates>
 <TreeState>0</TreeState>
@@ -22074,7 +22074,7 @@ end</Script>
 <Name>On Leave</Name>
 <Args/>
 <Script>if Image.IsEnabled("IMG_UPDATE_USER") then
-	Image.Load("IMG_UPDATE_USER", "AutoPlay\\Images\\btn_update-user.png");
+	Image.Load("IMG_UPDATE_USER", "AutoPlay\\htdocs\\images\\icons\\btn_update-user.png");
 end</Script>
 <TreeStates>
 <TreeState>0</TreeState>
@@ -22088,7 +22088,7 @@ end</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\btn_update-user.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\buttons\\btn_update-user.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -22133,11 +22133,11 @@ local ImageStatus = String.SplitPath(LoadedImage);
 ImageStatus = ImageStatus.Filename;
 
 if ImageStatus == "yes" then
-	Image.Load("IMG_TOGGLE_YES_NO", "AutoPlay\\Images\\no.png");
+	Image.Load("IMG_TOGGLE_YES_NO", "AutoPlay\\htdocs\\images\\icons\\no.png");
 end
 
-if ImageStatus == "no" or ImageStatus == "user_toggle_idle" then
-	Image.Load("IMG_TOGGLE_YES_NO", "AutoPlay\\Images\\yes.png");
+if ImageStatus == "no" or ImageStatus == "switch_yes_no_idle" then
+	Image.Load("IMG_TOGGLE_YES_NO", "AutoPlay\\htdocs\\images\\icons\\yes.png");
 end</Script>
 <TreeStates>
 <TreeState>0</TreeState>
@@ -22193,7 +22193,7 @@ end</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\user_toggle_idle.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\icons\\switch_yes_no_idle.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -22378,7 +22378,7 @@ end</Script>
 <Event>
 <Name>On Focus</Name>
 <Args/>
-<Script>Image.Load("IMG_PASSWORD_UCF", "AutoPlay\\Images\\input.png");
+<Script>Image.Load("IMG_PASSWORD_UCF", "AutoPlay\\htdocs\\images\\inputs\\input.png");
 if password == "Password" or password == "" then
 	Input.SetText("IN_PASSWORD_UCF", "Password");
 end</Script>
@@ -22502,7 +22502,7 @@ end</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\input.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\inputs\\input.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -22562,14 +22562,14 @@ if mySQLConnection ~= nil then
 		tblImageProps = {};
 		tblImageProps.Visible = true;
 		if row and row.Username ~= username then
-			tblImageProps.ImageFile = "AutoPlay\\Images\\error.png";
+			tblImageProps.ImageFile = "AutoPlay\\htdocs\\images\\icons\\error.png";
 			tblImageProps.TooltipText = "User already exist";
-			Image.Load("IMG_UPDATE_USER", "AutoPlay\\Images\\btn_update-user_disabled.png");
+			Image.Load("IMG_UPDATE_USER", "AutoPlay\\htdocs\\images\\icons\\btn_update-user_disabled.png");
 			Image.SetEnabled("IMG_UPDATE_USER", false);
 		else
-			tblImageProps.ImageFile = "AutoPlay\\Images\\ok.png";
+			tblImageProps.ImageFile = "AutoPlay\\htdocs\\images\\icons\\ok.png";
 			tblImageProps.TooltipText = "Username available";
-			Image.Load("IMG_UPDATE_USER", "AutoPlay\\Images\\btn_update-user.png");
+			Image.Load("IMG_UPDATE_USER", "AutoPlay\\htdocs\\images\\icons\\btn_update-user.png");
 			Image.SetEnabled("IMG_UPDATE_USER", true);
 		end
 		Image.SetProperties("IMG_NOTIFY", tblImageProps);
@@ -22583,7 +22583,7 @@ end</Script>
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>28</DesignCodeLine>
-<DesignCodeCol>74</DesignCodeCol>
+<DesignCodeCol>3</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -22727,7 +22727,7 @@ end</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\input.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\inputs\\input.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -22792,10 +22792,10 @@ if mySQLConnection ~= nil then
 		tblImageProps = {};
 		tblImageProps.Visible = true;
 		if row then
-			tblImageProps.ImageFile = "AutoPlay\\Images\\error.png";
+			tblImageProps.ImageFile = "AutoPlay\\htdocs\\images\\icons\\error.png";
 			tblImageProps.TooltipText = "User already exist";
 		else
-			tblImageProps.ImageFile = "AutoPlay\\Images\\ok.png";
+			tblImageProps.ImageFile = "AutoPlay\\htdocs\\images\\icons\\ok.png";
 			tblImageProps.TooltipText = "Username available";
 		end
 		Image.SetProperties("IMG_NOTIFY", tblImageProps);
@@ -22953,7 +22953,7 @@ end</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\input.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\inputs\\input.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -23018,10 +23018,10 @@ if mySQLConnection ~= nil then
 		tblImageProps = {};
 		tblImageProps.Visible = true;
 		if row then
-			tblImageProps.ImageFile = "AutoPlay\\Images\\error.png";
+			tblImageProps.ImageFile = "AutoPlay\\htdocs\\images\\icons\\error.png";
 			tblImageProps.TooltipText = "User already exist";
 		else
-			tblImageProps.ImageFile = "AutoPlay\\Images\\ok.png";
+			tblImageProps.ImageFile = "AutoPlay\\htdocs\\images\\icons\\ok.png";
 			tblImageProps.TooltipText = "Username available";
 		end
 		Image.SetProperties("IMG_NOTIFY", tblImageProps);
@@ -23034,8 +23034,8 @@ end</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>13</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeLine>29</DesignCodeLine>
+<DesignCodeCol>30</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -23291,7 +23291,7 @@ end</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\notification.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\icons\\notification.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -23379,18 +23379,18 @@ if mySQLConnection ~= nil then
 
 			if row.Sign_Check_List == "Yes" then
 				signCheckList ="Yes";
-				Image.Load("IMG_TOGGLE_YES_NO", "AutoPlay\\Images\\yes.png");
+				Image.Load("IMG_TOGGLE_YES_NO", "AutoPlay\\htdocs\\images\\icons\\yes.png");
 			else
 				signCheckList ="No";
-				Image.Load("IMG_TOGGLE_YES_NO", "AutoPlay\\Images\\no.png");
+				Image.Load("IMG_TOGGLE_YES_NO", "AutoPlay\\htdocs\\images\\icons\\no.png");
 			end
 
 			if row.Active == "1" then
 				status = "Active";
-				Image.Load("IMG_CHECKBOX", "AutoPlay\\Images\\checkbox_on.png");
+				Image.Load("IMG_CHECKBOX", "AutoPlay\\htdocs\\images\\icons\\checkbox_on.png");
 			else
 				status = "Disabled";
-				Image.Load("IMG_CHECKBOX", "AutoPlay\\Images\\checkbox_off.png");
+				Image.Load("IMG_CHECKBOX", "AutoPlay\\htdocs\\images\\icons\\checkbox_off.png");
 			end
 
 			Paragraph.SetText("PH_OLD_CONFIG", "***** Old informations : *****\r\n".."Fullname : "..firstname.." "..lastname.."\r\n".."Username : "..username.."\r\n".."Email : "..email.."\r\n".."Role : "..role.."\r\n".."Signature : "..signCheckList.." / ".."Status : "..status.."\r\nLast modification : "..lastModification.." "..lastModificationBy);
@@ -23430,17 +23430,17 @@ for i=1,nNodes do
 
 			if fieldToFill == "Sign check list" then
 				if textToFill == "Yes" then
-					Image.Load("IMG_TOGGLE_YES_NO", "AutoPlay\\Images\\yes.png");
+					Image.Load("IMG_TOGGLE_YES_NO", "AutoPlay\\htdocs\\images\\icons\\yes.png");
 				else
-					Image.Load("IMG_TOGGLE_YES_NO", "AutoPlay\\Images\\no.png");
+					Image.Load("IMG_TOGGLE_YES_NO", "AutoPlay\\htdocs\\images\\icons\\no.png");
 				end
 			end
 
 			if fieldToFill == "Status" then
 				if textToFill == "Active" then
-					Image.Load("IMG_CHECKBOX", "AutoPlay\\Images\\checkbox_on.png");
+					Image.Load("IMG_CHECKBOX", "AutoPlay\\htdocs\\images\\icons\\checkbox_on.png");
 				else
-					Image.Load("IMG_CHECKBOX", "AutoPlay\\Images\\checkbox_off.png");
+					Image.Load("IMG_CHECKBOX", "AutoPlay\\htdocs\\images\\icons\\checkbox_off.png");
 				end
 			end
 		end			
@@ -23457,14 +23457,14 @@ if checkUsername ~= "" then
 	tblImageProps = {};
 	tblImageProps.Visible = true;
 	if row and row.Username ~= username then
-		tblImageProps.ImageFile = "AutoPlay\\Images\\error.png";
+		tblImageProps.ImageFile = "AutoPlay\\htdocs\\images\\icons\\error.png";
 		tblImageProps.TooltipText = "User already exist";
-		Image.Load("IMG_UPDATE_USER", "AutoPlay\\Images\\btn_update-user_disabled.png");
+		Image.Load("IMG_UPDATE_USER", "AutoPlay\\htdocs\\images\\icons\\btn_update-user_disabled.png");
 		Image.SetEnabled("IMG_UPDATE_USER", false);
 	else
-		tblImageProps.ImageFile = "AutoPlay\\Images\\ok.png";
+		tblImageProps.ImageFile = "AutoPlay\\htdocs\\images\\icons\\ok.png";
 		tblImageProps.TooltipText = "Username available";
-		Image.Load("IMG_UPDATE_USER", "AutoPlay\\Images\\btn_update-user.png");
+		Image.Load("IMG_UPDATE_USER", "AutoPlay\\htdocs\\images\\icons\\btn_update-user.png");
 		Image.SetEnabled("IMG_UPDATE_USER", true);
 	end
 	Image.SetProperties("IMG_NOTIFY", tblImageProps);
@@ -23630,7 +23630,7 @@ end
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\showRoles.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\icons\\showRoles.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -23674,11 +23674,11 @@ local ImageStatus = String.SplitPath(LoadedImage);
 ImageStatus = ImageStatus.Filename;
 
 if ImageStatus == "checkbox_off" then
-	Image.Load("IMG_CHECKBOX", "AutoPlay\\Images\\checkbox_on.png");
+	Image.Load("IMG_CHECKBOX", "AutoPlay\\htdocs\\images\\icons\\checkbox_on.png");
 end
 
 if ImageStatus == "checkbox_on" then
-	Image.Load("IMG_CHECKBOX", "AutoPlay\\Images\\checkbox_off.png");
+	Image.Load("IMG_CHECKBOX", "AutoPlay\\htdocs\\images\\icons\\checkbox_off.png");
 end</Script>
 <TreeStates>
 <TreeState>0</TreeState>
@@ -23734,7 +23734,7 @@ end</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\checkbox_on.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\icons\\checkbox_on.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -23914,7 +23914,7 @@ end</Script>
 <Event>
 <Name>On Enter</Name>
 <Args/>
-<Script>Image.Load("IMG_DELETE_USER", "AutoPlay\\Images\\btn_delete_hover.png");</Script>
+<Script>Image.Load("IMG_DELETE_USER", "AutoPlay\\htdocs\\images\\icons\\btn_delete_hover.png");</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
@@ -23928,7 +23928,7 @@ end</Script>
 <Event>
 <Name>On Leave</Name>
 <Args/>
-<Script>Image.Load("IMG_DELETE_USER", "AutoPlay\\Images\\btn_delete.png");</Script>
+<Script>Image.Load("IMG_DELETE_USER", "AutoPlay\\htdocs\\images\\icons\\btn_delete.png");</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
@@ -23941,7 +23941,7 @@ end</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\btn_delete.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\buttons\\btn_delete.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -24035,7 +24035,7 @@ end</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\bg_listBox.png</Filename>
+<Filename>AutoPlay\htdocs\images\backgrounds\bg_listBox.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -24111,7 +24111,7 @@ end</Script>
 <Name>On Enter</Name>
 <Args/>
 <Script>if Image.IsEnabled("IMG_CANCEL") then
-	Image.Load(this, "AutoPlay\\Images\\btn_cancel_hover.png");
+	Image.Load(this, "AutoPlay\\htdocs\\images\\icons\\btn_cancel_hover.png");
 end</Script>
 <TreeStates>
 <TreeState>0</TreeState>
@@ -24127,7 +24127,7 @@ end</Script>
 <Name>On Leave</Name>
 <Args/>
 <Script>if Image.IsEnabled("IMG_CANCEL") then
-	Image.Load(this, "AutoPlay\\Images\\btn_cancel.png");
+	Image.Load(this, "AutoPlay\\htdocs\\images\\icons\\btn_cancel.png");
 end</Script>
 <TreeStates>
 <TreeState>0</TreeState>
@@ -24141,7 +24141,7 @@ end</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\btn_cancel.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\buttons\\btn_cancel.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -24235,7 +24235,7 @@ end</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\close.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\icons\\close.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -24329,7 +24329,7 @@ end</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\role.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\icons\\role.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -24535,7 +24535,7 @@ end</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\Images\input.png</Filename>
+<Filename>AutoPlay\\htdocs\\images\\inputs\\input.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -24595,10 +24595,10 @@ if mySQLConnection ~= nil then
 		tblImageProps = {};
 		tblImageProps.Visible = true;
 		if row then
-			tblImageProps.ImageFile = "AutoPlay\\Images\\error.png";
+			tblImageProps.ImageFile = "AutoPlay\\htdocs\\images\\icons\\error.png";
 			tblImageProps.TooltipText = "User already exist";
 		else
-			tblImageProps.ImageFile = "AutoPlay\\Images\\ok.png";
+			tblImageProps.ImageFile = "AutoPlay\\htdocs\\images\\icons\\ok.png";
 			tblImageProps.TooltipText = "Username available";
 		end
 		Image.SetProperties("IMG_NOTIFY", tblImageProps);

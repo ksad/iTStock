@@ -4,13 +4,13 @@ function checkSQLServerStatus()
 	Label.SetVisible("LB_SERVER_STATUS", true);
 	if checkSQLServer == 4 then
 		Label.SetText("LB_SERVER_STATUS", "Server is running");
-		Image.Load("IMG_SERVER_STATUS", "AutoPlay\\Images\\server_ok.png");
+		Image.Load("IMG_SERVER_STATUS", "AutoPlay\\htdocs\\images\\icons\\server_ok.png");
 	elseif checkSQLServer == 0 then
 		Label.SetText("LB_SERVER_STATUS", "Server not found");
-		Image.Load("IMG_SERVER_STATUS", "AutoPlay\\Images\\server_ko.png");
+		Image.Load("IMG_SERVER_STATUS", "AutoPlay\\htdocs\\images\\icons\\server_ko.png");
 	elseif checkSQLServer == 1 then
 		Label.SetText("LB_SERVER_STATUS", "Server stopped");
-		Image.Load("IMG_SERVER_STATUS", "AutoPlay\\Images\\server_ko.png");
+		Image.Load("IMG_SERVER_STATUS", "AutoPlay\\htdocs\\images\\icons\\server_ko.png");
 	end
 	
 	return checkSQLServer;
@@ -48,10 +48,10 @@ function setDbConfigForm (currentObject, mode)
 			else
 				Input.SetSelection(currentObject, 1, -1);
 			end
-			Image.Load(String.Replace(currentObject, "IN", "IMG", false), "AutoPlay\\Images\\input_selected.png");
+			Image.Load(String.Replace(currentObject, "IN", "IMG", false), "AutoPlay\\htdocs\\images\\inputs\\input_selected.png");
 		else
 			if objectType == 3 and String.Find(object, "DBCF", 1, false) ~= -1 then
-				Image.Load(object, "AutoPlay\\Images\\input.png");
+				Image.Load(object, "AutoPlay\\htdocs\\images\\inputs\\input.png");
 			end
 
 			if objectType == 7 and Input.GetText(object) == "" then
@@ -82,33 +82,33 @@ function saveDatabaseConfiguration ()
 	local port = Input.GetText("IN_DB_PORT_DBCF");
 
 	if databaseName == "" or databaseName == "Database" then
-		Image.Load("IMG_DB_NAME_DBCF", "AutoPlay\\Images\\input_mandatory.png");
+		Image.Load("IMG_DB_NAME_DBCF", "AutoPlay\\htdocs\\images\\inputs\\input_mandatory.png");
 		Application.SetLastError(0616);
 	end
 
 	if userName == "" or userName == "Username" then
-		Image.Load("IMG_DB_USERNAME_DBCF", "AutoPlay\\Images\\input_mandatory.png");
+		Image.Load("IMG_DB_USERNAME_DBCF", "AutoPlay\\htdocs\\images\\inputs\\input_mandatory.png");
 		Application.SetLastError(0616);
 	end
 
 	if password == "" or password == "Password" then
-		Image.Load("IMG_DB_PASSWORD_DBCF", "AutoPlay\\Images\\input_mandatory.png");
+		Image.Load("IMG_DB_PASSWORD_DBCF", "AutoPlay\\htdocs\\images\\inputs\\input_mandatory.png");
 		Application.SetLastError(0616);
 	end
 
 	if serverAddress == "" or serverAddress == "Address" then
-		Image.Load("IMG_DB_ADDRESS_DBCF", "AutoPlay\\Images\\input_mandatory.png");
+		Image.Load("IMG_DB_ADDRESS_DBCF", "AutoPlay\\htdocs\\images\\inputs\\input_mandatory.png");
 		Application.SetLastError(0616);
 	end
 
 	if port == "" or port == "Port" then
-		Image.Load("IMG_DB_PORT_DBCF", "AutoPlay\\Images\\input_mandatory.png");
+		Image.Load("IMG_DB_PORT_DBCF", "AutoPlay\\htdocs\\images\\inputs\\input_mandatory.png");
 		Application.SetLastError(0616);
 	else
 		local portIsValid = String.ToNumber(port);
 		if portIsValid == 0 then
 			Dialog.Message("Error", "Invalid port number.", MB_OK, MB_ICONSTOP, MB_DEFBUTTON1);
-			Image.Load("IMG_DB_PORT_DBCF", "AutoPlay\\Images\\input_mandatory.png");
+			Image.Load("IMG_DB_PORT_DBCF", "AutoPlay\\htdocs\\images\\inputs\\input_mandatory.png");
 			Application.ExitScript();
 		end
 	end
