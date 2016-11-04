@@ -167,17 +167,17 @@
 			<perPosX>46.559297218155</perPosX>
 			<perPosY>30.989583333333</perPosY>
 		</LB_STATUS>
-		<IMG_SAVE_MODIFICATION Width = "120" Height = "34" PosX = "658" PosY = "169">
-			<perWidth>8.7847730600293</perWidth>
-			<perHeight>4.4270833333333</perHeight>
-			<perPosX>48.169838945827</perPosX>
-			<perPosY>22.005208333333</perPosY>
-		</IMG_SAVE_MODIFICATION>
 		<IMG_CANCEL_UPDATE Width = "120" Height = "34" PosX = "788" PosY = "170">
 			<perWidth>8.7847730600293</perWidth>
 			<perHeight>4.4270833333333</perHeight>
 			<perPosX>57.686676427526</perPosX>
 			<perPosY>22.135416666667</perPosY>
 		</IMG_CANCEL_UPDATE>
+		<IMG_SAVE_MODIFICATION Width = "120" Height = "34" PosX = "658" PosY = "170">
+			<perWidth>8.7847730600293</perWidth>
+			<perHeight>4.4270833333333</perHeight>
+			<perPosX>48.169838945827</perPosX>
+			<perPosY>22.135416666667</perPosY>
+		</IMG_SAVE_MODIFICATION>
 	</PAGE>
 </ROOT>

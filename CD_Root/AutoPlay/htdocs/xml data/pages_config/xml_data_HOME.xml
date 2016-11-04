@@ -42,5 +42,11 @@
 			<perPosX>96.705710102489</perPosX>
 			<perPosY>7.8125</perPosY>
 		</IMG_LOGOUT>
+		<Label1 Width = "79" Height = "27" PosX = "298" PosY = "219">
+			<perWidth>5.7833089311859</perWidth>
+			<perHeight>3.515625</perHeight>
+			<perPosX>21.815519765739</perPosX>
+			<perPosY>28.515625</perPosY>
+		</Label1>
 	</PAGE>
 </ROOT>

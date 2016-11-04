@@ -241,7 +241,7 @@ function setObjectsSizeAndPositions (pageName)
 	PAGEWIDTH = Page.GetSize().Width;
 	PAGEHEIGHT = Page.GetSize().Height;
 	
-	XML.Load("AutoPlay\\Docs\\XML\\xml_data_"..pageName..".xml");
+	XML.Load("AutoPlay\\htdocs\\xml data\\pages_config\\xml_data_"..pageName..".xml");
 	
 	error = Application.GetLastError();
 	if (error ~= XML.OK) then
@@ -445,7 +445,7 @@ function saveXmlData()
 	xml = xml..'\t&lt;/PAGE&gt;\r\n';
 	xml = xml..'&lt;/ROOT&gt;';
 
-	TextFile.WriteFromString("AutoPlay\\Docs\\XML\\xml_data_"..Application.GetCurrentPage()..".xml", xml, false);
+	TextFile.WriteFromString("AutoPlay\\htdocs\\xml data\\pages_config\\xml_data_"..Application.GetCurrentPage()..".xml", xml, false);
 
 end
 
@@ -493,8 +493,8 @@ function resizeList (objectName)
 end</Script>
 <BookMarks count="0">
 </BookMarks>
-<DesignCodeLine>31</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeLine>3</DesignCodeLine>
+<DesignCodeCol>16</DesignCodeCol>
 </Globals>
 <Defaults>
 <StartupPage>_PageFirst</StartupPage>
@@ -1359,9 +1359,9 @@ end
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>55</Top>
-<Bottom>83</Bottom>
+<Bottom>82</Bottom>
 <Left>235</Left>
-<Right>306</Right>
+<Right>304</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -1450,9 +1450,9 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <MouseClickSound/>
 <OriginalRect>
 <Top>55</Top>
-<Bottom>83</Bottom>
+<Bottom>82</Bottom>
 <Left>235</Left>
-<Right>306</Right>
+<Right>304</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -1472,9 +1472,9 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>76</Top>
-<Bottom>104</Bottom>
+<Bottom>103</Bottom>
 <Left>235</Left>
-<Right>348</Right>
+<Right>342</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -1562,9 +1562,9 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <MouseClickSound/>
 <OriginalRect>
 <Top>76</Top>
-<Bottom>104</Bottom>
+<Bottom>103</Bottom>
 <Left>235</Left>
-<Right>348</Right>
+<Right>342</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -16000,9 +16000,9 @@ Image.SetEnabled("IMG_SAVE_CONFIG_SERVER", true);</Script>
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>9</Top>
-<Bottom>41</Bottom>
+<Bottom>40</Bottom>
 <Left>41</Left>
-<Right>258</Right>
+<Right>253</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -16112,9 +16112,9 @@ Image.SetEnabled("IMG_SAVE_CONFIG_SERVER", true);</Script>
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>9</Top>
-<Bottom>41</Bottom>
+<Bottom>40</Bottom>
 <Left>282</Left>
-<Right>466</Right>
+<Right>458</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
