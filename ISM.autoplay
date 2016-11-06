@@ -72,33 +72,22 @@ PAGE_LIMIT_RATIO = 2;
 function dbConnect ()
 	require("AutoPlay\\htdocs\\sources\\pg_database");
 	if File.DoesExist("AutoPlay\\htdocs\\database\\db_access.enc") then
-		Crypto.BlowfishDecrypt("AutoPlay\\htdocs\\database\\db_access.enc", "AutoPlay\\htdocs\\database\\~tmp_db_access.txt", "securestockitwiththispassword");
-		local db_access = TextFile.ReadToTable("AutoPlay\\htdocs\\database\\~tmp_db_access.txt");
-		File.Delete("AutoPlay\\htdocs\\database\\~tmp_db_access.txt", false, false, false, nil);
+		local serverStatus = checkSQLServerStatus();
 
-		dbName = String.TrimLeft(db_access[1], "[DB_NAME]=");
-		dbUser = String.TrimLeft(db_access[2], "[USER]=");
-		dbPassword = String.TrimLeft(db_access[3], "[PASSWORD]=");
-		dbAddress = String.TrimLeft(db_access[4], "[ADDRESS]=");
-		dbPort = String.TrimLeft(db_access[5], "[PORT]=");
+		if String.Left(serverStatus , 3) ~= "[4]" then
+			errorMsg = String.Mid(serverStatus, 4, -1);
+			local userAction = Dialog.Message("Notice", errorMsg.."\r\n".."Would you like to change your configurattion ?", MB_YESNO, MB_ICONINFORMATION, MB_DEFBUTTON1);
+			if userAction == IDYES then
+				local userAction = DialogEx.Show("DB_CONFIG", true, nil, nil);
+				if userAction == 2 then
+					Application.ExitScript();
+				end
+			else
+				Application.ExitScript();
+			end
+		end
 	else
-		dbName = "";
-		dbUser = "";
-		dbPassword = "";
-		dbAddress = "";
-		dbPort = 0;
-	end
-	
-	local serverStatus = checkSQLServerStatus();
-	if serverStatus ~= 4 then
-		result = Dialog.Message("Error", "SQL server down, Please check your configuration!", MB_OK, MB_ICONINFORMATION, MB_DEFBUTTON1);
-		Application.ExitScript();
-	end
-	
-	MySQLConnection, err = MySQL:connect(dbName, dbUser, dbPassword, dbAddress, dbPort);
-	if err then
-		-- If there is an error connecting to the database, display a dialog box with the error
-		Dialog.TimedMessage("Error coonection", err.."\r\nData base is not configured properly. Please check your database configuration ...", 5000, MB_ICONSTOP);
+		Dialog.TimedMessage("Error coonection", "Your Database is not configured properly. Please check your configuration ...", 5000, MB_ICONSTOP);
 		local userAction = DialogEx.Show("DB_CONFIG", true, nil, nil);
 		if userAction == 2 then
 			Application.ExitScript();
@@ -490,11 +479,13 @@ function resizeList (objectName)
 
 	Grid.SetListMode(objectName, true);
 	Grid.SetSingleRowSelection(objectName, true);
-end</Script>
+end
+
+</Script>
 <BookMarks count="0">
 </BookMarks>
-<DesignCodeLine>305</DesignCodeLine>
-<DesignCodeCol>4</DesignCodeCol>
+<DesignCodeLine>1</DesignCodeLine>
+<DesignCodeCol>26</DesignCodeCol>
 </Globals>
 <Defaults>
 <StartupPage>_PageFirst</StartupPage>
@@ -511,7 +502,10 @@ end</Script>
 <CurrentGrounp>4</CurrentGrounp>
 </Group>
 <ActionPlugins>
+<Plugin>CommandLine\CommandLine.lmd</Plugin>
 <Plugin>DXML\DXML.lmd</Plugin>
+<Plugin>HTTP\HTTP.lmd</Plugin>
+<Plugin>Language\Language.lmd</Plugin>
 </ActionPlugins>
 <TemplateInfo>
 <Name>Blank Project</Name>
@@ -3261,15 +3255,14 @@ end
 
 loadPageHeader();
 xmlDataPagesLoad(this);
-checkSQLServerStatus();
 loadDbAccess();</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>5</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeLine>4</DesignCodeLine>
+<DesignCodeCol>15</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -6619,7 +6612,7 @@ getUsersList();</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeLine>4</DesignCodeLine>
 <DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
@@ -15399,9 +15392,9 @@ Input.SetSelection("IN_PASSWORD", 1, -1);</Script>
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>74</Top>
-<Bottom>111</Bottom>
+<Bottom>109</Bottom>
 <Left>134</Left>
-<Right>366</Right>
+<Right>346</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -15489,9 +15482,9 @@ Input.SetSelection("IN_PASSWORD", 1, -1);</Script>
 <MouseClickSound/>
 <OriginalRect>
 <Top>74</Top>
-<Bottom>111</Bottom>
+<Bottom>109</Bottom>
 <Left>134</Left>
-<Right>366</Right>
+<Right>346</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -15819,34 +15812,14 @@ login ();</Script>
 <Event>
 <Name>On Show</Name>
 <Args/>
-<Script>require("AutoPlay\\htdocs\\sources\\pg_database");
-
-sqlServerStatus = checkSQLServerStatus();
-
-if sqlServerStatus ~= 4 then
-	Image.SetEnabled("IMG_DB_NAME_DBCF", false);
-	Image.SetEnabled("IMG_DB_USERNAME_DBCF", false);
-	Image.SetEnabled("IMG_DB_PASSWORD_DBCF", false);
-	Image.SetEnabled("IMG_DB_ADDRESS_DBCF", false);
-	Image.SetEnabled("IMG_DB_PORT_DBCF", false);
-	Input.SetEnabled("IN_DB_NAME_DBCF", false);
-	Input.SetEnabled("IN_DB_USERNAME_DBCF", false);
-	Input.SetEnabled("IN_DB_PASSWORD_DBCF", false);
-	Input.SetEnabled("IN_DB_ADDRESS_DBCF", false);
-	Input.SetEnabled("IN_DB_PORT_DBCF", false);
-	Image.Load("IMG_SAVE_CONFIG_SERVER", "AutoPlay\\htdocs\\images\\icons\\btn_save_disabled.png");
-	Image.SetEnabled("IMG_SAVE_CONFIG_SERVER", false);
-	
-	Dialog.Message("MySQL Service Error", "There is a problem with your MySQL Service.", MB_OK, MB_ICONSTOP, MB_DEFBUTTON1);
-	Application.ExitScript();
-end</Script>
+<Script>require("AutoPlay\\htdocs\\sources\\pg_database");</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>1</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>50</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -15881,8 +15854,8 @@ Image.SetEnabled("IMG_SAVE_CONFIG_SERVER", true);</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeLine>22</DesignCodeLine>
+<DesignCodeCol>49</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -15986,118 +15959,6 @@ Image.SetEnabled("IMG_SAVE_CONFIG_SERVER", true);</Script>
 </Event>
 <Object>
 <Type>1</Type>
-<Name>LB_SQLSERVER_TITLE</Name>
-<VisibleAtDesignTime>1</VisibleAtDesignTime>
-<VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>0</Locked>
-<Enabled>1</Enabled>
-<ToolTip/>
-<Cursor>0</Cursor>
-<Group>0</Group>
-<MaintainAspectRatio>1</MaintainAspectRatio>
-<Pin>0</Pin>
-<TabIndex>-1</TabIndex>
-<AutoResize>0</AutoResize>
-<Coordinates>
-<Top>9</Top>
-<Bottom>40</Bottom>
-<Left>41</Left>
-<Right>253</Right>
-</Coordinates>
-<Ratios>
-<WidthRatio>-1.000000</WidthRatio>
-<HeightRatio>-1.000000</HeightRatio>
-</Ratios>
-<Event>
-<Name>On Click</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Right-Click</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>17747</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Enter</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>59</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Leave</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>1080578048</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Actions/>
-<Text>
-<Body>MySQL Server Status :</Body>
-<NormalColor>16777215</NormalColor>
-<HighlightColor>16777215</HighlightColor>
-<MouseDownColor>16777215</MouseDownColor>
-<DisabledColor>16777215</DisabledColor>
-<FontData>
-<FontName>Nunito</FontName>
-<CharacterSet>0</CharacterSet>
-<Height>-19</Height>
-<Weight>400</Weight>
-<Italic>0</Italic>
-<Underline>0</Underline>
-<StrikeOut>0</StrikeOut>
-<AntiAlias>1</AntiAlias>
-</FontData>
-<Alignment>0</Alignment>
-<Orientation>0</Orientation>
-<AutoSize>1</AutoSize>
-<MouseOverSndMode>0</MouseOverSndMode>
-<MouseOverSound/>
-<MouseClickSndMode>0</MouseClickSndMode>
-<MouseClickSound/>
-<OriginalRect>
-<Top>9</Top>
-<Bottom>40</Bottom>
-<Left>41</Left>
-<Right>253</Right>
-</OriginalRect>
-</Text>
-</Object>
-<Object>
-<Type>1</Type>
 <Name>LB_SERVER_STATUS</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>0</VisibleAtRunTime>
@@ -16111,10 +15972,10 @@ Image.SetEnabled("IMG_SAVE_CONFIG_SERVER", true);</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>9</Top>
-<Bottom>40</Bottom>
-<Left>282</Left>
-<Right>458</Right>
+<Top>8</Top>
+<Bottom>39</Bottom>
+<Left>62</Left>
+<Right>238</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -16188,7 +16049,7 @@ Image.SetEnabled("IMG_SAVE_CONFIG_SERVER", true);</Script>
 <CharacterSet>0</CharacterSet>
 <Height>-19</Height>
 <Weight>400</Weight>
-<Italic>0</Italic>
+<Italic>1</Italic>
 <Underline>0</Underline>
 <StrikeOut>0</StrikeOut>
 <AntiAlias>1</AntiAlias>
@@ -16201,10 +16062,10 @@ Image.SetEnabled("IMG_SAVE_CONFIG_SERVER", true);</Script>
 <MouseClickSndMode>0</MouseClickSndMode>
 <MouseClickSound/>
 <OriginalRect>
-<Top>9</Top>
-<Bottom>40</Bottom>
-<Left>282</Left>
-<Right>458</Right>
+<Top>8</Top>
+<Bottom>39</Bottom>
+<Left>62</Left>
+<Right>238</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -16225,8 +16086,8 @@ Image.SetEnabled("IMG_SAVE_CONFIG_SERVER", true);</Script>
 <Coordinates>
 <Top>13</Top>
 <Bottom>29</Bottom>
-<Left>256</Left>
-<Right>272</Right>
+<Left>38</Left>
+<Right>54</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -16317,10 +16178,10 @@ Image.SetEnabled("IMG_SAVE_CONFIG_SERVER", true);</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>55</Top>
-<Bottom>95</Bottom>
-<Left>91</Left>
-<Right>371</Right>
+<Top>63</Top>
+<Bottom>103</Bottom>
+<Left>100</Left>
+<Right>380</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -16411,10 +16272,10 @@ Image.SetEnabled("IMG_SAVE_CONFIG_SERVER", true);</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>104</Top>
-<Bottom>144</Bottom>
-<Left>91</Left>
-<Right>371</Right>
+<Top>112</Top>
+<Bottom>152</Bottom>
+<Left>100</Left>
+<Right>380</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -16505,10 +16366,10 @@ Image.SetEnabled("IMG_SAVE_CONFIG_SERVER", true);</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>155</Top>
-<Bottom>195</Bottom>
-<Left>91</Left>
-<Right>371</Right>
+<Top>163</Top>
+<Bottom>203</Bottom>
+<Left>100</Left>
+<Right>380</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -16599,10 +16460,10 @@ Image.SetEnabled("IMG_SAVE_CONFIG_SERVER", true);</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>204</Top>
-<Bottom>244</Bottom>
-<Left>91</Left>
-<Right>371</Right>
+<Top>212</Top>
+<Bottom>252</Bottom>
+<Left>100</Left>
+<Right>380</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -16693,10 +16554,10 @@ Image.SetEnabled("IMG_SAVE_CONFIG_SERVER", true);</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>254</Top>
-<Bottom>294</Bottom>
-<Left>91</Left>
-<Right>371</Right>
+<Top>262</Top>
+<Bottom>302</Bottom>
+<Left>100</Left>
+<Right>380</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -16787,10 +16648,10 @@ Image.SetEnabled("IMG_SAVE_CONFIG_SERVER", true);</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>210</Top>
-<Bottom>240</Bottom>
-<Left>96</Left>
-<Right>366</Right>
+<Top>218</Top>
+<Bottom>248</Bottom>
+<Left>105</Left>
+<Right>375</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -16889,10 +16750,10 @@ end</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>160</Top>
-<Bottom>190</Bottom>
-<Left>96</Left>
-<Right>366</Right>
+<Top>168</Top>
+<Bottom>198</Bottom>
+<Left>105</Left>
+<Right>375</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -16991,10 +16852,10 @@ end</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>110</Top>
-<Bottom>140</Bottom>
-<Left>96</Left>
-<Right>366</Right>
+<Top>118</Top>
+<Bottom>148</Bottom>
+<Left>105</Left>
+<Right>375</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -17093,10 +16954,10 @@ end</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>60</Top>
-<Bottom>90</Bottom>
-<Left>96</Left>
-<Right>366</Right>
+<Top>68</Top>
+<Bottom>98</Bottom>
+<Left>105</Left>
+<Right>375</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -17184,7 +17045,7 @@ end</Script>
 <Type>3</Type>
 <Name>IMG_SERVER</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
-<VisibleAtRunTime>1</VisibleAtRunTime>
+<VisibleAtRunTime>0</VisibleAtRunTime>
 <Locked>0</Locked>
 <Enabled>1</Enabled>
 <ToolTip/>
@@ -17195,10 +17056,10 @@ end</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>8</Top>
-<Bottom>33</Bottom>
-<Left>10</Left>
-<Right>35</Right>
+<Top>9</Top>
+<Bottom>34</Bottom>
+<Left>7</Left>
+<Right>32</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -17289,10 +17150,10 @@ end</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>317</Top>
-<Bottom>362</Bottom>
-<Left>154</Left>
-<Right>311</Right>
+<Top>325</Top>
+<Bottom>370</Bottom>
+<Left>163</Left>
+<Right>320</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -17387,8 +17248,8 @@ end</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>187</Top>
-<Bottom>216</Bottom>
+<Top>195</Top>
+<Bottom>224</Bottom>
 <Left>59</Left>
 <Right>461</Right>
 </Coordinates>
@@ -17477,8 +17338,8 @@ end</Script>
 <MouseClickSndMode>0</MouseClickSndMode>
 <MouseClickSound/>
 <OriginalRect>
-<Top>187</Top>
-<Bottom>216</Bottom>
+<Top>195</Top>
+<Bottom>224</Bottom>
 <Left>59</Left>
 <Right>461</Right>
 </OriginalRect>
@@ -17499,8 +17360,8 @@ end</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>174</Top>
-<Bottom>219</Bottom>
+<Top>182</Top>
+<Bottom>227</Bottom>
 <Left>17</Left>
 <Right>62</Right>
 </Coordinates>
@@ -17593,10 +17454,10 @@ end</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>260</Top>
-<Bottom>290</Bottom>
-<Left>96</Left>
-<Right>366</Right>
+<Top>268</Top>
+<Bottom>298</Bottom>
+<Left>105</Left>
+<Right>375</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -17617,8 +17478,8 @@ end</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>1</DesignCodeLine>
-<DesignCodeCol>38</DesignCodeCol>
+<DesignCodeLine>6</DesignCodeLine>
+<DesignCodeCol>3</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -17632,7 +17493,7 @@ end</Script>
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeCol>20</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
