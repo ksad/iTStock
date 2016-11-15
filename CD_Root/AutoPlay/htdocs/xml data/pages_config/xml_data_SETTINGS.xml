@@ -1,28 +1,28 @@
 <ROOT>
 	<PAGE Name = "SETTINGS">
-		<IMG_ACCORDION1 Width = "815" Height = "40" PosX = "367" PosY = "115">
+		<IMG_ACCORDION1 Width = "815" Height = "40" PosX = "367" PosY = "165">
 			<perWidth>59.663250366032</perWidth>
 			<perHeight>5.2083333333333</perHeight>
 			<perPosX>26.866764275256</perPosX>
-			<perPosY>14.973958333333</perPosY>
+			<perPosY>21.484375</perPosY>
 		</IMG_ACCORDION1>
-		<IMG_TOGGLE_DOWN1 Width = "50" Height = "40" PosX = "1182" PosY = "115">
+		<IMG_TOGGLE_DOWN1 Width = "50" Height = "40" PosX = "1182" PosY = "165">
+			<perWidth>3.6603221083455</perWidth>
+			<perHeight>5.2083333333333</perHeight>
+			<perPosX>86.530014641288</perPosX>
+			<perPosY>21.484375</perPosY>
+		</IMG_TOGGLE_DOWN1>
+		<IMG_ACCORDION2 Width = "815" Height = "40" PosX = "367" PosY = "115">
+			<perWidth>59.663250366032</perWidth>
+			<perHeight>5.2083333333333</perHeight>
+			<perPosX>26.866764275256</perPosX>
+			<perPosY>14.973958333333</perPosY>
+		</IMG_ACCORDION2>
+		<IMG_TOGGLE_DOWN2 Width = "50" Height = "40" PosX = "1182" PosY = "115">
 			<perWidth>3.6603221083455</perWidth>
 			<perHeight>5.2083333333333</perHeight>
 			<perPosX>86.530014641288</perPosX>
 			<perPosY>14.973958333333</perPosY>
-		</IMG_TOGGLE_DOWN1>
-		<IMG_ACCORDION2 Width = "815" Height = "40" PosX = "367" PosY = "165">
-			<perWidth>59.663250366032</perWidth>
-			<perHeight>5.2083333333333</perHeight>
-			<perPosX>26.866764275256</perPosX>
-			<perPosY>21.484375</perPosY>
-		</IMG_ACCORDION2>
-		<IMG_TOGGLE_DOWN2 Width = "50" Height = "40" PosX = "1182" PosY = "165">
-			<perWidth>3.6603221083455</perWidth>
-			<perHeight>5.2083333333333</perHeight>
-			<perPosX>86.530014641288</perPosX>
-			<perPosY>21.484375</perPosY>
 		</IMG_TOGGLE_DOWN2>
 		<IMG_ACCORDION3 Width = "815" Height = "40" PosX = "367" PosY = "214">
 			<perWidth>59.663250366032</perWidth>
@@ -78,17 +78,17 @@
 			<perPosX>96.705710102489</perPosX>
 			<perPosY>7.8125</perPosY>
 		</IMG_LOGOUT>
-		<LB_MENU_DB Width = "82" Height = "29" PosX = "405" PosY = "124">
+		<LB_MENU_DB Width = "82" Height = "29" PosX = "405" PosY = "174">
 			<perWidth>6.0029282576867</perWidth>
 			<perHeight>3.7760416666667</perHeight>
 			<perPosX>29.648609077599</perPosX>
-			<perPosY>16.145833333333</perPosY>
+			<perPosY>22.65625</perPosY>
 		</LB_MENU_DB>
-		<LB_MENU_2 Width = "76" Height = "29" PosX = "405" PosY = "174">
-			<perWidth>5.5636896046852</perWidth>
+		<LB_MENU_2 Width = "84" Height = "29" PosX = "405" PosY = "124">
+			<perWidth>6.1493411420205</perWidth>
 			<perHeight>3.7760416666667</perHeight>
 			<perPosX>29.648609077599</perPosX>
-			<perPosY>22.65625</perPosY>
+			<perPosY>16.145833333333</perPosY>
 		</LB_MENU_2>
 		<LB_MENU-3 Width = "76" Height = "29" PosX = "405" PosY = "224">
 			<perWidth>5.5636896046852</perWidth>
