@@ -85,5 +85,11 @@
 			<perPosY>16.015625</perPosY>
 			<perFontSize>1.0248901903367</perFontSize>
 		</IN_SEARCH_USER>
+		<LB_MENU_SEARCH_USER Width = "112" Height = "29" PosX = "405" PosY = "124">
+			<perWidth>8.199121522694</perWidth>
+			<perHeight>3.7760416666667</perHeight>
+			<perPosX>29.648609077599</perPosX>
+			<perPosY>16.145833333333</perPosY>
+		</LB_MENU_SEARCH_USER>
 	</PAGE>
 </ROOT>

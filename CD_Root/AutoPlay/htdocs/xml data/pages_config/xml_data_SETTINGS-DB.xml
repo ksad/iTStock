@@ -54,24 +54,12 @@
 			<perPosX>86.530014641288</perPosX>
 			<perPosY>14.973958333333</perPosY>
 		</IMG_TOGGLE_DOWN1>
-		<IMG_ACCORDION2 Width = "815" Height = "40" PosX = "367" PosY = "295">
-			<perWidth>59.663250366032</perWidth>
-			<perHeight>5.2083333333333</perHeight>
-			<perPosX>26.866764275256</perPosX>
-			<perPosY>38.411458333333</perPosY>
-		</IMG_ACCORDION2>
 		<IMG_TOGGLE_DOWN2 Width = "50" Height = "40" PosX = "1182" PosY = "295">
 			<perWidth>3.6603221083455</perWidth>
 			<perHeight>5.2083333333333</perHeight>
 			<perPosX>86.530014641288</perPosX>
 			<perPosY>38.411458333333</perPosY>
 		</IMG_TOGGLE_DOWN2>
-		<IMG_ACCORDION3 Width = "815" Height = "40" PosX = "367" PosY = "344">
-			<perWidth>59.663250366032</perWidth>
-			<perHeight>5.2083333333333</perHeight>
-			<perPosX>26.866764275256</perPosX>
-			<perPosY>44.791666666667</perPosY>
-		</IMG_ACCORDION3>
 		<IMG_TOGGLE_DOWN3 Width = "50" Height = "40" PosX = "1182" PosY = "344">
 			<perWidth>3.6603221083455</perWidth>
 			<perHeight>5.2083333333333</perHeight>
@@ -191,5 +179,35 @@
 			<perPosY>27.083333333333</perPosY>
 			<perFontSize>0.87847730600293</perFontSize>
 		</IN_DB_NAME_DBCF>
+		<LB_MENU_DB Width = "82" Height = "29" PosX = "405" PosY = "124">
+			<perWidth>6.0029282576867</perWidth>
+			<perHeight>3.7760416666667</perHeight>
+			<perPosX>29.648609077599</perPosX>
+			<perPosY>16.145833333333</perPosY>
+		</LB_MENU_DB>
+		<IMG_ACCORDION2 Width = "815" Height = "40" PosX = "367" PosY = "295">
+			<perWidth>59.663250366032</perWidth>
+			<perHeight>5.2083333333333</perHeight>
+			<perPosX>26.866764275256</perPosX>
+			<perPosY>38.411458333333</perPosY>
+		</IMG_ACCORDION2>
+		<IMG_ACCORDION3 Width = "815" Height = "40" PosX = "367" PosY = "344">
+			<perWidth>59.663250366032</perWidth>
+			<perHeight>5.2083333333333</perHeight>
+			<perPosX>26.866764275256</perPosX>
+			<perPosY>44.791666666667</perPosY>
+		</IMG_ACCORDION3>
+		<LB_MENU_2 Width = "76" Height = "29" PosX = "405" PosY = "304">
+			<perWidth>5.5636896046852</perWidth>
+			<perHeight>3.7760416666667</perHeight>
+			<perPosX>29.648609077599</perPosX>
+			<perPosY>39.583333333333</perPosY>
+		</LB_MENU_2>
+		<LB_MENU-3 Width = "76" Height = "29" PosX = "405" PosY = "354">
+			<perWidth>5.5636896046852</perWidth>
+			<perHeight>3.7760416666667</perHeight>
+			<perPosX>29.648609077599</perPosX>
+			<perPosY>46.09375</perPosY>
+		</LB_MENU-3>
 	</PAGE>
 </ROOT>

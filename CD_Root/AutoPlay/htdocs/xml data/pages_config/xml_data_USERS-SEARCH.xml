@@ -179,5 +179,11 @@
 			<perPosX>48.169838945827</perPosX>
 			<perPosY>22.135416666667</perPosY>
 		</IMG_SAVE_MODIFICATION>
+		<LB_MENU_SEARCH_USER Width = "112" Height = "29" PosX = "405" PosY = "124">
+			<perWidth>8.199121522694</perWidth>
+			<perHeight>3.7760416666667</perHeight>
+			<perPosX>29.648609077599</perPosX>
+			<perPosY>16.145833333333</perPosY>
+		</LB_MENU_SEARCH_USER>
 	</PAGE>
 </ROOT>

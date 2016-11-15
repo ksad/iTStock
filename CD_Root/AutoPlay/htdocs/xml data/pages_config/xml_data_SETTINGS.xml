@@ -78,5 +78,23 @@
 			<perPosX>96.705710102489</perPosX>
 			<perPosY>7.8125</perPosY>
 		</IMG_LOGOUT>
+		<LB_MENU_DB Width = "82" Height = "29" PosX = "405" PosY = "124">
+			<perWidth>6.0029282576867</perWidth>
+			<perHeight>3.7760416666667</perHeight>
+			<perPosX>29.648609077599</perPosX>
+			<perPosY>16.145833333333</perPosY>
+		</LB_MENU_DB>
+		<LB_MENU_2 Width = "76" Height = "29" PosX = "405" PosY = "174">
+			<perWidth>5.5636896046852</perWidth>
+			<perHeight>3.7760416666667</perHeight>
+			<perPosX>29.648609077599</perPosX>
+			<perPosY>22.65625</perPosY>
+		</LB_MENU_2>
+		<LB_MENU-3 Width = "76" Height = "29" PosX = "405" PosY = "224">
+			<perWidth>5.5636896046852</perWidth>
+			<perHeight>3.7760416666667</perHeight>
+			<perPosX>29.648609077599</perPosX>
+			<perPosY>29.166666666667</perPosY>
+		</LB_MENU-3>
 	</PAGE>
 </ROOT>
