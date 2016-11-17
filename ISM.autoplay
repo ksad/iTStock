@@ -529,11 +529,86 @@ function showTimedMsgBox (title, msg, timer)
 	Application.SaveValue("MSGBOX", "timer", timer);
 
 	DialogEx.Show("MSGBOX", true, nil, nil);
+end
+
+function Trans (bundle, composant, tblBundleVars)
+	if bundle ~= "" and composant ~= "" then
+		local lang = Application.LoadValue("ITStock", "LANG");
+		local tblBundleList = TextFile.ReadToTable("AutoPlay\\htdocs\\lang-properties\\"..lang.."\\"..composant.."_"..lang..".properties");
+
+		for i,bundleLines in pairs (tblBundleList) do
+			if String.Find(bundleLines, bundle, 1, false) ~= -1 then
+				textBundle = String.Mid(bundleLines, String.Find(bundleLines, "=", 1, false)+1, -1);
+
+				if tblBundleVars then
+					for i,j in pairs (tblBundleVars) do
+						textBundle = String.Replace(textBundle, "{"..i.."}", j, true);
+					end
+					return textBundle;
+				else
+					return textBundle;
+				end
+			end
+		end
+
+		return bundle;
+	end
+end
+
+function TransPage (composant)
+	if Application.GetCurrentPage() == "" then
+		allObjects = DialogEx.EnumerateObjects();
+		currentInterface = Application.GetCurrentDialog();
+	else
+		allObjects = Page.EnumerateObjects();
+		currentInterface = Application.GetCurrentPage();
+	end
+
+	for i,object in pairs (allObjects) do
+		if Application.GetCurrentPage() == "" then
+			objectType = DialogEx.GetObjectType(object);
+			interfaceSize = DialogEx.GetSize();
+		else
+			objectType = Page.GetObjectType(object);
+			interfaceSize = Page.GetSize();
+		end
+
+		if objectType == 0 then
+			objProp = Button.GetProperties(object);
+			local objTransText = Trans(objProp.Text, composant);
+			Button.SetText(object, objTransText);
+		end
+
+		if objectType == 1 then
+			objProp = Label.GetProperties(object);
+			local objTransText = Trans(objProp.Text, composant);
+			local objRatio = Label.GetPos(object).X * 100 / (interfaceSize.Width - Label.GetSize(object).Width);
+			Label.SetText(object, objTransText);
+			
+			if String.Find(objProp.Text, "#", 1, false) == -1 then
+				local objNewPosX = objRatio * (interfaceSize.Width - Label.GetSize(object).Width) / 100;
+				Label.SetPos(object, objNewPosX, Label.GetPos(object).Y);
+			end
+		end
+
+		if objectType == 2 then
+			objProp = Paragraph.GetProperties(object);
+			local objTransText = Trans(objProp.Text, composant);
+			Paragraph.SetText(object, objTransText);
+		end
+
+		if objectType == 7 then
+			objProp = Input.GetProperties(object);
+			local objTransText = Trans(objProp.Text, composant);
+			Input.SetText(object, objTransText);
+		end
+	end
+	Application.SaveValue("ITStock", "TRANS_FLAG_"..currentInterface, "Y");
 end</Script>
 <BookMarks count="0">
 </BookMarks>
-<DesignCodeLine>464</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeLine>475</DesignCodeLine>
+<DesignCodeCol>88</DesignCodeCol>
 </Globals>
 <Defaults>
 <StartupPage>_PageFirst</StartupPage>
@@ -10602,7 +10677,7 @@ leftMenuJump();</Script>
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeCol>15</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
