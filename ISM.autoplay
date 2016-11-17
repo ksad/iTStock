@@ -607,8 +607,8 @@ function TransPage (composant)
 end</Script>
 <BookMarks count="0">
 </BookMarks>
-<DesignCodeLine>475</DesignCodeLine>
-<DesignCodeCol>88</DesignCodeCol>
+<DesignCodeLine>490</DesignCodeLine>
+<DesignCodeCol>3</DesignCodeCol>
 </Globals>
 <Defaults>
 <StartupPage>_PageFirst</StartupPage>
@@ -16597,14 +16597,17 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <Name>On Show</Name>
 <Args/>
 <Script>DialogEx.SetFocus("IN_USERNAME");
---DialogEx.ClickObject("IMG_LOGIN");</Script>
+
+if Application.LoadValue("ITStock", "TRANS_FLAG_"..Application.GetCurrentDialog()) ~= "Y" then
+	TransPage("login");
+end</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>1</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>33</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -16754,15 +16757,15 @@ end</Script>
 end
 
 if e_Key == 13 then
-	DialogEx.ClickObject("IMG_LOGIN");
+	DialogEx.ClickObject("BTN_LOGIN");
 end</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>4</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeLine>5</DesignCodeLine>
+<DesignCodeCol>32</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -16858,7 +16861,7 @@ Input.SetSelection("IN_USERNAME", 1, -1);</Script>
 end
 
 if e_Key == 13 then
-	DialogEx.ClickObject("IMG_LOGIN");
+	DialogEx.ClickObject("BTN_LOGIN");
 end</Script>
 <TreeStates>
 <TreeState>0</TreeState>
@@ -16866,7 +16869,7 @@ end</Script>
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>5</DesignCodeLine>
-<DesignCodeCol>35</DesignCodeCol>
+<DesignCodeCol>32</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -16945,10 +16948,10 @@ Input.SetSelection("IN_PASSWORD", 1, -1);</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>221</Top>
-<Bottom>247</Bottom>
-<Left>273</Left>
-<Right>414</Right>
+<Top>260</Top>
+<Bottom>286</Bottom>
+<Left>144</Left>
+<Right>356</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -17013,7 +17016,7 @@ Input.SetSelection("IN_PASSWORD", 1, -1);</Script>
 </Event>
 <Actions/>
 <Text>
-<Body>Forgot password ?</Body>
+<Body>login.dialog.password.forgot</Body>
 <NormalColor>16777215</NormalColor>
 <HighlightColor>16777215</HighlightColor>
 <MouseDownColor>16777215</MouseDownColor>
@@ -17036,10 +17039,10 @@ Input.SetSelection("IN_PASSWORD", 1, -1);</Script>
 <MouseClickSndMode>0</MouseClickSndMode>
 <MouseClickSound/>
 <OriginalRect>
-<Top>221</Top>
-<Bottom>247</Bottom>
-<Left>273</Left>
-<Right>414</Right>
+<Top>260</Top>
+<Bottom>286</Bottom>
+<Left>144</Left>
+<Right>356</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -17051,7 +17054,7 @@ Input.SetSelection("IN_PASSWORD", 1, -1);</Script>
 <Locked>0</Locked>
 <Enabled>1</Enabled>
 <ToolTip/>
-<Cursor>0</Cursor>
+<Cursor>1</Cursor>
 <Group>0</Group>
 <MaintainAspectRatio>1</MaintainAspectRatio>
 <Pin>0</Pin>
@@ -17059,9 +17062,9 @@ Input.SetSelection("IN_PASSWORD", 1, -1);</Script>
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>74</Top>
-<Bottom>109</Bottom>
-<Left>134</Left>
-<Right>346</Right>
+<Bottom>111</Bottom>
+<Left>155</Left>
+<Right>345</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -17125,7 +17128,7 @@ Input.SetSelection("IN_PASSWORD", 1, -1);</Script>
 </Event>
 <Actions/>
 <Text>
-<Body>User Athentification</Body>
+<Body>login.dialog.title</Body>
 <NormalColor>16777215</NormalColor>
 <HighlightColor>16777215</HighlightColor>
 <MouseDownColor>16777215</MouseDownColor>
@@ -17149,9 +17152,9 @@ Input.SetSelection("IN_PASSWORD", 1, -1);</Script>
 <MouseClickSound/>
 <OriginalRect>
 <Top>74</Top>
-<Bottom>109</Bottom>
-<Left>134</Left>
-<Right>346</Right>
+<Bottom>111</Bottom>
+<Left>155</Left>
+<Right>345</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -17344,8 +17347,8 @@ Input.SetSelection("IN_PASSWORD", 1, -1);</Script>
 <MouseClickSound/>
 </Object>
 <Object>
-<Type>3</Type>
-<Name>IMG_LOGIN</Name>
+<Type>0</Type>
+<Name>BTN_LOGIN</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
 <Locked>0</Locked>
@@ -17353,15 +17356,15 @@ Input.SetSelection("IN_PASSWORD", 1, -1);</Script>
 <ToolTip/>
 <Cursor>1</Cursor>
 <Group>0</Group>
-<MaintainAspectRatio>1</MaintainAspectRatio>
+<MaintainAspectRatio>0</MaintainAspectRatio>
 <Pin>0</Pin>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>213</Top>
-<Bottom>258</Bottom>
-<Left>110</Left>
-<Right>268</Right>
+<Top>214</Top>
+<Bottom>259</Bottom>
+<Left>171</Left>
+<Right>329</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -17378,8 +17381,8 @@ login ();</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>1</DesignCodeLine>
-<DesignCodeCol>16</DesignCodeCol>
+<DesignCodeLine>2</DesignCodeLine>
+<DesignCodeCol>9</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -17400,8 +17403,7 @@ login ();</Script>
 <Event>
 <Name>On Enter</Name>
 <Args/>
-<Script>Image.Load("IMG_LOGIN", "AutoPlay\\htdocs\\images\\icons\\btn_login_hover.png");
-</Script>
+<Script/>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
@@ -17415,30 +17417,47 @@ login ();</Script>
 <Event>
 <Name>On Leave</Name>
 <Args/>
-<Script>Image.Load("IMG_LOGIN", "AutoPlay\\htdocs\\images\\icons\\btn_login.png");</Script>
+<Script/>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>59</DesignCodeCol>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
 <Actions/>
-<NormalImage>
-<Filename>AutoPlay\\htdocs\\images\\buttons\\btn_login.png</Filename>
-<UseTransColor>0</UseTransColor>
-<TransClr>16777215</TransClr>
-<TransTolerance>10</TransTolerance>
-<Opacity>100</Opacity>
-<HTMode>0</HTMode>
-</NormalImage>
-<MouseOverSndMode>0</MouseOverSndMode>
+<BUTTON>
+<Filename>AutoPlay\htdocs\images\buttons\btn_login.btn</Filename>
+<Style>0</Style>
+<State>0</State>
+<Caption>login.button.login</Caption>
+<Align>1</Align>
+<UpColor>14067297</UpColor>
+<HighlightColor>14067297</HighlightColor>
+<DownColor>14067297</DownColor>
+<DisabledColor>10526880</DisabledColor>
+<FontData>
+<FontName>Nunito</FontName>
+<CharacterSet>0</CharacterSet>
+<Height>-16</Height>
+<Weight>700</Weight>
+<Italic>0</Italic>
+<Underline>0</Underline>
+<StrikeOut>0</StrikeOut>
+<AntiAlias>1</AntiAlias>
+</FontData>
+<CapXOff>0</CapXOff>
+<CapYOff>0</CapYOff>
+<LeftMargin>0</LeftMargin>
+<RightMargin>33</RightMargin>
+<MouseOverSndMode>1</MouseOverSndMode>
 <MouseOverSound/>
-<MouseClickSndMode>0</MouseClickSndMode>
+<MouseClickSndMode>1</MouseClickSndMode>
 <MouseClickSound/>
+</BUTTON>
 </Object>
 <HGuidelines/>
 <VGuidelines/>
