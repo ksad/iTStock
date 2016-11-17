@@ -1,0 +1,10 @@
+Autosave/
+CD_Root/AutoPlay/Plugins/
+CD_Root/AutoPlay/Scripts/
+CD_Root/AutoPlay/autorun.cdd
+CD_Root/lua5.1.dll
+CD_Root/lua51.dll
+CD_Root/AutoPlay/htdocs/batchs/Temp/local_rep.tmp
+CD_Root/AutoPlay/htdocs/batchs/Temp/remote_rep.tmp
+CD_Root/AutoPlay/htdocs/.idea/
+CD_Root/autorun.exe
