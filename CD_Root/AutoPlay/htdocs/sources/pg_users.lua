@@ -95,13 +95,13 @@ function markUpdatedUser (e_Row, e_Column, e_OldText, e_NewText, selectedUser)
 			end
 
 			if e_Column == 4 and (e_NewText ~= "Yes" and e_NewText ~= "No") then
-				Dialog.Message("Error", "Invalid data.\r\n Allowed value : Yes/No", MB_OK, MB_ICONSTOP, MB_DEFBUTTON1);
+				showMsgBox ("Error", "", "Invalid data.\r\n Allowed value : Yes/No", "OK");
 				Grid.SetCellText("GD_USERS_LIST", e_Row, e_Column, e_OldText, true);
 				Application.ExitScript();
 			end
 
 			if e_Column == 5 and (e_NewText ~= "Active" and e_NewText ~= "Disabled") then
-				Dialog.Message("Error", "Invalid data.\r\n Allowed value : Active/Disabled", MB_OK, MB_ICONSTOP, MB_DEFBUTTON1);
+				showMsgBox ("Error", "", "Invalid data.\r\n Allowed value : Active/Disabled", "OK");
 				Grid.SetCellText("GD_USERS_LIST", e_Row, e_Column, e_OldText, true);
 				Application.ExitScript();
 			end
@@ -405,20 +405,15 @@ function deleteUserAccount ()
 	if mySQLConnection ~= nil then
 		SQL = "DELETE FROM `it_stock_manager`.`it_users` WHERE ID = '"..dataSelecteduser.."';";
 
-		local userAction = Dialog.Message("Notice", "Delete user '"..updatedUsers.."', Please confirm.", MB_YESNO, MB_ICONINFORMATION, MB_DEFBUTTON1);
+		local userAction = showMsgBox ("Warning", "", "Delete user '"..updatedUsers.."', Please confirm.", "YES|NO");
 
-		if userAction == IDYES then
+		if userAction == "IDYES" then
 			mySQLCursor, err = mySQLConnection:execute(SQL);
 			if err then
-				-- Insert into lof write function
-				Application.SaveValue("ITSTOCK", "ERROR_MSG", err);
-				PopUp("0");
+				showMsgBox ("Error", "Deleting user", err, "OK");
 				Application.ExitScript();
 			else
-				local info = "User '"..username.."' successfly created.";
-				-- Insert into lof write function
-				Application.SaveValue("ITSTOCK", "INFO_MSG", info);
-				PopUp("1");
+				showMsgBox ("Success", "", "User successfully deleted.", "OK");
 				DialogEx.Close(this);
 			end
 			DialogEx.ClickObject("IMG_CANCEL");
