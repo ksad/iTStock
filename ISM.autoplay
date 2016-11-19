@@ -529,11 +529,13 @@ function showMsgBox (title, msgtitle, msg, buttons)
 		Application.SaveValue("MSGBOX", "buttons", buttons);
 	end
 	DialogEx.Show("MSGBOX", true, nil, nil);
+
+	return Application.LoadValue("MSGBOX", "PRESSED_KEY");
 end</Script>
 <BookMarks count="0">
 </BookMarks>
-<DesignCodeLine>461</DesignCodeLine>
-<DesignCodeCol>47</DesignCodeCol>
+<DesignCodeLine>466</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 </Globals>
 <Defaults>
 <StartupPage>_PageFirst</StartupPage>
@@ -27180,7 +27182,7 @@ OQAAADoAAAA7AAAAPAAAAD0AAAA+AAAAQwAAAEYAAABHAAAASAAAAEkAAABKAAAA
 SwAAAEwAAABNAAAATgAAAE8AAABQAAAAUQAAAFIAAABTAAAAVAAAAFUAAABWAAAA
 VwAAAFgAAABZAAAAWgAAAFsAAABcAAAAXQAAAF4AAABfAAAAYAAAAGEAAABiAAAA
 YwAAAGQAAABlAAAAZgAAAGcAAABoAAAAagAAAGsAAABsAAAAbQAAAG4AAABvAAAA
-cAAAAHEAAAB0AAAAdQAAAHYAAAB4AAAAfAAAAH4AAAA=
+cAAAAHIAAAB1AAAAdgAAAHcAAAB5AAAAfQAAAH8AAAA=
 </BookMarks>
 </Event>
 <Event>
