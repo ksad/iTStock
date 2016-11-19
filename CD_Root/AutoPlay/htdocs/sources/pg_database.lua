@@ -72,7 +72,7 @@ function loadDbAccess ()
 	if String.Left(serverStatus , 3) == "[8]" then
 		Label.SetText("LB_SERVER_STATUS", "MySQL Server error @"..dbAddress);
 		Image.Load("IMG_SERVER_STATUS", "AutoPlay\\htdocs\\images\\icons\\server_ko.png");
-		Dialog.Message("SQL Error", "There is a problem with the SQL Server : @"..dbAddress.."\r\n"..serverStatusMsg, MB_OK, MB_ICONSTOP, MB_DEFBUTTON1);
+		showMsgBox ("Error", "SQL server error", "There is a problem with the SQL Server : @"..dbAddress.."\r\n"..serverStatusMsg, "OK");
 		Application.ExitScript();
 	end
 
@@ -160,7 +160,7 @@ function saveDatabaseConfiguration ()
 	else
 		local portIsValid = String.ToNumber(port);
 		if portIsValid == 0 then
-			Dialog.Message("Error", "Invalid port number.", MB_OK, MB_ICONSTOP, MB_DEFBUTTON1);
+			showMsgBox ("Error", "", "Invalid port number.", "OK");
 			Image.Load("IMG_DB_PORT_DBCF", "AutoPlay\\htdocs\\images\\inputs\\input_mandatory.png");
 			Application.SetLastError(0616);
 		end
@@ -185,7 +185,7 @@ function saveDatabaseConfiguration ()
 	if String.Left(serverStatus , 3) == "[8]" then
 		Label.SetText("LB_SERVER_STATUS", "MySQL Server error @"..serverAddress);
 		Image.Load("IMG_SERVER_STATUS", "AutoPlay\\htdocs\\images\\icons\\server_ko.png");
-		Dialog.Message("SQL Error", "There is a problem with the SQL Server : @"..serverAddress.."\r\n"..serverStatusMsg, MB_OK, MB_ICONSTOP, MB_DEFBUTTON1);
+		showMsgBox ("Error", "SQL server error", "There is a problem with the SQL Server : @"..serverAddress.."\r\n"..serverStatusMsg, "OK");
 		Application.ExitScript();
 	end
 
@@ -232,7 +232,7 @@ function saveDatabaseConfiguration ()
 
 	if err then
 		-- If there is an error connecting to the database, display a dialog box with the error
-		Dialog.Message("Error coonection", err, MB_OK, MB_ICONSTOP, MB_DEFBUTTON1);
+		showMsgBox ("Error", "Databse connection error", err, "OK");
 		Application.ExitScript();
 	end
 
@@ -244,10 +244,10 @@ function saveDatabaseConfiguration ()
 	-- Test for error
 	error = Application.GetLastError();
 	if (error ~= 0) then
-		PopUp("0");
+		showMsgBox ("Error", "Error with db_access file", error, "OK");
 		Application.ExitScript();
 	else
-		PopUp("1");
+		showMsgBox ("Success", "", "Configuration saved.", "OK");
 		DialogEx.Close(this);
 	end
 end
