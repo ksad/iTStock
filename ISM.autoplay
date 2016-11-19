@@ -523,13 +523,17 @@ function showMsgBox (title, msgtitle, msg, buttons)
 		Application.SaveValue("MSGBOX", "msgtitle", msgtitle);
 	end
 	Application.SaveValue("MSGBOX", "msg", msg);
-	Application.SaveValue("MSGBOX", "buttons", buttons);
+	if buttons == nil then
+		Application.SaveValue("MSGBOX", "buttons", "");
+	else
+		Application.SaveValue("MSGBOX", "buttons", buttons);
+	end
 	DialogEx.Show("MSGBOX", true, nil, nil);
 end</Script>
 <BookMarks count="0">
 </BookMarks>
-<DesignCodeLine>458</DesignCodeLine>
-<DesignCodeCol>4</DesignCodeCol>
+<DesignCodeLine>461</DesignCodeLine>
+<DesignCodeCol>47</DesignCodeCol>
 </Globals>
 <Defaults>
 <StartupPage>_PageFirst</StartupPage>
@@ -16980,9 +16984,9 @@ Input.SetSelection("IN_PASSWORD", 1, -1);</Script>
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>74</Top>
-<Bottom>111</Bottom>
+<Bottom>109</Bottom>
 <Left>134</Left>
-<Right>366</Right>
+<Right>346</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -16997,8 +17001,8 @@ Input.SetSelection("IN_PASSWORD", 1, -1);</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>1802398766</DesignCodeLine>
-<DesignCodeCol>7012352</DesignCodeCol>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -17011,8 +17015,8 @@ Input.SetSelection("IN_PASSWORD", 1, -1);</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>50331659</DesignCodeLine>
-<DesignCodeCol>4</DesignCodeCol>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -17025,8 +17029,8 @@ Input.SetSelection("IN_PASSWORD", 1, -1);</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>1271</DesignCodeLine>
-<DesignCodeCol>1343</DesignCodeCol>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -17039,8 +17043,8 @@ Input.SetSelection("IN_PASSWORD", 1, -1);</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>1345</DesignCodeLine>
-<DesignCodeCol>1343</DesignCodeCol>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -17070,9 +17074,9 @@ Input.SetSelection("IN_PASSWORD", 1, -1);</Script>
 <MouseClickSound/>
 <OriginalRect>
 <Top>74</Top>
-<Bottom>111</Bottom>
+<Bottom>109</Bottom>
 <Left>134</Left>
-<Right>366</Right>
+<Right>346</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -27032,44 +27036,175 @@ end</Script>
 <Event>
 <Name>On Show</Name>
 <Args/>
-<Script>Debug.ShowWindow(true);
-
-local title = String.Lower(Application.LoadValue("MSGBOX", "title"));
+<Script>local title = String.Lower(Application.LoadValue("MSGBOX", "title"));
 local msgtitle = Application.LoadValue("MSGBOX", "msgtitle");
 local msg = Application.LoadValue("MSGBOX", "msg");
 local buttons = Application.LoadValue("MSGBOX", "buttons");
 
-local checkMsgBoxTemplate = Folder.Find("AutoPlay\\htdocs\\images\\msgbox", title, false, nil);
-
-if checkMsgBoxTemplate == nil then
-	Dialog.Message("Error", '"'..title..'" Template not found.\r\n'..msg, MB_OK, MB_ICONSTOP, MB_DEFBUTTON1);
-	Application.ExitScript();
-end
-
 Image.Load("IMG_ICONE", "AutoPlay\\htdocs\\images\\msgbox\\"..title.."\\icone.png");
 Image.Load("IMG_TITLE_BAR", "AutoPlay\\htdocs\\images\\msgbox\\"..title.."\\title_bar.png");
 Image.Load("IMG_CLOSE", "AutoPlay\\htdocs\\images\\msgbox\\"..title.."\\close.png");
-Label.SetText("LB_TITLE", String.Upper(title));</Script>
+Label.SetText("LB_TITLE", String.Upper(title));
+
+if msgtitle ~= "" then
+	RichText.SetText("RT_MSG", "- "..msgtitle.." :\r\n"..msg, false);
+else
+	RichText.SetText("RT_MSG", msg, false);
+end
+
+local Line = 1;
+while (true) do
+	local textLine = RichText.GetLine("RT_MSG", Line);
+
+	if textLine ~= "" then
+		Line = Line + 1;
+	else
+		Line = Line - 1;
+		break;
+	end
+end
+
+RichText.SetSize("RT_MSG", RichText.GetSize("RT_MSG").Width, (RichText.GetSize("RT_MSG").Height * Line)+8);
+Image.SetSize("IMG_BG_BODY", Image.GetSize("IMG_BG_BODY").Width, RichText.GetSize("RT_MSG").Height + 16);
+
+-- RichText object properties table.
+tblRichTextProps = {};
+tblRichTextProps.ReadOnly = true;
+--tblRichTextProps.Border = BORDER_SUNKEN;
+RichText.SetProperties("RT_MSG", tblRichTextProps);
+
+if buttons ~= "" then
+	local Search = buttons;
+	local Delim = 0;
+	local Position = 1;
+
+	tblButtons = {};
+	while (true) do
+		local Found = String.Find(Search, "|", Position, false);
+
+		if (Found ~= -1) then
+			Delim = Delim + 1;
+			Position = Found + 1;
+		else
+			break;
+		end
+	end
+
+	if Delim &gt; 0 then
+		tblButtons = {};
+
+		for i = 1, Delim + 1 do
+			buttonName = String.Left(buttons, String.Find(buttons, "|", 1, false)-1);
+			buttons = String.Replace(buttons, buttonName.."|", "", false)
+			Table.Insert(tblButtons, i, buttonName);
+			if String.Find(buttons, "|", 1, false) == -1 then
+				Table.Insert(tblButtons, i+1, buttons);
+				break;
+			end
+		end
+	else
+		tblButtons = {buttons};
+	end
+
+	-- Button object properties table.
+	tblBtnProps = {};
+	tblBtnProps.ButtonFile = "AutoPlay\\htdocs\\images\\msgbox\\"..title.."\\msgBox_button.btn";
+	tblBtnProps.FontName = "Nunito";
+	tblBtnProps.FontSize = 12;
+	tblBtnProps.FontWeight = FW_NORMAL;
+	tblBtnProps.FontItalic = false;
+	tblBtnProps.FontStrikeout = false;
+	tblBtnProps.FontScript = ANSI_CHARSET;
+	tblBtnProps.FontAntiAlias = true;
+	tblBtnProps.FontUnderline = false;
+	tblBtnProps.XOffset = 0;
+	tblBtnProps.YOffset = 0;
+	tblBtnProps.LeftMargin = 0;
+	tblBtnProps.RightMargin = 0;
+	tblBtnProps.Style = BTNSTYLE_STANDARD;
+	tblBtnProps.ToggleState = BTN_UP;
+	tblBtnProps.Cursor = CURSOR_HAND;
+	tblBtnProps.TooltipText = "";
+	tblBtnProps.Height = 30;
+	tblBtnProps.Enabled = true;
+	tblBtnProps.Visible = true;
+	tblBtnProps.ResizeLeft = false;
+	tblBtnProps.ResizeRight = false;
+	tblBtnProps.ResizeTop = false;
+	tblBtnProps.ResizeBottom = false;
+	tblBtnProps.HighlightSound = SND_STANDARD;
+	tblBtnProps.HighlightSoundFile = "";
+	tblBtnProps.ClickSound = SND_STANDARD;
+	tblBtnProps.ClickSoundFile = "";
+	tblBtnProps.ColorNormal = Math.HexColorToNumber("FFFFFF");
+	tblBtnProps.ColorHighlight = Math.HexColorToNumber("FFFFFF");
+	tblBtnProps.ColorDown = Math.HexColorToNumber("FFFFFF");
+	tblBtnProps.ColorDisabled = Math.HexColorToNumber("FFFFFF");
+	tblBtnProps.Alignment = ALIGN_CENTER;
+
+	btnPosX = 0;
+	for i,button in pairs (tblButtons) do
+		tblBtnProps.Text = button;
+		tblBtnProps.Width = 20 * String.Length(button);
+		tblBtnProps.Y = Image.GetPos("IMG_BG_BODY").Y + Image.GetSize("IMG_BG_BODY").Height + 10;
+		tblBtnProps.X = 0;
+		DialogEx.CreateObject(OBJECT_BUTTON, "BTN_"..button, tblBtnProps);
+		DialogEx.SetObjectScript("BTN_"..button, "On Click", 'Application.SaveValue("MSGBOX", "PRESSED_KEY", "ID"..Button.GetText(this));DialogEx.Close(this);');
+		btnPosX = btnPosX + (20 * String.Length(button));
+	end
+
+	for i,button in pairs (tblButtons) do
+		if i == 1 then
+			Button.SetPos("BTN_"..button, (DialogEx.GetSize().Width - (btnPosX + (10 * Delim)))/ 2, Button.GetPos("BTN_"..button).Y);
+		else
+			Button.SetPos("BTN_"..button, Button.GetPos("BTN_"..tblButtons[i-1]).X + Button.GetSize("BTN_"..tblButtons[i-1]).Width + 10, Button.GetPos("BTN_"..button).Y);
+		end
+	end
+
+	Window.SetSize(DialogEx.GetWndHandle(), DialogEx.GetSize().Width, Button.GetPos("BTN_"..tblButtons[1]).Y + Button.GetSize("BTN_"..tblButtons[1]).Height + 10);
+else
+	Window.SetSize(DialogEx.GetWndHandle(), DialogEx.GetSize().Width, Image.GetPos("IMG_BG_BODY").Y + Image.GetSize("IMG_BG_BODY").Height + 5);
+end</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>13</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
+<DesignCodeLine>113</DesignCodeLine>
+<DesignCodeCol>108</DesignCodeCol>
+<BookMarks count="92">
+AAAAAAEAAAACAAAAAwAAAAUAAAAGAAAABwAAAAgAAAAKAAAACwAAAA0AAAAQAAAA
+EQAAABIAAAAUAAAAFQAAABcAAAAcAAAAHQAAAB8AAAAgAAAAIQAAACIAAAAjAAAA
+JQAAACYAAAAnAAAAKAAAACoAAAArAAAALAAAAC4AAAAvAAAAMAAAADYAAAA3AAAA
+OQAAADoAAAA7AAAAPAAAAD0AAAA+AAAAQwAAAEYAAABHAAAASAAAAEkAAABKAAAA
+SwAAAEwAAABNAAAATgAAAE8AAABQAAAAUQAAAFIAAABTAAAAVAAAAFUAAABWAAAA
+VwAAAFgAAABZAAAAWgAAAFsAAABcAAAAXQAAAF4AAABfAAAAYAAAAGEAAABiAAAA
+YwAAAGQAAABlAAAAZgAAAGcAAABoAAAAagAAAGsAAABsAAAAbQAAAG4AAABvAAAA
+cAAAAHEAAAB0AAAAdQAAAHYAAAB4AAAAfAAAAH4AAAA=
 </BookMarks>
 </Event>
 <Event>
 <Name>On Close</Name>
 <Args/>
-<Script/>
+<Script>Image.SetSize("IMG_BG_BODY", 467, 80);
+RichText.SetSize("RT_MSG", 451, 15);
+
+if tblButtons then
+	for i,button in pairs (tblButtons) do
+		DialogEx.DeleteObject("BTN_"..button);
+	end
+end
+
+Application.SaveValue("MSGBOX", "title", "");
+Application.SaveValue("MSGBOX", "msgtitle", "");
+Application.SaveValue("MSGBOX", "msg", "");
+Application.SaveValue("MSGBOX", "buttons", "");</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeLine>8</DesignCodeLine>
 <DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
@@ -27583,7 +27718,7 @@ Label.SetText("LB_TITLE", String.Upper(title));</Script>
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>50</Top>
-<Bottom>200</Bottom>
+<Bottom>130</Bottom>
 <Left>5</Left>
 <Right>472</Right>
 </Coordinates>
@@ -27662,8 +27797,8 @@ Label.SetText("LB_TITLE", String.Upper(title));</Script>
 <MouseClickSound/>
 </Object>
 <Object>
-<Type>2</Type>
-<Name>PH_MSG</Name>
+<Type>14</Type>
+<Name>RT_MSG</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
 <Locked>0</Locked>
@@ -27676,31 +27811,31 @@ Label.SetText("LB_TITLE", String.Upper(title));</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>58</Top>
-<Bottom>190</Bottom>
+<Top>60</Top>
+<Bottom>76</Bottom>
 <Left>14</Left>
-<Right>466</Right>
+<Right>465</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
 <HeightRatio>-1.000000</HeightRatio>
 </Ratios>
 <Event>
-<Name>On Click</Name>
-<Args/>
+<Name>On Key</Name>
+<Args>number e_Key, table e_Modifiers</Args>
 <Script/>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>5857125</DesignCodeLine>
-<DesignCodeCol>1080143872</DesignCodeCol>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
 <Event>
-<Name>On Right-Click</Name>
+<Name>On Focus</Name>
 <Args/>
 <Script/>
 <TreeStates>
@@ -27709,13 +27844,13 @@ Label.SetText("LB_TITLE", String.Upper(title));</Script>
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>1080627200</DesignCodeCol>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
 <Event>
-<Name>On Enter</Name>
-<Args/>
+<Name>On Link</Name>
+<Args>number e_Min, number e_Max, string e_Link</Args>
 <Script/>
 <TreeStates>
 <TreeState>0</TreeState>
@@ -27723,55 +27858,41 @@ Label.SetText("LB_TITLE", String.Upper(title));</Script>
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>1080643584</DesignCodeCol>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
 <Event>
-<Name>On Leave</Name>
-<Args/>
+<Name>On Selection Changed</Name>
+<Args>number e_Min, number e_Max</Args>
 <Script/>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>5857125</DesignCodeLine>
-<DesignCodeCol>1080365056</DesignCodeCol>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
 <Actions/>
-<Text>
-<Body>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean erat ligula, vehicula at placerat sed, aliquam quis arcu. Praesent ut dui massa, condimentum placerat ante. Sed fermentum felis id justo ornare dapibus. Cras auctor nisi id magna elementum scelerisque. Suspendisse at eros ut lectus lacinia lacinia rutrum sed magna. Praesent pharetra elit in ligula semper eu tempor augue venenatis. Suspendisse rutrum elementum condimentum. Nulla facilisi. Nulla pharetra enim eu arcu mattis volutpat. Etiam in ante nec erat suscipit dictum. Integer quis arcu quis massa porta lobortis. Aliquam at tincidunt tortor. Suspendisse mi tellus, sagittis in dignissim eu, semper vel sapien. Ut cursus porttitor felis.</Body>
-<NormalColor>0</NormalColor>
-<HighlightColor>0</HighlightColor>
-<MouseDownColor>0</MouseDownColor>
-<DisabledColor>12632256</DisabledColor>
-<BorderColor>0</BorderColor>
-<BackColor>16777215</BackColor>
-<FontData>
-<FontName>Nunito</FontName>
-<CharacterSet>0</CharacterSet>
-<Height>-16</Height>
-<Weight>400</Weight>
-<Italic>0</Italic>
-<Underline>0</Underline>
-<StrikeOut>0</StrikeOut>
-<AntiAlias>1</AntiAlias>
-</FontData>
-<Alignment>0</Alignment>
-<TransBG>1</TransBG>
-<VSMode>0</VSMode>
-<HSMode>2</HSMode>
-<SBStyle>1</SBStyle>
-<SBSkin>Windows7</SBSkin>
-<Border>0</Border>
-<MouseOverSndMode>0</MouseOverSndMode>
-<MouseOverSound/>
-<MouseClickSndMode>0</MouseClickSndMode>
-<MouseClickSound/>
+<Options>
+<Text>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 MS Shell Dlg;}{\f1\fnil\fprq3\fcharset0 Nunito;}}
+\viewkind4\uc1\pard\f0\fs20 Lsit amet, consectetur adipiscing elit.\f1\fs24\par
+}
 </Text>
+<TransparentBackground>1</TransparentBackground>
+<BackgroundColor format="hex">ffffff</BackgroundColor>
+<ReadOnly>1</ReadOnly>
+<AutomaticWordSelection>1</AutomaticWordSelection>
+<VerticalScrollBar>1</VerticalScrollBar>
+<HorizontalScrollBar>0</HorizontalScrollBar>
+<AutodetectURL>0</AutodetectURL>
+<BorderStyle>0</BorderStyle>
+<RTLReadingOrder>0</RTLReadingOrder>
+<ContextMenu>1</ContextMenu>
+</Options>
 </Object>
 <HGuidelines/>
 <VGuidelines/>
