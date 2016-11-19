@@ -221,22 +221,6 @@ function setUserCreateForm (currentObject)
 	end
 end
 
-function PopUp (Status, showLoading)
-	if showLoading ~= 'NoLoading' then
-		ShowLoading = DialogEx.Show("LOADING", true, nil, nil);
-	end
-
-	--if ShowLoading == 0 then
-		if Status == "1" then
-			DialogEx.Show("SUCCESS", true, nil, nil);
-		else
-			DialogEx.Show("FAILED", true, nil, nil);
-		end
-	--else
-	--	Application.ExitScript();
-	--end
-end
-
 function setObjectsSizeAndPositions (pageName)
 	PAGEWIDTH = Page.GetSize().Width;
 	PAGEHEIGHT = Page.GetSize().Height;
@@ -534,7 +518,7 @@ function showMsgBox (title, msgtitle, msg, buttons)
 end</Script>
 <BookMarks count="0">
 </BookMarks>
-<DesignCodeLine>466</DesignCodeLine>
+<DesignCodeLine>157</DesignCodeLine>
 <DesignCodeCol>0</DesignCodeCol>
 </Globals>
 <Defaults>
