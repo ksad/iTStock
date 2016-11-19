@@ -3,13 +3,13 @@ function login ()
 	local password = Input.GetText("IN_PASSWORD");
 
 	if userName == "" then
-		Dialog.Message("Error", "Username can't be empty", MB_OK, MB_ICONSTOP, MB_DEFBUTTON1);
+		showMsgBox ("Error", "", "Username can't be empty", "OK");
 		DialogEx.SetFocus("IN_USERNAME");
 		Application.ExitScript();
 	end
 
 	if password == "" then
-		Dialog.Message("Error", "Password can't be empty", MB_OK, MB_ICONSTOP, MB_DEFBUTTON1);
+		showMsgBox ("Error", "", "Password can't be empty", "OK");
 		DialogEx.SetFocus("IN_PASSWORD");
 		Application.ExitScript();
 	end
@@ -26,8 +26,7 @@ function login ()
 		end
 
 		if not dbUsername then
-			Application.SaveValue("ITSTOCK", "ERROR_MSG", "The username "..userName.. " is not recognized.");
-			PopUp("0", "NoLoading");
+			showMsgBox ("Error", "", "The username '"..userName.. "' is not recognized.", "OK");
 			DialogEx.SetFocus("IN_USERNAME");
 		else
 			if dbStatus == '1' then
@@ -36,22 +35,18 @@ function login ()
 					EXIT = 1;
 					mySQLCursor, err = mySQLConnection:execute("UPDATE IT_USERS SET `Last_connection`=now() WHERE Username = '"..dbUsername.."';");
 					if err then
-						-- Insert into lof write function
-						Application.SaveValue("ITSTOCK", "ERROR_MSG", err);
-						PopUp("0", "NoLoading");
+						showMsgBox ("Error", "Updating Last_connection failed ()", err, "OK");
 						Application.ExitScript();
 					end
 					File.Run("AutoPlay\\htdocs\\images\\animations\\Loading.exe", "", "", SW_SHOWNORMAL, false);
 					Application.Sleep(3000);
 					DialogEx.Close(this);
 				else
-					Application.SaveValue("ITSTOCK", "ERROR_MSG", "Password incorrect.");
-					PopUp("0", "NoLoading");
+					showMsgBox ("Error", "", "Password incorrect.", "OK");
 					DialogEx.SetFocus("IN_USERNAME");
 				end
 			else
-				Application.SaveValue("ITSTOCK", "ERROR_MSG", "The account "..dbUsername.. " is disabled, Please contact your administrator.");
-				PopUp("0", "NoLoading");
+				showMsgBox ("Notice", "", "The account '"..dbUsername.. "' is disabled, Please contact your administrator.", "OK");
 			end
 		end
 		dbUsername = nil;
