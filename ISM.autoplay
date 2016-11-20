@@ -87,7 +87,7 @@ function dbConnect ()
 			end
 		end
 	else
-		Dialog.TimedMessage("Error coonection", "Your Database is not configured properly. Please check your configuration ...", 5000, MB_ICONSTOP);
+		showTimedMsgBox ("Error", "Your Database is not configured properly. Please check your configuration.", "5000");
 		local userAction = DialogEx.Show("DB_CONFIG", true, nil, nil);
 		if userAction == 2 then
 			Application.ExitScript();
