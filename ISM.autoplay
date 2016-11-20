@@ -76,8 +76,8 @@ function dbConnect ()
 
 		if String.Left(serverStatus , 3) ~= "[4]" then
 			errorMsg = String.Mid(serverStatus, 4, -1);
-			local userAction = Dialog.Message("Notice", errorMsg.."\r\n".."Would you like to change your configurattion ?", MB_YESNO, MB_ICONINFORMATION, MB_DEFBUTTON1);
-			if userAction == IDYES then
+			local userAction = showMsgBox ("Warning", "Database configuration", errorMsg.."\r\n".."Would you like to change your configuration ?", "YES|NO");
+			if userAction == "IDYES" then
 				local userAction = DialogEx.Show("DB_CONFIG", true, nil, nil);
 				if userAction == 2 then
 					Application.ExitScript();
@@ -229,7 +229,7 @@ function setObjectsSizeAndPositions (pageName)
 	
 	error = Application.GetLastError();
 	if (error ~= XML.OK) then
-	    Dialog.Message("Error", _tblErrorMessages[error]);
+	    showMsgBox ("Error", "XML Loading", _tblErrorMessages[error], "OK");
 	end
 	
 	allObjects = Page.EnumerateObjects();
@@ -334,7 +334,7 @@ function setObjectsSizeAndPositions (pageName)
 			Plugin.SetSize(object, NewWidth, NewHeight);
 			Plugin.SetPos(object, NewX, NewY);
 		else
-			Dialog.Message("Error", object.." : Object undifined", MB_OK, MB_ICONSTOP, MB_DEFBUTTON1);
+			showMsgBox ("Error", "", object.." : Object undifined", "OK");
 		end
 	end
 end
@@ -404,7 +404,7 @@ function saveXmlData()
 			elseif objectType ==40  and  String.Find(object, "IGNORED", 1, false) == -1 then
 				objProp = Plugin.GetProperties(object);
 			else
-				Dialog.Message("Error", object.." : Object undifined", MB_OK, MB_ICONSTOP, MB_DEFBUTTON1);
+				showMsgBox ("Error", "", object.." : Object undifined", "OK");
 			end
 
 			xml = xml..'\t\t&lt;'..object..' Width = "'..objProp.Width..'" Height = "'..objProp.Height..'" PosX = "'..objProp.X..'" PosY = "'..objProp.Y..'"&gt;\r\n';
@@ -485,7 +485,7 @@ function checkGitRepo ()
 		local nRemoteCommits = String.ToNumber(TextFile.ReadToString("AutoPlay\\htdocs\\batchs\\Temp\\remote_rep.tmp"));
 
 		if nLocalCommits &lt; nRemoteCommits then
-			Dialog.Message("Info", "Git repository is not up to date. Please pull the new version\r\n"..nRemoteCommits-nLocalCommits.." new commits", MB_OKCANCEL, MB_ICONINFORMATION, MB_DEFBUTTON1);
+			showMsgBox ("Notice", "Git repository", "Your repo is not up to date. Please pull the new version\r\n"..nRemoteCommits-nLocalCommits.." new commits", "OK");
 			--[[local commitsList = TextFile.ReadToString("AutoPlay\\htdocs\\batchs\\Temp\\commits_diff.tmp");
 
 			if String.Find(commitsList, "[TMP]:", 1, false) == -1 then
