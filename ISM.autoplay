@@ -27040,6 +27040,7 @@ end</Script>
 local msgtitle = Application.LoadValue("MSGBOX", "msgtitle");
 local msg = Application.LoadValue("MSGBOX", "msg");
 local buttons = Application.LoadValue("MSGBOX", "buttons");
+timer = Application.LoadValue("MSGBOX", "timer");
 
 Image.Load("IMG_ICONE", "AutoPlay\\htdocs\\images\\msgbox\\"..title.."\\icone.png");
 Image.Load("IMG_TITLE_BAR", "AutoPlay\\htdocs\\images\\msgbox\\"..title.."\\title_bar.png");
@@ -27050,6 +27051,12 @@ if msgtitle ~= "" then
 	RichText.SetText("RT_MSG", "- "..msgtitle.." :\r\n"..msg, false);
 else
 	RichText.SetText("RT_MSG", msg, false);
+end
+
+if timer ~= "" then
+	buttons = "";
+	timer = String.ToNumber(timer);
+	DialogEx.StartTimer(1000, 1);
 end
 
 local Line = 1;
@@ -27170,17 +27177,17 @@ end</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>113</DesignCodeLine>
-<DesignCodeCol>108</DesignCodeCol>
+<DesignCodeLine>120</DesignCodeLine>
+<DesignCodeCol>102</DesignCodeCol>
 <BookMarks count="92">
-AAAAAAEAAAACAAAAAwAAAAUAAAAGAAAABwAAAAgAAAAKAAAACwAAAA0AAAAQAAAA
-EQAAABIAAAAUAAAAFQAAABcAAAAcAAAAHQAAAB8AAAAgAAAAIQAAACIAAAAjAAAA
-JQAAACYAAAAnAAAAKAAAACoAAAArAAAALAAAAC4AAAAvAAAAMAAAADYAAAA3AAAA
-OQAAADoAAAA7AAAAPAAAAD0AAAA+AAAAQwAAAEYAAABHAAAASAAAAEkAAABKAAAA
-SwAAAEwAAABNAAAATgAAAE8AAABQAAAAUQAAAFIAAABTAAAAVAAAAFUAAABWAAAA
-VwAAAFgAAABZAAAAWgAAAFsAAABcAAAAXQAAAF4AAABfAAAAYAAAAGEAAABiAAAA
-YwAAAGQAAABlAAAAZgAAAGcAAABoAAAAagAAAGsAAABsAAAAbQAAAG4AAABvAAAA
-cAAAAHIAAAB1AAAAdgAAAHcAAAB5AAAAfQAAAH8AAAA=
+AAAAAAEAAAACAAAAAwAAAAYAAAAHAAAACAAAAAkAAAALAAAADAAAAA4AAAAXAAAA
+GAAAABkAAAAbAAAAHAAAAB4AAAAjAAAAJAAAACYAAAAnAAAAKAAAACkAAAAqAAAA
+LAAAAC0AAAAuAAAALwAAADEAAAAyAAAAMwAAADUAAAA2AAAANwAAAD0AAAA+AAAA
+QAAAAEEAAABCAAAAQwAAAEQAAABFAAAASgAAAE0AAABOAAAATwAAAFAAAABRAAAA
+UgAAAFMAAABUAAAAVQAAAFYAAABXAAAAWAAAAFkAAABaAAAAWwAAAFwAAABdAAAA
+XgAAAF8AAABgAAAAYQAAAGIAAABjAAAAZAAAAGUAAABmAAAAZwAAAGgAAABpAAAA
+agAAAGsAAABsAAAAbQAAAG4AAABvAAAAcQAAAHIAAABzAAAAdAAAAHUAAAB2AAAA
+dwAAAHkAAAB8AAAAfQAAAH4AAACAAAAAhAAAAIYAAAA=
 </BookMarks>
 </Event>
 <Event>
@@ -27189,37 +27196,52 @@ cAAAAHIAAAB1AAAAdgAAAHcAAAB5AAAAfQAAAH8AAAA=
 <Script>Image.SetSize("IMG_BG_BODY", 467, 80);
 RichText.SetSize("RT_MSG", 451, 15);
 
+Image.Load("IMG_ICONE", "AutoPlay\\htdocs\\images\\msgbox\\empty_icone.png");
+Image.Load("IMG_TITLE_BAR", "AutoPlay\\htdocs\\images\\msgbox\\empty_title_bar.png");
+Image.Load("IMG_CLOSE", "AutoPlay\\htdocs\\images\\msgbox\\empty_close.png");
+Label.SetText("LB_TITLE", "");
+
 if tblButtons then
 	for i,button in pairs (tblButtons) do
 		DialogEx.DeleteObject("BTN_"..button);
 	end
 end
 
+timer = "";
+
 Application.SaveValue("MSGBOX", "title", "");
 Application.SaveValue("MSGBOX", "msgtitle", "");
 Application.SaveValue("MSGBOX", "msg", "");
-Application.SaveValue("MSGBOX", "buttons", "");</Script>
+Application.SaveValue("MSGBOX", "buttons", "");
+Application.SaveValue("MSGBOX", "timer", "");</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>8</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeLine>6</DesignCodeLine>
+<DesignCodeCol>28</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
 <Event>
 <Name>On Timer</Name>
 <Args>number e_ID</Args>
-<Script/>
+<Script>if e_ID == 1 then
+	--UpdateTimer(timer);
+	timer = timer - 1000;
+	if timer == 0 then
+		DialogEx.StopTimer(1);
+		DialogEx.Close(this);
+	end
+end</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeLine>7</DesignCodeLine>
+<DesignCodeCol>3</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
