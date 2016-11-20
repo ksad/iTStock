@@ -515,10 +515,24 @@ function showMsgBox (title, msgtitle, msg, buttons)
 	DialogEx.Show("MSGBOX", true, nil, nil);
 
 	return Application.LoadValue("MSGBOX", "PRESSED_KEY");
+end
+
+function showTimedMsgBox (title, msg, timer)
+	local checkMsgBoxTemplate = Folder.Find("AutoPlay\\htdocs\\images\\msgbox", title, false, nil);
+	if checkMsgBoxTemplate == nil then
+		Dialog.Message("Error", '"'..title..'" : template not found.\r\n'..msg, MB_OK, MB_ICONSTOP, MB_DEFBUTTON1);
+		Application.ExitScript();
+	end
+
+	Application.SaveValue("MSGBOX", "title", title);
+	Application.SaveValue("MSGBOX", "msg", msg);
+	Application.SaveValue("MSGBOX", "timer", timer);
+
+	DialogEx.Show("MSGBOX", true, nil, nil);
 end</Script>
 <BookMarks count="0">
 </BookMarks>
-<DesignCodeLine>157</DesignCodeLine>
+<DesignCodeLine>464</DesignCodeLine>
 <DesignCodeCol>0</DesignCodeCol>
 </Globals>
 <Defaults>
