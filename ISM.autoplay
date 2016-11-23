@@ -17463,7 +17463,7 @@ login ();</Script>
 <VGuidelines/>
 </Page>
 </PageDialog>
-<PageDialog width="480" height="400" dialog_title="Database configuration" dialog_style="0" movable="1" use_custom_icon="1" custom_icon="AutoPlay\Icons\server.ico" always_on_top="0" resizable="0" min_width="480" min_height="300" fit_custom_mask_to_window="1" custom_mask="">
+<PageDialog width="480" height="400" dialog_title="" dialog_style="0" movable="1" use_custom_icon="1" custom_icon="AutoPlay\Icons\server.ico" always_on_top="0" resizable="0" min_width="480" min_height="300" fit_custom_mask_to_window="1" custom_mask="">
 <Page>
 <Name>DB_CONFIG</Name>
 <InheritObs/>
@@ -17499,14 +17499,19 @@ login ();</Script>
 <Event>
 <Name>On Show</Name>
 <Args/>
-<Script>require("AutoPlay\\htdocs\\sources\\pg_database");</Script>
+<Script>require("AutoPlay\\htdocs\\sources\\pg_database");
+if Application.LoadValue("ITStock", "TRANS_FLAG_"..Application.GetCurrentDialog()) ~= "Y" then
+	TransPage("database");
+end
+
+Window.SetText(DialogEx.GetWndHandle(), Trans("db.config.dialog.title", "database"));</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>50</DesignCodeCol>
+<DesignCodeLine>2</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -17518,11 +17523,11 @@ Input.SetEnabled("IN_DB_USERNAME_DBCF", true);
 Input.SetEnabled("IN_DB_PASSWORD_DBCF", true);
 Input.SetEnabled("IN_DB_ADDRESS_DBCF", true);
 Input.SetEnabled("IN_DB_PORT_DBCF", true);
-Input.SetText("IN_DB_NAME_DBCF", "Database");
-Input.SetText("IN_DB_USERNAME_DBCF", "Username");
-Input.SetText("IN_DB_PASSWORD_DBCF", "Password");
-Input.SetText("IN_DB_PORT_DBCF", "Port");
-Input.SetText("IN_DB_ADDRESS_DBCF", "Address");
+Input.SetText("IN_DB_NAME_DBCF", Trans("db.input.dbname", "database"));
+Input.SetText("IN_DB_USERNAME_DBCF", Trans("db.input.username", "database"));
+Input.SetText("IN_DB_PASSWORD_DBCF", Trans("db.input.password", "database"));
+Input.SetText("IN_DB_PORT_DBCF", Trans("db.input.port", "database"));
+Input.SetText("IN_DB_ADDRESS_DBCF", Trans("db.input.host", "database"));
 
 Image.Load("IMG_DB_NAME_DBCF", "AutoPlay\\htdocs\\images\\inputs\\input.png");
 Image.Load("IMG_DB_USERNAME_DBCF", "AutoPlay\\htdocs\\images\\inputs\\input.png");
@@ -17541,8 +17546,8 @@ Image.SetEnabled("IMG_SAVE_CONFIG_SERVER", true);</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>22</DesignCodeLine>
-<DesignCodeCol>49</DesignCodeCol>
+<DesignCodeLine>9</DesignCodeLine>
+<DesignCodeCol>72</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -17645,212 +17650,6 @@ Image.SetEnabled("IMG_SAVE_CONFIG_SERVER", true);</Script>
 </BookMarks>
 </Event>
 <Object>
-<Type>1</Type>
-<Name>LB_SERVER_STATUS</Name>
-<VisibleAtDesignTime>1</VisibleAtDesignTime>
-<VisibleAtRunTime>0</VisibleAtRunTime>
-<Locked>0</Locked>
-<Enabled>1</Enabled>
-<ToolTip/>
-<Cursor>0</Cursor>
-<Group>0</Group>
-<MaintainAspectRatio>1</MaintainAspectRatio>
-<Pin>0</Pin>
-<TabIndex>-1</TabIndex>
-<AutoResize>0</AutoResize>
-<Coordinates>
-<Top>8</Top>
-<Bottom>39</Bottom>
-<Left>62</Left>
-<Right>238</Right>
-</Coordinates>
-<Ratios>
-<WidthRatio>-1.000000</WidthRatio>
-<HeightRatio>-1.000000</HeightRatio>
-</Ratios>
-<Event>
-<Name>On Click</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>1080229888</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Right-Click</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>1079402496</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Enter</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>1080229888</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Leave</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>1080242176</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Actions/>
-<Text>
-<Body>{SERVER_STATUS}</Body>
-<NormalColor>16777215</NormalColor>
-<HighlightColor>16777215</HighlightColor>
-<MouseDownColor>16777215</MouseDownColor>
-<DisabledColor>16777215</DisabledColor>
-<FontData>
-<FontName>Nunito</FontName>
-<CharacterSet>0</CharacterSet>
-<Height>-19</Height>
-<Weight>400</Weight>
-<Italic>1</Italic>
-<Underline>0</Underline>
-<StrikeOut>0</StrikeOut>
-<AntiAlias>1</AntiAlias>
-</FontData>
-<Alignment>0</Alignment>
-<Orientation>0</Orientation>
-<AutoSize>1</AutoSize>
-<MouseOverSndMode>0</MouseOverSndMode>
-<MouseOverSound/>
-<MouseClickSndMode>0</MouseClickSndMode>
-<MouseClickSound/>
-<OriginalRect>
-<Top>8</Top>
-<Bottom>39</Bottom>
-<Left>62</Left>
-<Right>238</Right>
-</OriginalRect>
-</Text>
-</Object>
-<Object>
-<Type>3</Type>
-<Name>IMG_SERVER_STATUS</Name>
-<VisibleAtDesignTime>1</VisibleAtDesignTime>
-<VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>0</Locked>
-<Enabled>1</Enabled>
-<ToolTip/>
-<Cursor>0</Cursor>
-<Group>0</Group>
-<MaintainAspectRatio>1</MaintainAspectRatio>
-<Pin>1</Pin>
-<TabIndex>-1</TabIndex>
-<AutoResize>0</AutoResize>
-<Coordinates>
-<Top>13</Top>
-<Bottom>29</Bottom>
-<Left>38</Left>
-<Right>54</Right>
-</Coordinates>
-<Ratios>
-<WidthRatio>-1.000000</WidthRatio>
-<HeightRatio>-1.000000</HeightRatio>
-</Ratios>
-<Event>
-<Name>On Click</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>778331501</DesignCodeLine>
-<DesignCodeCol>6778480</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Right-Click</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>6778480</DesignCodeLine>
-<DesignCodeCol>1079902311</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Enter</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>1852845676</DesignCodeLine>
-<DesignCodeCol>6750311</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Leave</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>1781399593</DesignCodeLine>
-<DesignCodeCol>1073768304</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Actions/>
-<NormalImage>
-<Filename>AutoPlay\\htdocs\\images\\icons\\server_status.png</Filename>
-<UseTransColor>0</UseTransColor>
-<TransClr>16777215</TransClr>
-<TransTolerance>10</TransTolerance>
-<Opacity>100</Opacity>
-<HTMode>0</HTMode>
-</NormalImage>
-<MouseOverSndMode>0</MouseOverSndMode>
-<MouseOverSound/>
-<MouseClickSndMode>0</MouseClickSndMode>
-<MouseClickSound/>
-</Object>
-<Object>
 <Type>3</Type>
 <Name>IMG_DB_NAME_DBCF</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
@@ -17865,8 +17664,8 @@ Image.SetEnabled("IMG_SAVE_CONFIG_SERVER", true);</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>63</Top>
-<Bottom>103</Bottom>
+<Top>69</Top>
+<Bottom>109</Bottom>
 <Left>100</Left>
 <Right>380</Right>
 </Coordinates>
@@ -17959,8 +17758,8 @@ Image.SetEnabled("IMG_SAVE_CONFIG_SERVER", true);</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>112</Top>
-<Bottom>152</Bottom>
+<Top>118</Top>
+<Bottom>158</Bottom>
 <Left>100</Left>
 <Right>380</Right>
 </Coordinates>
@@ -18053,8 +17852,8 @@ Image.SetEnabled("IMG_SAVE_CONFIG_SERVER", true);</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>163</Top>
-<Bottom>203</Bottom>
+<Top>169</Top>
+<Bottom>209</Bottom>
 <Left>100</Left>
 <Right>380</Right>
 </Coordinates>
@@ -18147,8 +17946,8 @@ Image.SetEnabled("IMG_SAVE_CONFIG_SERVER", true);</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>212</Top>
-<Bottom>252</Bottom>
+<Top>218</Top>
+<Bottom>258</Bottom>
 <Left>100</Left>
 <Right>380</Right>
 </Coordinates>
@@ -18241,8 +18040,8 @@ Image.SetEnabled("IMG_SAVE_CONFIG_SERVER", true);</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>262</Top>
-<Bottom>302</Bottom>
+<Top>268</Top>
+<Bottom>308</Bottom>
 <Left>100</Left>
 <Right>380</Right>
 </Coordinates>
@@ -18335,8 +18134,8 @@ Image.SetEnabled("IMG_SAVE_CONFIG_SERVER", true);</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>218</Top>
-<Bottom>248</Bottom>
+<Top>224</Top>
+<Bottom>254</Bottom>
 <Left>105</Left>
 <Right>375</Right>
 </Coordinates>
@@ -18394,7 +18193,7 @@ end</Script>
 </Event>
 <Actions/>
 <Text>
-<Body>Port</Body>
+<Body>db.input.port</Body>
 <TextColor>12632256</TextColor>
 <BackgroundColor>16777215</BackgroundColor>
 <FontData>
@@ -18437,8 +18236,8 @@ end</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>168</Top>
-<Bottom>198</Bottom>
+<Top>174</Top>
+<Bottom>204</Bottom>
 <Left>105</Left>
 <Right>375</Right>
 </Coordinates>
@@ -18496,7 +18295,7 @@ end</Script>
 </Event>
 <Actions/>
 <Text>
-<Body>Password</Body>
+<Body>db.input.password</Body>
 <TextColor>12632256</TextColor>
 <BackgroundColor>16777215</BackgroundColor>
 <FontData>
@@ -18539,8 +18338,8 @@ end</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>118</Top>
-<Bottom>148</Bottom>
+<Top>124</Top>
+<Bottom>154</Bottom>
 <Left>105</Left>
 <Right>375</Right>
 </Coordinates>
@@ -18598,7 +18397,7 @@ end</Script>
 </Event>
 <Actions/>
 <Text>
-<Body>Username</Body>
+<Body>db.input.username</Body>
 <TextColor>12632256</TextColor>
 <BackgroundColor>16777215</BackgroundColor>
 <FontData>
@@ -18641,8 +18440,8 @@ end</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>68</Top>
-<Bottom>98</Bottom>
+<Top>74</Top>
+<Bottom>104</Bottom>
 <Left>105</Left>
 <Right>375</Right>
 </Coordinates>
@@ -18700,7 +18499,7 @@ end</Script>
 </Event>
 <Actions/>
 <Text>
-<Body>Database</Body>
+<Body>db.input.dbname</Body>
 <TextColor>12632256</TextColor>
 <BackgroundColor>16777215</BackgroundColor>
 <FontData>
@@ -18743,10 +18542,10 @@ end</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>9</Top>
-<Bottom>34</Bottom>
+<Top>12</Top>
+<Bottom>47</Bottom>
 <Left>7</Left>
-<Right>32</Right>
+<Right>42</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -18823,104 +18622,6 @@ end</Script>
 <MouseClickSound/>
 </Object>
 <Object>
-<Type>3</Type>
-<Name>IMG_SAVE_CONFIG_SERVER</Name>
-<VisibleAtDesignTime>1</VisibleAtDesignTime>
-<VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>0</Locked>
-<Enabled>1</Enabled>
-<ToolTip/>
-<Cursor>1</Cursor>
-<Group>0</Group>
-<MaintainAspectRatio>1</MaintainAspectRatio>
-<Pin>0</Pin>
-<TabIndex>-1</TabIndex>
-<AutoResize>0</AutoResize>
-<Coordinates>
-<Top>325</Top>
-<Bottom>370</Bottom>
-<Left>163</Left>
-<Right>320</Right>
-</Coordinates>
-<Ratios>
-<WidthRatio>-1.000000</WidthRatio>
-<HeightRatio>-1.000000</HeightRatio>
-</Ratios>
-<Event>
-<Name>On Click</Name>
-<Args/>
-<Script>saveDatabaseConfiguration();</Script>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>28</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Right-Click</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Enter</Name>
-<Args/>
-<Script>if sqlServerStatus == 4 then
-	Image.Load("IMG_SAVE_CONFIG_SERVER", "AutoPlay\\htdocs\\images\\icons\\btn_save_hover.png");
-end</Script>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>1</DesignCodeLine>
-<DesignCodeCol>17</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Leave</Name>
-<Args/>
-<Script>if sqlServerStatus == 4 then
-	Image.Load("IMG_SAVE_CONFIG_SERVER", "AutoPlay\\htdocs\\images\\icons\\btn_save.png");
-end</Script>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>20</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Actions/>
-<NormalImage>
-<Filename>AutoPlay\\htdocs\\images\\buttons\\btn_save.png</Filename>
-<UseTransColor>0</UseTransColor>
-<TransClr>16777215</TransClr>
-<TransTolerance>10</TransTolerance>
-<Opacity>100</Opacity>
-<HTMode>0</HTMode>
-</NormalImage>
-<MouseOverSndMode>0</MouseOverSndMode>
-<MouseOverSound/>
-<MouseClickSndMode>0</MouseClickSndMode>
-<MouseClickSound/>
-</Object>
-<Object>
 <Type>1</Type>
 <Name>LB_CHECK_DB_CONNECTION</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
@@ -18935,10 +18636,10 @@ end</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>195</Top>
-<Bottom>224</Bottom>
-<Left>59</Left>
-<Right>461</Right>
+<Top>204</Top>
+<Bottom>233</Bottom>
+<Left>154</Left>
+<Right>327</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -19002,7 +18703,7 @@ end</Script>
 </Event>
 <Actions/>
 <Text>
-<Body>Checking connection to database, Please wait ...</Body>
+<Body>db.check.connection</Body>
 <NormalColor>16777215</NormalColor>
 <HighlightColor>16777215</HighlightColor>
 <MouseDownColor>16777215</MouseDownColor>
@@ -19025,10 +18726,10 @@ end</Script>
 <MouseClickSndMode>0</MouseClickSndMode>
 <MouseClickSound/>
 <OriginalRect>
-<Top>195</Top>
-<Bottom>224</Bottom>
-<Left>59</Left>
-<Right>461</Right>
+<Top>204</Top>
+<Bottom>233</Bottom>
+<Left>154</Left>
+<Right>327</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -19047,10 +18748,10 @@ end</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>182</Top>
-<Bottom>227</Bottom>
-<Left>17</Left>
-<Right>62</Right>
+<Top>161</Top>
+<Bottom>206</Bottom>
+<Left>218</Left>
+<Right>263</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -19141,8 +18842,8 @@ end</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>268</Top>
-<Bottom>298</Bottom>
+<Top>274</Top>
+<Bottom>304</Bottom>
 <Left>105</Left>
 <Right>375</Right>
 </Coordinates>
@@ -19200,7 +18901,7 @@ end</Script>
 </Event>
 <Actions/>
 <Text>
-<Body>Address</Body>
+<Body>db.input.host</Body>
 <TextColor>12632256</TextColor>
 <BackgroundColor>16777215</BackgroundColor>
 <FontData>
@@ -19227,6 +18928,435 @@ end</Script>
 <MaskRetMode>0</MaskRetMode>
 <ReadOnly>0</ReadOnly>
 </Box>
+</Object>
+<Object>
+<Type>0</Type>
+<Name>BTN_SAVE_DB_CONFIG</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>1</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>0</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>335</Top>
+<Bottom>380</Bottom>
+<Left>80</Left>
+<Right>238</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script>Debug.Clear();
+saveDatabaseConfiguration();</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>14</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Right-Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Enter</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Leave</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<BUTTON>
+<Filename>AutoPlay\htdocs\images\buttons\btn_save.btn</Filename>
+<Style>0</Style>
+<State>0</State>
+<Caption>db.button.config</Caption>
+<Align>1</Align>
+<UpColor>14067297</UpColor>
+<HighlightColor>14067297</HighlightColor>
+<DownColor>14067297</DownColor>
+<DisabledColor>10526880</DisabledColor>
+<FontData>
+<FontName>Nunito</FontName>
+<CharacterSet>0</CharacterSet>
+<Height>-16</Height>
+<Weight>700</Weight>
+<Italic>0</Italic>
+<Underline>0</Underline>
+<StrikeOut>0</StrikeOut>
+<AntiAlias>1</AntiAlias>
+</FontData>
+<CapXOff>0</CapXOff>
+<CapYOff>0</CapYOff>
+<LeftMargin>0</LeftMargin>
+<RightMargin>33</RightMargin>
+<MouseOverSndMode>1</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>1</MouseClickSndMode>
+<MouseClickSound/>
+</BUTTON>
+</Object>
+<Object>
+<Type>2</Type>
+<Name>PH_SERVER_STATUS</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>0</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>0</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>0</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>0</Top>
+<Bottom>59</Bottom>
+<Left>64</Left>
+<Right>408</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>2573</DesignCodeLine>
+<DesignCodeCol>1078575104</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Right-Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>1081665536</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Enter</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>4</DesignCodeLine>
+<DesignCodeCol>15</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Leave</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<Text>
+<Body>sql.server.config.status#</Body>
+<NormalColor>16777215</NormalColor>
+<HighlightColor>16777215</HighlightColor>
+<MouseDownColor>16777215</MouseDownColor>
+<DisabledColor>16777215</DisabledColor>
+<BorderColor>0</BorderColor>
+<BackColor>16777215</BackColor>
+<FontData>
+<FontName>Nunito</FontName>
+<CharacterSet>0</CharacterSet>
+<Height>-19</Height>
+<Weight>400</Weight>
+<Italic>0</Italic>
+<Underline>0</Underline>
+<StrikeOut>0</StrikeOut>
+<AntiAlias>1</AntiAlias>
+</FontData>
+<Alignment>0</Alignment>
+<TransBG>1</TransBG>
+<VSMode>0</VSMode>
+<HSMode>2</HSMode>
+<SBStyle>1</SBStyle>
+<SBSkin>Windows7</SBSkin>
+<Border>0</Border>
+<MouseOverSndMode>0</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>0</MouseClickSndMode>
+<MouseClickSound/>
+</Text>
+</Object>
+<Object>
+<Type>3</Type>
+<Name>IMG_SERVER_STATUS</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>0</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>1</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>33</Top>
+<Bottom>49</Bottom>
+<Left>29</Left>
+<Right>45</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>778331501</DesignCodeLine>
+<DesignCodeCol>6778480</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Right-Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>6778480</DesignCodeLine>
+<DesignCodeCol>1079902311</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Enter</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>1852845676</DesignCodeLine>
+<DesignCodeCol>6750311</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Leave</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>1781399593</DesignCodeLine>
+<DesignCodeCol>1073768304</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<NormalImage>
+<Filename>AutoPlay\\htdocs\\images\\icons\\server_status.png</Filename>
+<UseTransColor>0</UseTransColor>
+<TransClr>16777215</TransClr>
+<TransTolerance>10</TransTolerance>
+<Opacity>100</Opacity>
+<HTMode>0</HTMode>
+</NormalImage>
+<MouseOverSndMode>0</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>0</MouseClickSndMode>
+<MouseClickSound/>
+</Object>
+<Object>
+<Type>0</Type>
+<Name>BTN_CANCEL</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>1</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>0</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>336</Top>
+<Bottom>381</Bottom>
+<Left>242</Left>
+<Right>400</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script>DialogEx.Close(this);</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>21</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Right-Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Enter</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Leave</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<BUTTON>
+<Filename>AutoPlay\htdocs\images\buttons\btn_cancel.btn</Filename>
+<Style>0</Style>
+<State>0</State>
+<Caption>db.button.cancel</Caption>
+<Align>1</Align>
+<UpColor>5558015</UpColor>
+<HighlightColor>5558015</HighlightColor>
+<DownColor>5558015</DownColor>
+<DisabledColor>5558015</DisabledColor>
+<FontData>
+<FontName>Nunito</FontName>
+<CharacterSet>0</CharacterSet>
+<Height>-16</Height>
+<Weight>700</Weight>
+<Italic>0</Italic>
+<Underline>0</Underline>
+<StrikeOut>0</StrikeOut>
+<AntiAlias>1</AntiAlias>
+</FontData>
+<CapXOff>0</CapXOff>
+<CapYOff>0</CapYOff>
+<LeftMargin>0</LeftMargin>
+<RightMargin>33</RightMargin>
+<MouseOverSndMode>1</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>1</MouseClickSndMode>
+<MouseClickSound/>
+</BUTTON>
 </Object>
 <HGuidelines/>
 <VGuidelines/>
@@ -19313,8 +19443,8 @@ Image.Load("IMG_TOGGLE_YES_NO", "AutoPlay\\htdocs\\images\\icons\\switch_yes_no_
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeLine>35</DesignCodeLine>
+<DesignCodeCol>67</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -21615,7 +21745,7 @@ end</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>1</DesignCodeLine>
+<DesignCodeLine>87</DesignCodeLine>
 <DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
@@ -25908,8 +26038,8 @@ end</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>120</DesignCodeLine>
-<DesignCodeCol>102</DesignCodeCol>
+<DesignCodeLine>2</DesignCodeLine>
+<DesignCodeCol>8</DesignCodeCol>
 <BookMarks count="92">
 AAAAAAEAAAACAAAAAwAAAAYAAAAHAAAACAAAAAkAAAALAAAADAAAAA4AAAAXAAAA
 GAAAABkAAAAbAAAAHAAAAB4AAAAjAAAAJAAAACYAAAAnAAAAKAAAACkAAAAqAAAA

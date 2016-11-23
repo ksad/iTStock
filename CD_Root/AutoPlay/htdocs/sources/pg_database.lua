@@ -15,23 +15,23 @@ function checkSQLServerStatus(dbName, dbUser, dbPassword, dbAddress, dbPort)
 		sqlServerStatus = Service.Query("mysql57", "mysql57");
 
 		if sqlServerStatus == 0 then
-			serverStatusMsg = "not found";
+			serverStatusMsg = Trans("sql.server.status0", "database");
 		elseif sqlServerStatus == 1 then
-			serverStatusMsg = "is not running";
+			serverStatusMsg = Trans("sql.server.status1", "database");
 		elseif sqlServerStatus == 2 then
-			serverStatusMsg = "is starting";
+			serverStatusMsg = Trans("sql.server.status2", "database");
 		elseif sqlServerStatus == 3 then
-			serverStatusMsg = "is stopping"
+			serverStatusMsg = Trans("sql.server.status3", "database");
 		elseif sqlServerStatus == 4 then
-			serverStatusMsg = "is running"
+			serverStatusMsg = Trans("sql.server.status4", "database");
 		elseif sqlServerStatus == 5 then
-			serverStatusMsg = "continue is pending";
+			serverStatusMsg = Trans("sql.server.status5", "database");
 		elseif sqlServerStatus == 6 then
-			serverStatusMsg = "pause is pending"
+			serverStatusMsg = Trans("sql.server.status6", "database");
 		elseif sqlServerStatus == 7 then
-			serverStatusMsg = "is paused";
+			serverStatusMsg = Trans("sql.server.status7", "database");
 		elseif sqlServerStatus == -1 then
-			serverStatusMsg = "error";
+			serverStatusMsg = Trans("sql.server.status#", "database");
 		end
 	else
 		MySQLConnection, err = MySQL:connect(dbName, dbUser, dbPassword, dbAddress, dbPort);
@@ -40,7 +40,7 @@ function checkSQLServerStatus(dbName, dbUser, dbPassword, dbAddress, dbPort)
 			serverStatusMsg = err;
 		else
 			sqlServerStatus = 4;
-			serverStatusMsg = "is running"
+			serverStatusMsg = Trans("sql.server.status4", "database");
 		end
 	end
 	return "["..sqlServerStatus.."]"..serverStatusMsg;
@@ -101,7 +101,11 @@ function setDbConfigForm (currentObject, mode)
 		end
 		if object == currentObject then
 			local objectText = Input.GetText(object);
-			if objectText == "Database" or objectText == "Username" or objectText == "Password" or objectText == "Port" or objectText == "Address" then
+			if objectText == Trans("db.input.dbname", "database")
+				or objectText == Trans("db.input.username", "database")
+				or objectText == Trans("db.input.password", "database")
+				or objectText == Trans("db.input.port", "database")
+				or objectText == Trans("db.input.host", "database") then
 				Input.SetText(currentObject, "");
 			else
 				Input.SetSelection(currentObject, 1, -1);
@@ -114,15 +118,15 @@ function setDbConfigForm (currentObject, mode)
 
 			if objectType == 7 and Input.GetText(object) == "" then
 				if String.Find(object, "DB_NAME", 1, false) ~= -1 then
-					Input.SetText(object, "Database");
+					Input.SetText(object, Trans("db.input.dbname", "database"));
 				elseif String.Find(object, "USERNAME", 1, false) ~= -1 then
-					Input.SetText(object, "Username");
+					Input.SetText(object, Trans("db.input.username", "database"));
 				elseif String.Find(object, "PASSWORD", 1, false) ~= -1 then
-					Input.SetText(object, "Password");
+					Input.SetText(object, Trans("db.input.password", "database"));
 				elseif String.Find(object, "PORT", 1, false) ~= -1 then
-					Input.SetText(object, "Port");
+					Input.SetText(object, Trans("db.input.port", "database"));
 				elseif String.Find(object, "ADDRESS", 1, false) ~= -1 then
-					Input.SetText(object, "Address");
+					Input.SetText(object, Trans("db.input.host", "database"));
 				else
 					Input.SetText(object, "...");
 				end
@@ -139,40 +143,56 @@ function saveDatabaseConfiguration ()
 	local serverAddress = Input.GetText("IN_DB_ADDRESS_DBCF");
 	local port = Input.GetText("IN_DB_PORT_DBCF");
 
-	if databaseName == "" or databaseName == "Database" then
+	if databaseName == "" or databaseName == Trans("db.input.dbname", "database") then
 		Image.Load("IMG_DB_NAME_DBCF", "AutoPlay\\htdocs\\images\\inputs\\input_mandatory.png");
-		Application.SetLastError(0616);
-	end
-
-	if userName == "" or userName == "Username" then
-		Image.Load("IMG_DB_USERNAME_DBCF", "AutoPlay\\htdocs\\images\\inputs\\input_mandatory.png");
-		Application.SetLastError(0616);
-	end
-
-	if password == "" or password == "Password" then
-		Image.Load("IMG_DB_PASSWORD_DBCF", "AutoPlay\\htdocs\\images\\inputs\\input_mandatory.png");
-		Application.SetLastError(0616);
-	end
-
-	if port == "" or port == "Port" then
-		Image.Load("IMG_DB_PORT_DBCF", "AutoPlay\\htdocs\\images\\inputs\\input_mandatory.png");
-		Application.SetLastError(0616);
+		Application.SaveValue("ItStock", "FORM_LAST_ERROR", "Error616");
 	else
-		local portIsValid = String.ToNumber(port);
-		if portIsValid == 0 then
-			showMsgBox ("Error", "", "Invalid port number.", "OK");
-			Image.Load("IMG_DB_PORT_DBCF", "AutoPlay\\htdocs\\images\\inputs\\input_mandatory.png");
-			Application.SetLastError(0616);
+		Application.SaveValue("ItStock", "FORM_LAST_ERROR", "");
+	end
+
+	if userName == "" or userName == Trans("db.input.username", "database") then
+		Image.Load("IMG_DB_USERNAME_DBCF", "AutoPlay\\htdocs\\images\\inputs\\input_mandatory.png");
+		Application.SaveValue("ItStock", "FORM_LAST_ERROR", "Error616");
+	else
+		if Application.LoadValue("ItStock", "FORM_LAST_ERROR") == "" then
+			Application.SaveValue("ItStock", "FORM_LAST_ERROR", "");
 		end
 	end
 
-	if serverAddress == "" or serverAddress == "Address" then
-		Image.Load("IMG_DB_ADDRESS_DBCF", "AutoPlay\\htdocs\\images\\inputs\\input_mandatory.png");
-		Application.SetLastError(0616);
+	if password == "" or password == Trans("db.input.password", "database") then
+		Image.Load("IMG_DB_PASSWORD_DBCF", "AutoPlay\\htdocs\\images\\inputs\\input_mandatory.png");
+		Application.SaveValue("ItStock", "FORM_LAST_ERROR", "Error616");
+	else
+		if Application.LoadValue("ItStock", "FORM_LAST_ERROR") == "" then
+			Application.SaveValue("ItStock", "FORM_LAST_ERROR", "");
+		end
 	end
 
-	error = Application.GetLastError();
-	if (error == 0616) then
+	if port == "" or port == Trans("db.input.port", "database") then
+		Image.Load("IMG_DB_PORT_DBCF", "AutoPlay\\htdocs\\images\\inputs\\input_mandatory.png");
+		Application.SaveValue("ItStock", "FORM_LAST_ERROR", "Error616");
+	else
+		local portIsValid = String.ToNumber(port);
+		if portIsValid == 0 then
+			showMsgBox ("Error", "", Trans("db.check.port", "database"), "OK");
+			Image.Load("IMG_DB_PORT_DBCF", "AutoPlay\\htdocs\\images\\inputs\\input_mandatory.png");
+			if Application.LoadValue("ItStock", "FORM_LAST_ERROR") == "" then
+				Application.SaveValue("ItStock", "FORM_LAST_ERROR", "");
+			end
+		end
+	end
+
+	if serverAddress == "" or serverAddress == Trans("db.input.host", "database") then
+		Image.Load("IMG_DB_ADDRESS_DBCF", "AutoPlay\\htdocs\\images\\inputs\\input_mandatory.png");
+		Application.SaveValue("ItStock", "FORM_LAST_ERROR", "Error616");
+	else
+		if Application.LoadValue("ItStock", "FORM_LAST_ERROR") == "" then
+			Application.SaveValue("ItStock", "FORM_LAST_ERROR", "");
+		end
+	end
+
+	error = Application.LoadValue("ItStock", "FORM_LAST_ERROR");
+	if (error == "Error616") then
 		Application.ExitScript();
 	end
 
@@ -183,9 +203,9 @@ function saveDatabaseConfiguration ()
 	Image.SetVisible("IMG_SERVER", true);
 
 	if String.Left(serverStatus , 3) == "[8]" then
-		Label.SetText("LB_SERVER_STATUS", "MySQL Server error @"..serverAddress);
+		Label.SetText("LB_SERVER_STATUS", Trans("sql.server.config.status", "database", {serverAddress}));
 		Image.Load("IMG_SERVER_STATUS", "AutoPlay\\htdocs\\images\\icons\\server_ko.png");
-		showMsgBox ("Error", "SQL server error", "There is a problem with the SQL Server : @"..serverAddress.."\r\n"..serverStatusMsg, "OK");
+		showMsgBox ("Error", Trans("sql.server.msg", "database"), "There is a problem with the SQL Server : @"..serverAddress.."\r\n"..serverStatusMsg, "OK");
 		Application.ExitScript();
 	end
 
@@ -203,7 +223,9 @@ function saveDatabaseConfiguration ()
 	Image.SetVisible("IMG_DB_PASSWORD_DBCF", false);
 	Image.SetVisible("IMG_DB_ADDRESS_DBCF", false);
 	Image.SetVisible("IMG_DB_PORT_DBCF", false);
-	Image.SetVisible("IMG_SAVE_CONFIG_SERVER", false);
+	Button.SetVisible("BTN_SAVE_DB_CONFIG", false);
+	Button.SetVisible("BTN_CANCEL", false);
+	
 	Input.SetVisible("IN_DB_NAME_DBCF", false);
 	Input.SetVisible("IN_DB_USERNAME_DBCF", false);
 	Input.SetVisible("IN_DB_PASSWORD_DBCF", false);
@@ -221,7 +243,8 @@ function saveDatabaseConfiguration ()
 	Image.SetVisible("IMG_DB_PASSWORD_DBCF", true);
 	Image.SetVisible("IMG_DB_ADDRESS_DBCF", true);
 	Image.SetVisible("IMG_DB_PORT_DBCF", true);
-	Image.SetVisible("IMG_SAVE_CONFIG_SERVER", true);
+	Button.SetVisible("BTN_SAVE_DB_CONFIG", true);
+	Button.SetVisible("BTN_CANCEL", true);
 	Input.SetVisible("IN_DB_NAME_DBCF", true);
 	Input.SetVisible("IN_DB_USERNAME_DBCF", true);
 	Input.SetVisible("IN_DB_PASSWORD_DBCF", true);
