@@ -43,6 +43,7 @@ function checkSQLServerStatus(dbName, dbUser, dbPassword, dbAddress, dbPort)
 			serverStatusMsg = Trans("sql.server.status4", "database");
 		end
 	end
+
 	return "["..sqlServerStatus.."]"..serverStatusMsg;
 end
 
@@ -66,22 +67,22 @@ function loadDbAccess ()
 	local serverStatus = checkSQLServerStatus(databaseName, userName, password, serverAddress, port);
 	local serverStatusMsg = String.Mid(serverStatus, 4, -1);
 
-	Label.SetVisible("LB_SERVER_STATUS", true);
+	Paragraph.SetVisible("PH_SERVER_STATUS", true);
 	Image.SetVisible("IMG_SERVER", true);
 
 	if String.Left(serverStatus , 3) == "[8]" then
-		Label.SetText("LB_SERVER_STATUS", "MySQL Server error @"..dbAddress);
+		Paragraph.SetText("PH_SERVER_STATUS", "MySQL Server error @"..dbAddress);
 		Image.Load("IMG_SERVER_STATUS", "AutoPlay\\htdocs\\images\\icons\\server_ko.png");
 		showMsgBox ("Error", "SQL server error", "There is a problem with the SQL Server : @"..dbAddress.."\r\n"..serverStatusMsg, "OK");
 		Application.ExitScript();
 	end
 
 	if String.Left(serverStatus , 3) ~= "[4]" then
-		Label.SetText("LB_SERVER_STATUS", "MySQL Server "..serverStatusMsg.." @ "..dbAddress);
+		Paragraph.SetText("PH_SERVER_STATUS", "MySQL Server "..serverStatusMsg.." @ "..serverAddress);
 		Image.Load("IMG_SERVER_STATUS", "AutoPlay\\htdocs\\images\\icons\\server_ko.png");
 		Application.ExitScript();
 	else
-		Label.SetText("LB_SERVER_STATUS", "MySQL Server "..serverStatusMsg.." @ "..dbAddress);
+		Paragraph.SetText("PH_SERVER_STATUS", "MySQL Server "..serverStatusMsg.." @ "..serverAddress);
 		Image.Load("IMG_SERVER_STATUS", "AutoPlay\\htdocs\\images\\icons\\server_ok.png");
 	end
 end
@@ -199,22 +200,22 @@ function saveDatabaseConfiguration ()
 	local serverStatus = checkSQLServerStatus(databaseName, userName, password, serverAddress, port);
 	local serverStatusMsg = String.Mid(serverStatus, 4, -1);
 
-	Label.SetVisible("LB_SERVER_STATUS", true);
+	Paragraph.SetVisible("PH_SERVER_STATUS", true);
 	Image.SetVisible("IMG_SERVER", true);
 
 	if String.Left(serverStatus , 3) == "[8]" then
-		Label.SetText("LB_SERVER_STATUS", Trans("sql.server.config.status", "database", {serverAddress}));
+		Paragraph.SetText("PH_SERVER_STATUS", Trans("sql.server.config.status", "database", {serverAddress}));
 		Image.Load("IMG_SERVER_STATUS", "AutoPlay\\htdocs\\images\\icons\\server_ko.png");
-		showMsgBox ("Error", Trans("sql.server.msg", "database"), "There is a problem with the SQL Server : @"..serverAddress.."\r\n"..serverStatusMsg, "OK");
+		showMsgBox ("Error", Trans("sql.server.error.msg", "database"), "There is a problem with the SQL Server : @"..serverAddress.."\r\n"..serverStatusMsg, "OK");
 		Application.ExitScript();
 	end
 
 	if String.Left(serverStatus , 3) ~= "[4]" then
-		Label.SetText("LB_SERVER_STATUS", "MySQL Server "..serverStatusMsg.." @ "..serverAddress);
+		Paragraph.SetText("PH_SERVER_STATUS", Trans("sql.server.status.msg", "database", {serverStatusMsg,serverAddress}));
 		Image.Load("IMG_SERVER_STATUS", "AutoPlay\\htdocs\\images\\icons\\server_ko.png");
 		Application.ExitScript();
 	else
-		Label.SetText("LB_SERVER_STATUS", "MySQL Server "..serverStatusMsg.." @ "..serverAddress);
+		Paragraph.SetText("PH_SERVER_STATUS", Trans("sql.server.status.msg", "database", {serverStatusMsg,serverAddress}));
 		Image.Load("IMG_SERVER_STATUS", "AutoPlay\\htdocs\\images\\icons\\server_ok.png");
 	end
 
@@ -255,7 +256,7 @@ function saveDatabaseConfiguration ()
 
 	if err then
 		-- If there is an error connecting to the database, display a dialog box with the error
-		showMsgBox ("Error", "Databse connection error", err, "OK");
+		showMsgBox ("Error", Trans("db.connection.error", "database"), err, "OK");
 		Application.ExitScript();
 	end
 
@@ -267,10 +268,10 @@ function saveDatabaseConfiguration ()
 	-- Test for error
 	error = Application.GetLastError();
 	if (error ~= 0) then
-		showMsgBox ("Error", "Error with db_access file", error, "OK");
+		showMsgBox ("Error", Trans("db.crypt.file.access", "database"), error, "OK");
 		Application.ExitScript();
 	else
-		showMsgBox ("Success", "", "Configuration saved.", "OK");
+		showMsgBox ("Success", "", Trans("db.config.saved", "database"), "OK");
 		DialogEx.Close(this);
 	end
 end
