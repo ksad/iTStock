@@ -677,14 +677,25 @@ end</Script>
 <Script>Application.SaveValue("ITStock", "FirstRun", "Y");
 local LANG = TextFile.ReadToString("AutoPlay\\htdocs\\lang-properties\\default_lang.lang");
 Application.SaveValue("ITStock", "LANG", LANG);
+
+tblDgList = Application.GetDialogs();
+for i,j in pairs(tblDgList) do
+	Application.SaveValue("ITStock", "TRANS_FLAG_"..j, "NULL");
+end
+
+tblPgList = Application.GetPages();
+for i,j in pairs(tblPgList) do
+	Application.SaveValue("ITStock", "TRANS_FLAG_"..j, "NULL");
+end
+
 DialogEx.Show("LOGIN", true, nil, nil);</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>2</DesignCodeLine>
-<DesignCodeCol>22</DesignCodeCol>
+<DesignCodeLine>8</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -698,7 +709,7 @@ DialogEx.Show("LOGIN", true, nil, nil);</Script>
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>14</DesignCodeCol>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -17519,7 +17530,7 @@ Window.SetText(DialogEx.GetWndHandle(), Trans("db.config.dialog.title", "databas
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>2</DesignCodeLine>
+<DesignCodeLine>0</DesignCodeLine>
 <DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
@@ -18400,7 +18411,7 @@ end</Script>
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeCol>32</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -18965,15 +18976,14 @@ end</Script>
 <Event>
 <Name>On Click</Name>
 <Args/>
-<Script>Debug.Clear();
-saveDatabaseConfiguration();</Script>
+<Script>saveDatabaseConfiguration();</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>14</DesignCodeCol>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
