@@ -173,54 +173,6 @@ function leftMenuJump ()
 	end
 end
 
-function setUserCreateForm (currentObject)
-	objectList = DialogEx.EnumerateObjects();
-
-	for i, object in pairs(objectList) do
-		objectType = DialogEx.GetObjectType(object);
-
-		if object == currentObject then
-			local objectText = Input.GetText(object);
-			if objectText == "Firstname" or objectText == "Username" or objectText == "Lastname" or objectText == "Password" then
-				Input.SetText(currentObject, "");
-			else
-				Input.SetSelection(currentObject, 1, -1);
-			end
-			Image.Load(String.Replace(currentObject, "IN", "IMG", false), "AutoPlay\\htdocs\\images\\inputs\\input_selected.png");
-		else
-			if objectType == 3 and String.Find(object, "UCF", 1, false) ~= -1 then -- UCF = User Create Form
-				Image.Load(object, "AutoPlay\\htdocs\\images\\inputs\\input.png");
-			end
-
-			if objectType == 7 and Input.GetText(object) == "" then
-				if String.Find(object, "FIRSTNAME", 1, false) ~= -1 then
-					Input.SetText(object, "Firstname");
-				elseif String.Find(object, "USERNAME", 1, false) ~= -1 then
-					Input.SetText(object, "Username");
-				elseif String.Find(object, "LASTNAME", 1, false) ~= -1 then
-					Input.SetText(object, "Lastname");
-				elseif String.Find(object, "PASSWORD", 1, false) ~= -1 then
-					Input.SetText(object, "Password");
-				else
-					Input.SetText(object, "...");
-				end
-			end
-
-			if ComboBox.GetSelected("CB_ROLE") == 1 then
-				ComboBox.SetItemText("CB_ROLE", 1, "Role");
-				ComboBox.SetSelected("CB_ROLE", 1);
-			end
-
-			tblLabelProps = {};
-			tblLabelProps.ColorNormal = Math.HexColorToNumber("FFFFFF");
-			tblLabelProps.ColorDown = Math.HexColorToNumber("FFFFFF");
-			tblLabelProps.ColorHighlight = Math.HexColorToNumber("FFFFFF");
-			tblLabelProps.ColorDisabled = Math.HexColorToNumber("FFFFFF");
-			Label.SetProperties("LB_SIGN", tblLabelProps);
-		end
-	end
-end
-
 function setObjectsSizeAndPositions (pageName)
 	PAGEWIDTH = Page.GetSize().Width;
 	PAGEHEIGHT = Page.GetSize().Height;

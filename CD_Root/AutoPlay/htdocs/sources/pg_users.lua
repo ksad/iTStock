@@ -1,3 +1,58 @@
+function setUserCreateForm (currentObject)
+	objectList = DialogEx.EnumerateObjects();
+
+	for i, object in pairs(objectList) do
+		objectType = DialogEx.GetObjectType(object);
+
+		if object == currentObject then
+			local objectText = Input.GetText(object);
+
+			if objectText == Trans("user.input.lastname", "users")
+				or objectText == Trans("user.input.firstname", "users")
+				or objectText == Trans("user.input.username", "users")
+				or objectText == Trans("user.input.email", "users")
+				or objectText == Trans("user.input.password", "users") then
+				Input.SetText(currentObject, "");
+			else
+				Input.SetSelection(currentObject, 1, -1);
+			end
+			Image.Load(String.Replace(currentObject, "IN", "IMG", false), "AutoPlay\\htdocs\\images\\inputs\\input_selected.png");
+		else
+			if objectType == 3 and String.Find(object, "UCF", 1, false) ~= -1 then -- UCF = User Create Form
+				Image.Load(object, "AutoPlay\\htdocs\\images\\inputs\\input.png");
+			end
+
+			if objectType == 7 and Input.GetText(object) == "" then
+				if String.Find(object, "FIRSTNAME", 1, false) ~= -1 then
+					Input.SetText(object, Trans("user.input.firstname", "users"));
+				elseif String.Find(object, "USERNAME", 1, false) ~= -1 then
+					Input.SetText(object, Trans("user.input.username", "users"));
+				elseif String.Find(object, "LASTNAME", 1, false) ~= -1 then
+					Input.SetText(object, Trans("user.input.lastname", "users"));
+				elseif String.Find(object, "PASSWORD", 1, false) ~= -1 then
+					Input.SetText(object, Trans("user.input.password", "users"));
+				elseif String.Find(object, "EMAIL", 1, false) ~= -1 then
+					Input.SetText(object, Trans("user.input.email", "users"));
+				else
+					Input.SetText(object, "...");
+				end
+			end
+
+			if ComboBox.GetSelected("CB_ROLE") == 1 then
+				ComboBox.SetItemText("CB_ROLE", 1, Trans("user.combobox.role", "users"));
+				ComboBox.SetSelected("CB_ROLE", 1);
+			end
+
+			tblLabelProps = {};
+			tblLabelProps.ColorNormal = Math.HexColorToNumber("FFFFFF");
+			tblLabelProps.ColorDown = Math.HexColorToNumber("FFFFFF");
+			tblLabelProps.ColorHighlight = Math.HexColorToNumber("FFFFFF");
+			tblLabelProps.ColorDisabled = Math.HexColorToNumber("FFFFFF");
+			Label.SetProperties("LB_SIGN", tblLabelProps);
+		end
+	end
+end
+
 function getUsersList ()
 	local usersListColumnsName = {"Lastname", "Firstname", "Username", "Role", "Sign check list", "Status"}
 	initList("GD_USERS_LIST", usersListColumnsName)
