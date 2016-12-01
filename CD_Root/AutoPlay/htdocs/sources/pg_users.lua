@@ -27,6 +27,7 @@ function setUserCreateForm (currentObject)
 					Input.SetText(object, Trans("user.input.firstname", "users"));
 				elseif String.Find(object, "USERNAME", 1, false) ~= -1 then
 					Input.SetText(object, Trans("user.input.username", "users"));
+					Image.SetVisible("IMG_NOTIFY", false);
 				elseif String.Find(object, "LASTNAME", 1, false) ~= -1 then
 					Input.SetText(object, Trans("user.input.lastname", "users"));
 				elseif String.Find(object, "PASSWORD", 1, false) ~= -1 then
@@ -460,18 +461,24 @@ function deleteUserAccount ()
 	if mySQLConnection ~= nil then
 		SQL = "DELETE FROM `it_stock_manager`.`it_users` WHERE ID = '"..dataSelecteduser.."';";
 
-		local userAction = showMsgBox ("Warning", "", "Delete user '"..updatedUsers.."', Please confirm.", "YES|NO");
+		local userAction = showMsgBox ("Warning", "", Trans("user.delete.confirmation", "users", {updatedUsers}), "YES|NO");
 
 		if userAction == "IDYES" then
 			mySQLCursor, err = mySQLConnection:execute(SQL);
 			if err then
-				showMsgBox ("Error", "Deleting user", err, "OK");
+				showMsgBox ("Error", Trans("user.msgbox.title.delete", "users"), err, "OK");
 				Application.ExitScript();
 			else
-				showMsgBox ("Success", "", "User successfully deleted.", "OK");
+				showMsgBox ("Success", "", Trans("user.delete.success", "users", {updatedUsers}), "OK");
+			end
+			local indexSelecteduser = ListBox.GetSelected("LBX_UPDATED_USERS")[1];
+			ListBox.DeleteItem("LBX_UPDATED_USERS", indexSelecteduser);
+			ListBox.SelectItem("LBX_UPDATED_USERS", 1);
+
+			local nItems = ListBox.GetCount("LBX_UPDATED_USERS");
+			if nItems == 0 then
 				DialogEx.Close(this);
 			end
-			DialogEx.ClickObject("IMG_CANCEL");
 		else
 			Application.ExitScript();
 		end

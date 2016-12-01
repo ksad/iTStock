@@ -567,8 +567,8 @@ function TransPage (composant)
 end</Script>
 <BookMarks count="0">
 </BookMarks>
-<DesignCodeLine>519</DesignCodeLine>
-<DesignCodeCol>25</DesignCodeCol>
+<DesignCodeLine>500</DesignCodeLine>
+<DesignCodeCol>3</DesignCodeCol>
 </Globals>
 <Defaults>
 <StartupPage>_PageFirst</StartupPage>
@@ -19401,7 +19401,7 @@ end</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>1</DesignCodeLine>
+<DesignCodeLine>2</DesignCodeLine>
 <DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
@@ -19450,8 +19450,8 @@ Button.SetText("BTN_CANCEL", Trans("user.button.cancel", "users"));</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>35</DesignCodeLine>
-<DesignCodeCol>67</DesignCodeCol>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -19968,7 +19968,7 @@ end</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>2</DesignCodeLine>
+<DesignCodeLine>0</DesignCodeLine>
 <DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
@@ -20585,8 +20585,8 @@ end</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeLine>12</DesignCodeLine>
+<DesignCodeCol>1</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -21207,8 +21207,8 @@ end</Script>
 <OriginalRect>
 <Top>0</Top>
 <Bottom>38</Bottom>
-<Left>305</Left>
-<Right>577</Right>
+<Left>259</Left>
+<Right>531</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -21463,8 +21463,8 @@ end</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>11</DesignCodeLine>
-<DesignCodeCol>72</DesignCodeCol>
+<DesignCodeLine>4</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -22298,8 +22298,9 @@ end</Script>
 <Args/>
 <Script>require("AutoPlay\\htdocs\\sources\\pg_users");
 
-Image.SetEnabled("IMG_CANCEL", true);
-Image.Load("IMG_CANCEL", "AutoPlay\\htdocs\\images\\icons\\btn_cancel.png");
+if Application.LoadValue("ITStock", "TRANS_FLAG_"..Application.GetCurrentDialog()) ~= "Y" then
+	TransPage("users");
+end
 
 local mySQLConnection = dbConnect();
 if mySQLConnection ~= nil then
@@ -22336,7 +22337,7 @@ if mySQLConnection ~= nil then
 			row = mySQLCursor:fetch(row,"a");
 		end
 	else
-		ComboBox.AddItem("CB_ROLE", "No role defined", "");
+		ComboBox.AddItem("CB_ROLE", Trans("user.checkbox.role.undefined", "users"), "");
 	end
 
 	mySQLCursor:close();
@@ -22349,28 +22350,56 @@ ListBox.SelectItem("LBX_UPDATED_USERS", 1);</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>1</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeLine>27</DesignCodeLine>
+<DesignCodeCol>8</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
 <Event>
 <Name>On Close</Name>
 <Args/>
-<Script>Input.SetText("IN_FIRSTNAME_UCF", "Firstname");
-Input.SetText("IN_LASTNAME_UCF", "Username");
-Input.SetText("IN_USERNAME_UCF", "Lastname");
-Input.SetText("IN_PASSWORD_UCF", "Password");
+<Script>objectList = DialogEx.EnumerateObjects();
+for i, object in pairs(objectList) do
+	objectType = DialogEx.GetObjectType(object);
+	if objectType == 3 and String.Find(object, "UCF", 1, false) ~= -1 then -- UCF = User Create Form
+		Image.Load(object, "AutoPlay\\htdocs\\images\\inputs\\input.png");
+	end
+end
+
+Label.SetText("LB_UPDATE_TITLE", Trans("user.dialog.title", "users"));
+Label.SetText("LB_CHECKBOX", Trans("user.checkbox.active#", "users"));
+Label.SetText("LB_SIGN", Trans("user.switch.signature#", "users"));
+
+Input.SetText("IN_LASTNAME_UCF", Trans("user.input.lastname", "users"));
+Input.SetText("IN_FIRSTNAME_UCF", Trans("user.input.firstname", "users"));
+Input.SetText("IN_USERNAME_UCF", Trans("user.input.username", "users"));
+Input.SetText("IN_EMAIL_UCF", Trans("user.input.email", "users"));
+
+ComboBox.SetItemText("CB_ROLE", 1, Trans("user.combobox.role", "users"));
 ComboBox.SetSelected("CB_ROLE", 1);
+
+Image.SetVisible("IMG_NOTIFY_ROLE", false);
+
 Image.Load("IMG_TOGGLE_YES_NO", "AutoPlay\\htdocs\\images\\icons\\switch_yes_no_idle.png");
-ListBox.DeleteItem("LBX_UPDATED_USERS", -1);</Script>
+
+tblLabelProps = {};
+tblLabelProps.ColorNormal = Math.HexColorToNumber("FFFFFF");
+tblLabelProps.ColorDown = Math.HexColorToNumber("FFFFFF");
+tblLabelProps.ColorHighlight = Math.HexColorToNumber("FFFFFF");
+tblLabelProps.ColorDisabled = Math.HexColorToNumber("FFFFFF");
+Label.SetProperties("LB_SIGN", tblLabelProps);
+Image.SetVisible("IMG_NOTIFY_SIGN", false);
+
+Button.SetText("BTN_UPDATE_USER", Trans("user.button.update", "users"));
+Button.SetEnabled("BTN_UPDATE_USER", true);
+Button.SetText("BTN_CANCEL", Trans("user.button.cancel", "users"));</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>6</DesignCodeLine>
-<DesignCodeCol>44</DesignCodeCol>
+<DesignCodeLine>33</DesignCodeLine>
+<DesignCodeCol>43</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -22474,189 +22503,6 @@ ListBox.DeleteItem("LBX_UPDATED_USERS", -1);</Script>
 </Event>
 <Object>
 <Type>3</Type>
-<Name>IMG_UPDATE_USER</Name>
-<VisibleAtDesignTime>1</VisibleAtDesignTime>
-<VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>0</Locked>
-<Enabled>1</Enabled>
-<ToolTip/>
-<Cursor>1</Cursor>
-<Group>0</Group>
-<MaintainAspectRatio>1</MaintainAspectRatio>
-<Pin>0</Pin>
-<TabIndex>-1</TabIndex>
-<AutoResize>0</AutoResize>
-<Coordinates>
-<Top>517</Top>
-<Bottom>562</Bottom>
-<Left>276</Left>
-<Right>433</Right>
-</Coordinates>
-<Ratios>
-<WidthRatio>3.488889</WidthRatio>
-<HeightRatio>0.286624</HeightRatio>
-</Ratios>
-<Event>
-<Name>On Click</Name>
-<Args/>
-<Script>local indexSelecteduser = ListBox.GetSelected("LBX_UPDATED_USERS")[1];
-local dataSelecteduser = ListBox.GetItemData("LBX_UPDATED_USERS", indexSelecteduser);
-
-local lastName = Input.GetText("IN_LASTNAME_UCF");
-local firstName = Input.GetText("IN_FIRSTNAME_UCF");
-local username = Input.GetText("IN_USERNAME_UCF");
-local email = Input.GetText("IN_EMAIL_UCF");
-local role = ComboBox.GetItemText("CB_ROLE", ComboBox.GetSelected("CB_ROLE"));
-
-local LoadedImage = Image.GetFilename("IMG_TOGGLE_YES_NO");
-local ImageStatus = String.SplitPath(LoadedImage);
-local checkListSign = ImageStatus.Filename;
-if checkListSign == "yes" then
-	signature = "Yes"	
-else
-	signature = "No"
-end
-
-local LoadedImage = Image.GetFilename("IMG_CHECKBOX");
-local ImageStatus = String.SplitPath(LoadedImage);
-local status = ImageStatus.Filename;
-if status == "checkbox_on" then
-	accountStatus = 1;
-else
-	accountStatus = 0;
-end
-
-if lastName == "" or lastName == "Lastname" then
-	Image.Load("IMG_LASTNAME_UCF", "AutoPlay\\htdocs\\images\\inputs\\input_mandatory.png");
-	Application.SetLastError(0616);
-end
-
-if firstName == "" or firstName == "Firstname" then
-	Image.Load("IMG_FIRSTNAME_UCF", "AutoPlay\\htdocs\\images\\inputs\\input_mandatory.png");
-	Application.SetLastError(0616);
-end
-
-if username == "" or username == "Username" then
-	Image.Load("IMG_USERNAME_UCF", "AutoPlay\\htdocs\\images\\inputs\\input_mandatory.png");
-	Application.SetLastError(0616);
-end
-
-if email == "" or email == "Email" then
-	Image.Load("IMG_USERNAME_UCF", "AutoPlay\\htdocs\\images\\inputs\\input_mandatory.png");
-	Application.SetLastError(0616);
-end
-
-if password == "" or password == "Password" then
-	Image.Load("IMG_PASSWORD_UCF", "AutoPlay\\htdocs\\images\\inputs\\input_mandatory.png");
-	Application.SetLastError(0616);
-end
-
-if role == "Role" then
-	ComboBox.SetItemText("CB_ROLE", 1, "Role is mandatory");
-	ComboBox.SetSelected("CB_ROLE", 1);
-	Application.SetLastError(0616);
-end
-
-if checkListSign == "switch_yes_no_idle" then
-	tblLabelProps = {};
-	tblLabelProps.ColorNormal = Math.HexColorToNumber("FF0000");
-	tblLabelProps.ColorDown = Math.HexColorToNumber("FF0000");
-	tblLabelProps.ColorHighlight = Math.HexColorToNumber("FF0000");
-	tblLabelProps.ColorDisabled = Math.HexColorToNumber("FF0000");
-	Label.SetProperties("LB_SIGN", tblLabelProps);
-	Application.SetLastError(0616);
-end
-
-error = Application.GetLastError();
-if (error == 0616) then
-	Application.ExitScript();
-end
-
-local mySQLConnection = dbConnect();
-if mySQLConnection ~= nil then
-	SQL = "UPDATE `it_stock_manager`.`it_users` SET `Lastname`='"..lastName.."', `Firstname`='"..firstName.."', `Username`='"..username.."', `Email`='"..email.."', `Role`='"..role.."', `Sign_Check_List`='"..signature.."', `Active`='"..accountStatus.."', `Modified`=now(), `Modified_By`='"..CURRENT_USER.."' WHERE ID = '"..dataSelecteduser.."';";
-
-	mySQLCursor, err = mySQLConnection:execute(SQL);
-	if err then
-		showMsgBox ("Error", "Creating user", err, "OK");
-		Application.ExitScript();
-	else
-		showMsgBox ("Success", "", "User '"..username.."' successfly created.", "OK");
-		DialogEx.Close(this);
-	end
-end</Script>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>68</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Right-Click</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Enter</Name>
-<Args/>
-<Script>if Image.IsEnabled("IMG_UPDATE_USER") then
-	Image.Load("IMG_UPDATE_USER", "AutoPlay\\htdocs\\images\\icons\\btn_update-user_hover.png");
-end</Script>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>35</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Leave</Name>
-<Args/>
-<Script>if Image.IsEnabled("IMG_UPDATE_USER") then
-	Image.Load("IMG_UPDATE_USER", "AutoPlay\\htdocs\\images\\icons\\btn_update-user.png");
-end</Script>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>35</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Actions/>
-<NormalImage>
-<Filename>AutoPlay\\htdocs\\images\\buttons\\btn_update-user.png</Filename>
-<UseTransColor>0</UseTransColor>
-<TransClr>16777215</TransClr>
-<TransTolerance>10</TransTolerance>
-<Opacity>100</Opacity>
-<HTMode>0</HTMode>
-</NormalImage>
-<MouseOverSndMode>0</MouseOverSndMode>
-<MouseOverSound/>
-<MouseClickSndMode>0</MouseClickSndMode>
-<MouseClickSound/>
-</Object>
-<Object>
-<Type>3</Type>
 <Name>IMG_TOGGLE_YES_NO</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
@@ -22672,8 +22518,8 @@ end</Script>
 <Coordinates>
 <Top>443</Top>
 <Bottom>470</Bottom>
-<Left>530</Left>
-<Right>587</Right>
+<Left>531</Left>
+<Right>588</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -22777,8 +22623,8 @@ end</Script>
 <Coordinates>
 <Top>442</Top>
 <Bottom>474</Bottom>
-<Left>416</Left>
-<Right>528</Right>
+<Left>437</Left>
+<Right>651</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -22842,7 +22688,7 @@ end</Script>
 </Event>
 <Actions/>
 <Text>
-<Body>Signature : </Body>
+<Body>user.switch.signature#</Body>
 <NormalColor>16777215</NormalColor>
 <HighlightColor>16777215</HighlightColor>
 <MouseDownColor>16777215</MouseDownColor>
@@ -22867,8 +22713,8 @@ end</Script>
 <OriginalRect>
 <Top>442</Top>
 <Bottom>474</Bottom>
-<Left>416</Left>
-<Right>528</Right>
+<Left>437</Left>
+<Right>651</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -22899,14 +22745,16 @@ end</Script>
 <Event>
 <Name>On Select</Name>
 <Args>number e_Selection</Args>
-<Script/>
+<Script>if ComboBox.GetText("CB_ROLE") ~= Trans("user.combobox.role", "users") then
+	Image.SetVisible("IMG_NOTIFY_ROLE", false);
+end</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeLine>2</DesignCodeLine>
+<DesignCodeCol>3</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -22918,7 +22766,7 @@ end</Script>
 end
 
 if e_Key == 13 then
-	DialogEx.ClickObject("IMG_UPDATE_USER");
+	DialogEx.ClickObject("BTN_UPDATE_USER");
 end</Script>
 <TreeStates>
 <TreeState>0</TreeState>
@@ -22926,24 +22774,21 @@ end</Script>
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>5</DesignCodeLine>
-<DesignCodeCol>9</DesignCodeCol>
+<DesignCodeCol>40</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
 <Event>
 <Name>On Focus</Name>
 <Args/>
-<Script>Image.Load("IMG_PASSWORD_UCF", "AutoPlay\\htdocs\\images\\inputs\\input.png");
-if password == "Password" or password == "" then
-	Input.SetText("IN_PASSWORD_UCF", "Password");
-end</Script>
+<Script/>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>3</DesignCodeLine>
-<DesignCodeCol>3</DesignCodeCol>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -22970,7 +22815,7 @@ end</Script>
 </Font>
 <ComboItems>
 <ComboItem>
-<Text>Role</Text>
+<Text>user.combobox.role</Text>
 <Data/>
 </ComboItem>
 </ComboItems>
@@ -23097,18 +22942,18 @@ end</Script>
 <Name>On Key</Name>
 <Args>number e_Key, table e_Modifiers</Args>
 <Script>if e_Key == 9 then
-	DialogEx.SetFocus("IN_PASSWORD_UCF");
+	DialogEx.SetFocus("IN_EMAIL_UCF");
 end
 
 if e_Key == 13 then
-	DialogEx.ClickObject("IMG_UPDATE_USER");
+	DialogEx.ClickObject("BTN_UPDATE_USER");
 end
 
 local mySQLConnection = dbConnect();
 if mySQLConnection ~= nil then
 	local searchByUsername = Input.GetText("IN_USERNAME_UCF");
 
-	if searchByUsername ~= "" then
+	if searchByUsername ~= "" and searchByUsername ~= Trans("user.input.username","users") then
 		SQL = "SELECT * FROM IT_USERS WHERE Username = '"..searchByUsername.."';";	
 
 		mySQLCursor = mySQLConnection:execute(SQL);
@@ -23118,14 +22963,12 @@ if mySQLConnection ~= nil then
 		tblImageProps.Visible = true;
 		if row and row.Username ~= username then
 			tblImageProps.ImageFile = "AutoPlay\\htdocs\\images\\icons\\error.png";
-			tblImageProps.TooltipText = "User already exist";
-			Image.Load("IMG_UPDATE_USER", "AutoPlay\\htdocs\\images\\icons\\btn_update-user_disabled.png");
-			Image.SetEnabled("IMG_UPDATE_USER", false);
+			tblImageProps.TooltipText = Trans("user.notification.exist", "users");
+			Button.SetEnabled("BTN_UPDATE_USER", false);
 		else
 			tblImageProps.ImageFile = "AutoPlay\\htdocs\\images\\icons\\ok.png";
-			tblImageProps.TooltipText = "Username available";
-			Image.Load("IMG_UPDATE_USER", "AutoPlay\\htdocs\\images\\icons\\btn_update-user.png");
-			Image.SetEnabled("IMG_UPDATE_USER", true);
+			tblImageProps.TooltipText = Trans("user.notification.available", "users");
+			Button.SetEnabled("BTN_UPDATE_USER", true);
 		end
 		Image.SetProperties("IMG_NOTIFY", tblImageProps);
 		mySQLCursor:close();
@@ -23137,8 +22980,8 @@ end</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>28</DesignCodeLine>
-<DesignCodeCol>3</DesignCodeCol>
+<DesignCodeLine>11</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -23172,7 +23015,7 @@ end</Script>
 </Event>
 <Actions/>
 <Text>
-<Body>Username</Body>
+<Body>user.input.username</Body>
 <TextColor>12632256</TextColor>
 <BackgroundColor>16777215</BackgroundColor>
 <FontData>
@@ -23326,7 +23169,7 @@ end</Script>
 end
 
 if e_Key == 13 then
-	DialogEx.ClickObject("IMG_UPDATE_USER");
+	DialogEx.ClickObject("BTN_UPDATE_USER");
 end
 
 local mySQLConnection = dbConnect();
@@ -23334,7 +23177,7 @@ if mySQLConnection ~= nil then
 	local searchByFirstname = Input.GetText("IN_FIRSTNAME_UCF");
 	local searchByLastname = Input.GetText("IN_LASTNAME_UCF");
 
-	if (searchByFirstname ~= "Firstname") and (searchByLastname ~= "Lastname") then
+	if (searchByFirstname ~= Trans("user.input.firstname", "users")) and (searchByLastname ~= Trans("user.input.lastname", "users")) then
 		local username = String.Left(searchByFirstname, 1).."."..searchByLastname;
 		Input.SetText("IN_USERNAME_UCF", "");
 		Input.SetText("IN_USERNAME_UCF", username);
@@ -23348,10 +23191,10 @@ if mySQLConnection ~= nil then
 		tblImageProps.Visible = true;
 		if row then
 			tblImageProps.ImageFile = "AutoPlay\\htdocs\\images\\icons\\error.png";
-			tblImageProps.TooltipText = "User already exist";
+			tblImageProps.TooltipText = Trans("user.notification.exist", "users");
 		else
 			tblImageProps.ImageFile = "AutoPlay\\htdocs\\images\\icons\\ok.png";
-			tblImageProps.TooltipText = "Username available";
+			tblImageProps.TooltipText = Trans("user.notification.available", "users");
 		end
 		Image.SetProperties("IMG_NOTIFY", tblImageProps);
 		mySQLCursor:close();
@@ -23363,8 +23206,8 @@ end</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>12</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeLine>27</DesignCodeLine>
+<DesignCodeCol>31</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -23398,7 +23241,7 @@ end</Script>
 </Event>
 <Actions/>
 <Text>
-<Body>Firstname</Body>
+<Body>user.input.firstname</Body>
 <TextColor>12632256</TextColor>
 <BackgroundColor>16777215</BackgroundColor>
 <FontData>
@@ -23552,7 +23395,7 @@ end</Script>
 end
 
 if e_Key == 13 then
-	DialogEx.ClickObject("IMG_UPDATE_USER");
+	DialogEx.ClickObject("BTN_UPDATE_USER");
 end
 
 local mySQLConnection = dbConnect();
@@ -23560,7 +23403,7 @@ if mySQLConnection ~= nil then
 	local searchByFirstname = Input.GetText("IN_FIRSTNAME_UCF");
 	local searchByLastname = Input.GetText("IN_LASTNAME_UCF");
 
-	if (searchByFirstname ~= "Firstname") and (searchByLastname ~= "Lastname") then
+	if (searchByFirstname ~= Trans("user.input.firstname", "users")) and (searchByLastname ~= Trans("user.input.lastname", "users")) then
 		local username = String.Left(searchByFirstname, 1).."."..searchByLastname;
 		Input.SetText("IN_USERNAME_UCF", "");
 		Input.SetText("IN_USERNAME_UCF", username);
@@ -23574,10 +23417,12 @@ if mySQLConnection ~= nil then
 		tblImageProps.Visible = true;
 		if row then
 			tblImageProps.ImageFile = "AutoPlay\\htdocs\\images\\icons\\error.png";
-			tblImageProps.TooltipText = "User already exist";
+			tblImageProps.TooltipText = Trans("user.notification.exist", "users");
+			Button.SetEnabled("BTN_UPDATE_USER", false);
 		else
 			tblImageProps.ImageFile = "AutoPlay\\htdocs\\images\\icons\\ok.png";
-			tblImageProps.TooltipText = "Username available";
+			tblImageProps.TooltipText = Trans("user.notification.available", "users");
+			Button.SetEnabled("BTN_UPDATE_USER", true);
 		end
 		Image.SetProperties("IMG_NOTIFY", tblImageProps);
 		mySQLCursor:close();
@@ -23589,8 +23434,8 @@ end</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>29</DesignCodeLine>
-<DesignCodeCol>30</DesignCodeCol>
+<DesignCodeLine>30</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -23624,7 +23469,7 @@ end</Script>
 </Event>
 <Actions/>
 <Text>
-<Body>Lastname</Body>
+<Body>user.input.lastname</Body>
 <TextColor>12632256</TextColor>
 <BackgroundColor>16777215</BackgroundColor>
 <FontData>
@@ -23654,7 +23499,7 @@ end</Script>
 </Object>
 <Object>
 <Type>1</Type>
-<Name>LB_CREATE_TITLE</Name>
+<Name>LB_UPDATE_TITLE</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
 <Locked>0</Locked>
@@ -23669,8 +23514,8 @@ end</Script>
 <Coordinates>
 <Top>0</Top>
 <Bottom>37</Bottom>
-<Left>281</Left>
-<Right>422</Right>
+<Left>218</Left>
+<Right>483</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -23734,7 +23579,7 @@ end</Script>
 </Event>
 <Actions/>
 <Text>
-<Body>Update user</Body>
+<Body>user.dialog.update.title</Body>
 <NormalColor>16777215</NormalColor>
 <HighlightColor>16777215</HighlightColor>
 <MouseDownColor>16777215</MouseDownColor>
@@ -23759,8 +23604,8 @@ end</Script>
 <OriginalRect>
 <Top>0</Top>
 <Bottom>37</Bottom>
-<Left>281</Left>
-<Right>422</Right>
+<Left>218</Left>
+<Right>483</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -23775,14 +23620,14 @@ end</Script>
 <Cursor>0</Cursor>
 <Group>0</Group>
 <MaintainAspectRatio>1</MaintainAspectRatio>
-<Pin>1</Pin>
+<Pin>0</Pin>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>299</Top>
-<Bottom>329</Bottom>
+<Top>302</Top>
+<Bottom>327</Bottom>
 <Left>597</Left>
-<Right>627</Right>
+<Right>622</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -23899,7 +23744,12 @@ end</Script>
 <Event>
 <Name>On Select</Name>
 <Args/>
-<Script>local indexSelecteduser = ListBox.GetSelected("LBX_UPDATED_USERS")[1];
+<Script>Image.Load("IMG_LASTNAME_UCF", "AutoPlay\\htdocs\\images\\inputs\\input.png");
+Image.Load("IMG_FIRSTNAME_UCF", "AutoPlay\\htdocs\\images\\inputs\\input.png");
+Image.Load("IMG_USERNAME_UCF", "AutoPlay\\htdocs\\images\\inputs\\input.png");
+Image.Load("IMG_EMAIL_UCF", "AutoPlay\\htdocs\\images\\inputs\\input.png");
+
+local indexSelecteduser = ListBox.GetSelected("LBX_UPDATED_USERS")[1];
 local dataSelecteduser = ListBox.GetItemData("LBX_UPDATED_USERS", indexSelecteduser);
 
 local mySQLConnection = dbConnect();
@@ -23933,22 +23783,22 @@ if mySQLConnection ~= nil then
 			ComboBox.SetSelected("CB_ROLE", ComboBox.FindItem("CB_ROLE", -1, LB_BYTEXT, role));
 
 			if row.Sign_Check_List == "Yes" then
-				signCheckList ="Yes";
+				signCheckList = Trans("user.switch.signature.yes", "users");
 				Image.Load("IMG_TOGGLE_YES_NO", "AutoPlay\\htdocs\\images\\icons\\yes.png");
 			else
-				signCheckList ="No";
+				signCheckList = Trans("user.switch.signature.no", "users");
 				Image.Load("IMG_TOGGLE_YES_NO", "AutoPlay\\htdocs\\images\\icons\\no.png");
 			end
 
 			if row.Active == "1" then
-				status = "Active";
+				status = Trans("user.checkbox.active", "users");
 				Image.Load("IMG_CHECKBOX", "AutoPlay\\htdocs\\images\\icons\\checkbox_on.png");
 			else
-				status = "Disabled";
+				status = Trans("user.checkbox.disabled", "users");
 				Image.Load("IMG_CHECKBOX", "AutoPlay\\htdocs\\images\\icons\\checkbox_off.png");
 			end
 
-			Paragraph.SetText("PH_OLD_CONFIG", "***** Old informations : *****\r\n".."Fullname : "..firstname.." "..lastname.."\r\n".."Username : "..username.."\r\n".."Email : "..email.."\r\n".."Role : "..role.."\r\n".."Signature : "..signCheckList.." / ".."Status : "..status.."\r\nLast modification : "..lastModification.." "..lastModificationBy);
+			Paragraph.SetText("PH_OLD_CONFIG", "***** "..Trans("user.update.old.infos", "users").." : *****\r\n"..Trans("user.update.fullname.old.info", "users").." : "..firstname.." "..lastname.."\r\n"..Trans("user.update.username.old.info", "users").." : "..username.."\r\n"..Trans("user.update.email.old.info", "users").." : "..email.."\r\n"..Trans("user.update.role.old.info", "users").." : "..role.."\r\n"..Trans("user.update.sign.old.info", "users").." : "..signCheckList.." / "..Trans("user.update.status.old.info", "users").." : "..status.."\r\n"..Trans("user.update.lastmodif.old.info", "users").." : "..lastModification.." "..lastModificationBy);
 			row = mySQLCursor:fetch(row,"a");
 		end
 	end
@@ -24013,14 +23863,12 @@ if checkUsername ~= "" then
 	tblImageProps.Visible = true;
 	if row and row.Username ~= username then
 		tblImageProps.ImageFile = "AutoPlay\\htdocs\\images\\icons\\error.png";
-		tblImageProps.TooltipText = "User already exist";
-		Image.Load("IMG_UPDATE_USER", "AutoPlay\\htdocs\\images\\icons\\btn_update-user_disabled.png");
-		Image.SetEnabled("IMG_UPDATE_USER", false);
+		tblImageProps.TooltipText = Trans("user.notification.exist", "users");
+		Button.SetEnabled("BTN_UPDATE_USER", false);
 	else
 		tblImageProps.ImageFile = "AutoPlay\\htdocs\\images\\icons\\ok.png";
-		tblImageProps.TooltipText = "Username available";
-		Image.Load("IMG_UPDATE_USER", "AutoPlay\\htdocs\\images\\icons\\btn_update-user.png");
-		Image.SetEnabled("IMG_UPDATE_USER", true);
+		tblImageProps.TooltipText = Trans("user.notification.available", "users");
+		Button.SetEnabled("BTN_UPDATE_USER", true);
 	end
 	Image.SetProperties("IMG_NOTIFY", tblImageProps);
 end
@@ -24030,8 +23878,8 @@ end
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>49</DesignCodeLine>
-<DesignCodeCol>338</DesignCodeCol>
+<DesignCodeLine>37</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -24212,10 +24060,10 @@ end
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>445</Top>
-<Bottom>465</Bottom>
-<Left>314</Left>
-<Right>334</Right>
+<Top>443</Top>
+<Bottom>468</Bottom>
+<Left>312</Left>
+<Right>337</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -24230,17 +24078,19 @@ ImageStatus = ImageStatus.Filename;
 
 if ImageStatus == "checkbox_off" then
 	Image.Load("IMG_CHECKBOX", "AutoPlay\\htdocs\\images\\icons\\checkbox_on.png");
+	Label.SetText("LB_CHECKBOX", Trans("user.checkbox.active", "users"));
 end
 
 if ImageStatus == "checkbox_on" then
 	Image.Load("IMG_CHECKBOX", "AutoPlay\\htdocs\\images\\icons\\checkbox_off.png");
+	Label.SetText("LB_CHECKBOX", Trans("user.checkbox.disabled", "users"));
 end</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>10</DesignCodeLine>
+<DesignCodeLine>12</DesignCodeLine>
 <DesignCodeCol>3</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
@@ -24309,7 +24159,7 @@ end</Script>
 <Locked>0</Locked>
 <Enabled>1</Enabled>
 <ToolTip/>
-<Cursor>1</Cursor>
+<Cursor>0</Cursor>
 <Group>0</Group>
 <MaintainAspectRatio>1</MaintainAspectRatio>
 <Pin>0</Pin>
@@ -24318,8 +24168,8 @@ end</Script>
 <Coordinates>
 <Top>442</Top>
 <Bottom>474</Bottom>
-<Left>338</Left>
-<Right>401</Right>
+<Left>341</Left>
+<Right>550</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -24384,7 +24234,7 @@ end</Script>
 </Event>
 <Actions/>
 <Text>
-<Body>Active</Body>
+<Body>user.checkbox.active#</Body>
 <NormalColor>16777215</NormalColor>
 <HighlightColor>16777215</HighlightColor>
 <MouseDownColor>16777215</MouseDownColor>
@@ -24409,104 +24259,10 @@ end</Script>
 <OriginalRect>
 <Top>442</Top>
 <Bottom>474</Bottom>
-<Left>338</Left>
-<Right>401</Right>
+<Left>341</Left>
+<Right>550</Right>
 </OriginalRect>
 </Text>
-</Object>
-<Object>
-<Type>3</Type>
-<Name>IMG_DELETE_USER</Name>
-<VisibleAtDesignTime>1</VisibleAtDesignTime>
-<VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>0</Locked>
-<Enabled>1</Enabled>
-<ToolTip/>
-<Cursor>1</Cursor>
-<Group>0</Group>
-<MaintainAspectRatio>1</MaintainAspectRatio>
-<Pin>0</Pin>
-<TabIndex>-1</TabIndex>
-<AutoResize>0</AutoResize>
-<Coordinates>
-<Top>517</Top>
-<Bottom>562</Bottom>
-<Left>444</Left>
-<Right>601</Right>
-</Coordinates>
-<Ratios>
-<WidthRatio>3.488889</WidthRatio>
-<HeightRatio>0.286624</HeightRatio>
-</Ratios>
-<Event>
-<Name>On Click</Name>
-<Args/>
-<Script>deleteUserAccount();</Script>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>17</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Right-Click</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Enter</Name>
-<Args/>
-<Script>Image.Load("IMG_DELETE_USER", "AutoPlay\\htdocs\\images\\icons\\btn_delete_hover.png");</Script>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>27</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Leave</Name>
-<Args/>
-<Script>Image.Load("IMG_DELETE_USER", "AutoPlay\\htdocs\\images\\icons\\btn_delete.png");</Script>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>59</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Actions/>
-<NormalImage>
-<Filename>AutoPlay\\htdocs\\images\\buttons\\btn_delete.png</Filename>
-<UseTransColor>0</UseTransColor>
-<TransClr>16777215</TransClr>
-<TransTolerance>10</TransTolerance>
-<Opacity>100</Opacity>
-<HTMode>0</HTMode>
-</NormalImage>
-<MouseOverSndMode>0</MouseOverSndMode>
-<MouseOverSound/>
-<MouseClickSndMode>0</MouseClickSndMode>
-<MouseClickSound/>
 </Object>
 <Object>
 <Type>3</Type>
@@ -24591,112 +24347,6 @@ end</Script>
 <Actions/>
 <NormalImage>
 <Filename>AutoPlay\htdocs\images\backgrounds\bg_listBox.png</Filename>
-<UseTransColor>0</UseTransColor>
-<TransClr>16777215</TransClr>
-<TransTolerance>10</TransTolerance>
-<Opacity>100</Opacity>
-<HTMode>0</HTMode>
-</NormalImage>
-<MouseOverSndMode>0</MouseOverSndMode>
-<MouseOverSound/>
-<MouseClickSndMode>0</MouseClickSndMode>
-<MouseClickSound/>
-</Object>
-<Object>
-<Type>3</Type>
-<Name>IMG_CANCEL</Name>
-<VisibleAtDesignTime>1</VisibleAtDesignTime>
-<VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>0</Locked>
-<Enabled>1</Enabled>
-<ToolTip/>
-<Cursor>1</Cursor>
-<Group>0</Group>
-<MaintainAspectRatio>1</MaintainAspectRatio>
-<Pin>0</Pin>
-<TabIndex>-1</TabIndex>
-<AutoResize>0</AutoResize>
-<Coordinates>
-<Top>517</Top>
-<Bottom>562</Bottom>
-<Left>106</Left>
-<Right>263</Right>
-</Coordinates>
-<Ratios>
-<WidthRatio>3.488889</WidthRatio>
-<HeightRatio>0.286624</HeightRatio>
-</Ratios>
-<Event>
-<Name>On Click</Name>
-<Args/>
-<Script>local indexSelecteduser = ListBox.GetSelected("LBX_UPDATED_USERS")[1];
-
-ListBox.DeleteItem("LBX_UPDATED_USERS", indexSelecteduser);
-ListBox.SelectItem("LBX_UPDATED_USERS", 1);
-
-local nItems = ListBox.GetCount("LBX_UPDATED_USERS");
-if nItems == 0 then
-	DialogEx.Close(this);
-end</Script>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Right-Click</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Enter</Name>
-<Args/>
-<Script>if Image.IsEnabled("IMG_CANCEL") then
-	Image.Load(this, "AutoPlay\\htdocs\\images\\icons\\btn_cancel_hover.png");
-end</Script>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Leave</Name>
-<Args/>
-<Script>if Image.IsEnabled("IMG_CANCEL") then
-	Image.Load(this, "AutoPlay\\htdocs\\images\\icons\\btn_cancel.png");
-end</Script>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>1</DesignCodeLine>
-<DesignCodeCol>1</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Actions/>
-<NormalImage>
-<Filename>AutoPlay\\htdocs\\images\\buttons\\btn_cancel.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -24836,7 +24486,7 @@ end</Script>
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>1080033339</DesignCodeCol>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -24850,7 +24500,7 @@ end</Script>
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>3877154</DesignCodeCol>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -24863,8 +24513,8 @@ end</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>1918988130</DesignCodeLine>
-<DesignCodeCol>1079509092</DesignCodeCol>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -24878,7 +24528,7 @@ end</Script>
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>1078149120</DesignCodeCol>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -24929,8 +24579,8 @@ end</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>1684828006</DesignCodeLine>
-<DesignCodeCol>3043941</DesignCodeCol>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -24944,7 +24594,7 @@ end</Script>
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>22</DesignCodeCol>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -24957,7 +24607,7 @@ end</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>5391702</DesignCodeLine>
+<DesignCodeLine>0</DesignCodeLine>
 <DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
@@ -24971,8 +24621,8 @@ end</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>3290685</DesignCodeLine>
-<DesignCodeCol>24</DesignCodeCol>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -25130,44 +24780,19 @@ end</Script>
 <Name>On Key</Name>
 <Args>number e_Key, table e_Modifiers</Args>
 <Script>if e_Key == 9 then
-	DialogEx.SetFocus("IN_PASSWORD_UCF");
+	DialogEx.SetFocus("CB_ROLE");
 end
 
 if e_Key == 13 then
-	--DialogEx.ClickObject("IMG_CREATE_USER");
-end
-
---[[local mySQLConnection = dbConnect();
-if mySQLConnection ~= nil then
-	local searchByUsername = Input.GetText("IN_USERNAME_UCF");
-
-	if searchByUsername ~= "" then
-		SQL = "SELECT * FROM IT_USERS WHERE Username = '"..searchByUsername.."';";	
-
-		mySQLCursor = mySQLConnection:execute(SQL);
-		row = mySQLCursor:fetch({},"a")
-		
-		tblImageProps = {};
-		tblImageProps.Visible = true;
-		if row then
-			tblImageProps.ImageFile = "AutoPlay\\htdocs\\images\\icons\\error.png";
-			tblImageProps.TooltipText = "User already exist";
-		else
-			tblImageProps.ImageFile = "AutoPlay\\htdocs\\images\\icons\\ok.png";
-			tblImageProps.TooltipText = "Username available";
-		end
-		Image.SetProperties("IMG_NOTIFY", tblImageProps);
-		mySQLCursor:close();
-		mySQLConnection:close();
-	end
-end]]</Script>
+	DialogEx.ClickObject("BTN_UPDATE_USER");
+end</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>5</DesignCodeLine>
-<DesignCodeCol>3</DesignCodeCol>
+<DesignCodeLine>1</DesignCodeLine>
+<DesignCodeCol>30</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -25201,7 +24826,7 @@ end]]</Script>
 </Event>
 <Actions/>
 <Text>
-<Body>Email</Body>
+<Body>user.input.email</Body>
 <TextColor>12632256</TextColor>
 <BackgroundColor>16777215</BackgroundColor>
 <FontData>
@@ -25228,6 +24853,645 @@ end]]</Script>
 <MaskRetMode>0</MaskRetMode>
 <ReadOnly>0</ReadOnly>
 </Box>
+</Object>
+<Object>
+<Type>0</Type>
+<Name>BTN_CANCEL</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>1</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>0</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>517</Top>
+<Bottom>562</Bottom>
+<Left>105</Left>
+<Right>263</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script>local indexSelecteduser = ListBox.GetSelected("LBX_UPDATED_USERS")[1];
+
+ListBox.DeleteItem("LBX_UPDATED_USERS", indexSelecteduser);
+ListBox.SelectItem("LBX_UPDATED_USERS", 1);
+
+local nItems = ListBox.GetCount("LBX_UPDATED_USERS");
+if nItems == 0 then
+	DialogEx.Close(this);
+end</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Right-Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Enter</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Leave</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<BUTTON>
+<Filename>AutoPlay\htdocs\images\buttons\btn_cancel.btn</Filename>
+<Style>0</Style>
+<State>0</State>
+<Caption>user.button.cancel</Caption>
+<Align>1</Align>
+<UpColor>5558015</UpColor>
+<HighlightColor>5558015</HighlightColor>
+<DownColor>5558015</DownColor>
+<DisabledColor>5558015</DisabledColor>
+<FontData>
+<FontName>Nunito</FontName>
+<CharacterSet>0</CharacterSet>
+<Height>-16</Height>
+<Weight>700</Weight>
+<Italic>0</Italic>
+<Underline>0</Underline>
+<StrikeOut>0</StrikeOut>
+<AntiAlias>1</AntiAlias>
+</FontData>
+<CapXOff>0</CapXOff>
+<CapYOff>0</CapYOff>
+<LeftMargin>0</LeftMargin>
+<RightMargin>33</RightMargin>
+<MouseOverSndMode>1</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>1</MouseClickSndMode>
+<MouseClickSound/>
+</BUTTON>
+</Object>
+<Object>
+<Type>0</Type>
+<Name>BTN_UPDATE_USER</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>1</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>0</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>517</Top>
+<Bottom>562</Bottom>
+<Left>271</Left>
+<Right>429</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script>local indexSelecteduser = ListBox.GetSelected("LBX_UPDATED_USERS")[1];
+local dataSelecteduser = ListBox.GetItemData("LBX_UPDATED_USERS", indexSelecteduser);
+
+local lastName = Input.GetText("IN_LASTNAME_UCF");
+local firstName = Input.GetText("IN_FIRSTNAME_UCF");
+local username = Input.GetText("IN_USERNAME_UCF");
+local email = Input.GetText("IN_EMAIL_UCF");
+local role = ComboBox.GetItemText("CB_ROLE", ComboBox.GetSelected("CB_ROLE"));
+
+local LoadedImage = Image.GetFilename("IMG_TOGGLE_YES_NO");
+local ImageStatus = String.SplitPath(LoadedImage);
+local checkListSign = ImageStatus.Filename;
+if checkListSign == "yes" then
+	signature = "Yes"
+else
+	signature = "No"
+end
+
+local LoadedImage = Image.GetFilename("IMG_CHECKBOX");
+local ImageStatus = String.SplitPath(LoadedImage);
+local status = ImageStatus.Filename;
+if status == "checkbox_on" then
+	accountStatus = 1;
+else
+	accountStatus = 0;
+end
+
+if lastName == "" or lastName == Trans("user.input.lastname", "users") then
+	Image.Load("IMG_LASTNAME_UCF", "AutoPlay\\htdocs\\images\\inputs\\input_mandatory.png");
+	Application.SaveValue("ItStock", "FORM_LAST_ERROR", "Error616");
+else
+	Application.SaveValue("ItStock", "FORM_LAST_ERROR", "");
+end
+
+if firstName == "" or firstName == Trans("user.input.firstname", "users") then
+	Image.Load("IMG_FIRSTNAME_UCF", "AutoPlay\\htdocs\\images\\inputs\\input_mandatory.png");
+	Application.SaveValue("ItStock", "FORM_LAST_ERROR", "Error616");
+else
+	if Application.LoadValue("ItStock", "FORM_LAST_ERROR") == "" then
+		Application.SaveValue("ItStock", "FORM_LAST_ERROR", "");
+	end
+end
+
+if username == "" or username == Trans("user.input.username", "users") then
+	Image.Load("IMG_USERNAME_UCF", "AutoPlay\\htdocs\\images\\inputs\\input_mandatory.png");
+	Application.SaveValue("ItStock", "FORM_LAST_ERROR", "Error616");
+else
+	if Application.LoadValue("ItStock", "FORM_LAST_ERROR") == "" then
+		Application.SaveValue("ItStock", "FORM_LAST_ERROR", "");
+	end
+end
+
+if email == "" or email == Trans("user.input.email", "users") then
+	Image.Load("IMG_EMAIL_UCF", "AutoPlay\\htdocs\\images\\inputs\\input_mandatory.png");
+	Application.SaveValue("ItStock", "FORM_LAST_ERROR", "Error616");
+else
+	if Application.LoadValue("ItStock", "FORM_LAST_ERROR") == "" then
+		Application.SaveValue("ItStock", "FORM_LAST_ERROR", "");
+	end
+end
+
+if role == Trans("user.combobox.role", "users") then
+	Image.SetVisible("IMG_NOTIFY_ROLE", true);
+	Image.SetVisible("IMG_ADD_ROLE", false);
+	Application.SaveValue("ItStock", "FORM_LAST_ERROR", "Error616");
+else
+	if Application.LoadValue("ItStock", "FORM_LAST_ERROR") == "" then
+		Application.SaveValue("ItStock", "FORM_LAST_ERROR", "");
+	end
+end
+
+if checkListSign == "switch_yes_no_idle" then
+	tblLabelProps = {};
+	tblLabelProps.ColorNormal = Math.HexColorToNumber("FF0000");
+	tblLabelProps.ColorDown = Math.HexColorToNumber("FF0000");
+	tblLabelProps.ColorHighlight = Math.HexColorToNumber("FF0000");
+	tblLabelProps.ColorDisabled = Math.HexColorToNumber("FF0000");
+	Label.SetProperties("LB_SIGN", tblLabelProps);
+	Image.SetVisible("IMG_NOTIFY_SIGN", true);
+	Application.SaveValue("ItStock", "FORM_LAST_ERROR", "Error616");
+else
+	if Application.LoadValue("ItStock", "FORM_LAST_ERROR") == "" then
+		Application.SaveValue("ItStock", "FORM_LAST_ERROR", "");
+	end
+end
+
+error = Application.LoadValue("ItStock", "FORM_LAST_ERROR");
+if (error == "Error616") then
+	Application.ExitScript();
+end
+local mySQLConnection = dbConnect();
+if mySQLConnection ~= nil then
+	SQL = "UPDATE `it_stock_manager`.`it_users` SET `Lastname`='"..lastName.."', `Firstname`='"..firstName.."', `Username`='"..username.."', `Email`='"..email.."', `Role`='"..role.."', `Sign_Check_List`='"..signature.."', `Active`='"..accountStatus.."', `Modified`=now(), `Modified_By`='"..CURRENT_USER.."' WHERE ID = '"..dataSelecteduser.."';";
+
+	mySQLCursor, err = mySQLConnection:execute(SQL);
+	if err then
+		showMsgBox ("Error", Trans("user.msgbox.title.update", "users"), err, "OK");
+		Application.ExitScript();
+	else
+		local indexSelecteduser = ListBox.GetSelected("LBX_UPDATED_USERS")[1];
+
+		ListBox.DeleteItem("LBX_UPDATED_USERS", indexSelecteduser);
+		ListBox.SelectItem("LBX_UPDATED_USERS", 1);
+
+		showMsgBox ("Success", "", Trans("user.update.success", "users", {username}), "OK");
+		local nItems = ListBox.GetCount("LBX_UPDATED_USERS");
+		if nItems == 0 then
+			DialogEx.Close(this);
+		end
+	end
+end</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>13</DesignCodeLine>
+<DesignCodeCol>18</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Right-Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Enter</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Leave</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<BUTTON>
+<Filename>AutoPlay\htdocs\images\buttons\btn_update_user.btn</Filename>
+<Style>0</Style>
+<State>0</State>
+<Caption>user.button.update</Caption>
+<Align>1</Align>
+<UpColor>14067297</UpColor>
+<HighlightColor>14067297</HighlightColor>
+<DownColor>14067297</DownColor>
+<DisabledColor>10526880</DisabledColor>
+<FontData>
+<FontName>Nunito</FontName>
+<CharacterSet>0</CharacterSet>
+<Height>-16</Height>
+<Weight>700</Weight>
+<Italic>0</Italic>
+<Underline>0</Underline>
+<StrikeOut>0</StrikeOut>
+<AntiAlias>1</AntiAlias>
+</FontData>
+<CapXOff>0</CapXOff>
+<CapYOff>0</CapYOff>
+<LeftMargin>0</LeftMargin>
+<RightMargin>33</RightMargin>
+<MouseOverSndMode>1</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>1</MouseClickSndMode>
+<MouseClickSound/>
+</BUTTON>
+</Object>
+<Object>
+<Type>0</Type>
+<Name>BTN_DELETE</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>1</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>0</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>517</Top>
+<Bottom>562</Bottom>
+<Left>437</Left>
+<Right>595</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script>deleteUserAccount();</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Right-Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Enter</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Leave</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<BUTTON>
+<Filename>AutoPlay\htdocs\images\buttons\btn_delete.btn</Filename>
+<Style>0</Style>
+<State>0</State>
+<Caption>user.button.delete</Caption>
+<Align>1</Align>
+<UpColor>255</UpColor>
+<HighlightColor>255</HighlightColor>
+<DownColor>255</DownColor>
+<DisabledColor>10526880</DisabledColor>
+<FontData>
+<FontName>Nunito</FontName>
+<CharacterSet>0</CharacterSet>
+<Height>-16</Height>
+<Weight>700</Weight>
+<Italic>0</Italic>
+<Underline>0</Underline>
+<StrikeOut>0</StrikeOut>
+<AntiAlias>1</AntiAlias>
+</FontData>
+<CapXOff>0</CapXOff>
+<CapYOff>0</CapYOff>
+<LeftMargin>0</LeftMargin>
+<RightMargin>33</RightMargin>
+<MouseOverSndMode>1</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>1</MouseClickSndMode>
+<MouseClickSound/>
+</BUTTON>
+</Object>
+<Object>
+<Type>3</Type>
+<Name>IMG_NOTIFY_ROLE</Name>
+<VisibleAtDesignTime>0</VisibleAtDesignTime>
+<VisibleAtRunTime>0</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>0</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>1</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>398</Top>
+<Bottom>423</Bottom>
+<Left>600</Left>
+<Right>625</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>7301492</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Right-Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>3877235</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Enter</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>1684340746</DesignCodeLine>
+<DesignCodeCol>100663296</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Leave</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>1882088812</DesignCodeLine>
+<DesignCodeCol>1073768302</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<NormalImage>
+<Filename>AutoPlay\htdocs\images\icons\error.png</Filename>
+<UseTransColor>0</UseTransColor>
+<TransClr>16777215</TransClr>
+<TransTolerance>10</TransTolerance>
+<Opacity>100</Opacity>
+<HTMode>0</HTMode>
+</NormalImage>
+<MouseOverSndMode>0</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>0</MouseClickSndMode>
+<MouseClickSound/>
+</Object>
+<Object>
+<Type>3</Type>
+<Name>IMG_NOTIFY_SIGN</Name>
+<VisibleAtDesignTime>0</VisibleAtDesignTime>
+<VisibleAtRunTime>0</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>0</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>1</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>444</Top>
+<Bottom>469</Bottom>
+<Left>589</Left>
+<Right>614</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>7301492</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Right-Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>3877235</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Enter</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>1684340746</DesignCodeLine>
+<DesignCodeCol>100663296</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Leave</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>1882088812</DesignCodeLine>
+<DesignCodeCol>1073768302</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<NormalImage>
+<Filename>AutoPlay\htdocs\images\icons\error.png</Filename>
+<UseTransColor>0</UseTransColor>
+<TransClr>16777215</TransClr>
+<TransTolerance>10</TransTolerance>
+<Opacity>100</Opacity>
+<HTMode>0</HTMode>
+</NormalImage>
+<MouseOverSndMode>0</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>0</MouseClickSndMode>
+<MouseClickSound/>
 </Object>
 <HGuidelines/>
 <VGuidelines/>
