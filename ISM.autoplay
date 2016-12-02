@@ -22350,8 +22350,8 @@ ListBox.SelectItem("LBX_UPDATED_USERS", 1);</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>27</DesignCodeLine>
-<DesignCodeCol>8</DesignCodeCol>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -26401,7 +26401,11 @@ end</Script>
 <Event>
 <Name>On Show</Name>
 <Args/>
-<Script>local title = String.Lower(Application.LoadValue("MSGBOX", "title"));
+<Script>if Application.LoadValue("ITStock", "TRANS_FLAG_"..Application.GetCurrentDialog()) ~= "Y" then
+	TransPage("common");
+end
+
+local title = String.Lower(Application.LoadValue("MSGBOX", "title"));
 local msgtitle = Application.LoadValue("MSGBOX", "msgtitle");
 local msg = Application.LoadValue("MSGBOX", "msg");
 local buttons = Application.LoadValue("MSGBOX", "buttons");
@@ -26410,7 +26414,7 @@ timer = Application.LoadValue("MSGBOX", "timer");
 Image.Load("IMG_ICONE", "AutoPlay\\htdocs\\images\\msgbox\\"..title.."\\icone.png");
 Image.Load("IMG_TITLE_BAR", "AutoPlay\\htdocs\\images\\msgbox\\"..title.."\\title_bar.png");
 Image.Load("IMG_CLOSE", "AutoPlay\\htdocs\\images\\msgbox\\"..title.."\\close.png");
-Label.SetText("LB_TITLE", String.Upper(title));
+Label.SetText("LB_TITLE", Trans("common.msg.box.header."..String.Upper(title), "common"));
 
 if msgtitle ~= "" then
 	RichText.SetText("RT_MSG", "- "..msgtitle.." :\r\n"..msg, false);
@@ -26542,17 +26546,17 @@ end</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>2</DesignCodeLine>
-<DesignCodeCol>8</DesignCodeCol>
-<BookMarks count="92">
-AAAAAAEAAAACAAAAAwAAAAYAAAAHAAAACAAAAAkAAAALAAAADAAAAA4AAAAXAAAA
-GAAAABkAAAAbAAAAHAAAAB4AAAAjAAAAJAAAACYAAAAnAAAAKAAAACkAAAAqAAAA
-LAAAAC0AAAAuAAAALwAAADEAAAAyAAAAMwAAADUAAAA2AAAANwAAAD0AAAA+AAAA
-QAAAAEEAAABCAAAAQwAAAEQAAABFAAAASgAAAE0AAABOAAAATwAAAFAAAABRAAAA
-UgAAAFMAAABUAAAAVQAAAFYAAABXAAAAWAAAAFkAAABaAAAAWwAAAFwAAABdAAAA
-XgAAAF8AAABgAAAAYQAAAGIAAABjAAAAZAAAAGUAAABmAAAAZwAAAGgAAABpAAAA
-agAAAGsAAABsAAAAbQAAAG4AAABvAAAAcQAAAHIAAABzAAAAdAAAAHUAAAB2AAAA
-dwAAAHkAAAB8AAAAfQAAAH4AAACAAAAAhAAAAIYAAAA=
+<DesignCodeLine>133</DesignCodeLine>
+<DesignCodeCol>5</DesignCodeCol>
+<BookMarks count="91">
+BQAAAAYAAAAHAAAACgAAAAsAAAAMAAAADQAAAA8AAAAQAAAAEgAAABsAAAAcAAAA
+HQAAAB8AAAAgAAAAIgAAACcAAAAoAAAAKgAAACsAAAAsAAAALQAAAC4AAAAwAAAA
+MQAAADIAAAAzAAAANQAAADYAAAA3AAAAOQAAADoAAAA7AAAAQQAAAEIAAABEAAAA
+RQAAAEYAAABHAAAASAAAAEkAAABOAAAAUQAAAFIAAABTAAAAVAAAAFUAAABWAAAA
+VwAAAFgAAABZAAAAWgAAAFsAAABcAAAAXQAAAF4AAABfAAAAYAAAAGEAAABiAAAA
+YwAAAGQAAABlAAAAZgAAAGcAAABoAAAAaQAAAGoAAABrAAAAbAAAAG0AAABuAAAA
+bwAAAHAAAABxAAAAcgAAAHMAAAB1AAAAdgAAAHcAAAB4AAAAeQAAAHoAAAB7AAAA
+fQAAAIAAAACBAAAAggAAAIQAAACIAAAAigAAAA==
 </BookMarks>
 </Event>
 <Event>
