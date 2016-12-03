@@ -47,6 +47,7 @@ function login ()
 						showMsgBox ("Error", Trans("login.msgbox.title.updatelastconnection", "login"), err, "OK");
 						Application.ExitScript();
 					end
+					loginRemember(userName, password);
 					File.Run("AutoPlay\\htdocs\\images\\animations\\Loading.exe", "", "", SW_SHOWNORMAL, false);
 					Application.Sleep(3000);
 					DialogEx.Close(this);
@@ -63,5 +64,45 @@ function login ()
 
 		mySQLCursor:close();
 		mySQLConnection:close();
+	end
+end
+
+function loginRemember (username, password)
+	local LoadedImage = Image.GetFilename("IMG_CHECKBOX");
+	local ImageStatus = String.SplitPath(LoadedImage);
+	ImageStatus = ImageStatus.Filename;
+
+	if ImageStatus == "checkbox_on" then
+		local credentials = "[USERNAME]="..username.."\r\n".."[PASSWORD]="..password;
+		TextFile.WriteFromString("AutoPlay\\htdocs\\sources\\credentials\\cred.txt", credentials, false);
+		Crypto.BlowfishEncrypt("AutoPlay\\htdocs\\sources\\credentials\\cred.txt", "AutoPlay\\htdocs\\sources\\credentials\\cred.enc", "credentialSecure");
+		File.Delete("AutoPlay\\htdocs\\sources\\credentials\\cred.txt", false, false, false, nil);
+
+		-- Test for error
+		error = Application.GetLastError();
+		if (error ~= 0) then
+			showMsgBox ("Error", Trans("login.crypt.file.access", "login"), error, "OK");
+			Application.ExitScript();
+		end
+	else
+		File.Delete("AutoPlay\\htdocs\\sources\\credentials\\cred.enc", false, false, false, nil);
+	end
+end
+
+function loadCredentials()
+	if File.DoesExist("AutoPlay\\htdocs\\sources\\credentials\\cred.enc") then
+		Image.Load("IMG_CHECKBOX", "AutoPlay\\htdocs\\images\\icons\\checkbox_on.png");
+
+		Crypto.BlowfishDecrypt("AutoPlay\\htdocs\\sources\\credentials\\cred.enc", "AutoPlay\\htdocs\\sources\\credentials\\~tmp_cred.txt", "credentialSecure");
+		local credentials = TextFile.ReadToTable("AutoPlay\\htdocs\\sources\\credentials\\~tmp_cred.txt");
+		File.Delete("AutoPlay\\htdocs\\sources\\credentials\\~tmp_cred.txt", false, false, false, nil);
+
+		username = String.TrimLeft(credentials[1], "[USERNAME]=");
+		password = String.TrimLeft(credentials[2], "[PASSWORD]=");
+
+		Input.SetText("IN_USERNAME", username);
+		Input.SetText("IN_PASSWORD", password);
+	else
+		Image.Load("IMG_CHECKBOX", "AutoPlay\\htdocs\\images\\icons\\checkbox_off.png");
 	end
 end

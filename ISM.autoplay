@@ -145,7 +145,7 @@ DialogEx.Show("LOGIN", true, nil, nil);</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>8</DesignCodeLine>
+<DesignCodeLine>14</DesignCodeLine>
 <DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
@@ -16073,14 +16073,15 @@ if Application.LoadValue("ITStock", "TRANS_FLAG_"..Application.GetCurrentDialog(
 	TransPage("login");
 end
 
-DialogEx.SetFocus("IN_USERNAME_LF");</Script>
+DialogEx.SetFocus("IN_USERNAME_LF");
+loadCredentials();</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>7</DesignCodeLine>
-<DesignCodeCol>36</DesignCodeCol>
+<DesignCodeLine>8</DesignCodeLine>
+<DesignCodeCol>18</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -16213,8 +16214,8 @@ end</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>122</Top>
-<Bottom>147</Bottom>
+<Top>116</Top>
+<Bottom>141</Bottom>
 <Left>116</Left>
 <Right>356</Right>
 </Coordinates>
@@ -16327,8 +16328,8 @@ Image.Load("IMG_PASSWORD_LF", "AutoPlay\\htdocs\\images\\inputs\\input_password.
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>170</Top>
-<Bottom>195</Bottom>
+<Top>164</Top>
+<Bottom>189</Bottom>
 <Left>117</Left>
 <Right>357</Right>
 </Coordinates>
@@ -16405,7 +16406,7 @@ Image.Load("IMG_USERNAME_LF", "AutoPlay\\htdocs\\images\\inputs\\input_username.
 <FontData>
 <FontName>Nunito</FontName>
 <CharacterSet>0</CharacterSet>
-<Height>-16</Height>
+<Height>-19</Height>
 <Weight>400</Weight>
 <Italic>0</Italic>
 <Underline>0</Underline>
@@ -16442,8 +16443,8 @@ Image.Load("IMG_USERNAME_LF", "AutoPlay\\htdocs\\images\\inputs\\input_username.
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>260</Top>
-<Bottom>286</Bottom>
+<Top>272</Top>
+<Bottom>298</Bottom>
 <Left>144</Left>
 <Right>356</Right>
 </Coordinates>
@@ -16533,8 +16534,8 @@ Image.Load("IMG_USERNAME_LF", "AutoPlay\\htdocs\\images\\inputs\\input_username.
 <MouseClickSndMode>0</MouseClickSndMode>
 <MouseClickSound/>
 <OriginalRect>
-<Top>260</Top>
-<Bottom>286</Bottom>
+<Top>272</Top>
+<Bottom>298</Bottom>
 <Left>144</Left>
 <Right>356</Right>
 </OriginalRect>
@@ -16657,7 +16658,7 @@ Image.Load("IMG_USERNAME_LF", "AutoPlay\\htdocs\\images\\inputs\\input_username.
 <Name>IMG_USERNAME_LF</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>0</Locked>
+<Locked>1</Locked>
 <Enabled>1</Enabled>
 <ToolTip/>
 <Cursor>0</Cursor>
@@ -16667,8 +16668,8 @@ Image.Load("IMG_USERNAME_LF", "AutoPlay\\htdocs\\images\\inputs\\input_username.
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>114</Top>
-<Bottom>154</Bottom>
+<Top>108</Top>
+<Bottom>148</Bottom>
 <Left>109</Left>
 <Right>389</Right>
 </Coordinates>
@@ -16751,7 +16752,7 @@ Image.Load("IMG_USERNAME_LF", "AutoPlay\\htdocs\\images\\inputs\\input_username.
 <Name>IMG_PASSWORD_LF</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>0</Locked>
+<Locked>1</Locked>
 <Enabled>1</Enabled>
 <ToolTip/>
 <Cursor>0</Cursor>
@@ -16761,8 +16762,8 @@ Image.Load("IMG_USERNAME_LF", "AutoPlay\\htdocs\\images\\inputs\\input_username.
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>163</Top>
-<Bottom>203</Bottom>
+<Top>157</Top>
+<Bottom>197</Bottom>
 <Left>109</Left>
 <Right>389</Right>
 </Coordinates>
@@ -16855,8 +16856,8 @@ Image.Load("IMG_USERNAME_LF", "AutoPlay\\htdocs\\images\\inputs\\input_username.
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>214</Top>
-<Bottom>259</Bottom>
+<Top>228</Top>
+<Bottom>273</Bottom>
 <Left>171</Left>
 <Right>329</Right>
 </Coordinates>
@@ -16875,7 +16876,7 @@ login ();</Script>
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>2</DesignCodeCol>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -16951,6 +16952,232 @@ login ();</Script>
 <MouseClickSndMode>1</MouseClickSndMode>
 <MouseClickSound/>
 </BUTTON>
+</Object>
+<Object>
+<Type>3</Type>
+<Name>IMG_CHECKBOX</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>1</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>1</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>206</Top>
+<Bottom>226</Bottom>
+<Left>132</Left>
+<Right>152</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script>local LoadedImage = Image.GetFilename("IMG_CHECKBOX");
+local ImageStatus = String.SplitPath(LoadedImage);
+ImageStatus = ImageStatus.Filename;
+
+if ImageStatus == "checkbox_off" then
+	Image.Load("IMG_CHECKBOX", "AutoPlay\\htdocs\\images\\icons\\checkbox_on.png");
+end
+
+if ImageStatus == "checkbox_on" then
+	Image.Load("IMG_CHECKBOX", "AutoPlay\\htdocs\\images\\icons\\checkbox_off.png");
+end</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>5</DesignCodeLine>
+<DesignCodeCol>1</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Right-Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Enter</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Leave</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<NormalImage>
+<Filename>AutoPlay\\htdocs\\images\\icons\\checkbox_on.png</Filename>
+<UseTransColor>0</UseTransColor>
+<TransClr>16777215</TransClr>
+<TransTolerance>10</TransTolerance>
+<Opacity>100</Opacity>
+<HTMode>0</HTMode>
+</NormalImage>
+<MouseOverSndMode>0</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>0</MouseClickSndMode>
+<MouseClickSound/>
+</Object>
+<Object>
+<Type>1</Type>
+<Name>LB_CRED_CBOX</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>1</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>1</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>206</Top>
+<Bottom>232</Bottom>
+<Left>156</Left>
+<Right>345</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script>local LoadedImage = Image.GetFilename("IMG_CHECKBOX");
+local ImageStatus = String.SplitPath(LoadedImage);
+ImageStatus = ImageStatus.Filename;
+
+if ImageStatus == "checkbox_off" then
+	Image.Load("IMG_CHECKBOX", "AutoPlay\\htdocs\\images\\icons\\checkbox_on.png");
+end
+
+if ImageStatus == "checkbox_on" then
+	Image.Load("IMG_CHECKBOX", "AutoPlay\\htdocs\\images\\icons\\checkbox_off.png");
+end</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>9</DesignCodeLine>
+<DesignCodeCol>81</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Right-Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Enter</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Leave</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<Text>
+<Body>login.checkbox.remember</Body>
+<NormalColor>16777215</NormalColor>
+<HighlightColor>16777215</HighlightColor>
+<MouseDownColor>16777215</MouseDownColor>
+<DisabledColor>16777215</DisabledColor>
+<FontData>
+<FontName>Nunito</FontName>
+<CharacterSet>0</CharacterSet>
+<Height>-15</Height>
+<Weight>400</Weight>
+<Italic>0</Italic>
+<Underline>0</Underline>
+<StrikeOut>0</StrikeOut>
+<AntiAlias>1</AntiAlias>
+</FontData>
+<Alignment>0</Alignment>
+<Orientation>0</Orientation>
+<AutoSize>1</AutoSize>
+<MouseOverSndMode>0</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>0</MouseClickSndMode>
+<MouseClickSound/>
+<OriginalRect>
+<Top>206</Top>
+<Bottom>232</Bottom>
+<Left>156</Left>
+<Right>345</Right>
+</OriginalRect>
+</Text>
 </Object>
 <HGuidelines/>
 <VGuidelines/>
