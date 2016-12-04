@@ -1,16 +1,25 @@
 function login ()
-	local userName = Input.GetText("IN_USERNAME");
-	local password = Input.GetText("IN_PASSWORD");
+	local userName = Input.GetText("IN_USERNAME_LF");
+	local password = Input.GetText("IN_PASSWORD_LF");
 
-	if userName == "" then
-		showMsgBox ("Error", "", "Username can't be empty", "OK");
-		DialogEx.SetFocus("IN_USERNAME");
-		Application.ExitScript();
+	if userName == "" or userName == Trans("user.input.username", "users") then
+		Image.Load("IMG_USERNAME_LF", "AutoPlay\\htdocs\\images\\inputs\\input_username_mandatory.png");
+		Application.SaveValue("ItStock", "FORM_LAST_ERROR", "Error616");
+	else
+		Application.SaveValue("ItStock", "FORM_LAST_ERROR", "");
 	end
 
-	if password == "" then
-		showMsgBox ("Error", "", "Password can't be empty", "OK");
-		DialogEx.SetFocus("IN_PASSWORD");
+	if password == "" or password == Trans("user.input.password", "users") then
+		Image.Load("IMG_PASSWORD_LF", "AutoPlay\\htdocs\\images\\inputs\\input_password_mandatory.png");
+		Application.SaveValue("ItStock", "FORM_LAST_ERROR", "Error616");
+	else
+		if Application.LoadValue("ItStock", "FORM_LAST_ERROR") == "" then
+			Application.SaveValue("ItStock", "FORM_LAST_ERROR", "");
+		end
+	end
+
+	error = Application.LoadValue("ItStock", "FORM_LAST_ERROR");
+	if (error == "Error616") then
 		Application.ExitScript();
 	end
 
@@ -26,8 +35,8 @@ function login ()
 		end
 
 		if not dbUsername then
-			showMsgBox ("Error", "", "The username '"..userName.. "' is not recognized.", "OK");
-			DialogEx.SetFocus("IN_USERNAME");
+			showMsgBox ("Error", Trans("login.msgbox.title.connection", "login"), Trans("login.msg.notrecognized", "login", {userName}), "OK");
+			DialogEx.SetFocus("IN_USERNAME_LF");
 		else
 			if dbStatus == '1' then
 				if (String.CompareNoCase(userName, dbUsername) == 0 and String.CompareNoCase(Crypto.MD5DigestFromString(password), dbPassword) == 0) then
@@ -35,18 +44,18 @@ function login ()
 					EXIT = 1;
 					mySQLCursor, err = mySQLConnection:execute("UPDATE IT_USERS SET `Last_connection`=now() WHERE Username = '"..dbUsername.."';");
 					if err then
-						showMsgBox ("Error", "Updating Last_connection failed ()", err, "OK");
+						showMsgBox ("Error", Trans("login.msgbox.title.updatelastconnection", "login"), err, "OK");
 						Application.ExitScript();
 					end
 					File.Run("AutoPlay\\htdocs\\images\\animations\\Loading.exe", "", "", SW_SHOWNORMAL, false);
 					Application.Sleep(3000);
 					DialogEx.Close(this);
 				else
-					showMsgBox ("Error", "", "Password incorrect.", "OK");
-					DialogEx.SetFocus("IN_USERNAME");
+					showMsgBox ("Error", Trans("login.msgbox.title.connection", "login"), Trans("login.msgbox.error.password", "login"), "OK");
+					DialogEx.SetFocus("IN_USERNAME_LF");
 				end
 			else
-				showMsgBox ("Notice", "", "The account '"..dbUsername.. "' is disabled, Please contact your administrator.", "OK");
+				showMsgBox ("Notice", "", Trans("login.msgbox.account.disabled", "login", {userName}), "OK");
 			end
 		end
 		dbUsername = nil;
