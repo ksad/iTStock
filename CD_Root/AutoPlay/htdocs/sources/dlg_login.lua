@@ -28,8 +28,11 @@ function login ()
 		mySQLCursor = mySQLConnection:execute("SELECT * FROM IT_USERS WHERE Username = '"..userName.."';");
 		row = mySQLCursor:fetch({},"a")
 		while row do
+			dbLastname = row.Lastname;
+			dbFirstname = row.Firstname;
 			dbUsername = row.Username;
 			dbPassword = row.Password;
+			dbRole = row.Role;
 			dbStatus = row.Active;
 			row = mySQLCursor:fetch(row,"a");
 		end
@@ -40,7 +43,9 @@ function login ()
 		else
 			if dbStatus == '1' then
 				if (String.CompareNoCase(userName, dbUsername) == 0 and String.CompareNoCase(Crypto.MD5DigestFromString(password), dbPassword) == 0) then
-					CURRENT_USER = dbUsername;
+					CURRENT_USER = dbFirstname.." "..dbLastname;
+					CURRENT_USERNAME = dbUsername;
+					CURRENT_USER_ROLE = dbRole;
 					EXIT = 1;
 					mySQLCursor, err = mySQLConnection:execute("UPDATE IT_USERS SET `Last_connection`=now() WHERE Username = '"..dbUsername.."';");
 					if err then

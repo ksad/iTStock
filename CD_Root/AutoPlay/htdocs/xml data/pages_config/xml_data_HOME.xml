@@ -1,46 +1,117 @@
 <ROOT>
 	<PAGE Name = "HOME">
-		<TR_MENU Width = "233" Height = "666" PosX = "0" PosY = "102">
-			<perWidth>17.05710102489</perWidth>
-			<perHeight>86.71875</perHeight>
+		<IMG_LEFT_MENU Width = "200" Height = "768" PosX = "0" PosY = "0">
+			<perWidth>14.641288433382</perWidth>
+			<perHeight>100</perHeight>
 			<perPosX>0</perPosX>
-			<perPosY>13.28125</perPosY>
-		</TR_MENU>
-		<IMG_BLACK_BAR Width = "1133" Height = "48" PosX = "233" PosY = "54">
-			<perWidth>82.94289897511</perWidth>
-			<perHeight>6.25</perHeight>
-			<perPosX>17.05710102489</perPosX>
-			<perPosY>7.03125</perPosY>
-		</IMG_BLACK_BAR>
-		<IMG_LEFT_BAR_TITLE Width = "233" Height = "48" PosX = "0" PosY = "54">
-			<perWidth>17.05710102489</perWidth>
-			<perHeight>6.25</perHeight>
+			<perPosY>0</perPosY>
+		</IMG_LEFT_MENU>
+		<IMG_NAVH Width = "1166" Height = "65" PosX = "200" PosY = "0">
+			<perWidth>85.358711566618</perWidth>
+			<perHeight>8.4635416666667</perHeight>
+			<perPosX>14.641288433382</perPosX>
+			<perPosY>0</perPosY>
+		</IMG_NAVH>
+		<IMG_PROFIL Width = "200" Height = "90" PosX = "0" PosY = "63">
+			<perWidth>14.641288433382</perWidth>
+			<perHeight>11.71875</perHeight>
 			<perPosX>0</perPosX>
-			<perPosY>7.03125</perPosY>
-		</IMG_LEFT_BAR_TITLE>
-		<LB_PAGE_TITLE Width = "82" Height = "38" PosX = "72" PosY = "63">
-			<perWidth>6.0029282576867</perWidth>
-			<perHeight>4.9479166666667</perHeight>
-			<perPosX>5.2708638360176</perPosX>
 			<perPosY>8.203125</perPosY>
-		</LB_PAGE_TITLE>
-		<LB_HELLO Width = "87" Height = "27" PosX = "235" PosY = "55">
-			<perWidth>6.3689604685212</perWidth>
-			<perHeight>3.515625</perHeight>
-			<perPosX>17.203513909224</perPosX>
-			<perPosY>7.1614583333333</perPosY>
-		</LB_HELLO>
-		<LB_DATE_TIME Width = "171" Height = "27" PosX = "235" PosY = "76">
-			<perWidth>12.518301610542</perWidth>
-			<perHeight>3.515625</perHeight>
-			<perPosX>17.203513909224</perPosX>
-			<perPosY>9.8958333333333</perPosY>
-		</LB_DATE_TIME>
-		<IMG_LOGOUT Width = "36" Height = "36" PosX = "1321" PosY = "60">
-			<perWidth>2.6354319180088</perWidth>
-			<perHeight>4.6875</perHeight>
-			<perPosX>96.705710102489</perPosX>
-			<perPosY>7.8125</perPosY>
-		</IMG_LOGOUT>
+		</IMG_PROFIL>
+		<IMG_MENU_DASHBOARD Width = "190" Height = "45" PosX = "0" PosY = "179">
+			<perWidth>13.909224011713</perWidth>
+			<perHeight>5.859375</perHeight>
+			<perPosX>0</perPosX>
+			<perPosY>23.307291666667</perPosY>
+		</IMG_MENU_DASHBOARD>
+		<IMG_ICON_DASHBORD Width = "21" Height = "15" PosX = "18" PosY = "193">
+			<perWidth>1.5373352855051</perWidth>
+			<perHeight>1.953125</perHeight>
+			<perPosX>1.3177159590044</perPosX>
+			<perPosY>25.130208333333</perPosY>
+		</IMG_ICON_DASHBORD>
+		<LB_DASHBOARD Width = "117" Height = "25" PosX = "47" PosY = "192">
+			<perWidth>8.5651537335286</perWidth>
+			<perHeight>3.2552083333333</perHeight>
+			<perPosX>3.4407027818448</perPosX>
+			<perPosY>25</perPosY>
+			<perFontSize>0.87847730600293</perFontSize>
+		</LB_DASHBOARD>
+		<IMG_MENU_SETTINGS Width = "190" Height = "45" PosX = "0" PosY = "229">
+			<perWidth>13.909224011713</perWidth>
+			<perHeight>5.859375</perHeight>
+			<perPosX>0</perPosX>
+			<perPosY>29.817708333333</perPosY>
+		</IMG_MENU_SETTINGS>
+		<IMG_ICON_SETTINGS Width = "21" Height = "22" PosX = "18" PosY = "238">
+			<perWidth>1.5373352855051</perWidth>
+			<perHeight>2.8645833333333</perHeight>
+			<perPosX>1.3177159590044</perPosX>
+			<perPosY>30.989583333333</perPosY>
+		</IMG_ICON_SETTINGS>
+		<LB_SETTINGS Width = "84" Height = "25" PosX = "47" PosY = "240">
+			<perWidth>6.1493411420205</perWidth>
+			<perHeight>3.2552083333333</perHeight>
+			<perPosX>3.4407027818448</perPosX>
+			<perPosY>31.25</perPosY>
+			<perFontSize>0.87847730600293</perFontSize>
+		</LB_SETTINGS>
+		<IMG_LOGO Width = "154" Height = "38" PosX = "22" PosY = "12">
+			<perWidth>11.273792093704</perWidth>
+			<perHeight>4.9479166666667</perHeight>
+			<perPosX>1.610541727672</perPosX>
+			<perPosY>1.5625</perPosY>
+		</IMG_LOGO>
+		<IMG_MENU_USERS Width = "190" Height = "45" PosX = "0" PosY = "278">
+			<perWidth>13.909224011713</perWidth>
+			<perHeight>5.859375</perHeight>
+			<perPosX>0</perPosX>
+			<perPosY>36.197916666667</perPosY>
+		</IMG_MENU_USERS>
+		<IMG_ICON_USERS Width = "19" Height = "23" PosX = "18" PosY = "286">
+			<perWidth>1.3909224011713</perWidth>
+			<perHeight>2.9947916666667</perHeight>
+			<perPosX>1.3177159590044</perPosX>
+			<perPosY>37.239583333333</perPosY>
+		</IMG_ICON_USERS>
+		<LB_USERS Width = "136" Height = "25" PosX = "45" PosY = "291">
+			<perWidth>9.9560761346999</perWidth>
+			<perHeight>3.2552083333333</perHeight>
+			<perPosX>3.294289897511</perPosX>
+			<perPosY>37.890625</perPosY>
+			<perFontSize>0.87847730600293</perFontSize>
+		</LB_USERS>
+		<LB_FULLNAME Width = "57" Height = "21" PosX = "54" PosY = "77">
+			<perWidth>4.1727672035139</perWidth>
+			<perHeight>2.734375</perHeight>
+			<perPosX>3.9531478770132</perPosX>
+			<perPosY>10.026041666667</perPosY>
+			<perFontSize>0.73206442166911</perFontSize>
+		</LB_FULLNAME>
+		<LB_ROLE Width = "54" Height = "21" PosX = "54" PosY = "97">
+			<perWidth>3.9531478770132</perWidth>
+			<perHeight>2.734375</perHeight>
+			<perPosX>3.9531478770132</perPosX>
+			<perPosY>12.630208333333</perPosY>
+			<perFontSize>0.73206442166911</perFontSize>
+		</LB_ROLE>
+		<IMG_LOG_AS Width = "15" Height = "18" PosX = "55" PosY = "127">
+			<perWidth>1.0980966325037</perWidth>
+			<perHeight>2.34375</perHeight>
+			<perPosX>4.0263543191801</perPosX>
+			<perPosY>16.536458333333</perPosY>
+		</IMG_LOG_AS>
+		<IMG_EXIT Width = "23" Height = "18" PosX = "84" PosY = "127">
+			<perWidth>1.6837481698389</perWidth>
+			<perHeight>2.34375</perHeight>
+			<perPosX>6.1493411420205</perPosX>
+			<perPosY>16.536458333333</perPosY>
+		</IMG_EXIT>
+		<IMG_USER_PROFIL_PICT Width = "40" Height = "40" PosX = "7" PosY = "75">
+			<perWidth>2.9282576866764</perWidth>
+			<perHeight>5.2083333333333</perHeight>
+			<perPosX>0.51244509516837</perPosX>
+			<perPosY>9.765625</perPosY>
+		</IMG_USER_PROFIL_PICT>
 	</PAGE>
 </ROOT>

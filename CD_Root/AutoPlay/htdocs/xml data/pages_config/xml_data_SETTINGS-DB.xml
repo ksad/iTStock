@@ -23,18 +23,21 @@
 			<perHeight>4.9479166666667</perHeight>
 			<perPosX>1.3177159590044</perPosX>
 			<perPosY>8.203125</perPosY>
+			<perFontSize>1.3177159590044</perFontSize>
 		</LB_PAGE_TITLE>
-		<LB_HELLO Width = "87" Height = "27" PosX = "235" PosY = "55">
-			<perWidth>6.3689604685212</perWidth>
+		<LB_HELLO Width = "181" Height = "27" PosX = "235" PosY = "55">
+			<perWidth>13.250366032211</perWidth>
 			<perHeight>3.515625</perHeight>
 			<perPosX>17.203513909224</perPosX>
 			<perPosY>7.1614583333333</perPosY>
+			<perFontSize>0.87847730600293</perFontSize>
 		</LB_HELLO>
 		<LB_DATE_TIME Width = "171" Height = "27" PosX = "235" PosY = "76">
 			<perWidth>12.518301610542</perWidth>
 			<perHeight>3.515625</perHeight>
 			<perPosX>17.203513909224</perPosX>
 			<perPosY>9.8958333333333</perPosY>
+			<perFontSize>0.87847730600293</perFontSize>
 		</LB_DATE_TIME>
 		<IMG_LOGOUT Width = "36" Height = "36" PosX = "1321" PosY = "60">
 			<perWidth>2.6354319180088</perWidth>
@@ -77,12 +80,14 @@
 			<perHeight>3.6458333333333</perHeight>
 			<perPosX>30.0878477306</perPosX>
 			<perPosY>21.484375</perPosY>
+			<perFontSize>0.87847730600293</perFontSize>
 		</LB_SQLSERVER_TITLE>
 		<LB_SERVER_STATUS Width = "148" Height = "27" PosX = "622" PosY = "165">
 			<perWidth>10.834553440703</perWidth>
 			<perHeight>3.515625</perHeight>
 			<perPosX>45.534407027818</perPosX>
 			<perPosY>21.484375</perPosY>
+			<perFontSize>0.87847730600293</perFontSize>
 		</LB_SERVER_STATUS>
 		<IMG_SERVER_STATUS Width = "16" Height = "16" PosX = "598" PosY = "169">
 			<perWidth>1.1713030746706</perWidth>
@@ -101,6 +106,7 @@
 			<perHeight>3.7760416666667</perHeight>
 			<perPosX>45.754026354319</perPosX>
 			<perPosY>28.255208333333</perPosY>
+			<perFontSize>0.87847730600293</perFontSize>
 		</LB_CHECK_DB_CONNECTION>
 		<IMG_CHECK_DB_CONNECT Width = "45" Height = "45" PosX = "583" PosY = "204">
 			<perWidth>3.294289897511</perWidth>
@@ -184,6 +190,7 @@
 			<perHeight>3.7760416666667</perHeight>
 			<perPosX>29.648609077599</perPosX>
 			<perPosY>16.145833333333</perPosY>
+			<perFontSize>0.95168374816984</perFontSize>
 		</LB_MENU_DB>
 		<IMG_ACCORDION2 Width = "815" Height = "40" PosX = "367" PosY = "295">
 			<perWidth>59.663250366032</perWidth>
@@ -202,12 +209,14 @@
 			<perHeight>3.7760416666667</perHeight>
 			<perPosX>29.648609077599</perPosX>
 			<perPosY>39.583333333333</perPosY>
+			<perFontSize>0.95168374816984</perFontSize>
 		</LB_MENU_2>
 		<LB_MENU-3 Width = "76" Height = "29" PosX = "405" PosY = "354">
 			<perWidth>5.5636896046852</perWidth>
 			<perHeight>3.7760416666667</perHeight>
 			<perPosX>29.648609077599</perPosX>
 			<perPosY>46.09375</perPosY>
+			<perFontSize>0.95168374816984</perFontSize>
 		</LB_MENU-3>
 	</PAGE>
 </ROOT>

@@ -125,7 +125,10 @@
 <Event>
 <Name>On Startup</Name>
 <Args/>
-<Script>Application.SaveValue("ITStock", "FirstRun", "Y");
+<Script>require("Autoplay\\htdocs\\sources\\dlg_login");
+require("Autoplay\\htdocs\\sources\\global_functions")
+
+Application.SaveValue("ITStock", "FirstRun", "Y");
 local LANG = TextFile.ReadToString("AutoPlay\\htdocs\\lang-properties\\default_lang.lang");
 Application.SaveValue("ITStock", "LANG", LANG);
 
@@ -145,8 +148,8 @@ DialogEx.Show("LOGIN", true, nil, nil);</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>14</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeLine>1</DesignCodeLine>
+<DesignCodeCol>54</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -279,10 +282,10 @@ DialogEx.Show("LOGIN", true, nil, nil);</Script>
 <Description/>
 <Keywords/>
 <Background>
-<Type>2</Type>
+<Type>0</Type>
 <ImageStyle>0</ImageStyle>
 <TopColor>16711680</TopColor>
-<BottomColor>16777215</BottomColor>
+<BottomColor>16447478</BottomColor>
 <UseCustomBackgroundSettings>1</UseCustomBackgroundSettings>
 <TransitionEffect/>
 <TransProps/>
@@ -307,29 +310,33 @@ DialogEx.Show("LOGIN", true, nil, nil);</Script>
 <Event>
 <Name>On Show</Name>
 <Args/>
-<Script>loadPageHeader();
-xmlDataPagesSetup(this);</Script>
+<Script>if Application.LoadValue("ITStock", "TRANS_FLAG_"..Application.GetCurrentPage()) ~= "Y" then
+	TransPage("common");
+end
+
+xmlDataPagesSetup(this);
+loadProfilInfos();</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>1</DesignCodeLine>
-<DesignCodeCol>22</DesignCodeCol>
+<DesignCodeCol>18</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
 <Event>
 <Name>On Close</Name>
 <Args/>
-<Script>Tree.SetSelectedNode("TR_MENU", MENU_TREE_INDEXS.NONE);</Script>
+<Script/>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>53</DesignCodeCol>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -449,46 +456,32 @@ end
 </BookMarks>
 </Event>
 <Object>
-<Type>12</Type>
-<Name>TR_MENU</Name>
+<Type>3</Type>
+<Name>IMG_LEFT_MENU</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>0</Locked>
+<Locked>1</Locked>
 <Enabled>1</Enabled>
 <ToolTip/>
 <Cursor>0</Cursor>
 <Group>0</Group>
-<MaintainAspectRatio>0</MaintainAspectRatio>
+<MaintainAspectRatio>1</MaintainAspectRatio>
 <Pin>0</Pin>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>102</Top>
+<Top>0</Top>
 <Bottom>768</Bottom>
 <Left>0</Left>
-<Right>233</Right>
+<Right>200</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
 <HeightRatio>-1.000000</HeightRatio>
 </Ratios>
 <Event>
-<Name>On Select</Name>
-<Args>string e_NodeIndex</Args>
-<Script>leftMenuJump();</Script>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>15</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Double-Click</Name>
-<Args>string e_NodeIndex</Args>
+<Name>On Click</Name>
+<Args/>
 <Script/>
 <TreeStates>
 <TreeState>0</TreeState>
@@ -496,13 +489,13 @@ end
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeCol>1079336960</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
 <Event>
-<Name>On Key</Name>
-<Args>number e_Key, table e_Modifiers</Args>
+<Name>On Right-Click</Name>
+<Args/>
 <Script/>
 <TreeStates>
 <TreeState>0</TreeState>
@@ -510,12 +503,12 @@ end
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeCol>1079336960</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
 <Event>
-<Name>On Focus</Name>
+<Name>On Enter</Name>
 <Args/>
 <Script/>
 <TreeStates>
@@ -529,8 +522,8 @@ end
 </BookMarks>
 </Event>
 <Event>
-<Name>On EditLabel</Name>
-<Args>string e_NodeIndex, string e_NewText, string e_OldText</Args>
+<Name>On Leave</Name>
+<Args/>
 <Script/>
 <TreeStates>
 <TreeState>0</TreeState>
@@ -538,100 +531,27 @@ end
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Check</Name>
-<Args>string e_NodeIndex, boolean e_Checked</Args>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Expanded</Name>
-<Args>string e_NodeIndex, boolean e_Expanded</Args>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeCol>1079336960</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
 <Actions/>
-<Options>
-<ImageList/>
-<BackgroundColor format="hex">ffffff</BackgroundColor>
-<TextColor format="hex">333333</TextColor>
-<TransparentImageListColor format="hex">000000</TransparentImageListColor>
-<ShowCheckBoxes>0</ShowCheckBoxes>
-<HasLines>0</HasLines>
-<LinesAtRoot>1</LinesAtRoot>
-<HasButtons>1</HasButtons>
-<EditLabels>0</EditLabels>
-<AlwaysShowSelection>1</AlwaysShowSelection>
-<UseImageList>1</UseImageList>
-<ReadOrder>0</ReadOrder>
-<Indent>0</Indent>
-<BorderMode>0</BorderMode>
-</Options>
-<Tree>
-<TreeRootCreated>1</TreeRootCreated>
-<tree_node>
-<AMSTreeData>
-<Text>Home</Text>
-<Data>HOME</Data>
-<Selected>0</Selected>
-<Expanded>0</Expanded>
-<NodeIndex>1</NodeIndex>
-<ImageIndex>-1</ImageIndex>
-<SelectedImageIndex>-1</SelectedImageIndex>
-<Checked>0</Checked>
-</AMSTreeData>
-<node_sibling>1</node_sibling>
-</tree_node>
-<tree_node>
-<AMSTreeData>
-<Text>Settings</Text>
-<Data>SETTINGS</Data>
-<Selected>0</Selected>
-<Expanded>0</Expanded>
-<NodeIndex>2</NodeIndex>
-<ImageIndex>-1</ImageIndex>
-<SelectedImageIndex>-1</SelectedImageIndex>
-<Checked>0</Checked>
-</AMSTreeData>
-<node_sibling>0</node_sibling>
-</tree_node>
-</Tree>
-<Font>
-<FontData>
-<FontName>Nunito</FontName>
-<CharacterSet>0</CharacterSet>
-<Height>-19</Height>
-<Weight>700</Weight>
-<Italic>0</Italic>
-<Underline>0</Underline>
-<StrikeOut>0</StrikeOut>
-<AntiAlias>1</AntiAlias>
-</FontData>
-</Font>
+<NormalImage>
+<Filename>AutoPlay\htdocs\images\backgrounds\bg_left_menu.png</Filename>
+<UseTransColor>0</UseTransColor>
+<TransClr>16777215</TransClr>
+<TransTolerance>10</TransTolerance>
+<Opacity>100</Opacity>
+<HTMode>0</HTMode>
+</NormalImage>
+<MouseOverSndMode>0</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>0</MouseClickSndMode>
+<MouseClickSound/>
 </Object>
 <Object>
 <Type>3</Type>
-<Name>IMG_BLACK_BAR</Name>
+<Name>IMG_NAVH</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
 <Locked>1</Locked>
@@ -644,9 +564,9 @@ end
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>54</Top>
-<Bottom>102</Bottom>
-<Left>233</Left>
+<Top>0</Top>
+<Bottom>65</Bottom>
+<Left>200</Left>
 <Right>1366</Right>
 </Coordinates>
 <Ratios>
@@ -663,7 +583,7 @@ end
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>1082825728</DesignCodeCol>
+<DesignCodeCol>7957612</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -677,7 +597,7 @@ end
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>1082526720</DesignCodeCol>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -691,7 +611,7 @@ end
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>1082326016</DesignCodeCol>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -705,13 +625,13 @@ end
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>1399153664</DesignCodeCol>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\\htdocs\\images\\menus\\nav_h.png</Filename>
+<Filename>AutoPlay\htdocs\images\backgrounds\nav_h.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -725,7 +645,7 @@ end
 </Object>
 <Object>
 <Type>3</Type>
-<Name>IMG_LEFT_BAR_TITLE</Name>
+<Name>IMG_PROFIL</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
 <Locked>1</Locked>
@@ -738,10 +658,10 @@ end
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>54</Top>
-<Bottom>102</Bottom>
+<Top>63</Top>
+<Bottom>153</Bottom>
 <Left>0</Left>
-<Right>233</Right>
+<Right>200</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -757,7 +677,7 @@ end
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>25600</DesignCodeCol>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -771,7 +691,7 @@ end
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>100</DesignCodeCol>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -785,7 +705,7 @@ end
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>1079894016</DesignCodeCol>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -799,13 +719,201 @@ end
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>1080008704</DesignCodeCol>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\\htdocs\\images\\menus\\left_menu_title.png</Filename>
+<Filename>AutoPlay\htdocs\images\backgrounds\bg_profil.png</Filename>
+<UseTransColor>0</UseTransColor>
+<TransClr>16777215</TransClr>
+<TransTolerance>10</TransTolerance>
+<Opacity>100</Opacity>
+<HTMode>0</HTMode>
+</NormalImage>
+<MouseOverSndMode>0</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>0</MouseClickSndMode>
+<MouseClickSound/>
+</Object>
+<Object>
+<Type>3</Type>
+<Name>IMG_MENU_DASHBOARD</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>1</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>1</MaintainAspectRatio>
+<Pin>1</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>179</Top>
+<Bottom>224</Bottom>
+<Left>0</Left>
+<Right>190</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Right-Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Enter</Name>
+<Args/>
+<Script>Image.Load("IMG_MENU_DASHBOARD", "AutoPlay\\htdocs\\images\\backgrounds\\bg_menu_item_hover.png");</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>98</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Leave</Name>
+<Args/>
+<Script>Image.Load("IMG_MENU_DASHBOARD", "AutoPlay\\htdocs\\images\\backgrounds\\bg_menu_item.png");</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>85</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<NormalImage>
+<Filename>AutoPlay\htdocs\images\backgrounds\bg_menu_item.png</Filename>
+<UseTransColor>0</UseTransColor>
+<TransClr>16777215</TransClr>
+<TransTolerance>10</TransTolerance>
+<Opacity>100</Opacity>
+<HTMode>0</HTMode>
+</NormalImage>
+<MouseOverSndMode>0</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>0</MouseClickSndMode>
+<MouseClickSound/>
+</Object>
+<Object>
+<Type>3</Type>
+<Name>IMG_ICON_DASHBORD</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>1</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>1</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>193</Top>
+<Bottom>208</Bottom>
+<Left>18</Left>
+<Right>39</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Right-Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Enter</Name>
+<Args/>
+<Script>Image.Load("IMG_MENU_DASHBOARD", "AutoPlay\\htdocs\\images\\backgrounds\\bg_menu_item_hover.png");</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>98</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Leave</Name>
+<Args/>
+<Script>Image.Load("IMG_MENU_DASHBOARD", "AutoPlay\\htdocs\\images\\backgrounds\\bg_menu_item.png");</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>85</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<NormalImage>
+<Filename>AutoPlay\htdocs\images\icons\dashboard.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -819,23 +927,23 @@ end
 </Object>
 <Object>
 <Type>1</Type>
-<Name>LB_PAGE_TITLE</Name>
+<Name>LB_DASHBOARD</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
 <Locked>0</Locked>
 <Enabled>1</Enabled>
 <ToolTip/>
-<Cursor>0</Cursor>
+<Cursor>1</Cursor>
 <Group>0</Group>
 <MaintainAspectRatio>1</MaintainAspectRatio>
 <Pin>0</Pin>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>63</Top>
-<Bottom>101</Bottom>
-<Left>72</Left>
-<Right>154</Right>
+<Top>192</Top>
+<Bottom>217</Bottom>
+<Left>45</Left>
+<Right>223</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -850,8 +958,8 @@ end
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>7563118</DesignCodeLine>
-<DesignCodeCol>1078853642</DesignCodeCol>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -865,49 +973,49 @@ end
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>1080528896</DesignCodeCol>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
 <Event>
 <Name>On Enter</Name>
 <Args/>
-<Script/>
+<Script>Image.Load("IMG_MENU_DASHBOARD", "AutoPlay\\htdocs\\images\\backgrounds\\bg_menu_item_hover.png");</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>28521</DesignCodeLine>
-<DesignCodeCol>-2147468503</DesignCodeCol>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
 <Event>
 <Name>On Leave</Name>
 <Args/>
-<Script/>
+<Script>Image.Load("IMG_MENU_DASHBOARD", "AutoPlay\\htdocs\\images\\backgrounds\\bg_menu_item.png");</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>1684340746</DesignCodeLine>
-<DesignCodeCol>1079836672</DesignCodeCol>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>85</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
 <Actions/>
 <Text>
-<Body>HOME</Body>
+<Body>common.dashboard.item</Body>
 <NormalColor>16777215</NormalColor>
 <HighlightColor>16777215</HighlightColor>
 <MouseDownColor>16777215</MouseDownColor>
 <DisabledColor>12632256</DisabledColor>
 <FontData>
-<FontName>Nunito</FontName>
+<FontName>Calibri</FontName>
 <CharacterSet>0</CharacterSet>
-<Height>-24</Height>
+<Height>-16</Height>
 <Weight>700</Weight>
 <Italic>0</Italic>
 <Underline>0</Underline>
@@ -922,241 +1030,110 @@ end
 <MouseClickSndMode>0</MouseClickSndMode>
 <MouseClickSound/>
 <OriginalRect>
-<Top>63</Top>
-<Bottom>101</Bottom>
-<Left>72</Left>
-<Right>154</Right>
-</OriginalRect>
-</Text>
-</Object>
-<Object>
-<Type>1</Type>
-<Name>LB_HELLO</Name>
-<VisibleAtDesignTime>1</VisibleAtDesignTime>
-<VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>0</Locked>
-<Enabled>1</Enabled>
-<ToolTip/>
-<Cursor>0</Cursor>
-<Group>0</Group>
-<MaintainAspectRatio>1</MaintainAspectRatio>
-<Pin>0</Pin>
-<TabIndex>-1</TabIndex>
-<AutoResize>0</AutoResize>
-<Coordinates>
-<Top>55</Top>
-<Bottom>82</Bottom>
-<Left>235</Left>
-<Right>304</Right>
-</Coordinates>
-<Ratios>
-<WidthRatio>-1.000000</WidthRatio>
-<HeightRatio>-1.000000</HeightRatio>
-</Ratios>
-<Event>
-<Name>On Click</Name>
-<Args/>
-<Script>DialogEx.Show("LOGIN", true, nil, nil);
-Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>1</DesignCodeLine>
-<DesignCodeCol>61</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Right-Click</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Enter</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Leave</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Actions/>
-<Text>
-<Body>{HELLO}</Body>
-<NormalColor>16777215</NormalColor>
-<HighlightColor>16777215</HighlightColor>
-<MouseDownColor>16777215</MouseDownColor>
-<DisabledColor>12632256</DisabledColor>
-<FontData>
-<FontName>Nunito</FontName>
-<CharacterSet>0</CharacterSet>
-<Height>-16</Height>
-<Weight>400</Weight>
-<Italic>1</Italic>
-<Underline>0</Underline>
-<StrikeOut>0</StrikeOut>
-<AntiAlias>1</AntiAlias>
-</FontData>
-<Alignment>0</Alignment>
-<Orientation>0</Orientation>
-<AutoSize>1</AutoSize>
-<MouseOverSndMode>0</MouseOverSndMode>
-<MouseOverSound/>
-<MouseClickSndMode>0</MouseClickSndMode>
-<MouseClickSound/>
-<OriginalRect>
-<Top>55</Top>
-<Bottom>82</Bottom>
-<Left>235</Left>
-<Right>304</Right>
-</OriginalRect>
-</Text>
-</Object>
-<Object>
-<Type>1</Type>
-<Name>LB_DATE_TIME</Name>
-<VisibleAtDesignTime>1</VisibleAtDesignTime>
-<VisibleAtRunTime>1</VisibleAtRunTime>
-<Locked>0</Locked>
-<Enabled>1</Enabled>
-<ToolTip/>
-<Cursor>0</Cursor>
-<Group>0</Group>
-<MaintainAspectRatio>1</MaintainAspectRatio>
-<Pin>0</Pin>
-<TabIndex>-1</TabIndex>
-<AutoResize>0</AutoResize>
-<Coordinates>
-<Top>76</Top>
-<Bottom>103</Bottom>
-<Left>235</Left>
-<Right>342</Right>
-</Coordinates>
-<Ratios>
-<WidthRatio>-1.000000</WidthRatio>
-<HeightRatio>-1.000000</HeightRatio>
-</Ratios>
-<Event>
-<Name>On Click</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>7563118</DesignCodeLine>
-<DesignCodeCol>1078853642</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Right-Click</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>1080528896</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Enter</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>28521</DesignCodeLine>
-<DesignCodeCol>-2147468503</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Event>
-<Name>On Leave</Name>
-<Args/>
-<Script/>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-<DesignCodeLine>1684340746</DesignCodeLine>
-<DesignCodeCol>1079836672</DesignCodeCol>
-<BookMarks count="0">
-</BookMarks>
-</Event>
-<Actions/>
-<Text>
-<Body>{DATA_TIME}</Body>
-<NormalColor>16777215</NormalColor>
-<HighlightColor>16777215</HighlightColor>
-<MouseDownColor>16777215</MouseDownColor>
-<DisabledColor>12632256</DisabledColor>
-<FontData>
-<FontName>Nunito</FontName>
-<CharacterSet>0</CharacterSet>
-<Height>-16</Height>
-<Weight>400</Weight>
-<Italic>1</Italic>
-<Underline>0</Underline>
-<StrikeOut>0</StrikeOut>
-<AntiAlias>1</AntiAlias>
-</FontData>
-<Alignment>0</Alignment>
-<Orientation>0</Orientation>
-<AutoSize>1</AutoSize>
-<MouseOverSndMode>0</MouseOverSndMode>
-<MouseOverSound/>
-<MouseClickSndMode>0</MouseClickSndMode>
-<MouseClickSound/>
-<OriginalRect>
-<Top>76</Top>
-<Bottom>103</Bottom>
-<Left>235</Left>
-<Right>342</Right>
+<Top>192</Top>
+<Bottom>217</Bottom>
+<Left>45</Left>
+<Right>223</Right>
 </OriginalRect>
 </Text>
 </Object>
 <Object>
 <Type>3</Type>
-<Name>IMG_LOGOUT</Name>
+<Name>IMG_MENU_SETTINGS</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>1</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>1</MaintainAspectRatio>
+<Pin>1</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>229</Top>
+<Bottom>274</Bottom>
+<Left>0</Left>
+<Right>190</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Right-Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Enter</Name>
+<Args/>
+<Script>Image.Load("IMG_MENU_SETTINGS", "AutoPlay\\htdocs\\images\\backgrounds\\bg_menu_item_hover.png");</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>58</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Leave</Name>
+<Args/>
+<Script>Image.Load("IMG_MENU_SETTINGS", "AutoPlay\\htdocs\\images\\backgrounds\\bg_menu_item.png");</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>35</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<NormalImage>
+<Filename>AutoPlay\htdocs\images\backgrounds\bg_menu_item.png</Filename>
+<UseTransColor>0</UseTransColor>
+<TransClr>16777215</TransClr>
+<TransTolerance>10</TransTolerance>
+<Opacity>100</Opacity>
+<HTMode>0</HTMode>
+</NormalImage>
+<MouseOverSndMode>0</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>0</MouseClickSndMode>
+<MouseClickSound/>
+</Object>
+<Object>
+<Type>3</Type>
+<Name>IMG_ICON_SETTINGS</Name>
 <VisibleAtDesignTime>1</VisibleAtDesignTime>
 <VisibleAtRunTime>1</VisibleAtRunTime>
 <Locked>0</Locked>
@@ -1169,10 +1146,10 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>60</Top>
-<Bottom>96</Bottom>
-<Left>1321</Left>
-<Right>1357</Right>
+<Top>238</Top>
+<Bottom>260</Bottom>
+<Left>18</Left>
+<Right>39</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -1181,14 +1158,1062 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <Event>
 <Name>On Click</Name>
 <Args/>
-<Script>Application.Exit(0);</Script>
+<Script/>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>20</DesignCodeCol>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Right-Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Enter</Name>
+<Args/>
+<Script>Image.Load("IMG_MENU_SETTINGS", "AutoPlay\\htdocs\\images\\backgrounds\\bg_menu_item_hover.png");</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Leave</Name>
+<Args/>
+<Script>Image.Load("IMG_MENU_SETTINGS", "AutoPlay\\htdocs\\images\\backgrounds\\bg_menu_item.png");</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<NormalImage>
+<Filename>AutoPlay\htdocs\images\icons\settings.png</Filename>
+<UseTransColor>0</UseTransColor>
+<TransClr>16777215</TransClr>
+<TransTolerance>10</TransTolerance>
+<Opacity>100</Opacity>
+<HTMode>0</HTMode>
+</NormalImage>
+<MouseOverSndMode>0</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>0</MouseClickSndMode>
+<MouseClickSound/>
+</Object>
+<Object>
+<Type>1</Type>
+<Name>LB_SETTINGS</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>1</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>1</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>240</Top>
+<Bottom>265</Bottom>
+<Left>45</Left>
+<Right>201</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Right-Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Enter</Name>
+<Args/>
+<Script>Image.Load("IMG_MENU_SETTINGS", "AutoPlay\\htdocs\\images\\backgrounds\\bg_menu_item_hover.png");</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>30</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Leave</Name>
+<Args/>
+<Script>Image.Load("IMG_MENU_SETTINGS", "AutoPlay\\htdocs\\images\\backgrounds\\bg_menu_item.png");</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>30</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<Text>
+<Body>common.settings.item</Body>
+<NormalColor>16777215</NormalColor>
+<HighlightColor>16777215</HighlightColor>
+<MouseDownColor>16777215</MouseDownColor>
+<DisabledColor>12632256</DisabledColor>
+<FontData>
+<FontName>Calibri</FontName>
+<CharacterSet>0</CharacterSet>
+<Height>-16</Height>
+<Weight>700</Weight>
+<Italic>0</Italic>
+<Underline>0</Underline>
+<StrikeOut>0</StrikeOut>
+<AntiAlias>1</AntiAlias>
+</FontData>
+<Alignment>0</Alignment>
+<Orientation>0</Orientation>
+<AutoSize>1</AutoSize>
+<MouseOverSndMode>0</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>0</MouseClickSndMode>
+<MouseClickSound/>
+<OriginalRect>
+<Top>240</Top>
+<Bottom>265</Bottom>
+<Left>45</Left>
+<Right>201</Right>
+</OriginalRect>
+</Text>
+</Object>
+<Object>
+<Type>3</Type>
+<Name>IMG_LOGO</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>0</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>1</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>3</Top>
+<Bottom>59</Bottom>
+<Left>70</Left>
+<Right>130</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>1081133056</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Right-Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>1081120768</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Enter</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>1081108480</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Leave</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>658750</DesignCodeLine>
+<DesignCodeCol>122</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<NormalImage>
+<Filename>AutoPlay\htdocs\images\icons\logo.png</Filename>
+<UseTransColor>0</UseTransColor>
+<TransClr>16777215</TransClr>
+<TransTolerance>10</TransTolerance>
+<Opacity>100</Opacity>
+<HTMode>0</HTMode>
+</NormalImage>
+<MouseOverSndMode>0</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>0</MouseClickSndMode>
+<MouseClickSound/>
+</Object>
+<Object>
+<Type>3</Type>
+<Name>IMG_MENU_USERS</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>1</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>1</MaintainAspectRatio>
+<Pin>1</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>278</Top>
+<Bottom>323</Bottom>
+<Left>0</Left>
+<Right>190</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Right-Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Enter</Name>
+<Args/>
+<Script>Image.Load("IMG_MENU_USERS", "AutoPlay\\htdocs\\images\\backgrounds\\bg_menu_item_hover.png");</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>30</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Leave</Name>
+<Args/>
+<Script>Image.Load("IMG_MENU_USERS", "AutoPlay\\htdocs\\images\\backgrounds\\bg_menu_item.png");</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>81</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<NormalImage>
+<Filename>AutoPlay\htdocs\images\backgrounds\bg_menu_item.png</Filename>
+<UseTransColor>0</UseTransColor>
+<TransClr>16777215</TransClr>
+<TransTolerance>10</TransTolerance>
+<Opacity>100</Opacity>
+<HTMode>0</HTMode>
+</NormalImage>
+<MouseOverSndMode>0</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>0</MouseClickSndMode>
+<MouseClickSound/>
+</Object>
+<Object>
+<Type>3</Type>
+<Name>IMG_ICON_USERS</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>1</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>1</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>289</Top>
+<Bottom>309</Bottom>
+<Left>18</Left>
+<Right>38</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Right-Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Enter</Name>
+<Args/>
+<Script>Image.Load("IMG_MENU_USERS", "AutoPlay\\htdocs\\images\\backgrounds\\bg_menu_item_hover.png");</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>30</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Leave</Name>
+<Args/>
+<Script>Image.Load("IMG_MENU_USERS", "AutoPlay\\htdocs\\images\\backgrounds\\bg_menu_item.png");</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>30</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<NormalImage>
+<Filename>AutoPlay\htdocs\images\icons\users.png</Filename>
+<UseTransColor>0</UseTransColor>
+<TransClr>16777215</TransClr>
+<TransTolerance>10</TransTolerance>
+<Opacity>100</Opacity>
+<HTMode>0</HTMode>
+</NormalImage>
+<MouseOverSndMode>0</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>0</MouseClickSndMode>
+<MouseClickSound/>
+</Object>
+<Object>
+<Type>1</Type>
+<Name>LB_USERS</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>1</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>1</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>291</Top>
+<Bottom>316</Bottom>
+<Left>45</Left>
+<Right>185</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Right-Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Enter</Name>
+<Args/>
+<Script>Image.Load("IMG_MENU_USERS", "AutoPlay\\htdocs\\images\\backgrounds\\bg_menu_item_hover.png");</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>30</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Leave</Name>
+<Args/>
+<Script>Image.Load("IMG_MENU_USERS", "AutoPlay\\htdocs\\images\\backgrounds\\bg_menu_item.png");</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>30</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<Text>
+<Body>common.users.item</Body>
+<NormalColor>16777215</NormalColor>
+<HighlightColor>16777215</HighlightColor>
+<MouseDownColor>16777215</MouseDownColor>
+<DisabledColor>12632256</DisabledColor>
+<FontData>
+<FontName>Calibri</FontName>
+<CharacterSet>0</CharacterSet>
+<Height>-16</Height>
+<Weight>700</Weight>
+<Italic>0</Italic>
+<Underline>0</Underline>
+<StrikeOut>0</StrikeOut>
+<AntiAlias>1</AntiAlias>
+</FontData>
+<Alignment>0</Alignment>
+<Orientation>0</Orientation>
+<AutoSize>1</AutoSize>
+<MouseOverSndMode>0</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>0</MouseClickSndMode>
+<MouseClickSound/>
+<OriginalRect>
+<Top>291</Top>
+<Bottom>316</Bottom>
+<Left>45</Left>
+<Right>185</Right>
+</OriginalRect>
+</Text>
+</Object>
+<Object>
+<Type>1</Type>
+<Name>LB_FULLNAME</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>0</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>1</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>77</Top>
+<Bottom>98</Bottom>
+<Left>54</Left>
+<Right>111</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>2573</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Right-Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Enter</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>1081141248</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Leave</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>1081036800</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<Text>
+<Body>Fullname</Body>
+<NormalColor>16777215</NormalColor>
+<HighlightColor>16777215</HighlightColor>
+<MouseDownColor>16777215</MouseDownColor>
+<DisabledColor>12632256</DisabledColor>
+<FontData>
+<FontName>Calibri</FontName>
+<CharacterSet>0</CharacterSet>
+<Height>-13</Height>
+<Weight>400</Weight>
+<Italic>0</Italic>
+<Underline>0</Underline>
+<StrikeOut>0</StrikeOut>
+<AntiAlias>1</AntiAlias>
+</FontData>
+<Alignment>0</Alignment>
+<Orientation>0</Orientation>
+<AutoSize>1</AutoSize>
+<MouseOverSndMode>0</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>0</MouseClickSndMode>
+<MouseClickSound/>
+<OriginalRect>
+<Top>77</Top>
+<Bottom>98</Bottom>
+<Left>54</Left>
+<Right>111</Right>
+</OriginalRect>
+</Text>
+</Object>
+<Object>
+<Type>1</Type>
+<Name>LB_ROLE</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>0</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>1</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>97</Top>
+<Bottom>118</Bottom>
+<Left>54</Left>
+<Right>108</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>2573</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Right-Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Enter</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>1081141248</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Leave</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>1081036800</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<Text>
+<Body>IT Admin</Body>
+<NormalColor>16777215</NormalColor>
+<HighlightColor>16777215</HighlightColor>
+<MouseDownColor>16777215</MouseDownColor>
+<DisabledColor>12632256</DisabledColor>
+<FontData>
+<FontName>Calibri</FontName>
+<CharacterSet>0</CharacterSet>
+<Height>-13</Height>
+<Weight>400</Weight>
+<Italic>0</Italic>
+<Underline>0</Underline>
+<StrikeOut>0</StrikeOut>
+<AntiAlias>1</AntiAlias>
+</FontData>
+<Alignment>0</Alignment>
+<Orientation>0</Orientation>
+<AutoSize>1</AutoSize>
+<MouseOverSndMode>0</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>0</MouseClickSndMode>
+<MouseClickSound/>
+<OriginalRect>
+<Top>97</Top>
+<Bottom>118</Bottom>
+<Left>54</Left>
+<Right>108</Right>
+</OriginalRect>
+</Text>
+</Object>
+<Object>
+<Type>3</Type>
+<Name>IMG_LOG_AS</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>1</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>1</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>127</Top>
+<Bottom>145</Bottom>
+<Left>55</Left>
+<Right>70</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script>showMsgBox ("Notice", "", Trans("common.feature.not.available", "common"), "OK");</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Right-Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Enter</Name>
+<Args/>
+<Script>tblImageProps = {};
+tblImageProps.TooltipText = Trans("users.icon.log.as", "users");
+Image.SetProperties("IMG_LOG_AS", tblImageProps);</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Leave</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<NormalImage>
+<Filename>AutoPlay\htdocs\images\icons\user_as.png</Filename>
+<UseTransColor>0</UseTransColor>
+<TransClr>16777215</TransClr>
+<TransTolerance>10</TransTolerance>
+<Opacity>100</Opacity>
+<HTMode>0</HTMode>
+</NormalImage>
+<MouseOverSndMode>0</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>0</MouseClickSndMode>
+<MouseClickSound/>
+</Object>
+<Object>
+<Type>3</Type>
+<Name>IMG_EXIT</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>1</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>1</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>127</Top>
+<Bottom>145</Bottom>
+<Left>84</Left>
+<Right>107</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script>--Page.Jump("HOME");
+Application.Exit();</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>1</DesignCodeLine>
+<DesignCodeCol>16</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Right-Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Enter</Name>
+<Args/>
+<Script>tblImageProps = {};
+tblImageProps.TooltipText = Trans("common.exit", "common");
+Image.SetProperties("IMG_EXIT", tblImageProps);</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>2</DesignCodeLine>
+<DesignCodeCol>31</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Leave</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<NormalImage>
+<Filename>AutoPlay\htdocs\images\icons\exit.png</Filename>
+<UseTransColor>0</UseTransColor>
+<TransClr>16777215</TransClr>
+<TransTolerance>10</TransTolerance>
+<Opacity>100</Opacity>
+<HTMode>0</HTMode>
+</NormalImage>
+<MouseOverSndMode>0</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>0</MouseClickSndMode>
+<MouseClickSound/>
+</Object>
+<Object>
+<Type>3</Type>
+<Name>IMG_USER_PROFIL_PICT</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>1</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>1</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>75</Top>
+<Bottom>115</Bottom>
+<Left>7</Left>
+<Right>47</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script>local imagePath = Dialog.FileBrowse(true, "", _SourceFolder.."\\AutoPlay\\htdocs\\images\\img_profil\\", "Image JPEG (*.jpg)|*.jpg|Image PNG (*.png)|*.*|All Files(*.*)|*.*|", "", "", false, false);
+
+Debug.ShowWindow(true);
+
+local image = String.SplitPath(imagePath[1]);
+local nowDate = System.GetDate(DATE_FMT_YEAR)..System.GetDate(DATE_FMT_MONTH)..System.GetDate(DATE_FMT_DAY);
+local nowTime = System.GetTime(TIME_FMT_HOUR)..System.GetTime(TIME_FMT_MIN)..System.GetTime(TIME_FMT_SEC);
+local imageFileName = image.Filename.."_"..nowDate..nowTime..image.Extension;
+Debug.Print(imageFileName.."\r\n");
+
+File.Copy(imagePath[1], _SourceFolder.."\\AutoPlay\\htdocs\\images\\img_profil\\"..imageFileName, true, true, false, true, nil);
+
+-- Test for error
+error = Application.GetLastError();
+if (error ~= 0) then
+	Dialog.Message("Error", _tblErrorMessages[error], MB_OK, MB_ICONEXCLAMATION);
+end
+
+local mySQLConnection = dbConnect();
+if mySQLConnection ~= nil then
+	Debug.Print(CURRENT_USERNAME.."\r\n");
+	SQL = "UPDATE `it_stock_manager`.`it_users` SET `Profil_Pict`='"..imageFileName.."' WHERE Username='"..CURRENT_USERNAME.."';";
+
+	mySQLCursor, err = mySQLConnection:execute(SQL);
+	if err then
+		showMsgBox ("Error", "", Trans("common.update.pict.error", "common"), "OK");
+		-- LOG_WRITE : err
+		Application.ExitScript();
+	else
+		Image.Load("IMG_USER_PROFIL_PICT", "AutoPlay\\htdocs\\images\\img_profil\\"..imageFileName);
+	end
+end</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>43</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -1236,7 +2261,7 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 </Event>
 <Actions/>
 <NormalImage>
-<Filename>AutoPlay\\htdocs\\images\\icons\\exit.png</Filename>
+<Filename>AutoPlay\htdocs\images\icons\no_profil_image.png</Filename>
 <UseTransColor>0</UseTransColor>
 <TransClr>16777215</TransClr>
 <TransTolerance>10</TransTolerance>
@@ -1249,7 +2274,24 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <MouseClickSound/>
 </Object>
 <HGuidelines/>
-<VGuidelines/>
+<VGuidelines>
+<Guideline>
+<pt>177</pt>
+<locked>0</locked>
+</Guideline>
+<Guideline>
+<pt>226</pt>
+<locked>0</locked>
+</Guideline>
+<Guideline>
+<pt>275</pt>
+<locked>0</locked>
+</Guideline>
+<Guideline>
+<pt>325</pt>
+<locked>0</locked>
+</Guideline>
+</VGuidelines>
 </Page>
 <Page>
 <Name>SETTINGS</Name>
@@ -16066,11 +17108,11 @@ Window.Close(Application.GetWndHandle(), CLOSEWND_TERMINATE);</Script>
 <Event>
 <Name>On Show</Name>
 <Args/>
-<Script>require("Autoplay\\htdocs\\sources\\dlg_login");
-require("Autoplay\\htdocs\\sources\\global_functions")
+<Script>--require("Autoplay\\htdocs\\sources\\dlg_login");
+--require("Autoplay\\htdocs\\sources\\global_functions")
 
 if Application.LoadValue("ITStock", "TRANS_FLAG_"..Application.GetCurrentDialog()) ~= "Y" then
-	TransPage("login");
+	TransDialog("login");
 end
 
 DialogEx.SetFocus("IN_USERNAME_LF");
@@ -16080,8 +17122,8 @@ loadCredentials();</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>8</DesignCodeLine>
-<DesignCodeCol>18</DesignCodeCol>
+<DesignCodeLine>4</DesignCodeLine>
+<DesignCodeCol>12</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -16557,9 +17599,9 @@ Image.Load("IMG_USERNAME_LF", "AutoPlay\\htdocs\\images\\inputs\\input_username.
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>74</Top>
-<Bottom>109</Bottom>
+<Bottom>111</Bottom>
 <Left>155</Left>
-<Right>331</Right>
+<Right>345</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -16647,9 +17689,9 @@ Image.Load("IMG_USERNAME_LF", "AutoPlay\\htdocs\\images\\inputs\\input_username.
 <MouseClickSound/>
 <OriginalRect>
 <Top>74</Top>
-<Bottom>109</Bottom>
+<Bottom>111</Bottom>
 <Left>155</Left>
-<Right>331</Right>
+<Right>345</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -23262,9 +24304,9 @@ end</Script>
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>0</Top>
-<Bottom>35</Bottom>
+<Bottom>37</Bottom>
 <Left>218</Left>
-<Right>468</Right>
+<Right>483</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -23352,9 +24394,9 @@ end</Script>
 <MouseClickSound/>
 <OriginalRect>
 <Top>0</Top>
-<Bottom>35</Bottom>
+<Bottom>37</Bottom>
 <Left>218</Left>
-<Right>468</Right>
+<Right>483</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -24865,8 +25907,8 @@ end</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>13</DesignCodeLine>
-<DesignCodeCol>18</DesignCodeCol>
+<DesignCodeLine>90</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -26151,7 +27193,7 @@ end</Script>
 <Name>On Show</Name>
 <Args/>
 <Script>if Application.LoadValue("ITStock", "TRANS_FLAG_"..Application.GetCurrentDialog()) ~= "Y" then
-	TransPage("common");
+	TransDialog("common");
 end
 
 local title = String.Lower(Application.LoadValue("MSGBOX", "title"));
@@ -26295,8 +27337,8 @@ end</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>124</DesignCodeLine>
-<DesignCodeCol>131</DesignCodeCol>
+<DesignCodeLine>1</DesignCodeLine>
+<DesignCodeCol>12</DesignCodeCol>
 <BookMarks count="91">
 BQAAAAYAAAAHAAAACgAAAAsAAAAMAAAADQAAAA8AAAAQAAAAEgAAABsAAAAcAAAA
 HQAAAB8AAAAgAAAAIgAAACcAAAAoAAAAKgAAACsAAAAsAAAALQAAAC4AAAAwAAAA

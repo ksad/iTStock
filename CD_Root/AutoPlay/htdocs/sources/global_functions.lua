@@ -43,6 +43,31 @@ function loadDefaultLanguage ()
 	end
 end
 
+function loadProfilInfos ()
+	if String.Length(CURRENT_USER) > 20 then
+		CURRENT_USER = String.Left(CURRENT_USER, 20).."...";
+	end
+
+	if String.Length(CURRENT_USER_ROLE) > 20 then
+		CURRENT_USER_ROLE = String.Left(CURRENT_USER_ROLE, 20).."...";
+	end
+
+	Label.SetText("LB_FULLNAME", CURRENT_USER);
+	Label.SetText("LB_ROLE", CURRENT_USER_ROLE);
+
+	local mySQLConnection = dbConnect();
+	if mySQLConnection ~= nil then
+		mySQLCursor = mySQLConnection:execute("SELECT Profil_Pict FROM IT_USERS WHERE Username = '"..CURRENT_USERNAME.."';");
+		row = mySQLCursor:fetch({},"a")
+		while row do
+			dbProfilPict = row.Profil_Pict;
+			row = mySQLCursor:fetch(row,"a");
+		end
+	end
+
+	Image.Load("IMG_USER_PROFIL_PICT", "AutoPlay\\htdocs\\images\\img_profil\\"..dbProfilPict);
+end
+
 function loadPageHeader ()
 	Label.SetText("LB_HELLO", Trans("common.welcome.msg", "common", {CURRENT_USER}));
 	Label.SetText("LB_IP", "@IP : "..System.GetLANInfo().IP);
@@ -242,6 +267,8 @@ function saveXmlData()
 				objProp = Button.GetProperties(object);
 			elseif objectType ==1  and  String.Find(object, "IGNORED", 1, false) == -1 then
 				objProp = Label.GetProperties(object);
+				perFont = (objProp.FontSize*100)/PROJEJCT_PAGE_WIDTH;
+				xmlFont = '\t\t\t<perFontSize>'..perFont..'</perFontSize>\r\n';
 			elseif objectType ==2  and  String.Find(object, "IGNORED", 1, false) == -1 then
 				objProp = Paragraph.GetProperties(object);
 			elseif objectType ==3  and  String.Find(object, "IGNORED", 1, false) == -1 then
@@ -443,22 +470,60 @@ function Trans (bundle, composant, tblBundleVars)
 end
 
 function TransPage (composant)
-	if Application.GetWndHandle() then
-		allObjects = DialogEx.EnumerateObjects();
-		currentInterface = Application.GetCurrentDialog();
-	else
-		allObjects = Page.EnumerateObjects();
-		currentInterface = Application.GetCurrentPage();
-	end
+	allObjects = Page.EnumerateObjects();
+	currentInterface = Application.GetCurrentPage();
 
 	for i,object in pairs (allObjects) do
-		if Application.GetWndHandle() then
-			objectType = DialogEx.GetObjectType(object);
-			interfaceSize = DialogEx.GetSize();
-		else
-			objectType = Page.GetObjectType(object);
-			interfaceSize = Page.GetSize();
+		objectType = Page.GetObjectType(object);
+		interfaceSize = Page.GetSize();
+
+		if objectType == 0 then
+			objProp = Button.GetProperties(object);
+			local objTransText = Trans(objProp.Text, composant);
+			Button.SetText(object, objTransText);
 		end
+
+		if objectType == 1 then
+			objProp = Label.GetProperties(object);
+			local objTransText = Trans(objProp.Text, composant);
+			local objRatio = Label.GetPos(object).X * 100 / (interfaceSize.Width - Label.GetSize(object).Width);
+			Label.SetText(object, objTransText);
+
+			if String.Find(objProp.Text, "#", 1, false) == -1 then
+				local objNewPosX = objRatio * (interfaceSize.Width - Label.GetSize(object).Width) / 100;
+				Label.SetPos(object, objNewPosX, Label.GetPos(object).Y);
+			end
+		end
+
+		if objectType == 2 then
+			objProp = Paragraph.GetProperties(object);
+			local objTransText = Trans(objProp.Text, composant);
+			Paragraph.SetText(object, objTransText);
+		end
+
+		if objectType == 7 then
+			objProp = Input.GetProperties(object);
+			local objTransText = Trans(objProp.Text, composant);
+			Input.SetText(object, objTransText);
+		end
+
+		if objectType == 10 then
+			objText = ComboBox.GetText(object);
+			local objTransText = Trans(objText, composant);
+			ComboBox.SetItemText(object, 1, objTransText);
+			ComboBox.SetSelected(object, 1);
+		end
+	end
+	Application.SaveValue("ITStock", "TRANS_FLAG_"..currentInterface, "Y");
+end
+
+function TransDialog (composant)
+	allObjects = DialogEx.EnumerateObjects();
+	currentInterface = Application.GetCurrentDialog();
+
+	for i,object in pairs (allObjects) do
+		objectType = DialogEx.GetObjectType(object);
+		interfaceSize = DialogEx.GetSize();
 
 		if objectType == 0 then
 			objProp = Button.GetProperties(object);
