@@ -53,9 +53,7 @@ function login ()
 						Application.ExitScript();
 					end
 					loginRemember(userName, password);
-					File.Run("AutoPlay\\htdocs\\images\\animations\\Loading.exe", "", "", SW_SHOWNORMAL, false);
-					Application.Sleep(3000);
-					DialogEx.Close(this);
+					Page.Jump("HOME");
 				else
 					showMsgBox ("Error", Trans("login.msgbox.title.connection", "login"), Trans("login.msgbox.error.password", "login"), "OK");
 					DialogEx.SetFocus("IN_USERNAME_LF");
@@ -105,8 +103,8 @@ function loadCredentials()
 		username = String.TrimLeft(credentials[1], "[USERNAME]=");
 		password = String.TrimLeft(credentials[2], "[PASSWORD]=");
 
-		Input.SetText("IN_USERNAME", username);
-		Input.SetText("IN_PASSWORD", password);
+		Input.SetText("IN_USERNAME_LF", username);
+		Input.SetText("IN_PASSWORD_LF", password);
 	else
 		Image.Load("IMG_CHECKBOX", "AutoPlay\\htdocs\\images\\icons\\checkbox_off.png");
 	end

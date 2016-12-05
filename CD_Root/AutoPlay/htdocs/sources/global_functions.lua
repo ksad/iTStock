@@ -500,7 +500,7 @@ function TransPage (composant)
 			local objTransText = Trans(objProp.Text, composant);
 			Paragraph.SetText(object, objTransText);
 		end
-
+		
 		if objectType == 7 then
 			objProp = Input.GetProperties(object);
 			local objTransText = Trans(objProp.Text, composant);

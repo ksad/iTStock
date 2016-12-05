@@ -56,11 +56,11 @@
 			<perPosY>31.25</perPosY>
 			<perFontSize>0.87847730600293</perFontSize>
 		</LB_SETTINGS>
-		<IMG_LOGO Width = "154" Height = "38" PosX = "22" PosY = "12">
-			<perWidth>11.273792093704</perWidth>
-			<perHeight>4.9479166666667</perHeight>
-			<perPosX>1.610541727672</perPosX>
-			<perPosY>1.5625</perPosY>
+		<IMG_LOGO Width = "60" Height = "56" PosX = "70" PosY = "3">
+			<perWidth>4.3923865300146</perWidth>
+			<perHeight>7.2916666666667</perHeight>
+			<perPosX>5.1244509516837</perPosX>
+			<perPosY>0.390625</perPosY>
 		</IMG_LOGO>
 		<IMG_MENU_USERS Width = "190" Height = "45" PosX = "0" PosY = "278">
 			<perWidth>13.909224011713</perWidth>
@@ -68,11 +68,11 @@
 			<perPosX>0</perPosX>
 			<perPosY>36.197916666667</perPosY>
 		</IMG_MENU_USERS>
-		<IMG_ICON_USERS Width = "19" Height = "23" PosX = "18" PosY = "286">
-			<perWidth>1.3909224011713</perWidth>
-			<perHeight>2.9947916666667</perHeight>
+		<IMG_ICON_USERS Width = "20" Height = "20" PosX = "18" PosY = "289">
+			<perWidth>1.4641288433382</perWidth>
+			<perHeight>2.6041666666667</perHeight>
 			<perPosX>1.3177159590044</perPosX>
-			<perPosY>37.239583333333</perPosY>
+			<perPosY>37.630208333333</perPosY>
 		</IMG_ICON_USERS>
 		<LB_USERS Width = "136" Height = "25" PosX = "45" PosY = "291">
 			<perWidth>9.9560761346999</perWidth>
@@ -81,37 +81,37 @@
 			<perPosY>37.890625</perPosY>
 			<perFontSize>0.87847730600293</perFontSize>
 		</LB_USERS>
-		<LB_FULLNAME Width = "57" Height = "21" PosX = "54" PosY = "77">
+		<LB_FULLNAME Width = "57" Height = "21" PosX = "4" PosY = "73">
 			<perWidth>4.1727672035139</perWidth>
 			<perHeight>2.734375</perHeight>
-			<perPosX>3.9531478770132</perPosX>
-			<perPosY>10.026041666667</perPosY>
+			<perPosX>0.29282576866764</perPosX>
+			<perPosY>9.5052083333333</perPosY>
 			<perFontSize>0.73206442166911</perFontSize>
 		</LB_FULLNAME>
-		<LB_ROLE Width = "54" Height = "21" PosX = "54" PosY = "97">
+		<LB_ROLE Width = "54" Height = "21" PosX = "4" PosY = "94">
 			<perWidth>3.9531478770132</perWidth>
 			<perHeight>2.734375</perHeight>
-			<perPosX>3.9531478770132</perPosX>
-			<perPosY>12.630208333333</perPosY>
+			<perPosX>0.29282576866764</perPosX>
+			<perPosY>12.239583333333</perPosY>
 			<perFontSize>0.73206442166911</perFontSize>
 		</LB_ROLE>
-		<IMG_LOG_AS Width = "15" Height = "18" PosX = "55" PosY = "127">
+		<IMG_LOG_AS Width = "15" Height = "18" PosX = "43" PosY = "127">
 			<perWidth>1.0980966325037</perWidth>
 			<perHeight>2.34375</perHeight>
-			<perPosX>4.0263543191801</perPosX>
+			<perPosX>3.1478770131772</perPosX>
 			<perPosY>16.536458333333</perPosY>
 		</IMG_LOG_AS>
-		<IMG_EXIT Width = "23" Height = "18" PosX = "84" PosY = "127">
+		<IMG_EXIT Width = "23" Height = "18" PosX = "72" PosY = "127">
 			<perWidth>1.6837481698389</perWidth>
 			<perHeight>2.34375</perHeight>
-			<perPosX>6.1493411420205</perPosX>
+			<perPosX>5.2708638360176</perPosX>
 			<perPosY>16.536458333333</perPosY>
 		</IMG_EXIT>
-		<IMG_USER_PROFIL_PICT Width = "40" Height = "40" PosX = "7" PosY = "75">
-			<perWidth>2.9282576866764</perWidth>
-			<perHeight>5.2083333333333</perHeight>
-			<perPosX>0.51244509516837</perPosX>
-			<perPosY>9.765625</perPosY>
+		<IMG_USER_PROFIL_PICT Width = "56" Height = "67" PosX = "137" PosY = "79">
+			<perWidth>4.099560761347</perWidth>
+			<perHeight>8.7239583333333</perHeight>
+			<perPosX>10.029282576867</perPosX>
+			<perPosY>10.286458333333</perPosY>
 		</IMG_USER_PROFIL_PICT>
 	</PAGE>
 </ROOT>
