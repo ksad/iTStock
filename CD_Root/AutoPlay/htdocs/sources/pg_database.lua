@@ -116,6 +116,7 @@ function setDbConfigForm (currentObject, mode)
 		else
 			if objectType == 3 and String.Find(object, "DBCF", 1, false) ~= -1 then
 				Image.Load(object, "AutoPlay\\htdocs\\images\\inputs\\input.png");
+				Label.SetVisible("LB_MANDATORY_FIELDS", false);
 			end
 
 			if objectType == 7 and Input.GetText(object) == "" then
@@ -193,6 +194,7 @@ function saveDatabaseConfiguration ()
 		end
 	end
 
+	Label.SetVisible("LB_MANDATORY_FIELDS", true);
 	error = Application.LoadValue("ItStock", "FORM_LAST_ERROR");
 	if (error == "Error616") then
 		Application.ExitScript();
