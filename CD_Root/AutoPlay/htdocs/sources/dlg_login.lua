@@ -3,14 +3,16 @@ function login ()
 	local password = Input.GetText("IN_PASSWORD_LF");
 
 	if userName == "" or userName == Trans("user.input.username", "users") then
-		Image.Load("IMG_USERNAME_LF", "AutoPlay\\htdocs\\images\\inputs\\input_username_mandatory.png");
+		Image.Load("IMG_USERNAME_LF", "AutoPlay\\htdocs\\images\\inputs\\input_login_mandatory.png");
+		Image.Load("IMG_LOGIN_ICON", "AutoPlay\\htdocs\\images\\inputs\\icone_username_manadatory.png");
 		Application.SaveValue("ItStock", "FORM_LAST_ERROR", "Error616");
 	else
 		Application.SaveValue("ItStock", "FORM_LAST_ERROR", "");
 	end
 
 	if password == "" or password == Trans("user.input.password", "users") then
-		Image.Load("IMG_PASSWORD_LF", "AutoPlay\\htdocs\\images\\inputs\\input_password_mandatory.png");
+		Image.Load("IMG_PASSWORD_LF", "AutoPlay\\htdocs\\images\\inputs\\input_login_mandatory.png");
+		Image.Load("IMG_PASSWORD_ICON", "AutoPlay\\htdocs\\images\\inputs\\icone_password_manadatory.png");
 		Application.SaveValue("ItStock", "FORM_LAST_ERROR", "Error616");
 	else
 		if Application.LoadValue("ItStock", "FORM_LAST_ERROR") == "" then
