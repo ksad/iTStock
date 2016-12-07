@@ -22,7 +22,7 @@ function dbConnect ()
 			end
 		end
 	else
-		showTimedMsgBox ("Error", Trans("", "database"), "5000");
+		showTimedMsgBox ("Error", Trans("db.error.first.config", "database"), "5000");
 		local userAction = DialogEx.Show("DB_CONFIG", true, nil, nil);
 		if userAction == 2 then
 			Application.ExitScript();
@@ -57,7 +57,12 @@ function loadProfilInfos ()
 
 	local mySQLConnection = dbConnect();
 	if mySQLConnection ~= nil then
-		mySQLCursor = mySQLConnection:execute("SELECT Profil_Pict FROM IT_USERS WHERE Username = '"..CURRENT_USERNAME.."';");
+		mySQLCursor, err = mySQLConnection:execute("SELECT Profil_Pict FROM IT_USERS WHERE Username = '"..CURRENT_USERNAME.."';");
+		if err then
+			showMsgBox ("Error", "", Trans("common.update.pict.error", "common"), "OK");
+			-- WRITE LOG (err)
+			Application.ExitScript();
+		end
 		row = mySQLCursor:fetch({},"a")
 		while row do
 			dbProfilPict = row.Profil_Pict;

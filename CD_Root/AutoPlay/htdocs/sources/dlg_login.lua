@@ -25,7 +25,12 @@ function login ()
 
 	local mySQLConnection = dbConnect();
 	if mySQLConnection ~= nil then
-		mySQLCursor = mySQLConnection:execute("SELECT * FROM IT_USERS WHERE Username = '"..userName.."';");
+		mySQLCursor, err = mySQLConnection:execute("SELECT * FROM IT_USERS WHERE Username = '"..userName.."';");
+		if err then
+			showMsgBox ("Error", "", Trans("common.update.pict.error"), "OK");
+			-- WRITE LOG (err)
+			Application.ExitScript();
+		end
 		row = mySQLCursor:fetch({},"a")
 		while row do
 			dbLastname = row.Lastname;

@@ -320,8 +320,8 @@ loadCredentials();</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>5</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeLine>6</DesignCodeLine>
+<DesignCodeCol>18</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -917,7 +917,7 @@ Image.Load("IMG_PASSWORD_LF", "AutoPlay\\htdocs\\images\\inputs\\input_password.
 <TextColor>3480078</TextColor>
 <BackgroundColor>16447478</BackgroundColor>
 <FontData>
-<FontName>Nunito</FontName>
+<FontName>Roboto</FontName>
 <CharacterSet>0</CharacterSet>
 <Height>-21</Height>
 <Weight>400</Weight>
@@ -1032,7 +1032,7 @@ Image.Load("IMG_USERNAME_LF", "AutoPlay\\htdocs\\images\\inputs\\input_username.
 <TextColor>3480078</TextColor>
 <BackgroundColor>16447478</BackgroundColor>
 <FontData>
-<FontName>Nunito</FontName>
+<FontName>Roboto</FontName>
 <CharacterSet>0</CharacterSet>
 <Height>-21</Height>
 <Weight>400</Weight>
@@ -1074,7 +1074,7 @@ Image.Load("IMG_USERNAME_LF", "AutoPlay\\htdocs\\images\\inputs\\input_username.
 <Top>505</Top>
 <Bottom>531</Bottom>
 <Left>577</Left>
-<Right>789</Right>
+<Right>782</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -1144,11 +1144,11 @@ Image.Load("IMG_USERNAME_LF", "AutoPlay\\htdocs\\images\\inputs\\input_username.
 <MouseDownColor>3480078</MouseDownColor>
 <DisabledColor>12632256</DisabledColor>
 <FontData>
-<FontName>Nunito</FontName>
+<FontName>Roboto</FontName>
 <CharacterSet>0</CharacterSet>
 <Height>-15</Height>
 <Weight>400</Weight>
-<Italic>1</Italic>
+<Italic>0</Italic>
 <Underline>0</Underline>
 <StrikeOut>0</StrikeOut>
 <AntiAlias>1</AntiAlias>
@@ -1164,7 +1164,7 @@ Image.Load("IMG_USERNAME_LF", "AutoPlay\\htdocs\\images\\inputs\\input_username.
 <Top>505</Top>
 <Bottom>531</Bottom>
 <Left>577</Left>
-<Right>789</Right>
+<Right>782</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -1290,7 +1290,7 @@ end</Script>
 <Top>457</Top>
 <Bottom>483</Bottom>
 <Left>497</Left>
-<Right>695</Right>
+<Right>691</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -1370,7 +1370,7 @@ end</Script>
 <MouseDownColor>3480078</MouseDownColor>
 <DisabledColor>12632256</DisabledColor>
 <FontData>
-<FontName>Nunito</FontName>
+<FontName>Roboto</FontName>
 <CharacterSet>0</CharacterSet>
 <Height>-15</Height>
 <Weight>400</Weight>
@@ -1390,7 +1390,7 @@ end</Script>
 <Top>457</Top>
 <Bottom>483</Bottom>
 <Left>497</Left>
-<Right>695</Right>
+<Right>691</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -1486,7 +1486,7 @@ end</Script>
 <DownColor>16777215</DownColor>
 <DisabledColor>16777215</DisabledColor>
 <FontData>
-<FontName>Arial</FontName>
+<FontName>Roboto</FontName>
 <CharacterSet>0</CharacterSet>
 <Height>-19</Height>
 <Weight>700</Weight>
@@ -19496,7 +19496,7 @@ end</Script>
 <Script>require("AutoPlay\\htdocs\\sources\\pg_database");
 
 if Application.LoadValue("ITStock", "TRANS_FLAG_"..Application.GetCurrentDialog()) ~= "Y" then
-	TransPage("database");
+	TransDialog("database");
 end
 
 Window.SetText(DialogEx.GetWndHandle(), Trans("db.config.dialog.title", "database"));</Script>
@@ -19505,8 +19505,8 @@ Window.SetText(DialogEx.GetWndHandle(), Trans("db.config.dialog.title", "databas
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeLine>3</DesignCodeLine>
+<DesignCodeCol>12</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>

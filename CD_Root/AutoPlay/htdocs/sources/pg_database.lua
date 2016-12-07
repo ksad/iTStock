@@ -23,6 +23,7 @@ function checkSQLServerStatus(dbName, dbUser, dbPassword, dbAddress, dbPort)
 		elseif sqlServerStatus == 3 then
 			serverStatusMsg = Trans("sql.server.status3", "database");
 		elseif sqlServerStatus == 4 then
+			MySQLConnection, err = MySQL:connect(dbName, dbUser, dbPassword, dbAddress, dbPort);
 			serverStatusMsg = Trans("sql.server.status4", "database");
 		elseif sqlServerStatus == 5 then
 			serverStatusMsg = Trans("sql.server.status5", "database");
