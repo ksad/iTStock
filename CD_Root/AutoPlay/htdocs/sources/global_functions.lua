@@ -117,24 +117,17 @@ function xmlDataPagesLoad (currentPage)
 	end
 end
 
---[[
-	this function allow to jump from keft menu on each page to a specific page
-	Usage : Each element added in the tree list should have Data = Page name in (MAJ)
-	Example : Settings -> Data = SETTINGS
-]]
-function leftMenuJump ()
-	local SelectedMenu = Tree.GetSelectedNode("TR_MENU");
+function leftMenuReset ()
+	local objectList = Page.EnumerateObjects();
 
-	if SelectedMenu == "" then
-		Application.ExitScript();
-	end
-
-	nodeMenuProperties = Tree.GetNode("TR_MENU", SelectedMenu);
-
-	if Application.GetCurrentPage() == nodeMenuProperties.Data then
-		Application.ExitScript();
-	else
-		Page.Jump(nodeMenuProperties.Data);
+	for i, object in pairs(objectList) do
+		objectType = Page.GetObjectType(object);
+		if objectType == 3 and String.Find(object, "IMG_MENU", 1, false) ~= -1 then
+			local path = String.SplitPath(Image.GetFilename(object));
+			if path.Filename ~= "bg_menu_item_active" then
+				Image.Load(object, "AutoPlay\\htdocs\\images\\backgrounds\\bg_menu_item.png");
+			end
+		end
 	end
 end
 
@@ -509,14 +502,18 @@ function TransPage (composant)
 		if objectType == 7 then
 			objProp = Input.GetProperties(object);
 			local objTransText = Trans(objProp.Text, composant);
-			Input.SetText(object, objTransText);
+			if objTransText then
+				Input.SetText(object, objTransText);
+			end
 		end
 
 		if objectType == 10 then
 			objText = ComboBox.GetText(object);
 			local objTransText = Trans(objText, composant);
-			ComboBox.SetItemText(object, 1, objTransText);
-			ComboBox.SetSelected(object, 1);
+			if objTransText then
+				ComboBox.SetItemText(object, 1, objTransText);
+				ComboBox.SetSelected(object, 1);
+			end
 		end
 	end
 	Application.SaveValue("ITStock", "TRANS_FLAG_"..currentInterface, "Y");
