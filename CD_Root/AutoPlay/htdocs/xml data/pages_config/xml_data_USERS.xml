@@ -74,8 +74,8 @@
 			<perPosX>0</perPosX>
 			<perPosY>8.203125</perPosY>
 		</IMG_PROFIL>
-		<IMG_MENU_DASHBOARD Width = "190" Height = "45" PosX = "0" PosY = "179">
-			<perWidth>13.909224011713</perWidth>
+		<IMG_MENU_DASHBOARD Width = "200" Height = "45" PosX = "0" PosY = "179">
+			<perWidth>14.641288433382</perWidth>
 			<perHeight>5.859375</perHeight>
 			<perPosX>0</perPosX>
 			<perPosY>23.307291666667</perPosY>
@@ -150,8 +150,8 @@
 			<perPosX>10.029282576867</perPosX>
 			<perPosY>10.286458333333</perPosY>
 		</IMG_USER_PROFIL_PICT>
-		<IMG_MENU_SETTINGS Width = "190" Height = "45" PosX = "0" PosY = "229">
-			<perWidth>13.909224011713</perWidth>
+		<IMG_MENU_SETTINGS Width = "200" Height = "45" PosX = "0" PosY = "229">
+			<perWidth>14.641288433382</perWidth>
 			<perHeight>5.859375</perHeight>
 			<perPosX>0</perPosX>
 			<perPosY>29.817708333333</perPosY>

@@ -113,5 +113,11 @@
 			<perPosX>10.029282576867</perPosX>
 			<perPosY>10.286458333333</perPosY>
 		</IMG_USER_PROFIL_PICT>
+		<IMG_LANGS Width = "25" Height = "24" PosX = "1333" PosY = "19">
+			<perWidth>1.8301610541728</perWidth>
+			<perHeight>3.125</perHeight>
+			<perPosX>97.584187408492</perPosX>
+			<perPosY>2.4739583333333</perPosY>
+		</IMG_LANGS>
 	</PAGE>
 </ROOT>

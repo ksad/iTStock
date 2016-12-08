@@ -109,9 +109,9 @@
 			<perPosY>31.119791666667</perPosY>
 			<perFontSize>0.87847730600293</perFontSize>
 		</LB_CHECKBOX>
-		<GD_USERS_LIST Width = "864" Height = "373" PosX = "367" PosY = "293">
-			<perWidth>63.250366032211</perWidth>
-			<perHeight>48.567708333333</perHeight>
+		<GD_USERS_LIST Width = "865" Height = "152" PosX = "367" PosY = "293">
+			<perWidth>63.323572474378</perWidth>
+			<perHeight>19.791666666667</perHeight>
 			<perPosX>26.866764275256</perPosX>
 			<perPosY>38.151041666667</perPosY>
 		</GD_USERS_LIST>
@@ -172,8 +172,8 @@
 			<perPosX>0</perPosX>
 			<perPosY>8.203125</perPosY>
 		</IMG_PROFIL>
-		<IMG_MENU_DASHBOARD Width = "190" Height = "45" PosX = "0" PosY = "179">
-			<perWidth>13.909224011713</perWidth>
+		<IMG_MENU_DASHBOARD Width = "200" Height = "45" PosX = "0" PosY = "179">
+			<perWidth>14.641288433382</perWidth>
 			<perHeight>5.859375</perHeight>
 			<perPosX>0</perPosX>
 			<perPosY>23.307291666667</perPosY>
@@ -248,8 +248,8 @@
 			<perPosX>10.029282576867</perPosX>
 			<perPosY>10.286458333333</perPosY>
 		</IMG_USER_PROFIL_PICT>
-		<IMG_MENU_SETTINGS Width = "190" Height = "45" PosX = "0" PosY = "229">
-			<perWidth>13.909224011713</perWidth>
+		<IMG_MENU_SETTINGS Width = "200" Height = "45" PosX = "0" PosY = "229">
+			<perWidth>14.641288433382</perWidth>
 			<perHeight>5.859375</perHeight>
 			<perPosX>0</perPosX>
 			<perPosY>29.817708333333</perPosY>

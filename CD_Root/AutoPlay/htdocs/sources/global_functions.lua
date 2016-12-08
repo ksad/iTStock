@@ -563,6 +563,12 @@ function TransDialog (composant)
 			ComboBox.SetItemText(object, 1, objTransText);
 			ComboBox.SetSelected(object, 1);
 		end
+		
+		if objectType == 13 then
+			objText = RadioButton.GetText(object);
+			local objTransText = Trans(objText, composant);
+			RadioButton.SetText(object, objTransText);
+		end
 	end
 	Application.SaveValue("ITStock", "TRANS_FLAG_"..currentInterface, "Y");
 end

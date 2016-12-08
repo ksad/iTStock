@@ -24,23 +24,23 @@
 			<perPosX>34.699853587116</perPosX>
 			<perPosY>43.75</perPosY>
 		</IMG_USERNAME_LF>
-		<IN_USERNAME_LF Width = "380" Height = "35" PosX = "510" PosY = "340">
+		<IN_USERNAME_LF Width = "380" Height = "28" PosX = "500" PosY = "347">
 			<perWidth>27.818448023426</perWidth>
-			<perHeight>4.5572916666667</perHeight>
-			<perPosX>37.335285505124</perPosX>
-			<perPosY>44.270833333333</perPosY>
-			<perFontSize>1.1713030746706</perFontSize>
+			<perHeight>3.6458333333333</perHeight>
+			<perPosX>36.603221083455</perPosX>
+			<perPosY>45.182291666667</perPosY>
+			<perFontSize>0.87847730600293</perFontSize>
 		</IN_USERNAME_LF>
-		<IN_PASSWORD_LF Width = "380" Height = "35" PosX = "510" PosY = "389">
+		<IN_PASSWORD_LF Width = "380" Height = "26" PosX = "500" PosY = "398">
 			<perWidth>27.818448023426</perWidth>
-			<perHeight>4.5572916666667</perHeight>
-			<perPosX>37.335285505124</perPosX>
-			<perPosY>50.651041666667</perPosY>
-			<perFontSize>1.1713030746706</perFontSize>
+			<perHeight>3.3854166666667</perHeight>
+			<perPosX>36.603221083455</perPosX>
+			<perPosY>51.822916666667</perPosY>
+			<perFontSize>0.87847730600293</perFontSize>
 		</IN_PASSWORD_LF>
-		<LB_REGISTER Width = "187" Height = "23" PosX = "577" PosY = "505">
-			<perWidth>13.689604685212</perWidth>
-			<perHeight>2.9947916666667</perHeight>
+		<LB_REGISTER Width = "191" Height = "26" PosX = "577" PosY = "505">
+			<perWidth>13.98243045388</perWidth>
+			<perHeight>3.3854166666667</perHeight>
 			<perPosX>42.240117130307</perPosX>
 			<perPosY>65.755208333333</perPosY>
 			<perFontSize>0.80527086383602</perFontSize>
@@ -51,9 +51,9 @@
 			<perPosX>34.626647144949</perPosX>
 			<perPosY>59.505208333333</perPosY>
 		</IMG_CHECKBOX>
-		<LB_CRED_CBOX Width = "182" Height = "23" PosX = "497" PosY = "457">
-			<perWidth>13.323572474378</perWidth>
-			<perHeight>2.9947916666667</perHeight>
+		<LB_CRED_CBOX Width = "179" Height = "26" PosX = "497" PosY = "457">
+			<perWidth>13.103953147877</perWidth>
+			<perHeight>3.3854166666667</perHeight>
 			<perPosX>36.383601756955</perPosX>
 			<perPosY>59.505208333333</perPosY>
 			<perFontSize>0.80527086383602</perFontSize>
@@ -64,17 +64,17 @@
 			<perPosX>54.685212298682</perPosX>
 			<perPosY>58.203125</perPosY>
 		</BTN_LOGIN>
-		<IMG_LOGIN_ICON Width = "30" Height = "35" PosX = "476" PosY = "339">
-			<perWidth>2.1961932650073</perWidth>
-			<perHeight>4.5572916666667</perHeight>
+		<IMG_LOGIN_ICON Width = "20" Height = "24" PosX = "476" PosY = "346">
+			<perWidth>1.4641288433382</perWidth>
+			<perHeight>3.125</perHeight>
 			<perPosX>34.846266471449</perPosX>
-			<perPosY>44.140625</perPosY>
+			<perPosY>45.052083333333</perPosY>
 		</IMG_LOGIN_ICON>
-		<IMG_PASSWORD_ICON Width = "30" Height = "35" PosX = "476" PosY = "387">
-			<perWidth>2.1961932650073</perWidth>
-			<perHeight>4.5572916666667</perHeight>
+		<IMG_PASSWORD_ICON Width = "20" Height = "23" PosX = "476" PosY = "396">
+			<perWidth>1.4641288433382</perWidth>
+			<perHeight>2.9947916666667</perHeight>
 			<perPosX>34.846266471449</perPosX>
-			<perPosY>50.390625</perPosY>
+			<perPosY>51.5625</perPosY>
 		</IMG_PASSWORD_ICON>
 	</PAGE>
 </ROOT>

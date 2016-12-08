@@ -149,19 +149,6 @@
 			<perPosY>25</perPosY>
 			<perFontSize>0.87847730600293</perFontSize>
 		</LB_DASHBOARD>
-		<IMG_MENU_SETTINGS Width = "200" Height = "45" PosX = "0" PosY = "229">
-			<perWidth>14.641288433382</perWidth>
-			<perHeight>5.859375</perHeight>
-			<perPosX>0</perPosX>
-			<perPosY>29.817708333333</perPosY>
-		</IMG_MENU_SETTINGS>
-		<LB_SETTINGS Width = "84" Height = "25" PosX = "47" PosY = "240">
-			<perWidth>6.1493411420205</perWidth>
-			<perHeight>3.2552083333333</perHeight>
-			<perPosX>3.4407027818448</perPosX>
-			<perPosY>31.25</perPosY>
-			<perFontSize>0.87847730600293</perFontSize>
-		</LB_SETTINGS>
 		<IMG_MENU_USERS Width = "200" Height = "45" PosX = "0" PosY = "278">
 			<perWidth>14.641288433382</perWidth>
 			<perHeight>5.859375</perHeight>
@@ -181,17 +168,30 @@
 			<perPosX>1.3177159590044</perPosX>
 			<perPosY>25.130208333333</perPosY>
 		</IMG_ICON_DASHBORD>
-		<IMG_ICON_SETTINGS Width = "21" Height = "22" PosX = "18" PosY = "238">
-			<perWidth>1.5373352855051</perWidth>
-			<perHeight>2.8645833333333</perHeight>
-			<perPosX>1.3177159590044</perPosX>
-			<perPosY>30.989583333333</perPosY>
-		</IMG_ICON_SETTINGS>
 		<IMG_ICON_USERS Width = "20" Height = "20" PosX = "18" PosY = "289">
 			<perWidth>1.4641288433382</perWidth>
 			<perHeight>2.6041666666667</perHeight>
 			<perPosX>1.3177159590044</perPosX>
 			<perPosY>37.630208333333</perPosY>
 		</IMG_ICON_USERS>
+		<IMG_MENU_SETTINGS Width = "200" Height = "45" PosX = "0" PosY = "229">
+			<perWidth>14.641288433382</perWidth>
+			<perHeight>5.859375</perHeight>
+			<perPosX>0</perPosX>
+			<perPosY>29.817708333333</perPosY>
+		</IMG_MENU_SETTINGS>
+		<LB_SETTINGS Width = "84" Height = "25" PosX = "47" PosY = "240">
+			<perWidth>6.1493411420205</perWidth>
+			<perHeight>3.2552083333333</perHeight>
+			<perPosX>3.4407027818448</perPosX>
+			<perPosY>31.25</perPosY>
+			<perFontSize>0.87847730600293</perFontSize>
+		</LB_SETTINGS>
+		<IMG_ICON_SETTINGS Width = "21" Height = "22" PosX = "18" PosY = "238">
+			<perWidth>1.5373352855051</perWidth>
+			<perHeight>2.8645833333333</perHeight>
+			<perPosX>1.3177159590044</perPosX>
+			<perPosY>30.989583333333</perPosY>
+		</IMG_ICON_SETTINGS>
 	</PAGE>
 </ROOT>
