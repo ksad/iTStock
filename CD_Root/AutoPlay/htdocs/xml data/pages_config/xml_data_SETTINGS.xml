@@ -1,62 +1,5 @@
 <ROOT>
 	<PAGE Name = "SETTINGS">
-		<IMG_ACCORDION1 Width = "815" Height = "40" PosX = "367" PosY = "165">
-			<perWidth>59.663250366032</perWidth>
-			<perHeight>5.2083333333333</perHeight>
-			<perPosX>26.866764275256</perPosX>
-			<perPosY>21.484375</perPosY>
-		</IMG_ACCORDION1>
-		<IMG_TOGGLE_DOWN1 Width = "50" Height = "40" PosX = "1182" PosY = "165">
-			<perWidth>3.6603221083455</perWidth>
-			<perHeight>5.2083333333333</perHeight>
-			<perPosX>86.530014641288</perPosX>
-			<perPosY>21.484375</perPosY>
-		</IMG_TOGGLE_DOWN1>
-		<IMG_ACCORDION2 Width = "815" Height = "40" PosX = "367" PosY = "115">
-			<perWidth>59.663250366032</perWidth>
-			<perHeight>5.2083333333333</perHeight>
-			<perPosX>26.866764275256</perPosX>
-			<perPosY>14.973958333333</perPosY>
-		</IMG_ACCORDION2>
-		<IMG_TOGGLE_DOWN2 Width = "50" Height = "40" PosX = "1182" PosY = "115">
-			<perWidth>3.6603221083455</perWidth>
-			<perHeight>5.2083333333333</perHeight>
-			<perPosX>86.530014641288</perPosX>
-			<perPosY>14.973958333333</perPosY>
-		</IMG_TOGGLE_DOWN2>
-		<IMG_ACCORDION3 Width = "815" Height = "40" PosX = "367" PosY = "214">
-			<perWidth>59.663250366032</perWidth>
-			<perHeight>5.2083333333333</perHeight>
-			<perPosX>26.866764275256</perPosX>
-			<perPosY>27.864583333333</perPosY>
-		</IMG_ACCORDION3>
-		<IMG_TOGGLE_DOWN3 Width = "50" Height = "40" PosX = "1182" PosY = "214">
-			<perWidth>3.6603221083455</perWidth>
-			<perHeight>5.2083333333333</perHeight>
-			<perPosX>86.530014641288</perPosX>
-			<perPosY>27.864583333333</perPosY>
-		</IMG_TOGGLE_DOWN3>
-		<LB_MENU_DB Width = "82" Height = "29" PosX = "405" PosY = "174">
-			<perWidth>6.0029282576867</perWidth>
-			<perHeight>3.7760416666667</perHeight>
-			<perPosX>29.648609077599</perPosX>
-			<perPosY>22.65625</perPosY>
-			<perFontSize>0.95168374816984</perFontSize>
-		</LB_MENU_DB>
-		<LB_MENU_2 Width = "84" Height = "29" PosX = "405" PosY = "124">
-			<perWidth>6.1493411420205</perWidth>
-			<perHeight>3.7760416666667</perHeight>
-			<perPosX>29.648609077599</perPosX>
-			<perPosY>16.145833333333</perPosY>
-			<perFontSize>0.95168374816984</perFontSize>
-		</LB_MENU_2>
-		<LB_MENU-3 Width = "76" Height = "29" PosX = "405" PosY = "224">
-			<perWidth>5.5636896046852</perWidth>
-			<perHeight>3.7760416666667</perHeight>
-			<perPosX>29.648609077599</perPosX>
-			<perPosY>29.166666666667</perPosY>
-			<perFontSize>0.95168374816984</perFontSize>
-		</LB_MENU-3>
 		<IMG_LEFT_MENU Width = "200" Height = "768" PosX = "0" PosY = "0">
 			<perWidth>14.641288433382</perWidth>
 			<perHeight>100</perHeight>
@@ -170,5 +113,162 @@
 			<perPosX>1.3177159590044</perPosX>
 			<perPosY>37.630208333333</perPosY>
 		</IMG_ICON_USERS>
+		<BTN_DB_TAB Width = "200" Height = "65" PosX = "200" PosY = "0">
+			<perWidth>14.641288433382</perWidth>
+			<perHeight>8.4635416666667</perHeight>
+			<perPosX>14.641288433382</perPosX>
+			<perPosY>0</perPosY>
+		</BTN_DB_TAB>
+		<IMG_OTHER_TAB Width = "200" Height = "65" PosX = "400" PosY = "0">
+			<perWidth>14.641288433382</perWidth>
+			<perHeight>8.4635416666667</perHeight>
+			<perPosX>29.282576866764</perPosX>
+			<perPosY>0</perPosY>
+		</IMG_OTHER_TAB>
+		<LB_SQLSERVER_TITLE Width = "191" Height = "28" PosX = "233" PosY = "135">
+			<perWidth>13.98243045388</perWidth>
+			<perHeight>3.6458333333333</perHeight>
+			<perPosX>17.05710102489</perPosX>
+			<perPosY>17.578125</perPosY>
+			<perFontSize>0.87847730600293</perFontSize>
+		</LB_SQLSERVER_TITLE>
+		<IMG_SERVER_STATUS Width = "20" Height = "20" PosX = "217" PosY = "135">
+			<perWidth>1.4641288433382</perWidth>
+			<perHeight>2.6041666666667</perHeight>
+			<perPosX>15.88579795022</perPosX>
+			<perPosY>17.578125</perPosY>
+		</IMG_SERVER_STATUS>
+		<IMG_SERVER Width = "35" Height = "35" PosX = "214" PosY = "79">
+			<perWidth>2.5622254758419</perWidth>
+			<perHeight>4.5572916666667</perHeight>
+			<perPosX>15.666178623719</perPosX>
+			<perPosY>10.286458333333</perPosY>
+		</IMG_SERVER>
+		<IMG_DB_NAME_DBCF Width = "250" Height = "30" PosX = "743" PosY = "255">
+			<perWidth>18.301610541728</perWidth>
+			<perHeight>3.90625</perHeight>
+			<perPosX>54.392386530015</perPosX>
+			<perPosY>33.203125</perPosY>
+		</IMG_DB_NAME_DBCF>
+		<IMG_DB_USERNAME_DBCF Width = "250" Height = "30" PosX = "743" PosY = "305">
+			<perWidth>18.301610541728</perWidth>
+			<perHeight>3.90625</perHeight>
+			<perPosX>54.392386530015</perPosX>
+			<perPosY>39.713541666667</perPosY>
+		</IMG_DB_USERNAME_DBCF>
+		<IMG_DB_PASSWORD_DBCF Width = "250" Height = "30" PosX = "743" PosY = "355">
+			<perWidth>18.301610541728</perWidth>
+			<perHeight>3.90625</perHeight>
+			<perPosX>54.392386530015</perPosX>
+			<perPosY>46.223958333333</perPosY>
+		</IMG_DB_PASSWORD_DBCF>
+		<IMG_DB_PORT_DBCF Width = "250" Height = "30" PosX = "743" PosY = "411">
+			<perWidth>18.301610541728</perWidth>
+			<perHeight>3.90625</perHeight>
+			<perPosX>54.392386530015</perPosX>
+			<perPosY>53.515625</perPosY>
+		</IMG_DB_PORT_DBCF>
+		<IMG_DB_ADDRESS_DBCF Width = "250" Height = "30" PosX = "743" PosY = "464">
+			<perWidth>18.301610541728</perWidth>
+			<perHeight>3.90625</perHeight>
+			<perPosX>54.392386530015</perPosX>
+			<perPosY>60.416666666667</perPosY>
+		</IMG_DB_ADDRESS_DBCF>
+		<IN_DB_ADDRESS_DBCF Width = "245" Height = "25" PosX = "746" PosY = "467">
+			<perWidth>17.935578330893</perWidth>
+			<perHeight>3.2552083333333</perHeight>
+			<perPosX>54.612005856515</perPosX>
+			<perPosY>60.807291666667</perPosY>
+			<perFontSize>0.87847730600293</perFontSize>
+		</IN_DB_ADDRESS_DBCF>
+		<IN_DB_PORT_DBCF Width = "245" Height = "25" PosX = "746" PosY = "413">
+			<perWidth>17.935578330893</perWidth>
+			<perHeight>3.2552083333333</perHeight>
+			<perPosX>54.612005856515</perPosX>
+			<perPosY>53.776041666667</perPosY>
+			<perFontSize>0.87847730600293</perFontSize>
+		</IN_DB_PORT_DBCF>
+		<IN_DB_PASSWORD_DBCF Width = "245" Height = "25" PosX = "746" PosY = "358">
+			<perWidth>17.935578330893</perWidth>
+			<perHeight>3.2552083333333</perHeight>
+			<perPosX>54.612005856515</perPosX>
+			<perPosY>46.614583333333</perPosY>
+			<perFontSize>0.87847730600293</perFontSize>
+		</IN_DB_PASSWORD_DBCF>
+		<IN_DB_USERNAME_DBCF Width = "245" Height = "25" PosX = "746" PosY = "308">
+			<perWidth>17.935578330893</perWidth>
+			<perHeight>3.2552083333333</perHeight>
+			<perPosX>54.612005856515</perPosX>
+			<perPosY>40.104166666667</perPosY>
+			<perFontSize>0.87847730600293</perFontSize>
+		</IN_DB_USERNAME_DBCF>
+		<IN_DB_NAME_DBCF Width = "245" Height = "25" PosX = "746" PosY = "258">
+			<perWidth>17.935578330893</perWidth>
+			<perHeight>3.2552083333333</perHeight>
+			<perPosX>54.612005856515</perPosX>
+			<perPosY>33.59375</perPosY>
+			<perFontSize>0.87847730600293</perFontSize>
+		</IN_DB_NAME_DBCF>
+		<LB_FORM_TITLE Width = "349" Height = "34" PosX = "262" PosY = "84">
+			<perWidth>25.549048316252</perWidth>
+			<perHeight>4.4270833333333</perHeight>
+			<perPosX>19.180087847731</perPosX>
+			<perPosY>10.9375</perPosY>
+			<perFontSize>1.1713030746706</perFontSize>
+		</LB_FORM_TITLE>
+		<LB_MANDATORY_FIELDS Width = "184" Height = "31" PosX = "688" PosY = "215">
+			<perWidth>13.469985358712</perWidth>
+			<perHeight>4.0364583333333</perHeight>
+			<perPosX>50.366032210835</perPosX>
+			<perPosY>27.994791666667</perPosY>
+			<perFontSize>1.0248901903367</perFontSize>
+		</LB_MANDATORY_FIELDS>
+		<PH_SERVER_STATUS Width = "596" Height = "40" PosX = "215" PosY = "158">
+			<perWidth>43.631039531479</perWidth>
+			<perHeight>5.2083333333333</perHeight>
+			<perPosX>15.739385065886</perPosX>
+			<perPosY>20.572916666667</perPosY>
+		</PH_SERVER_STATUS>
+		<LB_DB_NAME Width = "233" Height = "29" PosX = "529" PosY = "259">
+			<perWidth>17.05710102489</perWidth>
+			<perHeight>3.7760416666667</perHeight>
+			<perPosX>38.726207906296</perPosX>
+			<perPosY>33.723958333333</perPosY>
+			<perFontSize>0.95168374816984</perFontSize>
+		</LB_DB_NAME>
+		<LB_DB_USERNAME Width = "149" Height = "29" PosX = "560" PosY = "309">
+			<perWidth>10.90775988287</perWidth>
+			<perHeight>3.7760416666667</perHeight>
+			<perPosX>40.99560761347</perPosX>
+			<perPosY>40.234375</perPosY>
+			<perFontSize>0.95168374816984</perFontSize>
+		</LB_DB_USERNAME>
+		<LB_DB_PASSWORD Width = "117" Height = "29" PosX = "574" PosY = "359">
+			<perWidth>8.5651537335286</perWidth>
+			<perHeight>3.7760416666667</perHeight>
+			<perPosX>42.020497803807</perPosX>
+			<perPosY>46.744791666667</perPosY>
+			<perFontSize>0.95168374816984</perFontSize>
+		</LB_DB_PASSWORD>
+		<LB_DB_PORT Width = "42" Height = "29" PosX = "633" PosY = "414">
+			<perWidth>3.0746705710102</perWidth>
+			<perHeight>3.7760416666667</perHeight>
+			<perPosX>46.339677891654</perPosX>
+			<perPosY>53.90625</perPosY>
+			<perFontSize>0.95168374816984</perFontSize>
+		</LB_DB_PORT>
+		<LB_DB_ADDRESS Width = "151" Height = "29" PosX = "580" PosY = "467">
+			<perWidth>11.054172767204</perWidth>
+			<perHeight>3.7760416666667</perHeight>
+			<perPosX>42.459736456808</perPosX>
+			<perPosY>60.807291666667</perPosY>
+			<perFontSize>0.95168374816984</perFontSize>
+		</LB_DB_ADDRESS>
+		<BTN_SAVE_DB_CONFIG Width = "158" Height = "45" PosX = "704" PosY = "540">
+			<perWidth>11.566617862372</perWidth>
+			<perHeight>5.859375</perHeight>
+			<perPosX>51.537335285505</perPosX>
+			<perPosY>70.3125</perPosY>
+		</BTN_SAVE_DB_CONFIG>
 	</PAGE>
 </ROOT>

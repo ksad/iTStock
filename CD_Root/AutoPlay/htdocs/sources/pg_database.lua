@@ -88,19 +88,12 @@ function loadDbAccess ()
 	end
 end
 
-function setDbConfigForm (currentObject, mode)
-	if mode == "Dialog" then
-		objectList = DialogEx.EnumerateObjects();
-	else
-		objectList = Page.EnumerateObjects();
-	end
-
+function setDbConfigFormDialog (currentObject)
+	objectList = DialogEx.EnumerateObjects();
+	
 	for i, object in pairs(objectList) do
-		if mode == "Dialog" then
-			objectType = DialogEx.GetObjectType(object);
-		else
-			objectType = Page.GetObjectType(object);
-		end
+		objectType = DialogEx.GetObjectType(object);
+
 		if object == currentObject then
 			local objectText = Input.GetText(object);
 			if objectText == Trans("db.input.dbname", "database")
@@ -133,6 +126,27 @@ function setDbConfigForm (currentObject, mode)
 				else
 					Input.SetText(object, "...");
 				end
+			end
+		end
+	end
+end
+
+function setDbConfigFormPage (currentObject)
+	objectList = Page.EnumerateObjects();
+	
+	for i, object in pairs(objectList) do
+		objectType = Page.GetObjectType(object);
+
+		if object == currentObject then
+			local objectText = Input.GetText(object);
+			if objectText ~= "" then
+				Input.SetSelection(currentObject, 1, -1);
+			end
+			Image.Load(String.Replace(currentObject, "IN", "IMG", false), "AutoPlay\\htdocs\\images\\inputs\\input_selected.png");
+		else
+			if objectType == 3 and String.Find(object, "DBCF", 1, false) ~= -1 then
+				Image.Load(object, "AutoPlay\\htdocs\\images\\inputs\\input.png");
+				Label.SetVisible("LB_MANDATORY_FIELDS", false);
 			end
 		end
 	end
@@ -194,9 +208,9 @@ function saveDatabaseConfiguration ()
 		end
 	end
 
-	Label.SetVisible("LB_MANDATORY_FIELDS", true);
 	error = Application.LoadValue("ItStock", "FORM_LAST_ERROR");
 	if (error == "Error616") then
+		Label.SetVisible("LB_MANDATORY_FIELDS", true);
 		Application.ExitScript();
 	end
 

@@ -445,11 +445,17 @@ end
 
 function Trans (bundle, composant, tblBundleVars)
 	if bundle ~= "" and composant ~= "" then
+		if String.Find(bundle, "#", 1, false) ~= -1 then
+			fixedBundle = String.Mid(bundle, 1, String.Length(bundle)-1);
+		else
+			fixedBundle = bundle;
+		end
+
 		local lang = Application.LoadValue("ITStock", "LANG");
 		local tblBundleList = TextFile.ReadToTable("AutoPlay\\htdocs\\lang-properties\\"..lang.."\\"..composant.."_"..lang..".properties");
 
 		for i,bundleLines in pairs (tblBundleList) do
-			if String.Find(bundleLines, bundle, 1, false) ~= -1 then
+			if String.Find(bundleLines, fixedBundle, 1, false) ~= -1 then
 				textBundle = String.Mid(bundleLines, String.Find(bundleLines, "=", 1, false)+1, -1);
 
 				if tblBundleVars then
@@ -467,52 +473,54 @@ function Trans (bundle, composant, tblBundleVars)
 	end
 end
 
-function TransPage (composant)
+function TransPage (tblComposants)
 	allObjects = Page.EnumerateObjects();
 	currentInterface = Application.GetCurrentPage();
 
-	for i,object in pairs (allObjects) do
-		objectType = Page.GetObjectType(object);
-		interfaceSize = Page.GetSize();
+	for i, composant in pairs(tblComposants) do 
+		for i,object in pairs (allObjects) do
+			objectType = Page.GetObjectType(object);
+			interfaceSize = Page.GetSize();
 
-		if objectType == 0 then
-			objProp = Button.GetProperties(object);
-			local objTransText = Trans(objProp.Text, composant);
-			Button.SetText(object, objTransText);
-		end
-
-		if objectType == 1 then
-			objProp = Label.GetProperties(object);
-			local objTransText = Trans(objProp.Text, composant);
-			local objRatio = Label.GetPos(object).X * 100 / (interfaceSize.Width - Label.GetSize(object).Width);
-			Label.SetText(object, objTransText);
-
-			if String.Find(objProp.Text, "#", 1, false) == -1 then
-				local objNewPosX = objRatio * (interfaceSize.Width - Label.GetSize(object).Width) / 100;
-				Label.SetPos(object, objNewPosX, Label.GetPos(object).Y);
+			if objectType == 0 then
+				objProp = Button.GetProperties(object);
+				local objTransText = Trans(objProp.Text, composant);
+				Button.SetText(object, objTransText);
 			end
-		end
 
-		if objectType == 2 then
-			objProp = Paragraph.GetProperties(object);
-			local objTransText = Trans(objProp.Text, composant);
-			Paragraph.SetText(object, objTransText);
-		end
-		
-		if objectType == 7 then
-			objProp = Input.GetProperties(object);
-			local objTransText = Trans(objProp.Text, composant);
-			if objTransText then
-				Input.SetText(object, objTransText);
+			if objectType == 1 then
+				objProp = Label.GetProperties(object);
+				objTransText = Trans(objProp.Text, composant);
+				local objRatio = Label.GetPos(object).X * 100 / (interfaceSize.Width - Label.GetSize(object).Width);
+				Label.SetText(object, objTransText);
+
+				if String.Find(objProp.Text, "#", 1, false) == -1 then
+					local objNewPosX = objRatio * (interfaceSize.Width - Label.GetSize(object).Width) / 100;
+					Label.SetPos(object, objNewPosX, Label.GetPos(object).Y);
+				end
 			end
-		end
 
-		if objectType == 10 then
-			objText = ComboBox.GetText(object);
-			local objTransText = Trans(objText, composant);
-			if objTransText then
-				ComboBox.SetItemText(object, 1, objTransText);
-				ComboBox.SetSelected(object, 1);
+			if objectType == 2 then
+				objProp = Paragraph.GetProperties(object);
+				local objTransText = Trans(objProp.Text, composant);
+				Paragraph.SetText(object, objTransText);
+			end
+			
+			if objectType == 7 then
+				objProp = Input.GetProperties(object);
+				local objTransText = Trans(objProp.Text, composant);
+				if objTransText then
+					Input.SetText(object, objTransText);
+				end
+			end
+
+			if objectType == 10 then
+				objText = ComboBox.GetText(object);
+				local objTransText = Trans(objText, composant);
+				if objTransText then
+					ComboBox.SetItemText(object, 1, objTransText);
+					ComboBox.SetSelected(object, 1);
+				end
 			end
 		end
 	end
