@@ -1,0 +1,11 @@
+<ROOT>
+	<PAGE Name = "LOADING">
+		<LB_REGISTER Width = "171" Height = "41" PosX = "598" PosY = "364">
+			<perWidth>12.518301610542</perWidth>
+			<perHeight>5.3385416666667</perHeight>
+			<perPosX>43.777452415813</perPosX>
+			<perPosY>47.395833333333</perPosY>
+			<perFontSize>1.4641288433382</perFontSize>
+		</LB_REGISTER>
+	</PAGE>
+</ROOT>

@@ -92,7 +92,7 @@ function xmlDataPagesSetup (currentPage)
 			Page.Navigate(PAGE_NEXT);
 		else
 			local windowLoadingHandle = Application.LoadValue("Loading", "windowHandle");
-			Window.Close(windowLoadingHandle, CLOSEWND_TERMINATE);
+			--Window.Close(windowLoadingHandle, CLOSEWND_TERMINATE);
 			Window.Maximize(Application.GetWndHandle());
 		end
 	end

@@ -63,13 +63,11 @@
 <Tracks/>
 </AudioBGMusic>
 <Globals>
-<Script>result = String.Mid("0123456789", 1, String.Length("0123456789")-1);
-
-</Script>
+<Script/>
 <BookMarks count="0">
 </BookMarks>
 <DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>9</DesignCodeCol>
+<DesignCodeCol>0</DesignCodeCol>
 </Globals>
 <Defaults>
 <StartupPage>_PageFirst</StartupPage>
@@ -150,8 +148,8 @@ end</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>4</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeLine>17</DesignCodeLine>
+<DesignCodeCol>3</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -278,6 +276,299 @@ end</Script>
 </MenuBar>
 </ProjectInfo>
 <Page>
+<Name>LOADING</Name>
+<InheritObs/>
+<InheritBG/>
+<Description/>
+<Keywords/>
+<Background>
+<Type>2</Type>
+<ImageStyle>0</ImageStyle>
+<TopColor>16711680</TopColor>
+<BottomColor>16777215</BottomColor>
+<UseCustomBackgroundSettings>1</UseCustomBackgroundSettings>
+<TransitionEffect/>
+<TransProps/>
+<NormalImage>
+<Filename>AutoPlay\htdocs\images\backgrounds\bg_login.png</Filename>
+</NormalImage>
+</Background>
+<Event>
+<Name>On Preload</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Show</Name>
+<Args/>
+<Script>TransPage({"common"});
+xmlDataPagesSetup(this);
+
+if Application.LoadValue("ITStock", "FirstRun") ~= "Y" then
+	Page.Jump("LOGIN");
+end</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>3</DesignCodeLine>
+<DesignCodeCol>49</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Close</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Timer</Name>
+<Args>number e_ID</Args>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Audio</Name>
+<Args>number e_Channel, string e_State</Args>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Size</Name>
+<Args>number e_WindowWidth, number e_WindowHeight, number e_PageWidth, number e_PageHeight, number e_Type</Args>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Menu</Name>
+<Args>number e_ID, table e_ItemInfo</Args>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Key</Name>
+<Args>number e_Key, table e_Modifiers</Args>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Mouse Button</Name>
+<Args>number e_Type, number e_X, number e_Y</Args>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Mouse Move</Name>
+<Args>number e_X, number e_Y</Args>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Mouse Wheel</Name>
+<Args>table e_Flags, number e_Delta, number e_X, number e_Y</Args>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Object>
+<Type>1</Type>
+<Name>LB_REGISTER</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>0</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>1</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>364</Top>
+<Bottom>405</Bottom>
+<Left>554</Left>
+<Right>813</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script>Page.Navigate(PAGE_NEXT);
+</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>1</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Right-Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Enter</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Leave</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<Text>
+<Body>common.label.loading</Body>
+<NormalColor>3480078</NormalColor>
+<HighlightColor>3480078</HighlightColor>
+<MouseDownColor>3480078</MouseDownColor>
+<DisabledColor>12632256</DisabledColor>
+<FontData>
+<FontName>Roboto</FontName>
+<CharacterSet>0</CharacterSet>
+<Height>-27</Height>
+<Weight>400</Weight>
+<Italic>1</Italic>
+<Underline>0</Underline>
+<StrikeOut>0</StrikeOut>
+<AntiAlias>1</AntiAlias>
+</FontData>
+<Alignment>0</Alignment>
+<Orientation>0</Orientation>
+<AutoSize>1</AutoSize>
+<MouseOverSndMode>0</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>0</MouseClickSndMode>
+<MouseClickSound/>
+<OriginalRect>
+<Top>364</Top>
+<Bottom>405</Bottom>
+<Left>554</Left>
+<Right>813</Right>
+</OriginalRect>
+</Text>
+</Object>
+<HGuidelines/>
+<VGuidelines/>
+</Page>
+<Page>
 <Name>LOGIN</Name>
 <InheritObs/>
 <InheritBG/>
@@ -312,20 +603,19 @@ end</Script>
 <Event>
 <Name>On Show</Name>
 <Args/>
-<Script>xmlDataPagesSetup(this);
-
-if Application.LoadValue("ITStock", "TRANS_FLAG_"..Application.GetCurrentDialog()) ~= "Y" then
+<Script>if Application.LoadValue("ITStock", "TRANS_FLAG_"..Application.GetCurrentDialog()) ~= "Y" then
 	TransPage({"login"});
 end
 
+xmlDataPagesLoad(this);
 loadCredentials();</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>3</DesignCodeLine>
-<DesignCodeCol>20</DesignCodeCol>
+<DesignCodeLine>4</DesignCodeLine>
+<DesignCodeCol>23</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -1742,15 +2032,15 @@ end</Script>
 	TransPage({"common"});
 end
 
-xmlDataPagesSetup(this);
+xmlDataPagesLoad(this);
 loadProfilInfos();</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>1</DesignCodeLine>
-<DesignCodeCol>21</DesignCodeCol>
+<DesignCodeLine>4</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -2176,12 +2466,12 @@ end
 <Cursor>1</Cursor>
 <Group>0</Group>
 <MaintainAspectRatio>1</MaintainAspectRatio>
-<Pin>1</Pin>
+<Pin>0</Pin>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>179</Top>
-<Bottom>224</Bottom>
+<Top>180</Top>
+<Bottom>225</Bottom>
 <Left>0</Left>
 <Right>200</Right>
 </Coordinates>
@@ -2274,10 +2564,10 @@ end
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>193</Top>
-<Bottom>208</Bottom>
-<Left>18</Left>
-<Right>39</Right>
+<Top>195</Top>
+<Bottom>210</Bottom>
+<Left>15</Left>
+<Right>36</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -2368,8 +2658,8 @@ end
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>192</Top>
-<Bottom>217</Bottom>
+<Top>194</Top>
+<Bottom>219</Bottom>
 <Left>45</Left>
 <Right>223</Right>
 </Coordinates>
@@ -2458,8 +2748,8 @@ end
 <MouseClickSndMode>0</MouseClickSndMode>
 <MouseClickSound/>
 <OriginalRect>
-<Top>192</Top>
-<Bottom>217</Bottom>
+<Top>194</Top>
+<Bottom>219</Bottom>
 <Left>45</Left>
 <Right>223</Right>
 </OriginalRect>
@@ -2476,12 +2766,12 @@ end
 <Cursor>1</Cursor>
 <Group>0</Group>
 <MaintainAspectRatio>1</MaintainAspectRatio>
-<Pin>1</Pin>
+<Pin>0</Pin>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>229</Top>
-<Bottom>274</Bottom>
+<Top>225</Top>
+<Bottom>270</Bottom>
 <Left>0</Left>
 <Right>200</Right>
 </Coordinates>
@@ -2574,10 +2864,10 @@ end
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>238</Top>
-<Bottom>260</Bottom>
-<Left>18</Left>
-<Right>39</Right>
+<Top>237</Top>
+<Bottom>259</Bottom>
+<Left>15</Left>
+<Right>36</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -2668,8 +2958,8 @@ end
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>240</Top>
-<Bottom>265</Bottom>
+<Top>238</Top>
+<Bottom>263</Bottom>
 <Left>45</Left>
 <Right>201</Right>
 </Coordinates>
@@ -2758,8 +3048,8 @@ end
 <MouseClickSndMode>0</MouseClickSndMode>
 <MouseClickSound/>
 <OriginalRect>
-<Top>240</Top>
-<Bottom>265</Bottom>
+<Top>238</Top>
+<Bottom>263</Bottom>
 <Left>45</Left>
 <Right>201</Right>
 </OriginalRect>
@@ -2870,12 +3160,12 @@ end
 <Cursor>1</Cursor>
 <Group>0</Group>
 <MaintainAspectRatio>1</MaintainAspectRatio>
-<Pin>1</Pin>
+<Pin>0</Pin>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>278</Top>
-<Bottom>323</Bottom>
+<Top>270</Top>
+<Bottom>315</Bottom>
 <Left>0</Left>
 <Right>200</Right>
 </Coordinates>
@@ -2968,10 +3258,10 @@ end
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>289</Top>
-<Bottom>309</Bottom>
-<Left>18</Left>
-<Right>38</Right>
+<Top>282</Top>
+<Bottom>302</Bottom>
+<Left>15</Left>
+<Right>35</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -3062,8 +3352,8 @@ end
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>291</Top>
-<Bottom>316</Bottom>
+<Top>282</Top>
+<Bottom>307</Bottom>
 <Left>45</Left>
 <Right>185</Right>
 </Coordinates>
@@ -3152,8 +3442,8 @@ end
 <MouseClickSndMode>0</MouseClickSndMode>
 <MouseClickSound/>
 <OriginalRect>
-<Top>291</Top>
-<Bottom>316</Bottom>
+<Top>282</Top>
+<Bottom>307</Bottom>
 <Left>45</Left>
 <Right>185</Right>
 </OriginalRect>
@@ -3860,8 +4150,8 @@ loadProfilInfos();</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>1</DesignCodeLine>
-<DesignCodeCol>35</DesignCodeCol>
+<DesignCodeLine>4</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -4922,12 +5212,12 @@ end</Script>
 <Cursor>1</Cursor>
 <Group>0</Group>
 <MaintainAspectRatio>1</MaintainAspectRatio>
-<Pin>1</Pin>
+<Pin>0</Pin>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>179</Top>
-<Bottom>224</Bottom>
+<Top>180</Top>
+<Bottom>225</Bottom>
 <Left>0</Left>
 <Right>200</Right>
 </Coordinates>
@@ -5020,8 +5310,8 @@ end</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>192</Top>
-<Bottom>217</Bottom>
+<Top>194</Top>
+<Bottom>219</Bottom>
 <Left>45</Left>
 <Right>223</Right>
 </Coordinates>
@@ -5110,8 +5400,8 @@ end</Script>
 <MouseClickSndMode>0</MouseClickSndMode>
 <MouseClickSound/>
 <OriginalRect>
-<Top>192</Top>
-<Bottom>217</Bottom>
+<Top>194</Top>
+<Bottom>219</Bottom>
 <Left>45</Left>
 <Right>223</Right>
 </OriginalRect>
@@ -5128,12 +5418,12 @@ end</Script>
 <Cursor>1</Cursor>
 <Group>0</Group>
 <MaintainAspectRatio>1</MaintainAspectRatio>
-<Pin>1</Pin>
+<Pin>0</Pin>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>229</Top>
-<Bottom>274</Bottom>
+<Top>225</Top>
+<Bottom>270</Bottom>
 <Left>0</Left>
 <Right>200</Right>
 </Coordinates>
@@ -5226,8 +5516,8 @@ end</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>240</Top>
-<Bottom>265</Bottom>
+<Top>238</Top>
+<Bottom>263</Bottom>
 <Left>45</Left>
 <Right>201</Right>
 </Coordinates>
@@ -5316,8 +5606,8 @@ end</Script>
 <MouseClickSndMode>0</MouseClickSndMode>
 <MouseClickSound/>
 <OriginalRect>
-<Top>240</Top>
-<Bottom>265</Bottom>
+<Top>238</Top>
+<Bottom>263</Bottom>
 <Left>45</Left>
 <Right>201</Right>
 </OriginalRect>
@@ -5334,12 +5624,12 @@ end</Script>
 <Cursor>1</Cursor>
 <Group>0</Group>
 <MaintainAspectRatio>1</MaintainAspectRatio>
-<Pin>1</Pin>
+<Pin>0</Pin>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>278</Top>
-<Bottom>323</Bottom>
+<Top>270</Top>
+<Bottom>315</Bottom>
 <Left>0</Left>
 <Right>200</Right>
 </Coordinates>
@@ -5432,8 +5722,8 @@ end</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>291</Top>
-<Bottom>316</Bottom>
+<Top>282</Top>
+<Bottom>307</Bottom>
 <Left>45</Left>
 <Right>185</Right>
 </Coordinates>
@@ -5522,8 +5812,8 @@ end</Script>
 <MouseClickSndMode>0</MouseClickSndMode>
 <MouseClickSound/>
 <OriginalRect>
-<Top>291</Top>
-<Bottom>316</Bottom>
+<Top>282</Top>
+<Bottom>307</Bottom>
 <Left>45</Left>
 <Right>185</Right>
 </OriginalRect>
@@ -5544,10 +5834,10 @@ end</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>193</Top>
-<Bottom>208</Bottom>
-<Left>18</Left>
-<Right>39</Right>
+<Top>195</Top>
+<Bottom>210</Bottom>
+<Left>15</Left>
+<Right>36</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -5638,10 +5928,10 @@ end</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>238</Top>
-<Bottom>260</Bottom>
-<Left>18</Left>
-<Right>39</Right>
+<Top>237</Top>
+<Bottom>259</Bottom>
+<Left>15</Left>
+<Right>36</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -5732,10 +6022,10 @@ end</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>289</Top>
-<Bottom>309</Bottom>
-<Left>18</Left>
-<Right>38</Right>
+<Top>282</Top>
+<Bottom>302</Bottom>
+<Left>15</Left>
+<Right>35</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -6049,9 +6339,9 @@ end</Script>
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>135</Top>
-<Bottom>163</Bottom>
+<Bottom>162</Bottom>
 <Left>245</Left>
-<Right>377</Right>
+<Right>367</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -6121,10 +6411,10 @@ end</Script>
 <MouseDownColor>3480078</MouseDownColor>
 <DisabledColor>12632256</DisabledColor>
 <FontData>
-<FontName>Nunito</FontName>
+<FontName>Roboto</FontName>
 <CharacterSet>0</CharacterSet>
 <Height>-16</Height>
-<Weight>700</Weight>
+<Weight>400</Weight>
 <Italic>0</Italic>
 <Underline>0</Underline>
 <StrikeOut>0</StrikeOut>
@@ -6139,9 +6429,9 @@ end</Script>
 <MouseClickSound/>
 <OriginalRect>
 <Top>135</Top>
-<Bottom>163</Bottom>
+<Bottom>162</Bottom>
 <Left>245</Left>
-<Right>377</Right>
+<Right>367</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -6266,14 +6556,18 @@ end</Script>
 <Event>
 <Name>On Click</Name>
 <Args/>
-<Script/>
+<Script>-- Label object properties table.
+tblLabelProps = {};
+tblLabelProps.Alignment = ALIGN_LEFT;
+
+Label.SetProperties("LB_DB_NAME", tblLabelProps);</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>53</DesignCodeLine>
-<DesignCodeCol>1079336960</DesignCodeCol>
+<DesignCodeLine>2</DesignCodeLine>
+<DesignCodeCol>36</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -6286,7 +6580,7 @@ end</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>25972</DesignCodeLine>
+<DesignCodeLine>0</DesignCodeLine>
 <DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
@@ -6300,8 +6594,8 @@ end</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>1862284342</DesignCodeLine>
-<DesignCodeCol>14368</DesignCodeCol>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -6314,8 +6608,8 @@ end</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>1869177973</DesignCodeLine>
-<DesignCodeCol>14368</DesignCodeCol>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -7627,9 +7921,9 @@ end</Script>
 <BorderColor>0</BorderColor>
 <BackColor>16777215</BackColor>
 <FontData>
-<FontName>Nunito</FontName>
+<FontName>Roboto</FontName>
 <CharacterSet>0</CharacterSet>
-<Height>-19</Height>
+<Height>-16</Height>
 <Weight>400</Weight>
 <Italic>0</Italic>
 <Underline>0</Underline>
@@ -7665,9 +7959,9 @@ end</Script>
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>259</Top>
-<Bottom>288</Bottom>
-<Left>573</Left>
-<Right>713</Right>
+<Bottom>286</Bottom>
+<Left>500</Left>
+<Right>634</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -7731,22 +8025,22 @@ end</Script>
 </Event>
 <Actions/>
 <Text>
-<Body>db.label.dbname</Body>
+<Body>db.label.dbname#</Body>
 <NormalColor>3480078</NormalColor>
 <HighlightColor>3480078</HighlightColor>
 <MouseDownColor>3480078</MouseDownColor>
 <DisabledColor>12632256</DisabledColor>
 <FontData>
-<FontName>Nunito</FontName>
+<FontName>Roboto</FontName>
 <CharacterSet>0</CharacterSet>
-<Height>-17</Height>
-<Weight>700</Weight>
+<Height>-16</Height>
+<Weight>400</Weight>
 <Italic>0</Italic>
 <Underline>0</Underline>
 <StrikeOut>0</StrikeOut>
 <AntiAlias>1</AntiAlias>
 </FontData>
-<Alignment>2</Alignment>
+<Alignment>0</Alignment>
 <Orientation>0</Orientation>
 <AutoSize>1</AutoSize>
 <MouseOverSndMode>0</MouseOverSndMode>
@@ -7755,9 +8049,9 @@ end</Script>
 <MouseClickSound/>
 <OriginalRect>
 <Top>259</Top>
-<Bottom>288</Bottom>
-<Left>573</Left>
-<Right>713</Right>
+<Bottom>286</Bottom>
+<Left>500</Left>
+<Right>634</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -7777,9 +8071,9 @@ end</Script>
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>309</Top>
-<Bottom>338</Bottom>
-<Left>557</Left>
-<Right>713</Right>
+<Bottom>336</Bottom>
+<Left>500</Left>
+<Right>646</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -7843,22 +8137,22 @@ end</Script>
 </Event>
 <Actions/>
 <Text>
-<Body>db.label.username</Body>
+<Body>db.label.username#</Body>
 <NormalColor>3480078</NormalColor>
 <HighlightColor>3480078</HighlightColor>
 <MouseDownColor>3480078</MouseDownColor>
 <DisabledColor>12632256</DisabledColor>
 <FontData>
-<FontName>Nunito</FontName>
+<FontName>Roboto</FontName>
 <CharacterSet>0</CharacterSet>
-<Height>-17</Height>
-<Weight>700</Weight>
+<Height>-16</Height>
+<Weight>400</Weight>
 <Italic>0</Italic>
 <Underline>0</Underline>
 <StrikeOut>0</StrikeOut>
 <AntiAlias>1</AntiAlias>
 </FontData>
-<Alignment>2</Alignment>
+<Alignment>0</Alignment>
 <Orientation>0</Orientation>
 <AutoSize>1</AutoSize>
 <MouseOverSndMode>0</MouseOverSndMode>
@@ -7867,9 +8161,9 @@ end</Script>
 <MouseClickSound/>
 <OriginalRect>
 <Top>309</Top>
-<Bottom>338</Bottom>
-<Left>557</Left>
-<Right>713</Right>
+<Bottom>336</Bottom>
+<Left>500</Left>
+<Right>646</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -7890,8 +8184,8 @@ end</Script>
 <Coordinates>
 <Top>359</Top>
 <Bottom>388</Bottom>
-<Left>557</Left>
-<Right>711</Right>
+<Left>500</Left>
+<Right>659</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -7955,22 +8249,22 @@ end</Script>
 </Event>
 <Actions/>
 <Text>
-<Body>db.label.password</Body>
+<Body>db.label.password#</Body>
 <NormalColor>3480078</NormalColor>
 <HighlightColor>3480078</HighlightColor>
 <MouseDownColor>3480078</MouseDownColor>
 <DisabledColor>12632256</DisabledColor>
 <FontData>
-<FontName>Nunito</FontName>
+<FontName>Roboto</FontName>
 <CharacterSet>0</CharacterSet>
 <Height>-17</Height>
-<Weight>700</Weight>
+<Weight>400</Weight>
 <Italic>0</Italic>
 <Underline>0</Underline>
 <StrikeOut>0</StrikeOut>
 <AntiAlias>1</AntiAlias>
 </FontData>
-<Alignment>2</Alignment>
+<Alignment>0</Alignment>
 <Orientation>0</Orientation>
 <AutoSize>1</AutoSize>
 <MouseOverSndMode>0</MouseOverSndMode>
@@ -7980,8 +8274,8 @@ end</Script>
 <OriginalRect>
 <Top>359</Top>
 <Bottom>388</Bottom>
-<Left>557</Left>
-<Right>711</Right>
+<Left>500</Left>
+<Right>659</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -8002,8 +8296,8 @@ end</Script>
 <Coordinates>
 <Top>414</Top>
 <Bottom>443</Bottom>
-<Left>602</Left>
-<Right>711</Right>
+<Left>500</Left>
+<Right>615</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -8067,22 +8361,22 @@ end</Script>
 </Event>
 <Actions/>
 <Text>
-<Body>db.label.port</Body>
+<Body>db.label.port#</Body>
 <NormalColor>3480078</NormalColor>
 <HighlightColor>3480078</HighlightColor>
 <MouseDownColor>3480078</MouseDownColor>
 <DisabledColor>12632256</DisabledColor>
 <FontData>
-<FontName>Nunito</FontName>
+<FontName>Roboto</FontName>
 <CharacterSet>0</CharacterSet>
 <Height>-17</Height>
-<Weight>700</Weight>
+<Weight>400</Weight>
 <Italic>0</Italic>
 <Underline>0</Underline>
 <StrikeOut>0</StrikeOut>
 <AntiAlias>1</AntiAlias>
 </FontData>
-<Alignment>2</Alignment>
+<Alignment>0</Alignment>
 <Orientation>0</Orientation>
 <AutoSize>1</AutoSize>
 <MouseOverSndMode>0</MouseOverSndMode>
@@ -8092,8 +8386,8 @@ end</Script>
 <OriginalRect>
 <Top>414</Top>
 <Bottom>443</Bottom>
-<Left>602</Left>
-<Right>711</Right>
+<Left>500</Left>
+<Right>615</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -8113,9 +8407,9 @@ end</Script>
 <AutoResize>0</AutoResize>
 <Coordinates>
 <Top>467</Top>
-<Bottom>496</Bottom>
-<Left>600</Left>
-<Right>711</Right>
+<Bottom>494</Bottom>
+<Left>500</Left>
+<Right>608</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -8179,22 +8473,22 @@ end</Script>
 </Event>
 <Actions/>
 <Text>
-<Body>db.label.host</Body>
+<Body>db.label.host#</Body>
 <NormalColor>3480078</NormalColor>
 <HighlightColor>3480078</HighlightColor>
 <MouseDownColor>3480078</MouseDownColor>
 <DisabledColor>12632256</DisabledColor>
 <FontData>
-<FontName>Nunito</FontName>
+<FontName>Roboto</FontName>
 <CharacterSet>0</CharacterSet>
-<Height>-17</Height>
-<Weight>700</Weight>
+<Height>-16</Height>
+<Weight>400</Weight>
 <Italic>0</Italic>
 <Underline>0</Underline>
 <StrikeOut>0</StrikeOut>
 <AntiAlias>1</AntiAlias>
 </FontData>
-<Alignment>2</Alignment>
+<Alignment>0</Alignment>
 <Orientation>0</Orientation>
 <AutoSize>1</AutoSize>
 <MouseOverSndMode>0</MouseOverSndMode>
@@ -8203,9 +8497,9 @@ end</Script>
 <MouseClickSound/>
 <OriginalRect>
 <Top>467</Top>
-<Bottom>496</Bottom>
-<Left>600</Left>
-<Right>711</Right>
+<Bottom>494</Bottom>
+<Left>500</Left>
+<Right>608</Right>
 </OriginalRect>
 </Text>
 </Object>
@@ -9643,12 +9937,12 @@ end</Script>
 <Cursor>1</Cursor>
 <Group>0</Group>
 <MaintainAspectRatio>1</MaintainAspectRatio>
-<Pin>1</Pin>
+<Pin>0</Pin>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>179</Top>
-<Bottom>224</Bottom>
+<Top>180</Top>
+<Bottom>225</Bottom>
 <Left>0</Left>
 <Right>200</Right>
 </Coordinates>
@@ -9741,8 +10035,8 @@ end</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>192</Top>
-<Bottom>217</Bottom>
+<Top>194</Top>
+<Bottom>219</Bottom>
 <Left>45</Left>
 <Right>223</Right>
 </Coordinates>
@@ -9831,8 +10125,8 @@ end</Script>
 <MouseClickSndMode>0</MouseClickSndMode>
 <MouseClickSound/>
 <OriginalRect>
-<Top>192</Top>
-<Bottom>217</Bottom>
+<Top>194</Top>
+<Bottom>219</Bottom>
 <Left>45</Left>
 <Right>223</Right>
 </OriginalRect>
@@ -9849,12 +10143,12 @@ end</Script>
 <Cursor>1</Cursor>
 <Group>0</Group>
 <MaintainAspectRatio>1</MaintainAspectRatio>
-<Pin>1</Pin>
+<Pin>0</Pin>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>278</Top>
-<Bottom>323</Bottom>
+<Top>270</Top>
+<Bottom>315</Bottom>
 <Left>0</Left>
 <Right>200</Right>
 </Coordinates>
@@ -9947,8 +10241,8 @@ end</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>291</Top>
-<Bottom>316</Bottom>
+<Top>282</Top>
+<Bottom>307</Bottom>
 <Left>45</Left>
 <Right>185</Right>
 </Coordinates>
@@ -10037,8 +10331,8 @@ end</Script>
 <MouseClickSndMode>0</MouseClickSndMode>
 <MouseClickSound/>
 <OriginalRect>
-<Top>291</Top>
-<Bottom>316</Bottom>
+<Top>282</Top>
+<Bottom>307</Bottom>
 <Left>45</Left>
 <Right>185</Right>
 </OriginalRect>
@@ -10059,10 +10353,10 @@ end</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>193</Top>
-<Bottom>208</Bottom>
-<Left>18</Left>
-<Right>39</Right>
+<Top>195</Top>
+<Bottom>210</Bottom>
+<Left>15</Left>
+<Right>36</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -10153,10 +10447,10 @@ end</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>289</Top>
-<Bottom>309</Bottom>
-<Left>18</Left>
-<Right>38</Right>
+<Top>282</Top>
+<Bottom>302</Bottom>
+<Left>15</Left>
+<Right>35</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -10243,12 +10537,12 @@ end</Script>
 <Cursor>1</Cursor>
 <Group>0</Group>
 <MaintainAspectRatio>1</MaintainAspectRatio>
-<Pin>1</Pin>
+<Pin>0</Pin>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>229</Top>
-<Bottom>274</Bottom>
+<Top>225</Top>
+<Bottom>270</Bottom>
 <Left>0</Left>
 <Right>200</Right>
 </Coordinates>
@@ -10341,8 +10635,8 @@ end</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>240</Top>
-<Bottom>265</Bottom>
+<Top>238</Top>
+<Bottom>263</Bottom>
 <Left>45</Left>
 <Right>201</Right>
 </Coordinates>
@@ -10431,8 +10725,8 @@ end</Script>
 <MouseClickSndMode>0</MouseClickSndMode>
 <MouseClickSound/>
 <OriginalRect>
-<Top>240</Top>
-<Bottom>265</Bottom>
+<Top>238</Top>
+<Bottom>263</Bottom>
 <Left>45</Left>
 <Right>201</Right>
 </OriginalRect>
@@ -10453,10 +10747,10 @@ end</Script>
 <TabIndex>-1</TabIndex>
 <AutoResize>0</AutoResize>
 <Coordinates>
-<Top>238</Top>
-<Bottom>260</Bottom>
-<Left>18</Left>
-<Right>39</Right>
+<Top>237</Top>
+<Bottom>259</Bottom>
+<Left>15</Left>
+<Right>36</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
