@@ -427,7 +427,10 @@ function setUserSearchForm (currentObject)
 
 		if object == currentObject then
 			local objectText = Input.GetText(object);
-			if objectText == "Firstname" or objectText == "Username" or objectText == "Lastname" then
+			if objectText == Trans("user.input.lastname", "users")
+				or objectText == Trans("user.input.firstname", "users")
+				or objectText == Trans("user.input.username", "users")
+				or objectText == Trans("user.input.email", "users") then
 				Input.SetText(currentObject, "");
 			else
 				Input.SetSelection(currentObject, 1, -1);
@@ -440,11 +443,15 @@ function setUserSearchForm (currentObject)
 
 			if objectType == 7 and Input.GetText(object) == "" then
 				if String.Find(object, "FIRSTNAME", 1, false) ~= -1 then
-					Input.SetText(object, "Firstname");
+					Input.SetText(object, Trans("user.input.firstname", "users"));
 				elseif String.Find(object, "USERNAME", 1, false) ~= -1 then
-					Input.SetText(object, "Username");
+					Input.SetText(object, Trans("user.input.username", "users"));
 				elseif String.Find(object, "LASTNAME", 1, false) ~= -1 then
-					Input.SetText(object, "Lastname");
+					Input.SetText(object, Trans("user.input.lastname", "users"));
+				elseif String.Find(object, "PASSWORD", 1, false) ~= -1 then
+					Input.SetText(object, Trans("user.input.password", "users"));
+				elseif String.Find(object, "EMAIL", 1, false) ~= -1 then
+					Input.SetText(object, Trans("user.input.email", "users"));
 				else
 					Input.SetText(object, "...");
 				end
